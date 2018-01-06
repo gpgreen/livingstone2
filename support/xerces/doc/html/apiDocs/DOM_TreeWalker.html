@@ -1,0 +1,423 @@
+<html><head><TITLE>DOM_TreeWalker</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   DOM_TreeWalker  </H2><BLOCKQUOTE>
+
+<code>DOM_TreeWalker</code> objects are used to navigate a document tree or
+subtree using the view of the document defined by its <code>whatToShow</code>
+flags and any filters that are defined for the <code>DOM_TreeWalker</code>
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CDOM_TreeWalker,MDOM_TreeWalker.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.32.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and assignment operator </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.32.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_TreeWalker</B> ()<br>
+<I>
+Default constructor</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_TreeWalker</B> (const <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A> &other)<br>
+<I>
+Copy constructor</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A>& </TD><TD><B>operator = </B> (const <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A> &other)<br>
+<I>
+Assignment operator</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A>& </TD><TD><B>operator = </B> (const DOM_NullPtr *val)<br>
+<I>
+Assignment operator</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.32.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>~DOM_TreeWalker</B> ()<br>
+<I>
+Destructor for DOM_TreeWalker</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.6"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Detaching functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.32.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>detach</B> ()<br>
+<I>
+Detaches the iterator from the set which it iterated over, releasing any
+computational resources and placing the iterator in the INVALID state</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Equality and Inequality operators. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.32.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator == </B> (const <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A> & other) const <br>
+<I>
+The equality operator</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator == </B> (const DOM_NullPtr *other) const <br>
+<I>
+Compare with a pointer</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator != </B> (const <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A> & other) const <br>
+<I>
+The inequality operator</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.3.4"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator != </B> (const DOM_NullPtr * other) const <br>
+<I>
+Compare with a pointer</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Get functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.32.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  long </TD><TD><B>getWhatToShow</B> ()<br>
+<I>
+Return which node types are presented via the DOM_TreeWalker</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_NodeFilter.html">DOM_NodeFilter</A>* </TD><TD><B>getFilter</B> ()<br>
+<I>
+Return The filter used to screen nodes</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>getExpandEntityReferences</B> ()<br>
+<I>
+Return the expandEntityReferences flag</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>getCurrentNode</B> ()<br>
+<I>
+Return the node at which the DOM_TreeWalker is currently positioned</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4.5"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>parentNode</B> ()<br>
+<I>
+Moves to and returns the closest visible ancestor node of the current node</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4.6"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>firstChild</B> ()<br>
+<I>
+Moves the <code>DOM_TreeWalker</code> to the first child of the current node,
+and returns the new node</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4.7"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>lastChild</B> ()<br>
+<I>
+Moves the <code>DOM_TreeWalker</code> to the last child of the current node, and
+returns the new node</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4.8"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>previousSibling</B> ()<br>
+<I>
+Moves the <code>DOM_TreeWalker</code> to the previous sibling of the current
+node, and returns the new node</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4.9"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>nextSibling</B> ()<br>
+<I>
+Moves the <code>DOM_TreeWalker</code> to the next sibling of the current node,
+and returns the new node</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4.10"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>previousNode</B> ()<br>
+<I>
+Moves the <code>DOM_TreeWalker</code> to the previous visible node in document
+order relative to the current node, and returns the new node</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.4.11"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>nextNode</B> ()<br>
+<I>
+Moves the <code>DOM_TreeWalker</code> to the next visible node in document order
+relative to the current node, and returns the new node</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.32.5"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Set functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.32.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setCurrentNode</B> (<!1><A HREF="DOM_Node.html">DOM_Node</A> currentNode)<br>
+<I>
+Set the node at which the DOM_TreeWalker is currently positioned</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+<code>DOM_TreeWalker</code> objects are used to navigate a document tree or
+subtree using the view of the document defined by its <code>whatToShow</code>
+flags and any filters that are defined for the <code>DOM_TreeWalker</code>. Any
+function which performs navigation using a <code>DOM_TreeWalker</code> will
+automatically support any view defined by a <code>DOM_TreeWalker</code>.
+
+Omitting nodes from the logical view of a subtree can result in a structure that is
+substantially different from the same subtree in the complete, unfiltered document. Nodes
+that are siblings in the DOM_TreeWalker view may be children of different, widely separated
+nodes in the original view. For instance, consider a Filter that skips all nodes except for
+Text nodes and the root node of a document. In the logical view that results, all text
+nodes will be siblings and appear as direct children of the root node, no matter how
+deeply nested the structure of the original document.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and assignment operator ">
+<A NAME ="DOC.32.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and assignment operator </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="DOM_TreeWalker">
+<A NAME ="DOC.32.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_TreeWalker()</B></TT>
+<DD>
+Default constructor
+<DL></DL><P>
+<A NAME="DOM_TreeWalker">
+<A NAME ="DOC.32.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_TreeWalker(const <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A> &other)</B></TT>
+<DD>
+Copy constructor.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied.<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.32.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A>&  operator = (const <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A> &other)</B></TT>
+<DD>
+Assignment operator.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied.<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.32.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A>&  operator = (const DOM_NullPtr *val)</B></TT>
+<DD>
+Assignment operator.  This overloaded variant is provided for
+the sole purpose of setting a DOM_NodeIterator to null.
+
+
+<DL><DT><B>Parameters:</B><DD><B>val.</B> -   Only a value of 0, or null, is allowed.<br></DL><P></DL>
+
+<A NAME="Destructor. ">
+<A NAME ="DOC.32.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~DOM_TreeWalker">
+<A NAME ="DOC.32.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~DOM_TreeWalker()</B></TT>
+<DD>
+Destructor for DOM_TreeWalker
+<DL></DL><P></DL>
+
+<A NAME="Equality and Inequality operators. ">
+<A NAME ="DOC.32.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Equality and Inequality operators. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="operator == ">
+<A NAME ="DOC.32.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator == (const <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A> & other) const </B></TT>
+<DD>
+The equality operator.
+
+
+<DL><DT><B>Returns:</B><DD>s True if both <code>DOM_TreeWalker</code>s refer to the same
+actual node, or are both null; return false otherwise.
+<DT><B>Parameters:</B><DD><B>other</B> -  The object reference with which <code>this</code> object is compared
+<br></DL><P>
+<A NAME="operator == ">
+<A NAME ="DOC.32.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator == (const DOM_NullPtr *other) const </B></TT>
+<DD>
+Compare with a pointer.  Intended only to allow a convenient
+comparison with null.
+<DL></DL><P>
+<A NAME="operator != ">
+<A NAME ="DOC.32.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator != (const <!2><A HREF="DOM_TreeWalker.html#DOC.32.1.4">DOM_TreeWalker</A> & other) const </B></TT>
+<DD>
+The inequality operator.  See operator ==.
+<DL></DL><P>
+<A NAME="operator != ">
+<A NAME ="DOC.32.3.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator != (const DOM_NullPtr * other) const </B></TT>
+<DD>
+Compare with a pointer.  Intended only to allow a convenient
+comparison with null.
+
+<DL></DL><P></DL>
+
+<A NAME="Get functions. ">
+<A NAME ="DOC.32.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Get functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getWhatToShow">
+<A NAME ="DOC.32.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  long  getWhatToShow()</B></TT>
+<DD>
+Return which node types are presented via the DOM_TreeWalker.
+These constants are defined in the DOM_NodeFilter interface.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P>
+<A NAME="getFilter">
+<A NAME ="DOC.32.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_NodeFilter.html">DOM_NodeFilter</A>*  getFilter()</B></TT>
+<DD>
+Return The filter used to screen nodes.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P>
+<A NAME="getExpandEntityReferences">
+<A NAME ="DOC.32.4.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  getExpandEntityReferences()</B></TT>
+<DD>
+Return the expandEntityReferences flag.
+The value of this flag determines whether the children of entity reference
+nodes are visible to the DOM_TreeWalker. If false, they will be skipped over.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P>
+<A NAME="getCurrentNode">
+<A NAME ="DOC.32.4.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  getCurrentNode()</B></TT>
+<DD>
+Return the node at which the DOM_TreeWalker is currently positioned.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P>
+<A NAME="parentNode">
+<A NAME ="DOC.32.4.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  parentNode()</B></TT>
+<DD>
+Moves to and returns the closest visible ancestor node of the current node.
+If the search for parentNode attempts to step upward from the DOM_TreeWalker's root
+node, or if it fails to find a visible ancestor node, this method retains the
+current position and returns null.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P>
+<A NAME="firstChild">
+<A NAME ="DOC.32.4.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  firstChild()</B></TT>
+<DD>
+Moves the <code>DOM_TreeWalker</code> to the first child of the current node,
+and returns the new node. If the current node has no children, returns
+<code>null</code>, and retains the current node.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P>
+<A NAME="lastChild">
+<A NAME ="DOC.32.4.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  lastChild()</B></TT>
+<DD>
+Moves the <code>DOM_TreeWalker</code> to the last child of the current node, and
+returns the new node. If the current node has no children, returns
+<code>null</code>, and retains the current node.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P>
+<A NAME="previousSibling">
+<A NAME ="DOC.32.4.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  previousSibling()</B></TT>
+<DD>
+Moves the <code>DOM_TreeWalker</code> to the previous sibling of the current
+node, and returns the new node. If the current node has no previous sibling,
+returns <code>null</code>, and retains the current node.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P>
+<A NAME="nextSibling">
+<A NAME ="DOC.32.4.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  nextSibling()</B></TT>
+<DD>
+Moves the <code>DOM_TreeWalker</code> to the next sibling of the current node,
+and returns the new node. If the current node has no next sibling, returns
+<code>null</code>, and retains the current node.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P>
+<A NAME="previousNode">
+<A NAME ="DOC.32.4.10">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  previousNode()</B></TT>
+<DD>
+Moves the <code>DOM_TreeWalker</code> to the previous visible node in document
+order relative to the current node, and returns the new node. If the current
+node has no previous node, 
+or if the search for previousNode attempts to step upward from the DOM_TreeWalker's
+root node, returns <code>null</code>, and retains the current node. 
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P>
+<A NAME="nextNode">
+<A NAME ="DOC.32.4.11">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  nextNode()</B></TT>
+<DD>
+Moves the <code>DOM_TreeWalker</code> to the next visible node in document order
+relative to the current node, and returns the new node. If the current node has
+no next node, 
+or if the search for nextNode attempts to step upward from the DOM_TreeWalker's
+root node, returns <code>null</code>, and retains the current node.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P></DL>
+
+<A NAME="Set functions. ">
+<A NAME ="DOC.32.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Set functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="setCurrentNode">
+<A NAME ="DOC.32.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setCurrentNode(<!1><A HREF="DOM_Node.html">DOM_Node</A> currentNode)</B></TT>
+<DD>
+Set the node at which the DOM_TreeWalker is currently positioned.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P></DL>
+
+<A NAME="Detaching functions. ">
+<A NAME ="DOC.32.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Detaching functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="detach">
+<A NAME ="DOC.32.6.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  detach()</B></TT>
+<DD>
+Detaches the iterator from the set which it iterated over, releasing any
+computational resources and placing the iterator in the INVALID state. After
+<code>detach</code> has been invoked, calls to <code>nextNode</code> or
+<code>previousNode</code> will raise the exception INVALID_STATE_ERR.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

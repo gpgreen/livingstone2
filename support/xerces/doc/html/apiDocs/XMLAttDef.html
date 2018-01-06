@@ -1,0 +1,371 @@
+<html><head><TITLE>XMLAttDef</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   XMLAttDef  </H2><BLOCKQUOTE>
+Represents the core information of an atribute definition
+
+This class defines the basic characteristics of an attribute, no matter
+what type of validator is used
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CXMLAttDef,MXMLAttDef.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public Methods</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.37.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  const  XMLCh* </TD><TD><B>getAttTypeString</B> (const AttTypes attrType)<br>
+<I>Get a string representation of the passed attribute type enum
+
+This method allows you to get a textual representation of an attriubte
+type, mostly for debug or display</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  const  XMLCh* </TD><TD><B>getDefAttTypeString</B> (const DefAttTypes attrType)<br>
+<I>Get a string representation of the passed def attribute type enum
+
+This method allows you to get a textual representation of an default
+attributetype, mostly for debug or display</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.5"> <IMG BORDER=0 SRC=icon1.gif></A> DefAttTypes </TD><TD><B>getDefaultType</B> () const <br>
+<I>Get the default type of this attribute type
+
+This method returns the 'default type' of the attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.6"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getEnumeration</B> () const <br>
+<I>Get the enumeration value (if any) of this attribute type
+
+If the attribute is of an enumeration or notatin type, then this
+method will return a const reference to a string that contains the
+space separated values that can the attribute can have</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getFullName</B> () const <br>
+<I>Get the full name of this attribute type
+
+The derived class should return a const pointer to the full name of
+this attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.7"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getId</B> () const <br>
+<I>Get the pool id of this attribute type
+
+This method will return the id of this attribute in the validator's
+attribute pool</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.8"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getKey</B> () const <br>
+<I>Support keyed collections for attribute types
+
+This method allows this class to meet the standard semantics for some
+commnly used internal hashed or keyed collection classes</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.9"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>getProvided</B> () const <br>
+<I>Query whether the attribute was explicitly provided</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.10"> <IMG BORDER=0 SRC=icon1.gif></A> AttTypes </TD><TD><B>getType</B> () const <br>
+<I>Get the type of this attribute
+
+Gets the type of this attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.11"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getValue</B> () const <br>
+<I>Get the default/fixed value of this attribute (if any</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.12"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setDefaultType</B> (const XMLAttDef::DefAttTypes newValue)<br>
+<I>Set the default attribute type
+
+This method sets the default attribute type for this attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.17"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setEnumeration</B> (const XMLCh* const newValue)<br>
+<I>Set the enumerated value of this attribute type</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.13"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setId</B> (const unsigned int newId)<br>
+<I>Set the pool id for this attribute type</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.14"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setProvided</B> (const bool newValue)<br>
+<I>Set or clear the 'provided' flag</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.15"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setType</B> (const XMLAttDef::AttTypes newValue)<br>
+<I>Set the type of this attribute type</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.16"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setValue</B> (const XMLCh* const newValue)<br>
+<I>Set the default/fixed value of this attribute type</I>
+</TD></TR></TABLE><TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.37.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.37.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual </TD><TD><B>~XMLAttDef</B> ()<br>
+<I>
+Destructor</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.20"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Getter methods </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.18"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Public, static methods </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.21"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Setter methods </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.37.19"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Virtual interface </B> <br>
+<I></I>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+Represents the core information of an atribute definition
+
+This class defines the basic characteristics of an attribute, no matter
+what type of validator is used. If a particular schema associates more
+information with an attribute it will create a derivative of this class.
+So this class provides an abstract way to get basic information on
+attributes from any type of validator.
+
+This class supports keyed collection semantics on the fully qualified
+attribute name, by providing a getKey() method to extract the key string.
+getKey(), in this case, just calls the virtual method getFullName() to
+get the fully qualified name, as defined by the derived class.
+
+Note that the 'value' of an attribute type definition is the default or
+of fixed value given to it in its definition. If the attribute is of the
+enumerated or notation type, it will have an 'enumeration value' as well
+which is a space separated list of its possible vlaues.
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Public, static methods ">
+<A NAME ="DOC.37.18">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Public, static methods </B></TT>
+<DL></DL><P>
+<A NAME="getAttTypeString">
+<A NAME ="DOC.37.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  const  XMLCh*  getAttTypeString(const AttTypes attrType)</B></TT>
+<DD>Get a string representation of the passed attribute type enum
+
+This method allows you to get a textual representation of an attriubte
+type, mostly for debug or display.
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to the static string that holds the text 
+description of the passed type.
+<DT><B>Parameters:</B><DD><B>attrType</B> -  The attribute type value to get the string for.
+<br></DL><P>
+<A NAME="getDefAttTypeString">
+<A NAME ="DOC.37.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  const  XMLCh*  getDefAttTypeString(const DefAttTypes attrType)</B></TT>
+<DD>Get a string representation of the passed def attribute type enum
+
+This method allows you to get a textual representation of an default
+attributetype, mostly for debug or display.
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to the static string that holds the text 
+description of the passed default type.
+<DT><B>Parameters:</B><DD><B>attrType</B> -  The default attribute type value to get the string for.
+<br></DL><P>
+<A NAME="Destructor ">
+<A NAME ="DOC.37.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~XMLAttDef">
+<A NAME ="DOC.37.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  ~XMLAttDef()</B></TT>
+<DD>
+Destructor
+<DL></DL><P></DL>
+
+<A NAME="Virtual interface ">
+<A NAME ="DOC.37.19">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Virtual interface </B></TT>
+<DL></DL><P>
+<A NAME="getFullName">
+<A NAME ="DOC.37.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getFullName() const </B></TT>
+<DD>Get the full name of this attribute type
+
+The derived class should return a const pointer to the full name of
+this attribute. This will vary depending on the type of validator in
+use.
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to the full name of this attribute type.
+</DL><P>
+<A NAME="Getter methods ">
+<A NAME ="DOC.37.20">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Getter methods </B></TT>
+<DL></DL><P>
+<A NAME="getDefaultType">
+<A NAME ="DOC.37.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> DefAttTypes  getDefaultType() const </B></TT>
+<DD>Get the default type of this attribute type
+
+This method returns the 'default type' of the attribute. Default
+type in this case refers to the XML concept of a default type for
+an attribute, i.e. #FIXED, #IMPLIED, etc...
+
+
+<DL><DT><B>Returns:</B><DD>The default type enum for this attribute type.
+</DL><P>
+<A NAME="getEnumeration">
+<A NAME ="DOC.37.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getEnumeration() const </B></TT>
+<DD>Get the enumeration value (if any) of this attribute type
+
+If the attribute is of an enumeration or notatin type, then this
+method will return a const reference to a string that contains the
+space separated values that can the attribute can have.
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to a string that contains the space separated
+legal values for this attribute.
+</DL><P>
+<A NAME="getId">
+<A NAME ="DOC.37.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getId() const </B></TT>
+<DD>Get the pool id of this attribute type
+
+This method will return the id of this attribute in the validator's
+attribute pool. It was set by the validator when this attribute was
+created.
+
+
+<DL><DT><B>Returns:</B><DD>The pool id of this attribute type.
+</DL><P>
+<A NAME="getKey">
+<A NAME ="DOC.37.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getKey() const </B></TT>
+<DD>Support keyed collections for attribute types
+
+This method allows this class to meet the standard semantics for some
+commnly used internal hashed or keyed collection classes. What it
+returns depends upon the derived class because it is just an inline
+passthrough to getFullName().
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to the string that makes up the collection
+key for instances of this object.
+</DL><P>
+<A NAME="getProvided">
+<A NAME ="DOC.37.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  getProvided() const </B></TT>
+<DD>Query whether the attribute was explicitly provided.
+
+When the scanner scans a start tag, it will ask the element decl
+object of the element type of that start tag to clear the 'provided'
+flag on all its attributes. As the scanner sees explicitly provided
+attributes, its turns on this flag to indicate that this attribute
+has been provided. In this way, the scanner can catch duplicated
+attributes and required attributes that aren't provided, and default
+in fixed/default valued attributes that are not explicitly provided.
+
+
+<DL><DT><B>Returns:</B><DD>Returns a boolean value that indicates whether this attribute
+was explicitly provided.
+</DL><P>
+<A NAME="getType">
+<A NAME ="DOC.37.10">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> AttTypes  getType() const </B></TT>
+<DD>Get the type of this attribute
+
+Gets the type of this attribute. This type is represented by an enum
+that convers the types of attributes allowed by XML, e.g. CDATA, NMTOKEN,
+NOTATION, etc...
+
+
+<DL><DT><B>Returns:</B><DD>The attribute type enumeration value for this type of
+attribute.
+</DL><P>
+<A NAME="getValue">
+<A NAME ="DOC.37.11">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getValue() const </B></TT>
+<DD>Get the default/fixed value of this attribute (if any.)
+
+If the attribute defined a default/fixed value, then it is stored
+and this method will retrieve it. If it has non, then a null pointer
+is returned.
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to the default/fixed value for this attribute
+type.
+</DL><P>
+<A NAME="Setter methods ">
+<A NAME ="DOC.37.21">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Setter methods </B></TT>
+<DL></DL><P>
+<A NAME="setDefaultType">
+<A NAME ="DOC.37.12">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setDefaultType(const XMLAttDef::DefAttTypes newValue)</B></TT>
+<DD>Set the default attribute type
+
+This method sets the default attribute type for this attribute.
+This setting controls whether the attribute is required, fixed,
+implied, etc...
+
+
+<DL><DT><B>Parameters:</B><DD><B>The</B> -  new default attribute to set<br></DL><P>
+<A NAME="setId">
+<A NAME ="DOC.37.13">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setId(const unsigned int newId)</B></TT>
+<DD>Set the pool id for this attribute type.
+
+This method sets the pool id of this attribute type. This is usually
+called by the validator that creates the actual instance (which is of
+a derived type known only by the validator.)
+
+
+<DL><DT><B>Parameters:</B><DD><B>The</B> -  new pool id to set.<br></DL><P>
+<A NAME="setProvided">
+<A NAME ="DOC.37.14">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setProvided(const bool newValue)</B></TT>
+<DD>Set or clear the 'provided' flag.
+
+This method will set or clear the 'provided' flag. This is called
+by the scanner as it is scanning a start tag and marking off the
+attributes that have been explicitly provided.
+
+
+<DL><DT><B>Parameters:</B><DD><B>The</B> -  new provided state to set<br></DL><P>
+<A NAME="setType">
+<A NAME ="DOC.37.15">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setType(const XMLAttDef::AttTypes newValue)</B></TT>
+<DD>Set the type of this attribute type.
+
+This method will set the type of the attribute. The type of an attribute
+controls how it is normalized and what kinds of characters it can hold.
+
+
+<DL><DT><B>Parameters:</B><DD><B>The</B> -  new attribute type to set<br></DL><P>
+<A NAME="setValue">
+<A NAME ="DOC.37.16">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setValue(const XMLCh* const newValue)</B></TT>
+<DD>Set the default/fixed value of this attribute type.
+
+This method set the fixed/default value for the attribute. This value
+will be used when instances of this attribute type are faulted in. It
+<b>must</b> be a valid value for the type set by setType(). If the
+type is enumeration or notation, this must be one of the valid values
+set in the setEnumeration() call.
+
+
+<DL><DT><B>Parameters:</B><DD><B>The</B> -  new fixed/default value to set.<br></DL><P>
+<A NAME="setEnumeration">
+<A NAME ="DOC.37.17">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setEnumeration(const XMLCh* const newValue)</B></TT>
+<DD>Set the enumerated value of this attribute type.
+
+This method sets the enumerated/notation value list for this attribute
+type. It is a space separated set of possible values. These values must
+meet the constrains of the XML spec for such values of this type of
+attribute. This should only be set if the setType() method is used to
+set the type to the enumeration or notation types.
+
+
+<DL><DT><B>Parameters:</B><DD><B>The</B> -  new enumerated/notation value list to set.<br></DL><P></DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

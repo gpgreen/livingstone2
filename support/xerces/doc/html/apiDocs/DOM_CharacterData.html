@@ -1,0 +1,487 @@
+<html><head><TITLE>DOM_CharacterData</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   DOM_CharacterData : public <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> </H2><BLOCKQUOTE>
+
+The <code>DOM_CharacterData</code> interface extends Node with a set  of 
+methods for accessing character data in the DOM
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=125>
+<param name=classes value="CDOM_Node,MDOM_Node.html,CDOM_CharacterData,MDOM_CharacterData.html,CDOM_Text,MDOM_Text.html,CDOM_Comment,MDOM_Comment.html">
+<param name=before value="M,M,M|_,Mr_">
+<param name=after value="Md_,M,M,M">
+<param name=indent value="0,1,1,1">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.14.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and assignment operator </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.14.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_CharacterData</B> ()<br>
+<I>
+Default constructor for DOM_CharacterData</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_CharacterData</B> (const <!2><A HREF="DOM_CharacterData.html#DOC.14.1.1">DOM_CharacterData</A> &other)<br>
+<I>
+Copy constructor
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_CharacterData.html#DOC.14.1.1">DOM_CharacterData</A>& </TD><TD><B>operator = </B> (const <!2><A HREF="DOM_CharacterData.html#DOC.14.1.1">DOM_CharacterData</A> &other)<br>
+<I>
+Assignment operator
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_CharacterData.html#DOC.14.1.1">DOM_CharacterData</A>& </TD><TD><B>operator = </B> (const DOM_NullPtr *val)<br>
+<I>
+Assignment operator</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.14.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>~DOM_CharacterData</B> ()<br>
+<I>
+Destructor for DOM_CharacterData</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Functions that set or change data. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.14.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>appendData</B> (const <!1><A HREF="DOMString.html">DOMString</A> &arg)<br>
+<I>
+Append the string to the end of the character data of the node</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>insertData</B> (unsigned int offset, const <!1><A HREF="DOMString.html">DOMString</A> &arg)<br>
+<I>
+Insert a string at the specified character offset</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>deleteData</B> (unsigned int offset, unsigned int count)<br>
+<I>
+Remove a range of characters from the node</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.4.4"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>replaceData</B> (unsigned int offset, unsigned int count, const <!1><A HREF="DOMString.html">DOMString</A> &arg)<br>
+<I>
+Replace the characters starting at the specified character offset with 
+the specified string</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.4.5"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setData</B> (const <!1><A HREF="DOMString.html">DOMString</A> &data)<br>
+<I>
+Sets the character data of the node that implements this interface</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Getter functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.14.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A> </TD><TD><B>getData</B> () const <br>
+<I>
+Returns the character data of the node that implements this interface</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getLength</B> () const <br>
+<I>
+Returns the number of characters that are available through <code>data</code> and 
+the <code>substringData</code> method below</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.14.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A> </TD><TD><B>substringData</B> (unsigned int offset, unsigned int count) const <br>
+<I>
+Extracts a range of data from the node</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<hr><H3>Inherited from <A HREF="DOM_Node.html">DOM_Node:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P> <B>Cloning function. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>cloneNode</B>(bool deep) const  </B>
+ <DD><I>
+Returns a duplicate of this node</I>
+
+</DL>
+<DT><P> <B>Constructors and assignment operators </B>
+
+<DL>
+<DT><A HREF="#DOC.25.1.1"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>DOM_Node</B>() </B>
+ <DD><I>
+Default constructor for DOM_Node</I>
+<DT><A HREF="#DOC.25.1.2"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>DOM_Node</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &other) </B>
+ <DD><I>
+Copy constructor</I>
+<DT><A HREF="#DOC.25.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>&  <B>operator = </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &other) </B>
+ <DD><I>
+Assignment operator</I>
+<DT><A HREF="#DOC.25.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>&  <B>operator = </B>(const DOM_NullPtr *val) </B>
+ <DD><I>
+Assignment operator</I>
+
+</DL>
+<DT><P> <B>Equality and Inequality operators. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator == </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> & other) const  </B>
+ <DD><I>
+The equality operator</I>
+<DT><A HREF="#DOC.25.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator == </B>(const DOM_NullPtr *other) const  </B>
+ <DD><I>
+Compare with a pointer</I>
+<DT><A HREF="#DOC.25.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator != </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> & other) const  </B>
+ <DD><I>
+The inequality operator</I>
+<DT><A HREF="#DOC.25.3.4"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator != </B>(const DOM_NullPtr * other) const  </B>
+ <DD><I>
+Compare with a pointer</I>
+
+</DL>
+<DT><P> <B>Functions introduced in DOM Level 2. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.9.1"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>normalize</B>() </B>
+ <DD><I>
+Puts all <CODE>DOM_Text</CODE> 
+nodes in the full depth of the sub-tree underneath this <CODE>DOM_Node</CODE>, 
+including attribute nodes, into a "normal" form where only markup (e</I>
+<DT><A HREF="#DOC.25.9.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>supports</B>(const <!1><A HREF="DOMString.html">DOMString</A> &feature, const <!1><A HREF="DOMString.html">DOMString</A> &version) const  </B>
+ <DD><I>
+Tests whether the DOM implementation implements a specific
+feature and that feature is supported by this node</I>
+<DT><A HREF="#DOC.25.9.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getNamespaceURI</B>() const  </B>
+ <DD><I>
+Get the <em>namespace URI</em> of
+this node, or <code>null</code> if it is unspecified</I>
+<DT><A HREF="#DOC.25.9.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getPrefix</B>() const  </B>
+ <DD><I>
+Get the <em>namespace prefix</em>
+of this node, or <code>null</code> if it is unspecified</I>
+<DT><A HREF="#DOC.25.9.5"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getLocalName</B>() const  </B>
+ <DD><I>
+Returns the local part of the <em>qualified name</em> of this node</I>
+<DT><A HREF="#DOC.25.9.6"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setPrefix</B>(const <!1><A HREF="DOMString.html">DOMString</A> &prefix) </B>
+ <DD><I>
+Set the <em>namespace prefix</em> of this node</I>
+
+</DL>
+<DT><P> <B>Functions to modify the DOM Node. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>insertBefore</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild, const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &refChild) </B>
+ <DD><I>
+Inserts the node <code>newChild</code> before the existing child node
+<code>refChild</code></I>
+<DT><A HREF="#DOC.25.6.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>replaceChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild, const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &oldChild) </B>
+ <DD><I>
+Replaces the child node <code>oldChild</code> with <code>newChild</code>
+in the list of children, and returns the <code>oldChild</code> node</I>
+<DT><A HREF="#DOC.25.6.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>removeChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &oldChild) </B>
+ <DD><I>
+Removes the child node indicated by <code>oldChild</code> from the list
+of children, and returns it</I>
+<DT><A HREF="#DOC.25.6.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>appendChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild) </B>
+ <DD><I>
+Adds the node <code>newChild</code> to the end of the list of children of
+this node</I>
+
+</DL>
+<DT><P> <B>Get functions. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.4.10"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getNodeName</B>() const  </B>
+ <DD><I>
+The name of this node, depending on its type; see the table above</I>
+<DT><A HREF="#DOC.25.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getNodeValue</B>() const  </B>
+ <DD><I>
+Gets the value of this node, depending on its type</I>
+<DT><A HREF="#DOC.25.4.11"> <IMG BORDER=0 SRC=icon1.gif></A> short  <B>getNodeType</B>() const  </B>
+ <DD><I>
+An enum value representing the type of the underlying object</I>
+<DT><A HREF="#DOC.25.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getParentNode</B>() const  </B>
+ <DD><I>
+Gets the parent of this node</I>
+<DT><A HREF="#DOC.25.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_NodeList.html">DOM_NodeList</A>  <B>getChildNodes</B>() const  </B>
+ <DD><I>
+Gets a <code>NodeList</code> that contains all children of this node</I>
+<DT><A HREF="#DOC.25.4.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getFirstChild</B>() const  </B>
+ <DD><I>
+Gets the first child of this node</I>
+<DT><A HREF="#DOC.25.4.5"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getLastChild</B>() const  </B>
+ <DD><I>
+Gets the last child of this node</I>
+<DT><A HREF="#DOC.25.4.6"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getPreviousSibling</B>() const  </B>
+ <DD><I>
+Gets the node immediately preceding this node</I>
+<DT><A HREF="#DOC.25.4.7"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getNextSibling</B>() const  </B>
+ <DD><I>
+Gets the node immediately following this node</I>
+<DT><A HREF="#DOC.25.4.12"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_NamedNodeMap.html">DOM_NamedNodeMap</A>  <B>getAttributes</B>() const  </B>
+ <DD><I>
+Gets a <code>NamedNodeMap</code> containing the attributes of this node (if it
+is an <code>Element</code>) or <code>null</code> otherwise</I>
+<DT><A HREF="#DOC.25.4.8"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Document.html">DOM_Document</A>  <B>getOwnerDocument</B>() const  </B>
+ <DD><I>
+Gets the <code>DOM_Document</code> object associated with this node</I>
+<DT><A HREF="#DOC.25.4.9"> <IMG BORDER=0 SRC=icon1.gif></A> void*  <B>getUserData</B>() const  </B>
+ <DD><I>
+Return the user data pointer</I>
+
+</DL>
+<DT><P> <B>Query functions. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.7.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>hasChildNodes</B>() const  </B>
+ <DD><I>
+This is a convenience method to allow easy determination of whether a
+node has any children</I>
+<DT><A HREF="#DOC.25.7.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>isNull</B>() const  </B>
+ <DD><I>
+Test whether this node is null</I>
+
+</DL>
+<DT><P> <B>Set functions. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.8.1"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setNodeValue</B>(const <!1><A HREF="DOMString.html">DOMString</A> &nodeValue) </B>
+ <DD><I>
+Sets the value of the node</I>
+<DT><A HREF="#DOC.25.8.2"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setUserData</B>(void *p) </B>
+ <DD><I>
+Set the user data for a node</I>
+
+</DL>
+</DL></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+The <code>DOM_CharacterData</code> interface extends Node with a set  of 
+methods for accessing character data in the DOM.
+
+For clarity this set is defined here rather than on each class that uses 
+these methods. No DOM objects correspond directly to 
+<code>CharacterData</code>, though <code>Text</code> and others do inherit 
+the interface from it. All <code>offset</code>s in this interface start 
+from 0, and index in terms of Unicode 16 bit storage units.
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and assignment operator ">
+<A NAME ="DOC.14.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and assignment operator </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="DOM_CharacterData">
+<A NAME ="DOC.14.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_CharacterData()</B></TT>
+<DD>
+Default constructor for DOM_CharacterData.  While there can be
+no actual DOM nodes of type CharacterData, the C++ objects
+function more like reference variables, and instances of
+<code>DOM_CharacterData</code> can exist.  They will be null when created
+by this constructor, and can then be assigned to refer to Text
+or CDATASection nodes.
+<DL></DL><P>
+<A NAME="DOM_CharacterData">
+<A NAME ="DOC.14.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_CharacterData(const <!2><A HREF="DOM_CharacterData.html#DOC.14.1.1">DOM_CharacterData</A> &other)</B></TT>
+<DD>
+Copy constructor
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.14.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_CharacterData.html#DOC.14.1.1">DOM_CharacterData</A>&  operator = (const <!2><A HREF="DOM_CharacterData.html#DOC.14.1.1">DOM_CharacterData</A> &other)</B></TT>
+<DD>
+Assignment operator
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.14.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_CharacterData.html#DOC.14.1.1">DOM_CharacterData</A>&  operator = (const DOM_NullPtr *val)</B></TT>
+<DD>
+Assignment operator.  This overloaded variant is provided for
+the sole purpose of setting a DOM_Node reference variable to
+zero.  Nulling out a reference variable in this way will decrement
+the reference count on the underlying Node object that the variable
+formerly referenced.  This effect is normally obtained when reference
+variable goes out of scope, but zeroing them can be useful for
+global instances, or for local instances that will remain in scope
+for an extended time,  when the storage belonging to the underlying
+node needs to be reclaimed.
+
+
+<DL><DT><B>Parameters:</B><DD><B>val.</B> -   Only a value of 0, or null, is allowed.<br></DL><P></DL>
+
+<A NAME="Destructor. ">
+<A NAME ="DOC.14.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~DOM_CharacterData">
+<A NAME ="DOC.14.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~DOM_CharacterData()</B></TT>
+<DD>
+Destructor for DOM_CharacterData.  The object being destroyed
+is the reference to the Character Data node, not the character
+data itself.
+<DL></DL><P></DL>
+
+<A NAME="Getter functions. ">
+<A NAME ="DOC.14.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Getter functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getData">
+<A NAME ="DOC.14.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOMString.html">DOMString</A>  getData() const </B></TT>
+<DD>
+Returns the character data of the node that implements this interface. 
+
+The DOM implementation may not put arbitrary limits on the amount of data that 
+may be stored in a  <code>CharacterData</code> node. However, 
+implementation limits may  mean that the entirety of a node's data may 
+not fit into a single <code>DOMString</code>. In such cases, the user 
+may call <code>substringData</code> to retrieve the data in 
+appropriately sized pieces.
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+NO_MODIFICATION_ALLOWED_ERR: Raised when the node is readonly.
+<br><B>DOMException</B> 
+DOMSTRING_SIZE_ERR: Raised when it would return more characters than 
+fit in a <code>DOMString</code> variable on the implementation 
+platform.<br></DL><P>
+<A NAME="getLength">
+<A NAME ="DOC.14.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getLength() const </B></TT>
+<DD>
+Returns the number of characters that are available through <code>data</code> and 
+the <code>substringData</code> method below. 
+
+This may have the value 
+zero, i.e., <code>CharacterData</code> nodes may be empty.
+<DL></DL><P>
+<A NAME="substringData">
+<A NAME ="DOC.14.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOMString.html">DOMString</A>  substringData(unsigned int offset, unsigned int count) const </B></TT>
+<DD>
+Extracts a range of data from the node.
+
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+INDEX_SIZE_ERR: Raised if the specified offset is negative or greater 
+than the number of characters in <code>data</code>, or if the 
+specified <code>count</code> is negative.
+<br>DOMSTRING_SIZE_ERR: Raised if the specified range of text does not 
+fit into a <code>DOMString</code>.<br><DT><B>Returns:</B><DD>The specified substring. If the sum of <code>offset</code> and 
+<code>count</code> exceeds the <code>length</code>, then all 
+characters to the end of the data are returned.
+
+<DT><B>Parameters:</B><DD><B>offset</B> -  Start offset of substring to extract.
+<br><B>count</B> -  The number of characters to extract.
+<br></DL><P></DL>
+
+<A NAME="Functions that set or change data. ">
+<A NAME ="DOC.14.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Functions that set or change data. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="appendData">
+<A NAME ="DOC.14.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  appendData(const <!1><A HREF="DOMString.html">DOMString</A> &arg)</B></TT>
+<DD>
+Append the string to the end of the character data of the node.
+
+Upon success, <code>data</code> provides access to the concatenation of 
+<code>data</code> and the <code>DOMString</code> specified.
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.<br><DT><B>Parameters:</B><DD><B>arg</B> -  The <code>DOMString</code> to append.
+<br></DL><P>
+<A NAME="insertData">
+<A NAME ="DOC.14.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  insertData(unsigned int offset, const <!1><A HREF="DOMString.html">DOMString</A> &arg)</B></TT>
+<DD>
+Insert a string at the specified character offset.
+
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+INDEX_SIZE_ERR: Raised if the specified offset is negative or greater 
+than the number of characters in <code>data</code>.
+<br>NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.<br><DT><B>Parameters:</B><DD><B>offset</B> -  The character offset at which to insert.
+<br><B>arg</B> -  The <code>DOMString</code> to insert.
+<br></DL><P>
+<A NAME="deleteData">
+<A NAME ="DOC.14.4.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  deleteData(unsigned int offset, unsigned int count)</B></TT>
+<DD>
+Remove a range of characters from the node. 
+
+Upon success, 
+<code>data</code> and <code>length</code> reflect the change.
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+INDEX_SIZE_ERR: Raised if the specified offset is negative or greater 
+than the number of characters in <code>data</code>, or if the 
+specified <code>count</code> is negative.
+<br>NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.<br><DT><B>Parameters:</B><DD><B>offset</B> -  The offset from which to remove characters.
+<br><B>count</B> -  The number of characters to delete. If the sum of 
+<code>offset</code> and <code>count</code> exceeds <code>length</code> 
+then all characters from <code>offset</code> to the end of the data 
+are deleted.
+<br></DL><P>
+<A NAME="replaceData">
+<A NAME ="DOC.14.4.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  replaceData(unsigned int offset, unsigned int count, const <!1><A HREF="DOMString.html">DOMString</A> &arg)</B></TT>
+<DD>
+Replace the characters starting at the specified character offset with 
+the specified string.
+
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+INDEX_SIZE_ERR: Raised if the specified offset is negative or greater 
+than the number of characters in <code>data</code>, or if the 
+specified <code>count</code> is negative.
+<br>NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.<br><DT><B>Parameters:</B><DD><B>offset</B> -  The offset from which to start replacing.
+<br><B>count</B> -  The number of characters to replace. If the sum of 
+<code>offset</code> and <code>count</code> exceeds <code>length</code>
+, then all characters to the end of the data are replaced (i.e., the 
+effect is the same as a <code>remove</code> method call with the same 
+range, followed by an <code>append</code> method invocation).
+<br><B>arg</B> -  The <code>DOMString</code> with which the range must be 
+replaced.
+<br></DL><P>
+<A NAME="setData">
+<A NAME ="DOC.14.4.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setData(const <!1><A HREF="DOMString.html">DOMString</A> &data)</B></TT>
+<DD>
+Sets the character data of the node that implements this interface. 
+
+
+<DL><DT><B>Parameters:</B><DD><B>data</B> -  The <code>DOMString</code> to set.<br></DL><P></DL>
+</DL>
+<hr>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="DOM_Text.html"> DOM_Text </A><br>
+<A HREF="DOM_Comment.html"> DOM_Comment </A><br>
+</DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

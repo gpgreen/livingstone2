@@ -1,0 +1,645 @@
+<html><head><TITLE>DOM_Element</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   DOM_Element : public <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> </H2><BLOCKQUOTE>
+
+By far the vast majority of objects (apart from text) that authors 
+encounter when traversing a document are <code>DOM_Element</code> nodes
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CDOM_Node,MDOM_Node.html,CDOM_Element,MDOM_Element.html">
+<param name=before value="M,M">
+<param name=after value="Md_,M">
+<param name=indent value="0,1">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.21.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and assignment operator </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.21.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_Element</B> ()<br>
+<I>
+Default constructor for DOM_Element</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_Element</B> (const <!2><A HREF="DOM_Element.html#DOC.21.1.1">DOM_Element</A> &other)<br>
+<I>
+Copy constructor</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Element.html#DOC.21.1.1">DOM_Element</A>& </TD><TD><B>operator = </B> (const <!2><A HREF="DOM_Element.html#DOC.21.1.1">DOM_Element</A> &other)<br>
+<I>
+Assignment operator</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Element.html#DOC.21.1.1">DOM_Element</A>& </TD><TD><B>operator = </B> (const DOM_NullPtr *val)<br>
+<I>
+Assignment operator</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.21.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>~DOM_Element</B> ()<br>
+<I>
+Destructor</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.6"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Functions introduced in DOM Level 2. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.21.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A> </TD><TD><B>getAttributeNS</B> (const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName) const <br>
+<I>
+Retrieves an attribute value by local name and namespace URI</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.6.2"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setAttributeNS</B> (const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &qualifiedName, const <!1><A HREF="DOMString.html">DOMString</A> &value)<br>
+<I>
+Adds a new attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.6.3"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>removeAttributeNS</B> (const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName)<br>
+<I>
+Removes an attribute by local name and namespace URI</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.6.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Attr.html">DOM_Attr</A> </TD><TD><B>getAttributeNodeNS</B> (const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName) const <br>
+<I>
+Retrieves an <code>DOM_Attr</code> node by local name and namespace URI</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.6.5"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Attr.html">DOM_Attr</A> </TD><TD><B>setAttributeNodeNS</B> (<!1><A HREF="DOM_Attr.html">DOM_Attr</A> newAttr)<br>
+<I>
+Adds a new attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.6.6"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_NodeList.html">DOM_NodeList</A> </TD><TD><B>getElementsByTagNameNS</B> (const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName) const <br>
+<I>
+Returns a <code>DOM_NodeList</code> of all the <code>DOM_Element</code>s
+with a given local name and namespace URI in the order in which they
+would be encountered in a preorder traversal of the
+<code>DOM_Document</code> tree, starting from this node</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.5"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Functions which modify the Element. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.21.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Attr.html">DOM_Attr</A> </TD><TD><B>removeAttributeNode</B> (<!1><A HREF="DOM_Attr.html">DOM_Attr</A> oldAttr)<br>
+<I>
+Removes the specified attribute node</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.5.2"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>removeAttribute</B> (const <!1><A HREF="DOMString.html">DOMString</A> &name)<br>
+<I>
+Removes an attribute by name</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Getter functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.21.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A> </TD><TD><B>getTagName</B> () const <br>
+<I>
+The name of the element</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A> </TD><TD><B>getAttribute</B> (const <!1><A HREF="DOMString.html">DOMString</A> &name) const <br>
+<I>
+Retrieves an attribute value by name</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Attr.html">DOM_Attr</A> </TD><TD><B>getAttributeNode</B> (const <!1><A HREF="DOMString.html">DOMString</A> &name) const <br>
+<I>
+Retrieves an <code>DOM_Attr</code> node by name</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.3.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_NodeList.html">DOM_NodeList</A> </TD><TD><B>getElementsByTagName</B> (const <!1><A HREF="DOMString.html">DOMString</A> &name) const <br>
+<I>
+Returns a <code>NodeList</code> of all descendant elements with a given 
+tag name, in the order in which they would be encountered in a preorder 
+traversal of the <code>DOM_Element</code> tree</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Set functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.21.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setAttribute</B> (const <!1><A HREF="DOMString.html">DOMString</A> &name, const <!1><A HREF="DOMString.html">DOMString</A> &value)<br>
+<I>
+Adds a new attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.21.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Attr.html">DOM_Attr</A> </TD><TD><B>setAttributeNode</B> (<!1><A HREF="DOM_Attr.html">DOM_Attr</A> newAttr)<br>
+<I>
+Adds a new attribute</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<hr><H3>Inherited from <A HREF="DOM_Node.html">DOM_Node:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P> <B>Cloning function. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>cloneNode</B>(bool deep) const  </B>
+ <DD><I>
+Returns a duplicate of this node</I>
+
+</DL>
+<DT><P> <B>Constructors and assignment operators </B>
+
+<DL>
+<DT><A HREF="#DOC.25.1.1"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>DOM_Node</B>() </B>
+ <DD><I>
+Default constructor for DOM_Node</I>
+<DT><A HREF="#DOC.25.1.2"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>DOM_Node</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &other) </B>
+ <DD><I>
+Copy constructor</I>
+<DT><A HREF="#DOC.25.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>&  <B>operator = </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &other) </B>
+ <DD><I>
+Assignment operator</I>
+<DT><A HREF="#DOC.25.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>&  <B>operator = </B>(const DOM_NullPtr *val) </B>
+ <DD><I>
+Assignment operator</I>
+
+</DL>
+<DT><P> <B>Equality and Inequality operators. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator == </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> & other) const  </B>
+ <DD><I>
+The equality operator</I>
+<DT><A HREF="#DOC.25.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator == </B>(const DOM_NullPtr *other) const  </B>
+ <DD><I>
+Compare with a pointer</I>
+<DT><A HREF="#DOC.25.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator != </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> & other) const  </B>
+ <DD><I>
+The inequality operator</I>
+<DT><A HREF="#DOC.25.3.4"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator != </B>(const DOM_NullPtr * other) const  </B>
+ <DD><I>
+Compare with a pointer</I>
+
+</DL>
+<DT><P> <B>Functions to modify the DOM Node. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>insertBefore</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild, const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &refChild) </B>
+ <DD><I>
+Inserts the node <code>newChild</code> before the existing child node
+<code>refChild</code></I>
+<DT><A HREF="#DOC.25.6.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>replaceChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild, const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &oldChild) </B>
+ <DD><I>
+Replaces the child node <code>oldChild</code> with <code>newChild</code>
+in the list of children, and returns the <code>oldChild</code> node</I>
+<DT><A HREF="#DOC.25.6.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>removeChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &oldChild) </B>
+ <DD><I>
+Removes the child node indicated by <code>oldChild</code> from the list
+of children, and returns it</I>
+<DT><A HREF="#DOC.25.6.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>appendChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild) </B>
+ <DD><I>
+Adds the node <code>newChild</code> to the end of the list of children of
+this node</I>
+
+</DL>
+<DT><P> <B>Get functions. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.4.10"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getNodeName</B>() const  </B>
+ <DD><I>
+The name of this node, depending on its type; see the table above</I>
+<DT><A HREF="#DOC.25.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getNodeValue</B>() const  </B>
+ <DD><I>
+Gets the value of this node, depending on its type</I>
+<DT><A HREF="#DOC.25.4.11"> <IMG BORDER=0 SRC=icon1.gif></A> short  <B>getNodeType</B>() const  </B>
+ <DD><I>
+An enum value representing the type of the underlying object</I>
+<DT><A HREF="#DOC.25.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getParentNode</B>() const  </B>
+ <DD><I>
+Gets the parent of this node</I>
+<DT><A HREF="#DOC.25.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_NodeList.html">DOM_NodeList</A>  <B>getChildNodes</B>() const  </B>
+ <DD><I>
+Gets a <code>NodeList</code> that contains all children of this node</I>
+<DT><A HREF="#DOC.25.4.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getFirstChild</B>() const  </B>
+ <DD><I>
+Gets the first child of this node</I>
+<DT><A HREF="#DOC.25.4.5"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getLastChild</B>() const  </B>
+ <DD><I>
+Gets the last child of this node</I>
+<DT><A HREF="#DOC.25.4.6"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getPreviousSibling</B>() const  </B>
+ <DD><I>
+Gets the node immediately preceding this node</I>
+<DT><A HREF="#DOC.25.4.7"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getNextSibling</B>() const  </B>
+ <DD><I>
+Gets the node immediately following this node</I>
+<DT><A HREF="#DOC.25.4.12"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_NamedNodeMap.html">DOM_NamedNodeMap</A>  <B>getAttributes</B>() const  </B>
+ <DD><I>
+Gets a <code>NamedNodeMap</code> containing the attributes of this node (if it
+is an <code>Element</code>) or <code>null</code> otherwise</I>
+<DT><A HREF="#DOC.25.4.8"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Document.html">DOM_Document</A>  <B>getOwnerDocument</B>() const  </B>
+ <DD><I>
+Gets the <code>DOM_Document</code> object associated with this node</I>
+<DT><A HREF="#DOC.25.4.9"> <IMG BORDER=0 SRC=icon1.gif></A> void*  <B>getUserData</B>() const  </B>
+ <DD><I>
+Return the user data pointer</I>
+
+</DL>
+<DT><P> <B>Query functions. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.7.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>hasChildNodes</B>() const  </B>
+ <DD><I>
+This is a convenience method to allow easy determination of whether a
+node has any children</I>
+<DT><A HREF="#DOC.25.7.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>isNull</B>() const  </B>
+ <DD><I>
+Test whether this node is null</I>
+
+</DL>
+</DL></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+By far the vast majority of objects (apart from text) that authors 
+encounter when traversing a document are <code>DOM_Element</code> nodes.  
+
+Assume the following XML document:&lt;elementExample id="demo"&gt; 
+&lt;subelement1/&gt; 
+&lt;subelement2&gt;&lt;subsubelement/&gt;&lt;/subelement2&gt;
+&lt;/elementExample&gt;  
+<p>When represented using DOM, the top node is an <code>DOM_Element</code> node 
+for "elementExample", which contains two child <code>DOM_Element</code> nodes, 
+one for "subelement1" and one for "subelement2". "subelement1" contains no 
+child nodes.
+<p>Elements may have attributes associated with them; since the 
+<code>DOM_Element</code> interface inherits from <code>DOM_Node</code>, the generic
+<code>DOM_Node</code> interface method <code>getAttributes</code> may be used 
+to retrieve the set of all attributes for an element.  There are methods on
+the <code>DOM_Element</code> interface to retrieve either an <code>DOM_Attr</code>
+object by name or an attribute value by name. In XML, where an attribute 
+value may contain entity references, an <code>DOM_Attr</code> object should be 
+retrieved to examine the possibly fairly complex sub-tree representing the 
+attribute value. On the other hand, in HTML, where all attributes have 
+simple string values, methods to directly access an attribute value can 
+safely be used as a convenience.
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and assignment operator ">
+<A NAME ="DOC.21.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and assignment operator </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="DOM_Element">
+<A NAME ="DOC.21.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_Element()</B></TT>
+<DD>
+Default constructor for DOM_Element.  The resulting object does not
+refer to an actual Element node; it will compare == to 0, and is similar
+to a null object reference variable in Java.  It may subsequently be
+assigned to refer to an actual Element node.
+<p>
+New comment nodes are created by DOM_Document::createElement().
+
+<DL></DL><P>
+<A NAME="DOM_Element">
+<A NAME ="DOC.21.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_Element(const <!2><A HREF="DOM_Element.html#DOC.21.1.1">DOM_Element</A> &other)</B></TT>
+<DD>
+Copy constructor.  Creates a new <code>DOM_Element</code> that refers to the
+same underlying actual element as the original.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.21.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_Element.html#DOC.21.1.1">DOM_Element</A>&  operator = (const <!2><A HREF="DOM_Element.html#DOC.21.1.1">DOM_Element</A> &other)</B></TT>
+<DD>
+Assignment operator.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied.<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.21.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_Element.html#DOC.21.1.1">DOM_Element</A>&  operator = (const DOM_NullPtr *val)</B></TT>
+<DD>
+Assignment operator.  This overloaded variant is provided for
+the sole purpose of setting a DOM_Node reference variable to
+zero.  Nulling out a reference variable in this way will decrement
+the reference count on the underlying Node object that the variable
+formerly referenced.  This effect is normally obtained when reference
+variable goes out of scope, but zeroing them can be useful for
+global instances, or for local instances that will remain in scope
+for an extended time,  when the storage belonging to the underlying
+node needs to be reclaimed.
+
+
+<DL><DT><B>Parameters:</B><DD><B>val.</B> -   Only a value of 0, or null, is allowed.<br></DL><P></DL>
+
+<A NAME="Destructor. ">
+<A NAME ="DOC.21.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~DOM_Element">
+<A NAME ="DOC.21.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~DOM_Element()</B></TT>
+<DD>
+Destructor.  The object being destroyed is the reference
+object, not the underlying Element itself.
+
+<DL></DL><P></DL>
+
+<A NAME="Getter functions. ">
+<A NAME ="DOC.21.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Getter functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getTagName">
+<A NAME ="DOC.21.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOMString.html">DOMString</A>  getTagName() const </B></TT>
+<DD>
+The name of the element. 
+
+For example, in: &lt;elementExample 
+id="demo"&gt;  ... &lt;/elementExample&gt; , <code>tagName</code> has 
+the value <code>"elementExample"</code>. Note that this is 
+case-preserving in XML, as are all of the operations of the DOM. 
+<DL></DL><P>
+<A NAME="getAttribute">
+<A NAME ="DOC.21.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOMString.html">DOMString</A>  getAttribute(const <!1><A HREF="DOMString.html">DOMString</A> &name) const </B></TT>
+<DD>
+Retrieves an attribute value by name.
+
+
+<DL><DT><B>Returns:</B><DD>The <code>DOM_Attr</code> value as a string, or the empty  string if 
+that attribute does not have a specified or default value.
+<DT><B>Parameters:</B><DD><B>name</B> -  The name of the attribute to retrieve.
+<br></DL><P>
+<A NAME="getAttributeNode">
+<A NAME ="DOC.21.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Attr.html">DOM_Attr</A>  getAttributeNode(const <!1><A HREF="DOMString.html">DOMString</A> &name) const </B></TT>
+<DD>
+Retrieves an <code>DOM_Attr</code> node by name.
+
+
+<DL><DT><B>Returns:</B><DD>The <code>DOM_Attr</code> node with the specified name (<CODE>nodeName</CODE>) or 
+<code>null</code> if there is no such attribute.
+<DT><B>Parameters:</B><DD><B>name</B> -  The name (<CODE>nodeName</CODE>) of the attribute to retrieve.
+<br></DL><P>
+<A NAME="getElementsByTagName">
+<A NAME ="DOC.21.3.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_NodeList.html">DOM_NodeList</A>  getElementsByTagName(const <!1><A HREF="DOMString.html">DOMString</A> &name) const </B></TT>
+<DD>
+Returns a <code>NodeList</code> of all descendant elements with a given 
+tag name, in the order in which they would be encountered in a preorder 
+traversal of the <code>DOM_Element</code> tree.
+
+
+<DL><DT><B>Returns:</B><DD>A list of matching <code>DOM_Element</code> nodes.
+<DT><B>Parameters:</B><DD><B>name</B> -  The name of the tag to match on. The special value "*" 
+matches all tags.
+<br></DL><P></DL>
+
+<A NAME="Set functions. ">
+<A NAME ="DOC.21.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Set functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="setAttribute">
+<A NAME ="DOC.21.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setAttribute(const <!1><A HREF="DOMString.html">DOMString</A> &name, const <!1><A HREF="DOMString.html">DOMString</A> &value)</B></TT>
+<DD>
+Adds a new attribute. 
+
+If an attribute with that name is already present 
+in the element, its value is changed to be that of the value parameter. 
+This value is a simple string, it is not parsed as it is being set. So 
+any markup (such as syntax to be recognized as an entity reference) is 
+treated as literal text, and needs to be appropriately escaped by the 
+implementation when it is written out. In order to assign an attribute 
+value that contains entity references, the user must create an 
+<code>DOM_Attr</code> node plus any <code>Text</code> and 
+<code>EntityReference</code> nodes, build the appropriate subtree, and 
+use <code>setAttributeNode</code> to assign it as the value of an 
+attribute.
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+INVALID_CHARACTER_ERR: Raised if the specified name contains an 
+illegal character.
+<br>NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.<br><DT><B>Parameters:</B><DD><B>name</B> -  The name of the attribute to create or alter.
+<br><B>value</B> -  Value to set in string form.
+<br></DL><P>
+<A NAME="setAttributeNode">
+<A NAME ="DOC.21.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Attr.html">DOM_Attr</A>  setAttributeNode(<!1><A HREF="DOM_Attr.html">DOM_Attr</A> newAttr)</B></TT>
+<DD>
+Adds a new attribute. 
+
+If an attribute with that name (<CODE>nodeName</CODE>) is already present 
+in the element, it is replaced by the new one.
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+WRONG_DOCUMENT_ERR: Raised if <code>newAttr</code> was created from a 
+different document than the one that created the element.
+<br>NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.
+<br>INUSE_ATTRIBUTE_ERR: Raised if <code>newAttr</code> is already an 
+attribute of another <code>DOM_Element</code> object. The DOM user must 
+explicitly clone <code>DOM_Attr</code> nodes to re-use them in other 
+elements.<br><DT><B>Returns:</B><DD>If the <code>newAttr</code> attribute replaces an existing 
+attribute, the replaced
+<code>DOM_Attr</code> node is returned, otherwise <code>null</code> is 
+returned.
+
+<DT><B>Parameters:</B><DD><B>newAttr</B> -  The <code>DOM_Attr</code> node to add to the attribute list.
+<br></DL><P></DL>
+
+<A NAME="Functions which modify the Element. ">
+<A NAME ="DOC.21.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Functions which modify the Element. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="removeAttributeNode">
+<A NAME ="DOC.21.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Attr.html">DOM_Attr</A>  removeAttributeNode(<!1><A HREF="DOM_Attr.html">DOM_Attr</A> oldAttr)</B></TT>
+<DD>
+Removes the specified attribute node.
+If the removed <CODE>DOM_Attr</CODE>
+has a default value it is immediately replaced. The replacing attribute 
+has the same namespace URI and local name, as well as the original prefix, 
+when applicable.
+
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.
+<br>NOT_FOUND_ERR: Raised if <code>oldAttr</code> is not an attribute 
+of the element.<br><DT><B>Returns:</B><DD>The <code>DOM_Attr</code> node that was removed.
+
+<DT><B>Parameters:</B><DD><B>oldAttr</B> -  The <code>DOM_Attr</code> node to remove from the attribute 
+list.
+<br></DL><P>
+<A NAME="removeAttribute">
+<A NAME ="DOC.21.5.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  removeAttribute(const <!1><A HREF="DOMString.html">DOMString</A> &name)</B></TT>
+<DD>
+Removes an attribute by name. 
+
+If the removed attribute 
+is known to have a default value, an attribute immediately appears 
+containing the default value as well as the corresponding namespace URI, 
+local name, and prefix when applicable.<BR>To remove an attribute by local 
+name and namespace URI, use the <CODE>removeAttributeNS</CODE> method.
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.<br><DT><B>Parameters:</B><DD><B>name</B> -  The name of the attribute to remove.
+<br></DL><P></DL>
+
+<A NAME="Functions introduced in DOM Level 2. ">
+<A NAME ="DOC.21.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Functions introduced in DOM Level 2. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getAttributeNS">
+<A NAME ="DOC.21.6.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOMString.html">DOMString</A>  getAttributeNS(const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName) const </B></TT>
+<DD>
+Retrieves an attribute value by local name and namespace URI.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+
+<DL><DT><B>Returns:</B><DD>The <code>DOM_Attr</code> value as a string, or an <CODE>null</CODE> if
+that attribute does not have a specified or default value.
+<DT><B>Parameters:</B><DD><B>namespaceURI</B> -  The <em>namespace URI</em> of
+the attribute to retrieve.
+<br><B>localName</B> -  The <em>local name</em> of the
+attribute to retrieve.
+<br></DL><P>
+<A NAME="setAttributeNS">
+<A NAME ="DOC.21.6.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setAttributeNS(const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &qualifiedName, const <!1><A HREF="DOMString.html">DOMString</A> &value)</B></TT>
+<DD>
+Adds a new attribute. If an attribute with the same 
+local name and namespace URI is already present on the element, its prefix 
+is changed to be the prefix part of the <CODE>qualifiedName</CODE>, and 
+its value is changed to be the <CODE>value</CODE> parameter. This value is 
+a simple string, it is not parsed as it is being set. So any markup (such 
+as syntax to be recognized as an entity reference) is treated as literal 
+text, and needs to be appropriately escaped by the implementation when it 
+is written out. In order to assign an attribute value that contains entity 
+references, the user must create an <CODE>DOM_Attr</CODE>
+node plus any <CODE>DOM_Text</CODE> and <CODE>DOM_EntityReference</CODE>
+nodes, build the appropriate subtree, and use 
+<CODE>setAttributeNodeNS</CODE> or <CODE>setAttributeNode</CODE> to assign 
+it as the value of an attribute.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+INVALID_CHARACTER_ERR: Raised if the specified qualified name contains an 
+illegal character.
+<br>NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.
+<br>
+NAMESPACE_ERR: Raised if the <CODE>qualifiedName</CODE> is 
+malformed, if the <CODE>qualifiedName</CODE> has a prefix and the 
+<CODE>namespaceURI</CODE> is <CODE>null</CODE> or an empty string, 
+if the <CODE>qualifiedName</CODE> has a prefix that is "xml" and the 
+<CODE>namespaceURI</CODE> is different from 
+"http:   *        <CODE>qualifiedName</CODE> has a prefix that is "xmlns" and the 
+<CODE>namespaceURI</CODE> is different from 
+"http:   *        <CODE>qualifiedName</CODE> is "xmlns" and the 
+<CODE>namespaceURI</CODE> is different from 
+"http:   <br><DT><B>Parameters:</B><DD><B>namespaceURI</B> -  The <em>namespace URI</em> of
+the attribute to create or alter.
+<br><B>qualifiedName</B> -  The <em>qualified name</em> of the
+attribute to create or alter.
+<br><B>value</B> -  The value to set in string form.
+<br></DL><P>
+<A NAME="removeAttributeNS">
+<A NAME ="DOC.21.6.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  removeAttributeNS(const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName)</B></TT>
+<DD>
+Removes an attribute by local name and namespace URI. If the
+removed attribute has a default value it is immediately replaced.
+The replacing attribute has the same namespace URI and local name, as well as 
+the original prefix.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.<br><DT><B>Parameters:</B><DD><B>namespaceURI</B> -  The <em>namespace URI</em> of
+the attribute to remove.
+<br><B>localName</B> -  The <em>local name</em> of the
+attribute to remove.
+<br></DL><P>
+<A NAME="getAttributeNodeNS">
+<A NAME ="DOC.21.6.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Attr.html">DOM_Attr</A>  getAttributeNodeNS(const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName) const </B></TT>
+<DD>
+Retrieves an <code>DOM_Attr</code> node by local name and namespace URI.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+
+<DL><DT><B>Returns:</B><DD>The <code>DOM_Attr</code> node with the specified attribute local
+name and namespace URI or <code>null</code> if there is no such attribute.
+<DT><B>Parameters:</B><DD><B>namespaceURI</B> -  The <em>namespace URI</em> of
+the attribute to retrieve.
+<br><B>localName</B> -  The <em>local name</em> of the
+attribute to retrieve.
+<br></DL><P>
+<A NAME="setAttributeNodeNS">
+<A NAME ="DOC.21.6.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Attr.html">DOM_Attr</A>  setAttributeNodeNS(<!1><A HREF="DOM_Attr.html">DOM_Attr</A> newAttr)</B></TT>
+<DD>
+Adds a new attribute. 
+
+If an attribute with that local name and namespace URI is already present 
+in the element, it is replaced by the new one.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+WRONG_DOCUMENT_ERR: Raised if <code>newAttr</code> was created from a 
+different document than the one that created the element.
+<br>NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.
+<br>INUSE_ATTRIBUTE_ERR: Raised if <code>newAttr</code> is already an 
+attribute of another <code>DOM_Element</code> object. The DOM user must 
+explicitly clone <code>DOM_Attr</code> nodes to re-use them in other 
+elements.<br><DT><B>Returns:</B><DD>If the <code>newAttr</code> attribute replaces an existing
+attribute with the same <em>local name</em> and <em>namespace URI</em>,
+the replaced <code>DOM_Attr</code> node is
+returned, otherwise <code>null</code> is returned.
+
+<DT><B>Parameters:</B><DD><B>newAttr</B> -  The <code>DOM_Attr</code> node to add to the attribute list.
+<br></DL><P>
+<A NAME="getElementsByTagNameNS">
+<A NAME ="DOC.21.6.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_NodeList.html">DOM_NodeList</A>  getElementsByTagNameNS(const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName) const </B></TT>
+<DD>
+Returns a <code>DOM_NodeList</code> of all the <code>DOM_Element</code>s
+with a given local name and namespace URI in the order in which they
+would be encountered in a preorder traversal of the
+<code>DOM_Document</code> tree, starting from this node.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+
+<DL><DT><B>Returns:</B><DD>A new <code>DOM_NodeList</code> object containing all the matched
+<code>DOM_Element</code>s.
+<DT><B>Parameters:</B><DD><B>namespaceURI</B> -  The <em>namespace URI</em> of
+the elements to match on. The special value "*" matches all
+namespaces.
+<br><B>localName</B> -  The <em>local name</em> of the
+elements to match on. The special value "*" matches all local names.
+<br></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

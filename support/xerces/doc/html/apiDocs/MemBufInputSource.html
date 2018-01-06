@@ -1,0 +1,225 @@
+<html><head><TITLE>MemBufInputSource</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   MemBufInputSource : public <!2><A HREF="InputSource.html#DOC.7.5.5">InputSource</A> </H2><BLOCKQUOTE>
+
+This class is a derivative of the standard InputSource class
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CInputSource,MInputSource.html,CMemBufInputSource,MMemBufInputSource.html">
+<param name=before value="M,M">
+<param name=after value="Md_,M">
+<param name=indent value="0,1">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public Methods</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.34.3"> <IMG BORDER=0 SRC=icon1.gif></A> BinInputStream* </TD><TD><B>makeStream</B> () const <br>
+<I>
+This method will return a binary input stream derivative that will
+parse from the memory buffer</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.34.4"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setCopyBufToStream</B> (const bool newState)<br>
+<I>
+By default, for safety's sake, each newly created stream from this
+input source will make its own copy of the buffer to stream from</I>
+</TD></TR></TABLE></DL>
+<hr><H3>Inherited from <A HREF="InputSource.html">InputSource:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P>protected  <B>Constructors and Destructor </B>
+
+<DL>
+<DT><A HREF="#DOC.7.5.5"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>() </B>
+ <DD><I>Default constructor </I>
+<DT><A HREF="#DOC.7.5.1"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>(const XMLCh* const systemId) </B>
+ <DD><I>Constructor with a system identifier as XMLCh type</I>
+<DT><A HREF="#DOC.7.5.2"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>( const XMLCh* const systemId, const XMLCh* const publicId ) </B>
+ <DD><I>Constructor with a system and public identifiers 
+</I>
+<DT><A HREF="#DOC.7.5.3"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>(const char* const systemId) </B>
+ <DD><I>Constructor witha system identifier as string 
+</I>
+<DT><A HREF="#DOC.7.5.4"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>( const char* const systemId, const char* const publicId ) </B>
+ <DD><I>Constructor witha system and public identifiers</I>
+
+</DL>
+<DT><P> <B>Destructor </B>
+
+<DL>
+<DT><A HREF="#DOC.7.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <B>~InputSource</B>() </B>
+ <DD><I>
+Destructor
+</I>
+
+</DL>
+<DT><P> <B>Getter methods </B>
+
+<DL>
+<DT><A HREF="#DOC.7.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh*  <B>getEncoding</B>() const  </B>
+ <DD><I>
+An input source can be set to force the parser to assume a particular
+encoding for the data that input source reprsents, via the setEncoding()
+method</I>
+<DT><A HREF="#DOC.7.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh*  <B>getPublicId</B>() const  </B>
+ <DD><I>
+Get the public identifier for this input source</I>
+<DT><A HREF="#DOC.7.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh*  <B>getSystemId</B>() const  </B>
+ <DD><I>
+Get the system identifier for this input source</I>
+
+</DL>
+<DT><P> <B>Setter methods </B>
+
+<DL>
+<DT><A HREF="#DOC.7.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setEncoding</B>(const XMLCh* const encodingStr) </B>
+ <DD><I>
+Set the encoding which will be required for use with the XML text read
+via a stream opened by this input source</I>
+<DT><A HREF="#DOC.7.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setPublicId</B>(const XMLCh* const publicId) </B>
+ <DD><I>
+Set the public identifier for this input source</I>
+<DT><A HREF="#DOC.7.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setSystemId</B>(const XMLCh* const systemId) </B>
+ <DD><I>
+Set the system identifier for this input source</I>
+
+</DL>
+<DT><P> <B>Virtual input source interface </B>
+
+<DL>
+<DT><A HREF="#DOC.7.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  BinInputStream*  <B>makeStream</B>() const  </B>
+ <DD><I>
+Makes the byte stream for this input source</I>
+
+</DL>
+</DL></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This class is a derivative of the standard InputSource class. It provides
+for the parser access to data stored in a memory buffer. The type of
+buffer and its host specific attributes are of little concern here. The
+only real requirement is that the memory be readable by the current
+process.
+
+Note that the memory buffer size is expressed in <b>bytes</b>, not in
+characters. If you pass it text data, you must account for the bytes
+per character when indicating the buffer size.
+
+As with all InputSource derivatives. The primary objective of an input
+source is to create an input stream via which the parser can spool in
+data from the referenced source. In this case, there are two options
+available.
+
+The passed buffer can be adopted or merely referenced. If it is adopted,
+then it must be dynamically allocated and will be destroyed when the
+input source is destroyed (no reference counting!.) If not adopted, the
+caller must insure that it remains valid until the input source object
+is destroyed.
+
+The other option indicates whether each stream created for this input
+source should get its own copy of the data, or whether it should just
+stream the data directly from this object's copy of the data. The same
+rules apply here, in that the buffer must either be copied by the
+stream or it must remain valid until the stream is destroyed.
+
+</BLOCKQUOTE>
+<DL>
+<DL>
+
+<A NAME="MemBufInputSource">
+<A NAME ="DOC.34.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  MemBufInputSource( const XMLByte* const srcDocBytes, const unsigned int byteCount, const XMLCh* const bufId, const bool adoptBuffer = false )</B></TT>
+<DD>
+A memory buffer input source is constructed from a buffer of byte
+data, and the count of bytes in that buffer. The parser will parse
+from this memory buffer until it has eaten the indicated number of
+bytes.
+
+Note that the system id provided serves two purposes. Firstly it is
+going to be displayed in error messages as the source of the error.
+And secondly, any entities which are refered to from this entity
+via relative paths/URLs will be relative to this fake system id.
+
+
+<DL><DT><B>Parameters:</B><DD><B>srcDocBytes</B> -      The actual data buffer to be parsed from.
+<br><B>byteCount</B> -        The count of bytes (not characters, bytes!)
+in the buffer.
+@Param  bufId           A fake system id for the buffer.
+@Param  adoptBuffer     Indicates whether this object should adopt
+the buffer (i.e. make a copy of it) or just
+use it in place.<br></DL><P>
+<A NAME="MemBufInputSource">
+<A NAME ="DOC.34.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  MemBufInputSource( const XMLByte* const srcDocBytes, const unsigned int byteCount, const char* const bufId, const bool adoptBuffer = false )</B></TT>
+<DD>
+This constructor is identical to the previous one, except that it takes
+the fake system id in local code page form and transcodes it internally
+<DL></DL><P></DL>
+<DL>
+
+<A NAME="~MemBufInputSource">
+<A NAME ="DOC.34.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~MemBufInputSource()</B></TT>
+<DD>
+If the buffer was adopted, the copy made during construction is deleted
+at this point
+<DL></DL><P></DL>
+
+<A NAME="makeStream">
+<A NAME ="DOC.34.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> BinInputStream*  makeStream() const </B></TT>
+<DD>
+This method will return a binary input stream derivative that will
+parse from the memory buffer. If setCopyBufToStream() has been set,
+then the stream will make its own copy. Otherwise, it will use the
+buffer as is (in which case it must remain valid until the stream
+is no longer in use, i.e. the parse completes.)
+
+
+<DL><DT><B>Returns:</B><DD>A dynamically allocated binary input stream derivative that
+can parse from the memory buffer.
+</DL><P>
+<A NAME="setCopyBufToStream">
+<A NAME ="DOC.34.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setCopyBufToStream(const bool newState)</B></TT>
+<DD>
+By default, for safety's sake, each newly created stream from this
+input source will make its own copy of the buffer to stream from. This
+avoids having to deal with aliasing of the buffer for simple work. But,
+for higher performance applications or for large buffers, this is
+obviously not optimal.
+
+In such cases, you can call this method to turn off that default
+action. Once turned off, the streams will just get a pointer to the
+buffer and parse directly from that. In this case, you must insure that
+the buffer remains valid for as long as any parse events are still
+using it.
+
+
+<DL><DT><B>Parameters:</B><DD><B>newState</B> -     The new boolean flag state to set.<br></DL><P></DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

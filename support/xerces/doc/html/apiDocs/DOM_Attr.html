@@ -1,0 +1,399 @@
+<html><head><TITLE>DOM_Attr</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   DOM_Attr : public <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> </H2><BLOCKQUOTE>
+
+The <code>DOM_Attr</code> class refers to an attribute of an XML element
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CDOM_Node,MDOM_Node.html,CDOM_Attr,MDOM_Attr.html">
+<param name=before value="M,M">
+<param name=after value="Md_,M">
+<param name=indent value="0,1">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.12.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and assignment operators </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.12.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_Attr</B> ()<br>
+<I>
+Default constructor for DOM_Attr</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.12.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_Attr</B> (const <!2><A HREF="DOM_Attr.html#DOC.12.1.1">DOM_Attr</A> &other)<br>
+<I>
+Copy constructor</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.12.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Attr.html#DOC.12.1.1">DOM_Attr</A>& </TD><TD><B>operator = </B> (const <!2><A HREF="DOM_Attr.html#DOC.12.1.1">DOM_Attr</A> &other)<br>
+<I>
+Assignment operator
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.12.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Attr.html#DOC.12.1.1">DOM_Attr</A>& </TD><TD><B>operator = </B> (const DOM_NullPtr *val)<br>
+<I>
+Assignment operator</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.12.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.12.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>~DOM_Attr</B> ()<br>
+<I>
+Destructor</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.12.5"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Functions introduced in DOM Level 2. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.12.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Element.html">DOM_Element</A> </TD><TD><B>getOwnerElement</B> () const <br>
+<I>
+The <code>DOM_Element</code> node this attribute is attached to or
+<code>null</code> if this attribute is not in use</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.12.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Getter functions </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.12.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A> </TD><TD><B>getName</B> () const <br>
+<I>
+Returns the name of this attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.12.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>getSpecified</B> () const <br>
+<I>
+
+Returns true if the attribute received its value explicitly in the
+XML document, or if a value was assigned programatically with
+the setValue function</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.12.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A> </TD><TD><B>getValue</B> () const <br>
+<I>
+Returns the value of the attribute</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.12.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Setter functions </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.12.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setValue</B> (const <!1><A HREF="DOMString.html">DOMString</A> &value)<br>
+<I>
+Sets the value of the attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.12.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setSpecified</B> (bool spec)<br>
+<I>
+Sets the value of the SPECIFIED for this attribute
+
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<hr><H3>Inherited from <A HREF="DOM_Node.html">DOM_Node:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P> <B>Cloning function. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>cloneNode</B>(bool deep) const  </B>
+ <DD><I>
+Returns a duplicate of this node</I>
+
+</DL>
+<DT><P> <B>Destructor. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.2.1"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>~DOM_Node</B>() </B>
+ <DD><I>
+Destructor for DOM_Node</I>
+
+</DL>
+<DT><P> <B>Equality and Inequality operators. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator == </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> & other) const  </B>
+ <DD><I>
+The equality operator</I>
+<DT><A HREF="#DOC.25.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator == </B>(const DOM_NullPtr *other) const  </B>
+ <DD><I>
+Compare with a pointer</I>
+<DT><A HREF="#DOC.25.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator != </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> & other) const  </B>
+ <DD><I>
+The inequality operator</I>
+<DT><A HREF="#DOC.25.3.4"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator != </B>(const DOM_NullPtr * other) const  </B>
+ <DD><I>
+Compare with a pointer</I>
+
+</DL>
+<DT><P> <B>Functions to modify the DOM Node. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>insertBefore</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild, const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &refChild) </B>
+ <DD><I>
+Inserts the node <code>newChild</code> before the existing child node
+<code>refChild</code></I>
+<DT><A HREF="#DOC.25.6.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>replaceChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild, const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &oldChild) </B>
+ <DD><I>
+Replaces the child node <code>oldChild</code> with <code>newChild</code>
+in the list of children, and returns the <code>oldChild</code> node</I>
+<DT><A HREF="#DOC.25.6.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>removeChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &oldChild) </B>
+ <DD><I>
+Removes the child node indicated by <code>oldChild</code> from the list
+of children, and returns it</I>
+<DT><A HREF="#DOC.25.6.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>appendChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild) </B>
+ <DD><I>
+Adds the node <code>newChild</code> to the end of the list of children of
+this node</I>
+
+</DL>
+<DT><P> <B>Get functions. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.4.10"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getNodeName</B>() const  </B>
+ <DD><I>
+The name of this node, depending on its type; see the table above</I>
+<DT><A HREF="#DOC.25.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getNodeValue</B>() const  </B>
+ <DD><I>
+Gets the value of this node, depending on its type</I>
+<DT><A HREF="#DOC.25.4.11"> <IMG BORDER=0 SRC=icon1.gif></A> short  <B>getNodeType</B>() const  </B>
+ <DD><I>
+An enum value representing the type of the underlying object</I>
+<DT><A HREF="#DOC.25.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getParentNode</B>() const  </B>
+ <DD><I>
+Gets the parent of this node</I>
+<DT><A HREF="#DOC.25.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_NodeList.html">DOM_NodeList</A>  <B>getChildNodes</B>() const  </B>
+ <DD><I>
+Gets a <code>NodeList</code> that contains all children of this node</I>
+<DT><A HREF="#DOC.25.4.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getFirstChild</B>() const  </B>
+ <DD><I>
+Gets the first child of this node</I>
+<DT><A HREF="#DOC.25.4.5"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getLastChild</B>() const  </B>
+ <DD><I>
+Gets the last child of this node</I>
+<DT><A HREF="#DOC.25.4.6"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getPreviousSibling</B>() const  </B>
+ <DD><I>
+Gets the node immediately preceding this node</I>
+<DT><A HREF="#DOC.25.4.7"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>getNextSibling</B>() const  </B>
+ <DD><I>
+Gets the node immediately following this node</I>
+<DT><A HREF="#DOC.25.4.12"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_NamedNodeMap.html">DOM_NamedNodeMap</A>  <B>getAttributes</B>() const  </B>
+ <DD><I>
+Gets a <code>NamedNodeMap</code> containing the attributes of this node (if it
+is an <code>Element</code>) or <code>null</code> otherwise</I>
+<DT><A HREF="#DOC.25.4.8"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Document.html">DOM_Document</A>  <B>getOwnerDocument</B>() const  </B>
+ <DD><I>
+Gets the <code>DOM_Document</code> object associated with this node</I>
+<DT><A HREF="#DOC.25.4.9"> <IMG BORDER=0 SRC=icon1.gif></A> void*  <B>getUserData</B>() const  </B>
+ <DD><I>
+Return the user data pointer</I>
+
+</DL>
+<DT><P> <B>Query functions. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.7.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>hasChildNodes</B>() const  </B>
+ <DD><I>
+This is a convenience method to allow easy determination of whether a
+node has any children</I>
+<DT><A HREF="#DOC.25.7.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>isNull</B>() const  </B>
+ <DD><I>
+Test whether this node is null</I>
+
+</DL>
+<DT><P> <B>Set functions. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.8.1"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setNodeValue</B>(const <!1><A HREF="DOMString.html">DOMString</A> &nodeValue) </B>
+ <DD><I>
+Sets the value of the node</I>
+<DT><A HREF="#DOC.25.8.2"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setUserData</B>(void *p) </B>
+ <DD><I>
+Set the user data for a node</I>
+
+</DL>
+</DL></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+The <code>DOM_Attr</code> class refers to an attribute of an XML element.
+
+Typically the allowable values for the 
+attribute are defined in a documenttype definition.
+<p><code>DOM_Attr</code> objects inherit the <code>DOM_Node</code>  interface, but 
+since attributes are not actually child nodes of the elements they are associated with, the 
+DOM does not consider them part of the document  tree.  Thus, the 
+<code>DOM_Node</code> attributes <code>parentNode</code>,  
+<code>previousSibling</code>, and <code>nextSibling</code> have a  null 
+value for <code>DOM_Attr</code> objects. The DOM takes the  view that 
+attributes are properties of elements rather than having a  separate 
+identity from the elements they are associated with;  this should make it 
+more efficient to implement such features as default attributes associated 
+with all elements of a  given type.  Furthermore, attribute nodes 
+may not be immediate children of a <code>DocumentFragment</code>. However, 
+they can be associated with <code>Element</code> nodes contained within a 
+<code>DocumentFragment</code>. In short, users of the DOM 
+need to be aware that  <code>Attr</code> nodes have some things in  common 
+with other objects inheriting the <code>Node</code> interface, but they 
+also are quite distinct.
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and assignment operators ">
+<A NAME ="DOC.12.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and assignment operators </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="DOM_Attr">
+<A NAME ="DOC.12.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_Attr()</B></TT>
+<DD>
+Default constructor for DOM_Attr.  The resulting object does not
+refer to any Attribute; it will compare == to 0, and is similar
+to a null object reference variable in Java.
+
+<DL></DL><P>
+<A NAME="DOM_Attr">
+<A NAME ="DOC.12.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_Attr(const <!2><A HREF="DOM_Attr.html#DOC.12.1.1">DOM_Attr</A> &other)</B></TT>
+<DD>
+Copy constructor.  Creates a new <code>DOM_Attr</code> that refers to the
+same underlying Attribute as the original.  See also DOM_Node::clone(),
+which will copy an actual attribute, rather than just creating a new
+reference to the original attribute.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The source attribute reference object<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.12.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_Attr.html#DOC.12.1.1">DOM_Attr</A>&  operator = (const <!2><A HREF="DOM_Attr.html#DOC.12.1.1">DOM_Attr</A> &other)</B></TT>
+<DD>
+Assignment operator
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The source attribute object<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.12.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_Attr.html#DOC.12.1.1">DOM_Attr</A>&  operator = (const DOM_NullPtr *val)</B></TT>
+<DD>
+Assignment operator.  This overloaded variant is provided for
+the sole purpose of setting a DOM_Node reference variable to
+zero.  Nulling out a reference variable in this way will decrement
+the reference count on the underlying Node object that the variable
+formerly referenced.  This effect is normally obtained when reference
+variable goes out of scope, but zeroing them can be useful for
+global instances, or for local instances that will remain in scope
+for an extended time,  when the storage belonging to the underlying
+node needs to be reclaimed.
+
+
+<DL><DT><B>Parameters:</B><DD><B>val.</B> -   Only a value of 0, or null, is allowed.<br></DL><P></DL>
+
+<A NAME="Destructor ">
+<A NAME ="DOC.12.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~DOM_Attr">
+<A NAME ="DOC.12.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~DOM_Attr()</B></TT>
+<DD>
+Destructor.  The object being destroyed is a reference to the Attribute
+"node", not the underlying attribute itself.
+
+<DL></DL><P></DL>
+
+<A NAME="Getter functions ">
+<A NAME ="DOC.12.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Getter functions </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getName">
+<A NAME ="DOC.12.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOMString.html">DOMString</A>  getName() const </B></TT>
+<DD>
+Returns the name of this attribute
+<DL></DL><P>
+<A NAME="getSpecified">
+<A NAME ="DOC.12.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  getSpecified() const </B></TT>
+<DD>
+
+Returns true if the attribute received its value explicitly in the
+XML document, or if a value was assigned programatically with
+the setValue function.  Returns false if the attribute value 
+came from the default value declared in the document's DTD.
+<DL></DL><P>
+<A NAME="getValue">
+<A NAME ="DOC.12.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOMString.html">DOMString</A>  getValue() const </B></TT>
+<DD>
+Returns the value of the attribute.
+
+The value of the attribute is returned as a string. 
+Character and general entity references are replaced with their values.
+<DL></DL><P></DL>
+
+<A NAME="Setter functions ">
+<A NAME ="DOC.12.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Setter functions </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="setValue">
+<A NAME ="DOC.12.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setValue(const <!1><A HREF="DOMString.html">DOMString</A> &value)</B></TT>
+<DD>
+Sets the value of the attribute.  A text node with the unparsed contents
+of the string will be created.
+
+
+<DL><DT><B>Parameters:</B><DD><B>value</B> -  The value of the DOM attribute to be set<br></DL><P>
+<A NAME="setSpecified">
+<A NAME ="DOC.12.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setSpecified(bool spec)</B></TT>
+<DD>
+Sets the value of the SPECIFIED for this attribute
+
+
+<DL><DT><B>Parameters:</B><DD><B>spec</B> -  The boolean value to be set<br></DL><P></DL>
+
+<A NAME="Functions introduced in DOM Level 2. ">
+<A NAME ="DOC.12.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Functions introduced in DOM Level 2. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getOwnerElement">
+<A NAME ="DOC.12.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Element.html">DOM_Element</A>  getOwnerElement() const </B></TT>
+<DD>
+The <code>DOM_Element</code> node this attribute is attached to or
+<code>null</code> if this attribute is not in use.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+<DL></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

@@ -1,0 +1,395 @@
+<html><head><TITLE>XMLElementDecl</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   XMLElementDecl  </H2><BLOCKQUOTE>
+
+This class defines the core information of an element declaration
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CXMLElementDecl,MXMLElementDecl.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public Methods</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.45.13"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="XMLContentModel.html">XMLContentModel</A>* </TD><TD><B>getContentModel</B> ()<br>
+<I>Get a pointer to the abstract content model
+
+This method is identical to the previous one, except that it is non
+const</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.2"> <IMG BORDER=0 SRC=icon1.gif></A> const  <!1><A HREF="XMLContentModel.html">XMLContentModel</A>* </TD><TD><B>getContentModel</B> () const <br>
+<I>Get a pointer to the abstract content model
+
+This method will return a const pointer to the content model object
+of this element</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.3"> <IMG BORDER=0 SRC=icon1.gif></A> CreateReasons </TD><TD><B>getCreateReason</B> () const <br>
+<I>Get the create reason for this element type
+
+This method returns an enumeration which indicates why this element
+declaration exists</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.9"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getFormattedContentModel</B> ( const <!1><A HREF="XMLValidator.html">XMLValidator</A>& validator ) const <br>
+<I>Geta formatted string of the content model
+
+This method is a convenience method which will create a formatted
+representation of the content model of the element</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.4"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getId</B> () const <br>
+<I>Get the element decl pool id for this element type
+
+This method will return the element decl pool id of this element
+declaration</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.10"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getKey</B> () const <br>
+<I>Support keyed collections
+
+This method allows objects of this type be placed into one of the
+standard keyed collections</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.5"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>isDeclared</B> () const <br>
+<I>Indicate whether this element type has been declared yet
+
+This method returns a boolean that indicates whether this element
+has been declared yet</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.6"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setContentModel</B> (<!1><A HREF="XMLContentModel.html">XMLContentModel</A>* const newModelToAdopt)<br>
+<I>Set the content model object for this element type
+
+This method will adopt the based content model object</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.7"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setCreateReason</B> (const CreateReasons newReason)<br>
+<I>Update the create reason for this element type</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.8"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setId</B> (const unsigned int newId)<br>
+<I>Set the element decl pool id for this element type
+
+This method will set the pool id of this element decl</I>
+</TD></TR></TABLE><TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.45.11"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.12"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Getter methods </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.15"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Miscellenous methods </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.14"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Setter methods </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Virual ElementDecl interface </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.45.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <!1><A HREF="XMLAttDef.html">XMLAttDef</A>* </TD><TD><B>findAttr</B> ( const XMLCh* const qName, const unsigned int uriId, const XMLCh* const baseName, const LookupOpts options, bool& wasAdded ) const <br>
+<I>Find an attribute by name or optionally fault it in</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <!1><A HREF="XMLAttDefList.html">XMLAttDefList</A>& </TD><TD><B>getAttDefList</B> () const <br>
+<I>Get a list of attributes defined for this element</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getBaseName</B> () const <br>
+<I>Get the base name of this element type</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  CharDataOpts </TD><TD><B>getCharDataOpts</B> () const <br>
+<I>The character data options for this element type
+
+The derived class should return an appropriate character data opts value
+which correctly represents its tolerance towards whitespace or character
+data inside of its instances</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.1.5"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getFullName</B> () const <br>
+<I>Get the full name of this element type</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.1.6"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool </TD><TD><B>hasAttDefs</B> () const <br>
+<I>Indicate whether this element type defined any attributes
+
+The derived class should return a boolean that indicates whether this
+element has any attributes defined for it or not</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.45.1.7"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool </TD><TD><B>resetDefs</B> ()<br>
+<I>Reset the flags on the attribute definitions</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This class defines the core information of an element declaration. Each
+validator (DTD, Schema, etc...) will have its own information that it
+associations with the declaration of an element, but they must all share
+at least this core information, i.e. they must all derive from this
+class. The set of info enforced at this level is driven by the needs of
+XML 1.0 spec validation and well formedness checks.
+
+This class supports keyed collection semantics by providing the getKey()
+method, which extracts the key field. getKey() just calls getFullName()
+which is virtual so that each type of validator can have its own version
+of what a full name is. For the DTD validator, its element decl
+derivatives will return QNames in form pre:name. A Schema validator
+would return expanded names in the form {uri}name.
+
+This class defines some special element id values for invalid elements
+and PCDATA elements, as well as a string for the special PCDATA element
+name. All validators must honor these special values in order to allow
+content models to work generically (i.e. to let code know when its dealing
+with invalid or PCDATA element ids without having to know what type of
+validator its messing with.)
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Destructor ">
+<A NAME ="DOC.45.11">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor </B></TT>
+<DL></DL><P>
+<A NAME="Virual ElementDecl interface ">
+<A NAME ="DOC.45.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Virual ElementDecl interface </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="findAttr">
+<A NAME ="DOC.45.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  <!1><A HREF="XMLAttDef.html">XMLAttDef</A>*  findAttr( const XMLCh* const qName, const unsigned int uriId, const XMLCh* const baseName, const LookupOpts options, bool& wasAdded ) const </B></TT>
+<DD>Find an attribute by name or optionally fault it in.
+
+The derived class should look up the passed attribute in the list of
+of attributes for this element. If namespaces are enabled, then it
+should use the uriId/baseName pair, else it should use the qName. The
+options allow the caller to indicate whether the attribute should be
+defaulted in if not found. If it is defaulted in, then wasAdded should
+be set, else it should be cleared. If its not found and the caller does
+not want defaulting, then return a null pointer.
+
+
+<DL><DT><B>Parameters:</B><DD><B>qName</B> -        This is the qName of the attribute, i.e. the actual
+lexical name found.
+<br><B>uriId</B> -        This is the id of the URI of the namespace to which
+this attribute mapped. Only valid if namespaces are
+enabled.
+<br><B>baseName</B> -     This is the base part of the name, i.e. after any
+prefix.
+<br><B>options</B> -      Indicates the lookup options.
+<br><B>wasAdded</B> -     Should be set if the attribute is faulted in, else
+cleared.<br></DL><P>
+<A NAME="getAttDefList">
+<A NAME ="DOC.45.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  <!1><A HREF="XMLAttDefList.html">XMLAttDefList</A>&  getAttDefList() const </B></TT>
+<DD>Get a list of attributes defined for this element.
+
+The derived class should return a reference to some member object which
+implements the XMLAttDefList interface. This object gives the scanner the
+ability to look through the attributes defined for this element.
+
+It is done this way for efficiency, though of course this is not thread
+safe. The scanner guarantees that it won't ever call this method in any
+nested way, but the outside world must be careful about when it calls
+this method, and optimally never would.
+<DL></DL><P>
+<A NAME="getBaseName">
+<A NAME ="DOC.45.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getBaseName() const </B></TT>
+<DD>Get the base name of this element type.
+
+The derived class should return the base name part of the element's
+name. This is the same regardless of whether namespaces are enabled or
+not.
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to the base name of the element decl.
+</DL><P>
+<A NAME="getCharDataOpts">
+<A NAME ="DOC.45.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  CharDataOpts  getCharDataOpts() const </B></TT>
+<DD>The character data options for this element type
+
+The derived class should return an appropriate character data opts value
+which correctly represents its tolerance towards whitespace or character
+data inside of its instances. This allows the scanner to do all of the
+validation of character data.
+<DL></DL><P>
+<A NAME="getFullName">
+<A NAME ="DOC.45.1.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getFullName() const </B></TT>
+<DD>Get the full name of this element type.
+
+The derived class should reutrn the full name of the element. If namespaces
+are not enabled, then this is the qName. Else it is the {uri}baseName
+form. For those validators that always require namespace processing, it
+will always be in the latter form because namespace processing will always
+be on.
+<DL></DL><P>
+<A NAME="hasAttDefs">
+<A NAME ="DOC.45.1.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  hasAttDefs() const </B></TT>
+<DD>Indicate whether this element type defined any attributes
+
+The derived class should return a boolean that indicates whether this
+element has any attributes defined for it or not. This is an optimization
+that allows the scanner to skip some work if no attributes exist.
+<DL></DL><P>
+<A NAME="resetDefs">
+<A NAME ="DOC.45.1.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  resetDefs()</B></TT>
+<DD>Reset the flags on the attribute definitions.
+
+This method is called by the scanner at the beginning of each scan
+of a start tag, asking this element decl to reset the 'declared' flag
+of each of its attribute defs. This allows the scanner to mark each
+one as declared yet or not.
+<DL></DL><P></DL>
+
+<A NAME="Getter methods ">
+<A NAME ="DOC.45.12">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Getter methods </B></TT>
+<DL></DL><P>
+<A NAME="getContentModel">
+<A NAME ="DOC.45.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  <!1><A HREF="XMLContentModel.html">XMLContentModel</A>*  getContentModel() const </B></TT>
+<DD>Get a pointer to the abstract content model
+
+This method will return a const pointer to the content model object
+of this element. This class is a simple abstraction that allows an
+element to define and use multiple, specialized content model types
+internally but still allow the outside world to do simple stuff with
+them.
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to the element's content model, via the basic
+abstract content model type.
+</DL><P>
+<A NAME="getContentModel">
+<A NAME ="DOC.45.13">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="XMLContentModel.html">XMLContentModel</A>*  getContentModel()</B></TT>
+<DD>Get a pointer to the abstract content model
+
+This method is identical to the previous one, except that it is non
+const
+<DL></DL><P>
+<A NAME="getCreateReason">
+<A NAME ="DOC.45.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> CreateReasons  getCreateReason() const </B></TT>
+<DD>Get the create reason for this element type
+
+This method returns an enumeration which indicates why this element
+declaration exists. Elements can be used before they are actually
+declared, so they will often be faulted into the pool and marked as
+to why they are there.
+
+
+<DL><DT><B>Returns:</B><DD>An enumerated value that indicates the reason why this element
+was added to the element decl pool.
+</DL><P>
+<A NAME="getId">
+<A NAME ="DOC.45.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getId() const </B></TT>
+<DD>Get the element decl pool id for this element type
+
+This method will return the element decl pool id of this element
+declaration. This uniquely identifies this element type within the
+parse event that it is declared within. This value is assigned by the
+validator whose decl pool this object belongs to.
+
+
+<DL><DT><B>Returns:</B><DD>The element decl id of this element declaration.
+</DL><P>
+<A NAME="isDeclared">
+<A NAME ="DOC.45.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  isDeclared() const </B></TT>
+<DD>Indicate whether this element type has been declared yet
+
+This method returns a boolean that indicates whether this element
+has been declared yet. There are a number of reasons why an element
+declaration can be faulted in, but eventually it must be declared or
+its an error. See the CreateReasons enumeration.
+
+
+<DL><DT><B>Returns:</B><DD>true if this element has been declared, else false.
+</DL><P>
+<A NAME="Setter methods ">
+<A NAME ="DOC.45.14">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Setter methods </B></TT>
+<DL></DL><P>
+<A NAME="setContentModel">
+<A NAME ="DOC.45.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setContentModel(<!1><A HREF="XMLContentModel.html">XMLContentModel</A>* const newModelToAdopt)</B></TT>
+<DD>Set the content model object for this element type
+
+This method will adopt the based content model object. This is called
+by the actual validator which is parsing its DTD or Schema or whatever
+a creating an element decl. It will build what it feels is the correct
+content model type object and store it on the element decl object via
+this method.
+
+
+<DL><DT><B>Parameters:</B><DD><B>newModelToAdopt</B> -  This method will adop the passed content model
+object. Any previous object is destroyed.<br></DL><P>
+<A NAME="setCreateReason">
+<A NAME ="DOC.45.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setCreateReason(const CreateReasons newReason)</B></TT>
+<DD>Update the create reason for this element type.
+
+This method will update the 'create reason' field for this element
+decl object. As the validator parses its DTD, Schema, etc... it will
+encounter various references to an element declaration, which will
+cause the element declaration to either be declared or to be faulted
+into the pool in preperation for some future declaration. As it does
+so,it will update this field to indicate the current satus of the
+decl object.
+<DL></DL><P>
+<A NAME="setId">
+<A NAME ="DOC.45.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setId(const unsigned int newId)</B></TT>
+<DD>Set the element decl pool id for this element type
+
+This method will set the pool id of this element decl. This is called
+by the validator which created this object, and will provide this
+decl object with a unique id within the parse event that created it.
+<DL></DL><P>
+<A NAME="Miscellenous methods ">
+<A NAME ="DOC.45.15">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Miscellenous methods </B></TT>
+<DL></DL><P>
+<A NAME="getFormattedContentModel">
+<A NAME ="DOC.45.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getFormattedContentModel( const <!1><A HREF="XMLValidator.html">XMLValidator</A>& validator ) const </B></TT>
+<DD>Geta formatted string of the content model
+
+This method is a convenience method which will create a formatted
+representation of the content model of the element. It will not always
+exactly recreate the original model, since some normalization or
+or reformatting may occur. But, it will be a technically accurate
+representation of the original content model.
+
+The format depends upon the validator, since content models are
+expressed differently in different structural description languages.
+
+
+<DL><DT><B>Returns:</B><DD>A pointer to an internal buffer which contains the formatted
+content model. The caller does not own this buffer and should
+copy it if it needs to be kept around.
+<DT><B>Parameters:</B><DD><B>validator</B> -    The validator which owns this object, and which
+therefore has the information required to format
+the content model.
+<br></DL><P>
+<A NAME="getKey">
+<A NAME ="DOC.45.10">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getKey() const </B></TT>
+<DD>Support keyed collections
+
+This method allows objects of this type be placed into one of the
+standard keyed collections. This method will return the full name of
+the element, which will vary depending upon the type of the validator.
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to teh full name of this element type.
+</DL><P></DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

@@ -1,0 +1,543 @@
+<html><head><TITLE>XMLValidator</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   XMLValidator  </H2><BLOCKQUOTE>
+
+This abstract class provides the interface for all validators
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CXMLValidator,MXMLValidator.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public Methods</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.53.9"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  int </TD><TD><B>addOrFindNSId</B> ( const XMLCh* const uriText )<br>
+<I>
+The derived class should look for the passed URI (case sensitive) in
+its URI pool</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.10"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  int </TD><TD><B>checkContent</B> ( const unsigned int elemId, const unsigned int* childIds, const unsigned int childCount )<br>
+<I>
+The derived class should look up its declaration of the passed element
+from its element pool</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.29"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool </TD><TD><B>checkRootElement</B> ( const unsigned int elemId )<br>
+<I>
+For those validators that contrain the possible root elements of a
+document to only particular elements, they should use this call to
+validate that the passed root element id is a legal root element</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.25"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>emitError</B> (const XML4CValid::Codes toEmit)<br>
+<I>
+This call is a convenience by which validators can emit errors</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.11"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>faultInAttr</B> ( <!1><A HREF="XMLAttr.html">XMLAttr</A>& toFill, const <!1><A HREF="XMLAttDef.html">XMLAttDef</A>& attDef ) const <br>
+<I>
+The derived class should fault in the passed XMLAttr value</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.12"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  <!1><A HREF="XMLElementDecl.html">XMLElementDecl</A>* </TD><TD><B>findElemDecl</B> ( const unsigned int uriId, const XMLCh* const baseName, const XMLCh* const qName, const LookupOpts options, bool& wasAdded ) const <br>
+<I>
+The derived class should look up an element in its element declaration
+pool and return a pointer to it</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.15"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  unsigned  int </TD><TD><B>findElemId</B> ( const unsigned int uriId, const XMLCh* const baseName, const XMLCh* const qName ) const <br>
+<I>
+The derived class should find the indicate element in its element
+declaration pool</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.14"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <!1><A HREF="XMLEntityDecl.html">XMLEntityDecl</A>* </TD><TD><B>findEntityDecl</B> ( const XMLCh* const entName, const bool isPE )<br>
+<I>
+This method is identical to the previous one, except that it is non-
+const</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.13"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  <!1><A HREF="XMLEntityDecl.html">XMLEntityDecl</A>* </TD><TD><B>findEntityDecl</B> ( const XMLCh* const entName, const bool isPE ) const <br>
+<I>
+The derived class should look the passed entity declaration name in its
+entity pool and return a pointer to the declaration object</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.16"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  <!1><A HREF="XMLNotationDecl.html">XMLNotationDecl</A>* </TD><TD><B>findNotationDecl</B> ( const XMLCh* const notName ) const <br>
+<I>
+The derived class should look up the passed notation name in its
+notation decl pool</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.30"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <!1><A HREF="XMLNotationDecl.html">XMLNotationDecl</A>* </TD><TD><B>findNotationDecl</B> ( const XMLCh* const notName )<br>
+<I>
+This method is identical to the previous method except that it is non-
+const</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.17"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  unsigned  int </TD><TD><B>findNSId</B> ( const XMLCh* const nsName ) const <br>
+<I>
+The derived class should look up the passed namespace name (prefix) in
+its namespace name pool and return the id</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.31"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <!1><A HREF="XMLElementDecl.html">XMLElementDecl</A>* </TD><TD><B>getElemDecl</B> ( const unsigned int elemId )<br>
+<I>
+This method is identical to the previous method, except that it is a
+non-const version</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.18"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  <!1><A HREF="XMLElementDecl.html">XMLElementDecl</A>* </TD><TD><B>getElemDecl</B> ( const unsigned int elemId ) const <br>
+<I>
+The derived class should return the element from its element decl pool
+which has the indicated element id</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.2"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getEmptyNamespaceId</B> () const <br>
+<I>
+When an attribute name has no prefix, unlike elements, it is not mapped
+to the global namespace</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.3"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getGlobalNamespaceId</B> () const <br>
+<I>
+When namespaces are enabled, any elements whose names have no prefix
+are mapped to a global namespace</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.4"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getUnknownNamespaceId</B> () const <br>
+<I>
+When a prefix is found that has not been mapped, an error is issued</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.19"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool </TD><TD><B>getURIText</B> ( const unsigned int uriId, <!1><A HREF="XMLBuffer.html">XMLBuffer</A>& uriBufToFill ) const <br>
+<I>
+The derived class should find the passed URI id in its URI pool and
+copy the text of that URI into the passed buffer</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.5"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getXMLNamespaceId</B> () const <br>
+<I>
+The prefix 'xml' is a magic prefix, defined by the XML spec and 
+requiring no prior definition</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.6"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getXMLNSNamespaceId</B> () const <br>
+<I>
+The prefix 'xmlns' is a magic prefix, defined by the namespace spec
+and requiring no prior definition</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.33"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool </TD><TD><B>handlesDTD</B> () const <br>
+<I>
+This method allows the scanner to ask the validator if it handles
+DTDs or not</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.20"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>postParseValidation</B> ()<br>
+<I>
+This method is called by the scanner after the parse has completed</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.22"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool </TD><TD><B>requiresNamespaces</B> () const <br>
+<I>
+The derived class should return a boolean that indicates whether it
+requires namespace processing or not</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.21"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>reset</B> ()<br>
+<I>
+This method is called by the scanner before a new document is about
+to start</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.24"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>scanDTD</B> (const bool reuseValidator)<br>
+<I>
+This method is called by the scanner when it is time for the validator
+to parse the DTD</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.8"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setErrorReporter</B> ( <!1><A HREF="XMLErrorReporter.html">XMLErrorReporter</A>* const errorReporter )<br>
+<I>
+This method is called to set an error reporter on the validator via
+which it will report any errors it sees during parsing or validation</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.7"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setScannerInfo</B> ( XMLScanner* const owningScanner, ReaderMgr* const readerMgr, <!1><A HREF="XMLBufferMgr.html">XMLBufferMgr</A>* const bufMgr )<br>
+<I>
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.23"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>validateAttrValue</B> ( const <!1><A HREF="XMLAttDef.html">XMLAttDef</A>& attDef, const XMLCh* const attrValue )<br>
+<I>
+The derived class should apply any rules to the passed attribute value
+that are above and beyond those defined by XML 1</I>
+</TD></TR></TABLE><TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.53.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.53.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> FailIfNotFound  virtual </TD><TD><B>~XMLValidator</B> ()<br>
+<I>
+The derived class should clean up its allocated data, then this class
+will do the same for data allocated at this level</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.34"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Error emittor methods </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.26"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Getter Methods </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.27"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Setter methods </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.32"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Virtual DTD handler interface </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.53.28"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Virtual validator interface </B> <br>
+<I></I>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This abstract class provides the interface for all validators. This is
+the simple amount of API that all validators must honor, in order for
+the scanner to use them to do validation. All validators will actually
+contain much more functionality than is accessible via this common API,
+but that functionality requires that you know what type of validator you
+are dealing with.
+
+Basically, at this level, the primary concern is to be able to query
+core information about elements and attributes. Adding decls to the
+validator requires that you go through the derived interface because they
+all have their own decl types. At this level, we can return information
+via the base decl classes, from which each validator derives its own
+decl classes.
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Destructor ">
+<A NAME ="DOC.53.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~XMLValidator">
+<A NAME ="DOC.53.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> FailIfNotFound  virtual  ~XMLValidator()</B></TT>
+<DD>
+The derived class should clean up its allocated data, then this class
+will do the same for data allocated at this level
+<DL></DL><P></DL>
+
+<A NAME="Getter Methods ">
+<A NAME ="DOC.53.26">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Getter Methods </B></TT>
+<DL></DL><P>
+<A NAME="getEmptyNamespaceId">
+<A NAME ="DOC.53.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getEmptyNamespaceId() const </B></TT>
+<DD>
+When an attribute name has no prefix, unlike elements, it is not mapped
+to the global namespace. So, in order to have something to map it to
+for practical purposes, a id for an empty URL is created and used for
+such names.
+
+
+<DL><DT><B>Returns:</B><DD>The URL pool id of the URL for an empty URL "".
+</DL><P>
+<A NAME="getGlobalNamespaceId">
+<A NAME ="DOC.53.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getGlobalNamespaceId() const </B></TT>
+<DD>
+When namespaces are enabled, any elements whose names have no prefix
+are mapped to a global namespace. This is the URL id for the URL
+to which those names are mapped. It has no official standard text,
+but the parser must use some id here.
+
+
+<DL><DT><B>Returns:</B><DD>The URL pool id of the URL for the global namespace.
+</DL><P>
+<A NAME="getUnknownNamespaceId">
+<A NAME ="DOC.53.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getUnknownNamespaceId() const </B></TT>
+<DD>
+When a prefix is found that has not been mapped, an error is issued.
+However, if the parser has been instructed not to stop on the first
+fatal error, it needs to be able to continue. To do so, it will map
+that prefix tot his magic unknown namespace id.
+
+
+<DL><DT><B>Returns:</B><DD>The URL pool id of the URL for the unknown prefix
+namespace.
+</DL><P>
+<A NAME="getXMLNamespaceId">
+<A NAME ="DOC.53.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getXMLNamespaceId() const </B></TT>
+<DD>
+The prefix 'xml' is a magic prefix, defined by the XML spec and 
+requiring no prior definition. This method returns the id for the
+intrinsically defined URL for this prefix.
+
+
+<DL><DT><B>Returns:</B><DD>The URL pool id of the URL for the 'xml' prefix.
+</DL><P>
+<A NAME="getXMLNSNamespaceId">
+<A NAME ="DOC.53.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getXMLNSNamespaceId() const </B></TT>
+<DD>
+The prefix 'xmlns' is a magic prefix, defined by the namespace spec
+and requiring no prior definition. This method returns the id for the
+intrinsically defined URL for this prefix.
+
+
+<DL><DT><B>Returns:</B><DD>The URL pool id of the URL for the 'xmlns' prefix.
+</DL><P>
+<A NAME="Setter methods ">
+<A NAME ="DOC.53.27">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Setter methods </B></TT>
+<DL></DL><P>
+<A NAME="setScannerInfo">
+<A NAME ="DOC.53.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setScannerInfo( XMLScanner* const owningScanner, ReaderMgr* const readerMgr, <!1><A HREF="XMLBufferMgr.html">XMLBufferMgr</A>* const bufMgr )</B></TT>
+<DD>
+
+<DL><DT><B>Parameters:</B><DD><B>owningScanner</B> -    This is a pointer to the scanner to which the
+validator belongs. The validator will often
+need to query state data from the scanner.
+<br><B>readerMgr</B> -        This is a pointer to the reader manager that is
+being used by the scanner.
+<br><B>bufMgr</B> -           This is the buffer manager of the scanner. This
+is provided as a convenience so that the validator
+doesn't have to create its own buffer manager
+during the parse process.<br></DL><P>
+<A NAME="setErrorReporter">
+<A NAME ="DOC.53.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setErrorReporter( <!1><A HREF="XMLErrorReporter.html">XMLErrorReporter</A>* const errorReporter )</B></TT>
+<DD>
+This method is called to set an error reporter on the validator via
+which it will report any errors it sees during parsing or validation.
+This is generally called by the owning scanner.
+
+
+<DL><DT><B>Parameters:</B><DD><B>errorReporter</B> -    A pointer to the error reporter to use. This
+is not adopted, just referenced so the caller
+remains responsible for its cleanup, if any.<br></DL><P>
+<A NAME="Virtual validator interface ">
+<A NAME ="DOC.53.28">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Virtual validator interface </B></TT>
+<DL></DL><P>
+<A NAME="addOrFindNSId">
+<A NAME ="DOC.53.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  int  addOrFindNSId( const XMLCh* const uriText )</B></TT>
+<DD>
+The derived class should look for the passed URI (case sensitive) in
+its URI pool. If the URI does not exist, then it should be added to the
+pool. The new or existing pool id should be returned.
+<DL></DL><P>
+<A NAME="checkContent">
+<A NAME ="DOC.53.10">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  int  checkContent( const unsigned int elemId, const unsigned int* childIds, const unsigned int childCount )</B></TT>
+<DD>
+The derived class should look up its declaration of the passed element
+from its element pool. It should then use the content model description
+contained in that element declaration to validate that the passed list
+of child elements are valid for that content model. The count can be
+zero, indicating no child elements.
+
+Note that whitespace and text content are not validated here. Those are
+handled by the scanner. So only element ids are provided here.
+
+
+<DL><DT><B>Parameters:</B><DD><B>elemId</B> -       The pool id of the element whose content is to be
+checked.
+<br><B>childIds</B> -     An array of element ids which represent the elements
+found within the parent element, i.e. the content
+to be validated.
+<br><B>childCount</B> -   The number of elements in the childIds array. It can
+be zero if the element had none.<br></DL><P>
+<A NAME="checkRootElement">
+<A NAME ="DOC.53.29">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  checkRootElement( const unsigned int elemId )</B></TT>
+<DD>
+For those validators that contrain the possible root elements of a
+document to only particular elements, they should use this call to
+validate that the passed root element id is a legal root element
+<DL></DL><P>
+<A NAME="faultInAttr">
+<A NAME ="DOC.53.11">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  faultInAttr( <!1><A HREF="XMLAttr.html">XMLAttr</A>& toFill, const <!1><A HREF="XMLAttDef.html">XMLAttDef</A>& attDef ) const </B></TT>
+<DD>
+The derived class should fault in the passed XMLAttr value. It should
+use the passeed attribute definition (which is passed via the base
+type so it must often be downcast to the appropriate type for the
+derived validator class), to fill in the passed attribute. This is done
+as a performance enhancement since the derived class has more direct
+access to the information.
+<DL></DL><P>
+<A NAME="findElemDecl">
+<A NAME ="DOC.53.12">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  <!1><A HREF="XMLElementDecl.html">XMLElementDecl</A>*  findElemDecl( const unsigned int uriId, const XMLCh* const baseName, const XMLCh* const qName, const LookupOpts options, bool& wasAdded ) const </B></TT>
+<DD>
+The derived class should look up an element in its element declaration
+pool and return a pointer to it. The name should be looked up either via
+the qName field (if namespaces are off) or via the uriID/baseName combo
+(if namespaces are on.)
+
+The options allow the caller to indicate how the validator should react
+if the element exists or not. If the element does not exist, the option
+can indicate that it should be faulted it. If it does not exist and
+faulting in is not requested, a null pointer should be returned. The
+wasAdded flag should be set if the declaration was faulted in, else it
+should be cleared.
+<DL></DL><P>
+<A NAME="findEntityDecl">
+<A NAME ="DOC.53.13">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  <!1><A HREF="XMLEntityDecl.html">XMLEntityDecl</A>*  findEntityDecl( const XMLCh* const entName, const bool isPE ) const </B></TT>
+<DD>
+The derived class should look the passed entity declaration name in its
+entity pool and return a pointer to the declaration object. If the
+entity is not in the pool, it should return a null pointer.
+
+
+<DL><DT><B>Parameters:</B><DD><B>entName</B> -      The name of the entity to look up. Entity names can
+not be namespace based, so its always just a single
+unqualified name.
+<br><B>isPE</B> -         Indicates whether the name represents a parameter
+entity or a general entity. The validator should
+look at the correct pool for the entity type.<br></DL><P>
+<A NAME="findEntityDecl">
+<A NAME ="DOC.53.14">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  <!1><A HREF="XMLEntityDecl.html">XMLEntityDecl</A>*  findEntityDecl( const XMLCh* const entName, const bool isPE )</B></TT>
+<DD>
+This method is identical to the previous one, except that it is non-
+const.
+
+
+<DL><DT><B>Parameters:</B><DD><B>entName</B> -      The name of the entity to look up. Entity names can
+not be namespace based, so its always just a single
+unqualified name.
+<br><B>isPE</B> -         Indicates whether the name represents a parameter
+entity or a general entity. The validator should
+look at the correct pool for the entity type.<br></DL><P>
+<A NAME="findElemId">
+<A NAME ="DOC.53.15">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  unsigned  int  findElemId( const unsigned int uriId, const XMLCh* const baseName, const XMLCh* const qName ) const </B></TT>
+<DD>
+The derived class should find the indicate element in its element
+declaration pool. If namespaces are on, then it should use the uriId
+and base name. Otherwise, it should use the qName. It should return
+the element decl pool id for the decl found. If the element is not
+not found, it should return the value XMLElementDecl::fgInvalidElemId;
+<DL></DL><P>
+<A NAME="findNotationDecl">
+<A NAME ="DOC.53.16">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  <!1><A HREF="XMLNotationDecl.html">XMLNotationDecl</A>*  findNotationDecl( const XMLCh* const notName ) const </B></TT>
+<DD>
+The derived class should look up the passed notation name in its
+notation decl pool. If the name is not found, it should return a null
+pointer. If it is found, it should return a pointer to the declaration
+object.
+<DL></DL><P>
+<A NAME="findNotationDecl">
+<A NAME ="DOC.53.30">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  <!1><A HREF="XMLNotationDecl.html">XMLNotationDecl</A>*  findNotationDecl( const XMLCh* const notName )</B></TT>
+<DD>
+This method is identical to the previous method except that it is non-
+const
+<DL></DL><P>
+<A NAME="findNSId">
+<A NAME ="DOC.53.17">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  unsigned  int  findNSId( const XMLCh* const nsName ) const </B></TT>
+<DD>
+The derived class should look up the passed namespace name (prefix) in
+its namespace name pool and return the id. If not found, it should
+return zero, which is never a valid pool id.
+<DL></DL><P>
+<A NAME="getElemDecl">
+<A NAME ="DOC.53.18">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  <!1><A HREF="XMLElementDecl.html">XMLElementDecl</A>*  getElemDecl( const unsigned int elemId ) const </B></TT>
+<DD>
+The derived class should return the element from its element decl pool
+which has the indicated element id. Given that these ids are gotten from
+the validator itself, it should always be valid. If not, then a major
+internal error has occured.
+<DL></DL><P>
+<A NAME="getElemDecl">
+<A NAME ="DOC.53.31">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  <!1><A HREF="XMLElementDecl.html">XMLElementDecl</A>*  getElemDecl( const unsigned int elemId )</B></TT>
+<DD>
+This method is identical to the previous method, except that it is a
+non-const version
+<DL></DL><P>
+<A NAME="getURIText">
+<A NAME ="DOC.53.19">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  getURIText( const unsigned int uriId, <!1><A HREF="XMLBuffer.html">XMLBuffer</A>& uriBufToFill ) const </B></TT>
+<DD>
+The derived class should find the passed URI id in its URI pool and
+copy the text of that URI into the passed buffer. Since these ids are
+obtained from the validator itself, they should always be valid. If
+not, then a major internal error has occured.
+<DL></DL><P>
+<A NAME="postParseValidation">
+<A NAME ="DOC.53.20">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  postParseValidation()</B></TT>
+<DD>
+This method is called by the scanner after the parse has completed. It
+gives the validator a chance to check certain things that can only be
+checked after the whole document has been parsed, such as referential
+integrity of ID/IDREF pairs and so forth. The validator should just
+issue errors for any problems it finds.
+<DL></DL><P>
+<A NAME="reset">
+<A NAME ="DOC.53.21">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  reset()</B></TT>
+<DD>
+This method is called by the scanner before a new document is about
+to start. It gives the validator a change to reset itself in preperation
+for another validation pass.
+<DL></DL><P>
+<A NAME="requiresNamespaces">
+<A NAME ="DOC.53.22">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  requiresNamespaces() const </B></TT>
+<DD>
+The derived class should return a boolean that indicates whether it
+requires namespace processing or not. Some do and some allow it to be
+optional. This flag is used to control whether the client code's
+requests to disable namespace processing can be honored or not.
+<DL></DL><P>
+<A NAME="validateAttrValue">
+<A NAME ="DOC.53.23">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  validateAttrValue( const <!1><A HREF="XMLAttDef.html">XMLAttDef</A>& attDef, const XMLCh* const attrValue )</B></TT>
+<DD>
+The derived class should apply any rules to the passed attribute value
+that are above and beyond those defined by XML 1.0. The scanner itself
+will impose XML 1.0 rules, based on the type of the attribute. This
+will generally be used to check things such as range checks and other
+datatype related validation.
+
+If the value breaks any rules as defined by the derived class, it
+should just issue errors as usual.
+<DL></DL><P>
+<A NAME="Virtual DTD handler interface ">
+<A NAME ="DOC.53.32">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Virtual DTD handler interface </B></TT>
+<DL></DL><P>
+<A NAME="handlesDTD">
+<A NAME ="DOC.53.33">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  handlesDTD() const </B></TT>
+<DD>
+This method allows the scanner to ask the validator if it handles
+DTDs or not
+<DL></DL><P>
+<A NAME="scanDTD">
+<A NAME ="DOC.53.24">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  scanDTD(const bool reuseValidator)</B></TT>
+<DD>
+This method is called by the scanner when it is time for the validator
+to parse the DTD. At the time of this call, the parser has parsed up to
+the [ of the DOCTYPE line. This call should parse to the ]> that ends
+the DOCTYPE line, and any external subset referenced.
+
+
+<DL><DT><B>Parameters:</B><DD><B>reuseValidator</B> -   Indicates whether the current state of the
+validator should be kept. If the DTD validator
+sees any internal subset, it should consider
+it an error for this to be true. Otherwise, it
+just ignores any external subset and returns
+with the state unchanged.<br></DL><P>
+<A NAME="Error emittor methods ">
+<A NAME ="DOC.53.34">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Error emittor methods </B></TT>
+<DL></DL><P>
+<A NAME="emitError">
+<A NAME ="DOC.53.25">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  emitError(const XML4CValid::Codes toEmit)</B></TT>
+<DD>
+This call is a convenience by which validators can emit errors. Most
+of the grunt work of loading the text, getting the current source
+location, ect... is handled here.
+
+If the loaded text has replacement parameters, then text strings can be
+passed. These will be used to replace the tokens {0}, {1}, {2}, and {3}
+in the order passed. So text1 will replace {0}, text2 will replace {1},
+and so forth.
+
+
+<DL><DT><B>Parameters:</B><DD><B>toEmit</B> -    The error code to emit. it must be one of the defined
+validator error codes.
+<br><B>textX</B> -    Up to four replacement parameters. They can be provided
+as either XMLCh strings, or local code page strings which
+will be transcoded internally.<br></DL><P></DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

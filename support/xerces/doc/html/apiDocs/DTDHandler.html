@@ -1,0 +1,186 @@
+<html><head><TITLE>DTDHandler</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   DTDHandler  </H2><BLOCKQUOTE>
+
+Receive notification of basic DTD-related events
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CDTDHandler,MDTDHandler.html,CHandlerBase,MHandlerBase.html">
+<param name=before value="M,M^_">
+<param name=after value="M,M">
+<param name=indent value="0,0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.3.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DTDHandler</B> ()<br>
+<I>Default Constructor </I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.3.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual </TD><TD><B>~DTDHandler</B> ()<br>
+<I>Destructor </I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>The DTD handler interface </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.3.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>notationDecl</B> ( const XMLCh* const name, const XMLCh* const publicId, const XMLCh* const systemId )<br>
+<I>
+Receive notification of a notation declaration event</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.3.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>unparsedEntityDecl</B> ( const XMLCh* const name, const XMLCh* const publicId, const XMLCh* const systemId, const XMLCh* const notationName )<br>
+<I>
+Receive notification of an unparsed entity declaration event</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.3.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>resetDocType</B> ()<br>
+<I>
+Reset the DocType object on its reuse
+
+<p>This method helps in reseting the DTD object implementational
+defaults each time the DTD is begun</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+Receive notification of basic DTD-related events.
+
+<p>If a SAX application needs information about notations and
+unparsed entities, then the application implements this 
+interface and registers an instance with the SAX parser using 
+the parser's setDTDHandler method.  The parser uses the 
+instance to report notation and unparsed entity declarations to 
+the application.</p>
+
+<p>The SAX parser may report these events in any order, regardless
+of the order in which the notations and unparsed entities were
+declared; however, all DTD events must be reported after the
+document handler's startDocument event, and before the first
+startElement event.</p>
+
+<p>It is up to the application to store the information for 
+future use (perhaps in a hash table or object tree).
+If the application encounters attributes of type "NOTATION",
+"ENTITY", or "ENTITIES", it can use the information that it
+obtained through this interface to find the entity and/or
+notation corresponding with the attribute value.</p>
+
+<p>The HandlerBase class provides a default implementation
+of this interface, which simply ignores the events.</p>
+
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and Destructor ">
+<A NAME ="DOC.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="DTDHandler">
+<A NAME ="DOC.3.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DTDHandler()</B></TT>
+<DD>Default Constructor 
+<DL></DL><P>
+<A NAME="~DTDHandler">
+<A NAME ="DOC.3.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  ~DTDHandler()</B></TT>
+<DD>Destructor 
+<DL></DL><P></DL>
+
+<A NAME="The DTD handler interface ">
+<A NAME ="DOC.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  The DTD handler interface </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="notationDecl">
+<A NAME ="DOC.3.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  notationDecl( const XMLCh* const name, const XMLCh* const publicId, const XMLCh* const systemId )</B></TT>
+<DD>
+Receive notification of a notation declaration event.
+
+<p>It is up to the application to record the notation for later
+reference, if necessary.</p>
+
+<p>If a system identifier is present, and it is a URL, the SAX
+parser must resolve it fully before passing it to the
+application.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>name</B> -  The notation name.
+<br><B>publicId</B> -  The notation's public identifier, or null if
+none was given.
+<br><B>systemId</B> -  The notation's system identifier, or null if
+none was given.
+<br><DT><B>See Also:</B><DD><A HREF="#unparsedEntityDecl">unparsedEntityDecl</A>
+<br><A HREF="AttributeList.html#AttributeList">AttributeList</A><br></DL><P>
+<A NAME="unparsedEntityDecl">
+<A NAME ="DOC.3.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  unparsedEntityDecl( const XMLCh* const name, const XMLCh* const publicId, const XMLCh* const systemId, const XMLCh* const notationName )</B></TT>
+<DD>
+Receive notification of an unparsed entity declaration event.
+
+<p>Note that the notation name corresponds to a notation
+reported by the notationDecl() event.  It is up to the
+application to record the entity for later reference, if
+necessary.</p>
+
+<p>If the system identifier is a URL, the parser must resolve it
+fully before passing it to the application.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>name</B> -  The unparsed entity's name.
+<br><B>publicId</B> -  The entity's public identifier, or null if none
+was given.
+<br><B>systemId</B> -  The entity's system identifier (it must always
+have one).
+<br><B>notation</B> -  name The name of the associated notation.
+<br><DT><B>See Also:</B><DD><A HREF="#notationDecl">notationDecl</A>
+<br><A HREF="AttributeList.html#AttributeList">AttributeList</A><br></DL><P>
+<A NAME="resetDocType">
+<A NAME ="DOC.3.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetDocType()</B></TT>
+<DD>
+Reset the DocType object on its reuse
+
+<p>This method helps in reseting the DTD object implementational
+defaults each time the DTD is begun.</p>
+
+<DL></DL><P></DL>
+</DL>
+<hr>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="HandlerBase.html"> HandlerBase </A><br>
+</DL>
+<DL><DT><B>See Also:</B><DD><A HREF="Parser.html#setDTDHandler">setDTDHandler</A>
+<br><A HREF="HandlerBase.html#HandlerBase">HandlerBase</A><br></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

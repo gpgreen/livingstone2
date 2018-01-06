@@ -1,0 +1,450 @@
+<html><head><TITLE>DOM_NamedNodeMap</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   DOM_NamedNodeMap  </H2><BLOCKQUOTE>
+
+<code>NamedNodeMap</code>s  are used to 
+represent collections of nodes that can be accessed by name
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CDOM_NamedNodeMap,MDOM_NamedNodeMap.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.24.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B></B> <br>
+<I>@Comparisons</I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.24.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator == </B> (const <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A> &other) const <br>
+<I>
+Test whether this NamedNodeMap reference refers to the same underlying
+named node map as the other reference object</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator != </B> (const <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A> &other) const <br>
+<I>
+Test whether this NamedNodeMap reference refers to a different underlying
+named node map as the other reference object</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator == </B> (const DOM_NullPtr *p) const <br>
+<I>
+Use this comparison operator to test whether a Named Node Map reference
+is null</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.3.4"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator != </B> (const DOM_NullPtr *p) const <br>
+<I>
+Use this comparison operator to test whether a Named Node Map reference
+is not null</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and assignment operator </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.24.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_NamedNodeMap</B> ()<br>
+<I>
+Default constructor for DOM_NamedNodeMap</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_NamedNodeMap</B> (const <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A> &other)<br>
+<I>
+Copy constructor</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A>& </TD><TD><B>operator = </B> (const <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A> &other)<br>
+<I>
+Assignment operator</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A>& </TD><TD><B>operator = </B> (const DOM_NullPtr *other)<br>
+<I>
+Assignment operator</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.24.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>~DOM_NamedNodeMap</B> ()<br>
+<I>
+Destructor for DOM_NamedNodeMap</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.7"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Functions introduced in DOM Level 2. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.24.7.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>getNamedItemNS</B> (const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName)<br>
+<I>
+Retrieves a node specified by local name and namespace URI</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.7.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>setNamedItemNS</B> (<!1><A HREF="DOM_Node.html">DOM_Node</A> arg)<br>
+<I>
+Adds a node using its <CODE>namespaceURI</CODE> and <CODE>localName</CODE></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.7.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>removeNamedItemNS</B> (const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName)<br>
+<I>
+Removes a node specified by local name and namespace URI</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.6"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Functions to change the node collection. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.24.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>removeNamedItem</B> (const <!1><A HREF="DOMString.html">DOMString</A> &name)<br>
+<I>
+Removes a node specified by name</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.5"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Get functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.24.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>item</B> (unsigned int index)<br>
+<I>
+Returns the <code>index</code>th item in the map</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.5.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>getNamedItem</B> (const <!1><A HREF="DOMString.html">DOMString</A> &name)<br>
+<I>
+Retrieves a node specified by name</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.5.3"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getLength</B> () const <br>
+<I>
+The number of nodes in the map</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.24.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Set functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.24.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOM_Node.html">DOM_Node</A> </TD><TD><B>setNamedItem</B> (<!1><A HREF="DOM_Node.html">DOM_Node</A> arg)<br>
+<I>
+Adds a node using its <code>nodeName</code> attribute</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+<code>NamedNodeMap</code>s  are used to 
+represent collections of nodes that can be accessed by name.
+
+Note that <code>NamedNodeMap</code> does not inherit from <code>NodeList</code>; 
+<code>NamedNodeMap</code>s are not maintained in any particular order. 
+Nodes contained in a <code>NamedNodeMap</code> may 
+also be accessed by an ordinal index, but this is simply to allow 
+convenient enumeration of the contents, and 
+does not imply that the DOM specifies an order to these Nodes. 
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and assignment operator ">
+<A NAME ="DOC.24.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and assignment operator </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="DOM_NamedNodeMap">
+<A NAME ="DOC.24.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_NamedNodeMap()</B></TT>
+<DD>
+Default constructor for DOM_NamedNodeMap.  The resulting object does not
+refer to an actual DOM_NamedNodeMap node; it will compare == to 0, and is similar
+to a null object reference variable in Java. NamedNopes are instantiated
+by these methods:  DOM_Node::getAttributes, DOM_DocumentType::getEntities
+andDOM_DocumentType::getNotations
+
+<DL></DL><P>
+<A NAME="DOM_NamedNodeMap">
+<A NAME ="DOC.24.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_NamedNodeMap(const <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A> &other)</B></TT>
+<DD>
+Copy constructor.  Creates a new <code>DOM_NamedNodeMap</code> reference object 
+that refers to the same underlying NamedNodeMap as the original.  
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied.<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.24.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A>&  operator = (const <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A> &other)</B></TT>
+<DD>
+Assignment operator.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied.<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.24.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A>&  operator = (const DOM_NullPtr *other)</B></TT>
+<DD>
+Assignment operator.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied.<br></DL><P></DL>
+
+<A NAME="Destructor. ">
+<A NAME ="DOC.24.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~DOM_NamedNodeMap">
+<A NAME ="DOC.24.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~DOM_NamedNodeMap()</B></TT>
+<DD>
+Destructor for DOM_NamedNodeMap.  The object being destroyed is the reference
+object, not the underlying NamedNodeMap itself.
+
+<p>Like most other DOM types in this implementation, memory management
+of named node maps is automatic.  Instances of DOM_NamedNodeMap function
+as references to an underlying heap based implementation object,
+and should never be explicitly new-ed or deleted in application code, but
+should appear only as local variables or function parameters.
+
+<DL></DL><P></DL>
+
+<A NAME="">
+<A NAME ="DOC.24.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  </B></TT>
+<DD>@Comparisons
+<DL></DL><P><DL>
+
+<A NAME="operator == ">
+<A NAME ="DOC.24.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator == (const <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A> &other) const </B></TT>
+<DD>
+Test whether this NamedNodeMap reference refers to the same underlying
+named node map as the other reference object.  This does not
+compare the contents of two different objects.
+
+
+<DL><DT><B>Returns:</B><DD>Returns true if the underlying named node map is same
+<DT><B>Parameters:</B><DD><B>arg</B> -  p The value to be compared
+<br></DL><P>
+<A NAME="operator != ">
+<A NAME ="DOC.24.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator != (const <!2><A HREF="DOM_NamedNodeMap.html#DOC.24.1.1">DOM_NamedNodeMap</A> &other) const </B></TT>
+<DD>
+Test whether this NamedNodeMap reference refers to a different underlying
+named node map as the other reference object.  This does not
+compare the contents of two different objects.
+
+
+<DL><DT><B>Returns:</B><DD>Returns true if the underlying named node map is different
+<DT><B>Parameters:</B><DD><B>arg</B> -  p The value to be compared
+<br></DL><P>
+<A NAME="operator == ">
+<A NAME ="DOC.24.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator == (const DOM_NullPtr *p) const </B></TT>
+<DD>
+Use this comparison operator to test whether a Named Node Map reference
+is null.
+
+
+<DL><DT><B>Returns:</B><DD>Returns true if the named node map is null
+<DT><B>Parameters:</B><DD><B>arg</B> -  p The value to be compared, which must be 0 or null.
+<br></DL><P>
+<A NAME="operator != ">
+<A NAME ="DOC.24.3.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator != (const DOM_NullPtr *p) const </B></TT>
+<DD>
+Use this comparison operator to test whether a Named Node Map reference
+is not null.
+
+
+<DL><DT><B>Returns:</B><DD>Returns true if the named node map is not null
+<DT><B>Parameters:</B><DD><B>arg</B> -  p The value to be compared, which must not be 0 or null.
+<br></DL><P></DL>
+
+<A NAME="Set functions. ">
+<A NAME ="DOC.24.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Set functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="setNamedItem">
+<A NAME ="DOC.24.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  setNamedItem(<!1><A HREF="DOM_Node.html">DOM_Node</A> arg)</B></TT>
+<DD>
+Adds a node using its <code>nodeName</code> attribute. 
+
+<br>As the <code>nodeName</code> attribute is used to derive the name 
+which the node must be stored under, multiple nodes of certain types 
+(those that have a "special" string value) cannot be stored as the names 
+would clash. This is seen as preferable to allowing nodes to be aliased.
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+WRONG_DOCUMENT_ERR: Raised if <code>arg</code> was created from a 
+different document than the one that created the 
+<code>NamedNodeMap</code>.
+<br>NO_MODIFICATION_ALLOWED_ERR: Raised if this 
+<code>NamedNodeMap</code> is readonly.
+<br>INUSE_ATTRIBUTE_ERR: Raised if <code>arg</code> is an 
+<code>Attr</code> that is already an attribute of another 
+<code>Element</code> object. The DOM user must explicitly clone 
+<code>Attr</code> nodes to re-use them in other elements.<br><DT><B>Returns:</B><DD>If the new <code>Node</code> replaces an existing node the
+replaced <code>Node</code> is returned, 
+otherwise <code>null</code> is returned.
+
+<DT><B>Parameters:</B><DD><B>arg</B> -  A node to store in a named node map. The node will later be 
+accessible using the value of the <code>nodeName</code> attribute of 
+the node. If a node with that name is already present in the map, it 
+is replaced by the new one.
+<br></DL><P></DL>
+
+<A NAME="Get functions. ">
+<A NAME ="DOC.24.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Get functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="item">
+<A NAME ="DOC.24.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  item(unsigned int index)</B></TT>
+<DD>
+Returns the <code>index</code>th item in the map. 
+
+If <code>index</code> 
+is greater than or equal to the number of nodes in the map, this returns 
+<code>null</code>.
+
+<DL><DT><B>Returns:</B><DD>The node at the <code>index</code>th position in the 
+<code>NamedNodeMap</code>, or <code>null</code> if that is not a valid 
+index.
+<DT><B>Parameters:</B><DD><B>index</B> -  Index into the map.
+<br></DL><P>
+<A NAME="getNamedItem">
+<A NAME ="DOC.24.5.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  getNamedItem(const <!1><A HREF="DOMString.html">DOMString</A> &name)</B></TT>
+<DD>
+Retrieves a node specified by name.
+
+
+<DL><DT><B>Returns:</B><DD>A <code>DOM_Node</code> (of any type) with the specified <code>nodeName</code>, or 
+<code>null</code> if it does not identify any node in 
+the map. 
+<DT><B>Parameters:</B><DD><B>name</B> -  The <code>nodeName</code> of a node to retrieve.
+<br></DL><P>
+<A NAME="getLength">
+<A NAME ="DOC.24.5.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getLength() const </B></TT>
+<DD>
+The number of nodes in the map. 
+
+The range of valid child node indices is 
+0 to <code>length-1</code> inclusive. 
+<DL></DL><P></DL>
+
+<A NAME="Functions to change the node collection. ">
+<A NAME ="DOC.24.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Functions to change the node collection. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="removeNamedItem">
+<A NAME ="DOC.24.6.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  removeNamedItem(const <!1><A HREF="DOMString.html">DOMString</A> &name)</B></TT>
+<DD>
+Removes a node specified by name.
+
+If the removed node is an 
+<code>Attr</code> with a default value it is immediately replaced.
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+NOT_FOUND_ERR: Raised if there is no node named <code>name</code> in 
+the map.
+<br>
+NO_MODIFICATION_ALLOWED_ERR: Raised if this <code>NamedNodeMap</code>
+is readonly.<br><DT><B>Returns:</B><DD>The node removed from the map or <code>null</code> if no node 
+with such a name exists.
+
+<DT><B>Parameters:</B><DD><B>name</B> -  The <code>nodeName</code> of a node to remove.
+<br></DL><P></DL>
+
+<A NAME="Functions introduced in DOM Level 2. ">
+<A NAME ="DOC.24.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Functions introduced in DOM Level 2. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getNamedItemNS">
+<A NAME ="DOC.24.7.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  getNamedItemNS(const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName)</B></TT>
+<DD>
+Retrieves a node specified by local name and namespace URI.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+
+<DL><DT><B>Returns:</B><DD>A <code>DOM_Node</code> (of any type) with the specified
+local name and namespace URI, or <code>null</code> if they do not
+identify any node in the map.
+<DT><B>Parameters:</B><DD><B>namespaceURI</B> -  The <em>namespace URI</em> of
+the node to retrieve.
+<br><B>localName</B> -  The <em>local name</em> of the node to retrieve.
+<br></DL><P>
+<A NAME="setNamedItemNS">
+<A NAME ="DOC.24.7.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  setNamedItemNS(<!1><A HREF="DOM_Node.html">DOM_Node</A> arg)</B></TT>
+<DD>
+Adds a node using its <CODE>namespaceURI</CODE> and <CODE>localName</CODE>.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+WRONG_DOCUMENT_ERR: Raised if <code>arg</code> was created from a 
+different document than the one that created the 
+<code>DOM_NamedNodeMap</code>.
+<br>NO_MODIFICATION_ALLOWED_ERR: Raised if this 
+<code>vNamedNodeMap</code> is readonly.
+<br>INUSE_ATTRIBUTE_ERR: Raised if <code>arg</code> is an 
+<code>DOM_Attr</code> that is already an attribute of another 
+<code>DOM_Element</code> object. The DOM user must explicitly clone 
+<code>DOM_Attr</code> nodes to re-use them in other elements.<br><DT><B>Returns:</B><DD>If the new <code>DOM_Node</code> replaces an existing node the
+replaced <code>DOM_Node</code> is returned, 
+otherwise <code>null</code> is returned.
+
+<DT><B>Parameters:</B><DD><B>arg</B> -  A node to store in a named node map. The node will later be 
+accessible using the value of the <CODE>namespaceURI</CODE> and 
+<CODE>localName</CODE> attribute of the node. If a node with those 
+namespace URI and local name is already present in the map, it is 
+replaced by the new one.
+<br></DL><P>
+<A NAME="removeNamedItemNS">
+<A NAME ="DOC.24.7.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  removeNamedItemNS(const <!1><A HREF="DOMString.html">DOMString</A> &namespaceURI, const <!1><A HREF="DOMString.html">DOMString</A> &localName)</B></TT>
+<DD>
+Removes a node specified by local name and namespace URI.
+
+<p><b>"Experimental - subject to change"</b></p>
+
+
+<DL><DT><B>Throws:</B><DD><B>DOMException</B> 
+NOT_FOUND_ERR: Raised if there is no node named <code>name</code> in 
+the map.
+<br>
+NO_MODIFICATION_ALLOWED_ERR: Raised if this <code>DOM_NamedNodeMap</code>
+is readonly.<br><DT><B>Returns:</B><DD>The node removed from the map if a node with such a local name
+and namespace URI exists.
+
+<DT><B>Parameters:</B><DD><B>namespaceURI</B> -  The <em>namespace URI</em> of
+the node to remove.
+<br><B>localName</B> -  The <em>local name</em> of the
+node to remove. When this <code>DOM_NamedNodeMap</code> contains the
+attributes attached to an element, as returned by the attributes
+attribute of the <code>DOM_Node</code> interface, if the removed
+attribute is known to have a default value, an attribute
+immediately appears containing the default value
+as well as the corresponding namespace URI, local name, and prefix.
+<br></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

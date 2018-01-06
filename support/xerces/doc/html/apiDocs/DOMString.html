@@ -1,0 +1,590 @@
+<html><head><TITLE>DOMString</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   DOMString  </H2><BLOCKQUOTE>
+
+<code>DOMString</code> is the generic string class that stores all strings
+used in the DOM C++ API
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CDOMString,MDOMString.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.54.7"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Cloning function. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.54.7.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> </TD><TD><B>clone</B> () const <br>
+<I>
+Makes a clone of a the DOMString</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and assignment operator </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.54.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOMString</B> (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other)<br>
+<I>
+Copy constructor</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOMString</B> (const XMLCh *other)<br>
+<I>
+Constructor to build a DOMString from an XML character array</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOMString</B> (const XMLCh *other, unsigned int <!2><A HREF="DOMString.html#DOC.54.6.6">length</A>)<br>
+<I>
+Constructor to build a DOMString from a character array of given length</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOMString</B> (const char *other)<br>
+<I>
+Constructor to build a DOMString from an 8 bit character array</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.1.6"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOMString</B> (int nullPointerValue)<br>
+<I>
+Construct a null DOMString</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.1.5"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>& </TD><TD><B>operator = </B> (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other)<br>
+<I>
+Assignment operator</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.54.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>~DOMString</B> ()<br>
+<I>
+Destructor for DOMString
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Equality and Inequality operators. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.54.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator == </B> (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other) const <br>
+<I>
+Equality operator</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator != </B> (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other) const <br>
+<I>
+Inequality operator</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator == </B> (const DOM_NullPtr *other) const <br>
+<I>
+Equality operator</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.4.4"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>operator != </B> (const DOM_NullPtr *other) const <br>
+<I>
+Inequality operator, for null test</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.5"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Functions to change the string. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.54.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>reserve</B> (unsigned int size)<br>
+<I>
+Preallocate storage in the string to hold a given number of characters</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.5.2"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>appendData</B> (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other)<br>
+<I>
+Appends the content of another <code>DOMString</code> to this string</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.5.3"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>appendData</B> (XMLCh ch)<br>
+<I>
+Append a single Unicode character to this string</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.5.4"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>appendData</B> (const XMLCh *other)<br>
+<I>
+Append a null-terminated XMLCh * (Unicode) string to this string</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.5.5"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>& </TD><TD><B>operator +=</B> (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other)<br>
+<I>
+Appends the content of another <code>DOMString</code> to this string</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.5.6"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>& </TD><TD><B>operator +=</B> (const XMLCh* other)<br>
+<I>
+Appends the content of a c-style string to this string</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.5.7"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>& </TD><TD><B>operator +=</B> (XMLCh ch)<br>
+<I>
+Appends a character to this string</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.5.8"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>deleteData</B> (unsigned int offset, unsigned int count)<br>
+<I>
+Clears the data of this <code>DOMString</code></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.5.9"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>insertData</B> (unsigned int offset, const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &data)<br>
+<I>
+Inserts a string within the existing <code>DOMString</code> at an arbitrary position</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.9"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Functions to compare a string with another. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.54.9.1"> <IMG BORDER=0 SRC=icon1.gif></A> int </TD><TD><B>compareString</B> (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other) const <br>
+<I>
+Compares a DOMString with another</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.9.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>equals</B> (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other) const <br>
+<I>
+Tells if a <code>DOMString</code> contains the same character data
+as another</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.9.3"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>equals</B> (const XMLCh *other) const <br>
+<I>
+Compare a DOMString with a null-terminated raw 16-bit character
+string</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.6"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Functions to get properties of the string. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.54.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> XMLCh </TD><TD><B>charAt</B> (unsigned int index) const <br>
+<I>
+Returns the character at the specified position</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.6.2"> <IMG BORDER=0 SRC=icon1.gif></A> XMLCh* </TD><TD><B>rawBuffer</B> () const <br>
+<I>
+Returns a handle to the raw buffer in the <code>DOMString</code></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.6.3"> <IMG BORDER=0 SRC=icon1.gif></A> char* </TD><TD><B>transcode</B> () const <br>
+<I>
+Returns a copy of the string, transcoded to the local code page</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.6.4"> <IMG BORDER=0 SRC=icon1.gif></A> static  <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> </TD><TD><B>transcode</B> (const char* str)<br>
+<I>
+Creates a DOMString, transcoded from an input 8 bit char * string
+in the local code page</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.6.5"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> </TD><TD><B>substringData</B> (unsigned int offset, unsigned int count) const <br>
+<I>
+Returns a sub-string of the <code>DOMString</code> starting at a specified position</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.6.6"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>length</B> () const <br>
+<I>
+Returns the length of the DOMString</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Operators for string manipulation. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.54.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B></B> <br>
+<I>
+Concatenate a DOMString to another</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.8"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Print functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.54.8.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>print</B> () const <br>
+<I>
+Dumps the <code>DOMString</code> on the console</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.54.8.2"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>println</B> () const <br>
+<I>
+Dumps the <code>DOMString</code> on the console with a line feed at the end</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+<code>DOMString</code> is the generic string class that stores all strings
+used in the DOM C++ API.
+
+Though this class supports most of the common string operations to manipulate
+strings, it is not meant to be a comphrehensive string class.
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and assignment operator ">
+<A NAME ="DOC.54.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and assignment operator </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="DOMString">
+<A NAME ="DOC.54.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOMString(const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other)</B></TT>
+<DD>
+Copy constructor.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied.<br></DL><P>
+<A NAME="DOMString">
+<A NAME ="DOC.54.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOMString(const XMLCh *other)</B></TT>
+<DD>
+Constructor to build a DOMString from an XML character array.
+(XMLCh is a 16 bit UNICODE character).
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The null-terminated character array to be 
+that provides the initial value for the DOMString.<br></DL><P>
+<A NAME="DOMString">
+<A NAME ="DOC.54.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOMString(const XMLCh *other, unsigned int <!2><A HREF="DOMString.html#DOC.54.6.6">length</A>)</B></TT>
+<DD>
+Constructor to build a DOMString from a character array of given length.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The character array to be imported into the <code>DOMString</code>
+<br><B>length</B> -  The length of the character array to be imported<br></DL><P>
+<A NAME="DOMString">
+<A NAME ="DOC.54.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOMString(const char *other)</B></TT>
+<DD>
+Constructor to build a DOMString from an 8 bit character array.
+The char * string will be transcoded to UNICODE using the default
+code page on the system where the code is running.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The character array to be imported into the <code>DOMString</code><br></DL><P>
+<A NAME="DOMString">
+<A NAME ="DOC.54.1.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOMString(int nullPointerValue)</B></TT>
+<DD>
+Construct a null DOMString
+<DL></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.54.1.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>&  operator = (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other)</B></TT>
+<DD>
+Assignment operator.  Make destination DOMString refer to the same
+underlying string in memory as the source string.
+
+
+<DL><DT><B>Parameters:</B><DD><B>the</B> -  source DOMString.<br></DL><P></DL>
+
+<A NAME="Destructor. ">
+<A NAME ="DOC.54.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~DOMString">
+<A NAME ="DOC.54.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~DOMString()</B></TT>
+<DD>
+Destructor for DOMString
+
+<DL></DL><P></DL>
+
+<A NAME="Operators for string manipulation. ">
+<A NAME ="DOC.54.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Operators for string manipulation. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="">
+<A NAME ="DOC.54.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  </B></TT>
+<DD>
+Concatenate a DOMString to another.
+
+
+<DL><DT><B>Returns:</B><DD>The concatenated object
+<DT><B>Parameters:</B><DD><B>other</B> -  The string to be concatenated.
+<br></DL><P></DL>
+
+<A NAME="Equality and Inequality operators. ">
+<A NAME ="DOC.54.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Equality and Inequality operators. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="operator == ">
+<A NAME ="DOC.54.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator == (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other) const </B></TT>
+<DD>
+Equality operator.  
+
+
+<DL><DT><B>Returns:</B><DD>True if the two DOMStrings refer to the same underlying string
+in memory.  
+<p>
+WARNING:  operator == does NOT compare the contents of
+the two  strings.  To do this, use the <code>DOMString::equals()</code>
+This behavior is modelled after the String operations in Java, and
+is also similar to operator == on the other DOM_* classes.
+<DT><B>Parameters:</B><DD><B>other</B> -  The object to be compared with.
+<br></DL><P>
+<A NAME="operator != ">
+<A NAME ="DOC.54.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator != (const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other) const </B></TT>
+<DD>
+Inequality operator.
+
+
+<DL><DT><B>Returns:</B><DD>True if the two DOMStrings refer to different underlying strings in
+memory.
+<p>
+WARNING:  operator == does NOT compare the contents of
+the two  strings.  To do this, use the <code>DOMString::equals()</code>
+This behavior is modelled after the String operations in Java, and
+is also similar to operator == on the other DOM_* classes.
+<DT><B>Parameters:</B><DD><B>other</B> -  The object to be compared with.
+<br></DL><P>
+<A NAME="operator == ">
+<A NAME ="DOC.54.4.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator == (const DOM_NullPtr *other) const </B></TT>
+<DD>
+Equality operator.  Test for a null DOMString, which is one that does
+not refer to any string at all; similar to a null object reference
+variable in Java.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  must be 0 or null.
+<br></DL><P>
+<A NAME="operator != ">
+<A NAME ="DOC.54.4.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  operator != (const DOM_NullPtr *other) const </B></TT>
+<DD>
+Inequality operator, for null test.
+
+
+<DL><DT><B>Returns:</B><DD>True if the two strings are different, false otherwise
+<DT><B>Parameters:</B><DD><B>other</B> -  must be 0 or null.
+<br></DL><P></DL>
+
+<A NAME="Functions to change the string. ">
+<A NAME ="DOC.54.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Functions to change the string. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="reserve">
+<A NAME ="DOC.54.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  reserve(unsigned int size)</B></TT>
+<DD>
+Preallocate storage in the string to hold a given number of characters.
+A DOMString will grow its buffer on demand, as characters are added,
+but it can be more efficient to allocate once in advance, if the size is known.
+
+
+<DL><DT><B>Parameters:</B><DD><B>size</B> -  The number of 16 bit characters to reserve.<br></DL><P>
+<A NAME="appendData">
+<A NAME ="DOC.54.5.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  appendData(const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other)</B></TT>
+<DD>
+Appends the content of another <code>DOMString</code> to this string.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be appended<br></DL><P>
+<A NAME="appendData">
+<A NAME ="DOC.54.5.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  appendData(XMLCh ch)</B></TT>
+<DD>
+Append a single Unicode character to this string.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be appended<br></DL><P>
+<A NAME="appendData">
+<A NAME ="DOC.54.5.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  appendData(const XMLCh *other)</B></TT>
+<DD>
+Append a null-terminated XMLCh * (Unicode) string to this string.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be appended<br></DL><P>
+<A NAME="operator +=">
+<A NAME ="DOC.54.5.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>&  operator +=(const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other)</B></TT>
+<DD>
+Appends the content of another <code>DOMString</code> to this string.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be appended<br></DL><P>
+<A NAME="operator +=">
+<A NAME ="DOC.54.5.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>&  operator +=(const XMLCh* other)</B></TT>
+<DD>
+Appends the content of a c-style string to this string.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The string to be appended<br></DL><P>
+<A NAME="operator +=">
+<A NAME ="DOC.54.5.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>&  operator +=(XMLCh ch)</B></TT>
+<DD>
+Appends a character to this string.
+
+
+<DL><DT><B>Parameters:</B><DD><B>ch</B> -  The character to be appended<br></DL><P>
+<A NAME="deleteData">
+<A NAME ="DOC.54.5.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  deleteData(unsigned int offset, unsigned int count)</B></TT>
+<DD>
+Clears the data of this <code>DOMString</code>.
+
+
+<DL><DT><B>Parameters:</B><DD><B>offset</B> -  The position from the beginning from which the data must be deleted
+<br><B>count</B> -  The count of characters from the offset that must be deleted<br></DL><P>
+<A NAME="insertData">
+<A NAME ="DOC.54.5.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  insertData(unsigned int offset, const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &data)</B></TT>
+<DD>
+Inserts a string within the existing <code>DOMString</code> at an arbitrary position.
+
+
+<DL><DT><B>Returns:</B><DD>The object to be returned.
+<DT><B>Parameters:</B><DD><B>offset</B> -  The offset from the beginning at which the insertion needs to be done 
+in <code>this</code> object
+<br><B>data</B> -  The <code>DOMString</code> containing the data that needs to be inserted
+<br></DL><P></DL>
+
+<A NAME="Functions to get properties of the string. ">
+<A NAME ="DOC.54.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Functions to get properties of the string. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="charAt">
+<A NAME ="DOC.54.6.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> XMLCh  charAt(unsigned int index) const </B></TT>
+<DD>
+Returns the character at the specified position.
+
+
+<DL><DT><B>Returns:</B><DD>Returns the character at the specified position.
+<DT><B>Parameters:</B><DD><B>index</B> -  The position at which the character is being requested
+<br></DL><P>
+<A NAME="rawBuffer">
+<A NAME ="DOC.54.6.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> XMLCh*  rawBuffer() const </B></TT>
+<DD>
+Returns a handle to the raw buffer in the <code>DOMString</code>.
+
+
+<DL><DT><B>Returns:</B><DD>The pointer inside the <code>DOMString</code> containg the string data.
+Note: the data is not always null terminated.  Do not rely on
+a null being there, and do not add one, as several DOMStrings
+with different lengths may share the same raw buffer.
+</DL><P>
+<A NAME="transcode">
+<A NAME ="DOC.54.6.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> char*  transcode() const </B></TT>
+<DD>
+Returns a copy of the string, transcoded to the local code page. The
+caller owns the (char *) string that is returned, and is responsible
+for deleting it.
+
+
+<DL><DT><B>Returns:</B><DD>A pointer to a newly allocated buffer of char elements, which
+represents the original string, but in the local encoding.
+</DL><P>
+<A NAME="transcode">
+<A NAME ="DOC.54.6.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>  transcode(const char* str)</B></TT>
+<DD>
+Creates a DOMString, transcoded from an input 8 bit char * string
+in the local code page.
+
+
+<DL><DT><B>Returns:</B><DD>A new DOMString object
+<DT><B>Parameters:</B><DD><B>str</B> -  The string to be transcoded
+<br></DL><P>
+<A NAME="substringData">
+<A NAME ="DOC.54.6.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>  substringData(unsigned int offset, unsigned int count) const </B></TT>
+<DD>
+Returns a sub-string of the <code>DOMString</code> starting at a specified position.
+
+
+<DL><DT><B>Returns:</B><DD>The sub-string of the <code>DOMString</code> being requested
+<DT><B>Parameters:</B><DD><B>offset</B> -  The offset from the beginning from which the sub-string is being requested.
+<br><B>count</B> -  The count of characters in the requested sub-string
+<br></DL><P>
+<A NAME="length">
+<A NAME ="DOC.54.6.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  length() const </B></TT>
+<DD>
+Returns the length of the DOMString.
+
+
+<DL><DT><B>Returns:</B><DD>The length of the string
+</DL><P></DL>
+
+<A NAME="Cloning function. ">
+<A NAME ="DOC.54.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Cloning function. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="clone">
+<A NAME ="DOC.54.7.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A>  clone() const </B></TT>
+<DD>
+Makes a clone of a the DOMString.
+
+
+<DL><DT><B>Returns:</B><DD>The object to be cloned.
+</DL><P></DL>
+
+<A NAME="Print functions. ">
+<A NAME ="DOC.54.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Print functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="print">
+<A NAME ="DOC.54.8.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  print() const </B></TT>
+<DD>
+Dumps the <code>DOMString</code> on the console
+<DL></DL><P>
+<A NAME="println">
+<A NAME ="DOC.54.8.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  println() const </B></TT>
+<DD>
+Dumps the <code>DOMString</code> on the console with a line feed at the end
+<DL></DL><P></DL>
+
+<A NAME="Functions to compare a string with another. ">
+<A NAME ="DOC.54.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Functions to compare a string with another. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="compareString">
+<A NAME ="DOC.54.9.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> int  compareString(const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other) const </B></TT>
+<DD>
+Compares a DOMString with another.
+
+This compareString does not match the semantics of the standard C strcmp.  
+All it needs to do is define some less than - equals - greater than 
+ordering of strings.  How doesn't matter.
+
+
+
+<DL><DT><B>Returns:</B><DD>Either -1, 0, or 1 based on the comparison. 
+<DT><B>Parameters:</B><DD><B>other</B> -  The object to be compared with
+<br></DL><P>
+<A NAME="equals">
+<A NAME ="DOC.54.9.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  equals(const <!2><A HREF="DOMString.html#DOC.54.1.1">DOMString</A> &other) const </B></TT>
+<DD>
+Tells if a <code>DOMString</code> contains the same character data
+as another.
+
+
+<DL><DT><B>Returns:</B><DD>True if the two <code>DOMString</code>s are same, false otherwise.
+<DT><B>Parameters:</B><DD><B>other</B> -  The DOMString to be compared with.
+<br></DL><P>
+<A NAME="equals">
+<A NAME ="DOC.54.9.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  equals(const XMLCh *other) const </B></TT>
+<DD>
+Compare a DOMString with a null-terminated raw 16-bit character
+string.
+
+
+<DL><DT><B>Returns:</B><DD>True if the strings are the same, false otherwise.
+<DT><B>Parameters:</B><DD><B>other</B> -  The character string to be compared with.
+<br></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

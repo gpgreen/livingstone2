@@ -116,14 +116,14 @@ if (! ${?STANLEY_ROOT}) then
       # java version "1.3.0_02"
       set version_2 = `echo $java_version | awk -F\" '{print $2}'`
       # echo version_2 $version_2
-      set match_test = `expr match $version_2 '.*1\.4\.*'`
+      set match_test = `expr match $version_2 '.*1\.5\.*'`
       # echo match_test $match_test 
       if ( $match_test == 0 ) then
-        echo "$JAVA_HOME not jdk1.4.*"
+        echo "$JAVA_HOME not jdk1.5.*"
         exit 1
       endif
     else
-      echo "JAVA_HOME not set - L2Tools requires Java JDK 1.4.*"
+      echo "JAVA_HOME not set - L2Tools requires Java JDK 1.5.* or later"
       exit 1
     endif
     setenv JAVA_BIN $JAVA_HOME/bin
@@ -138,6 +138,9 @@ if (! ${?STANLEY_ROOT}) then
     setenv CLASSPATH ${CLASSPATH}\;${L2_ROOT}/l2-tools/java/lib/aelfred.jar\;${L2_ROOT}/l2-tools/java/lib/antlr.jar\;${L2_ROOT}/l2-tools/java/lib/domlight-1.0.jar\;${L2_ROOT}/l2-tools/java/lib/sax.jar\;${L2_ROOT}/l2-tools/java/lib/openjgraph.jar
     ## for other L2 tools
    setenv CLASSPATH ${CLASSPATH}\;${L2_ROOT}/l2-tools/jars/browser.jar
+
+    ## dummy for stanley.tcl
+    setenv LD_LIBRARY_PATH ${STANLEY_TCL_TK_LIB}
 
 endif
 

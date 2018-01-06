@@ -1,0 +1,334 @@
+<html><head><TITLE>DocumentHandler</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   DocumentHandler  </H2><BLOCKQUOTE>
+
+Receive notification of general document events
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CDocumentHandler,MDocumentHandler.html,CHandlerBase,MHandlerBase.html">
+<param name=before value="M,M^_">
+<param name=after value="M,M">
+<param name=indent value="0,0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public Methods</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>operator=</B> (const <!2><A HREF="DocumentHandler.html#DOC.2.1.1">DocumentHandler</A>&)<br>
+<I>Assignment operator </I>
+</TD></TR></TABLE><TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.2.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DocumentHandler</B> ()<br>
+<I>Default constructor </I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.2.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual </TD><TD><B>~DocumentHandler</B> ()<br>
+<I>Destructor </I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>The virtual document handler interface </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.2.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>characters</B> ( const XMLCh* const chars, const unsigned int length )<br>
+<I>
+Receive notification of character data</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.2.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>endDocument</B> ()<br>
+<I>
+Receive notification of the end of a document</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.2.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>endElement</B> (const XMLCh* const name)<br>
+<I>
+Receive notification of the end of an element</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.2.2.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>ignorableWhitespace</B> ( const XMLCh* const chars, const unsigned int length )<br>
+<I>
+Receive notification of ignorable whitespace in element content</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.2.2.5"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>processingInstruction</B> ( const XMLCh* const target, const XMLCh* const data )<br>
+<I>
+Receive notification of a processing instruction</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.2.2.6"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>resetDocument</B> ()<br>
+<I>
+Reset the Docuemnt object on its reuse
+
+<p>This method helps in reseting the document implementational
+defaults each time the document is begun</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.2.2.7"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>setDocumentLocator</B> (<!1><A HREF="Locator.html">Locator</A>* const locator)<br>
+<I>
+Receive an object for locating the origin of SAX document events</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.2.2.8"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>startDocument</B> ()<br>
+<I>
+Receive notification of the beginning of a document</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.2.2.9"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>startElement</B> ( const XMLCh* const name, <!1><A HREF="AttributeList.html">AttributeList</A>& attrs )<br>
+<I>
+Receive notification of the beginning of an element</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+Receive notification of general document events.
+
+<p>This is the main interface that most SAX applications
+implement: if the application needs to be informed of basic parsing 
+events, it implements this interface and registers an instance with 
+the SAX parser using the setDocumentHandler method.  The parser 
+uses the instance to report basic document-related events like
+the start and end of elements and character data.</p>
+
+<p>The order of events in this interface is very important, and
+mirrors the order of information in the document itself.  For
+example, all of an element's content (character data, processing
+instructions, and/or subelements) will appear, in order, between
+the startElement event and the corresponding endElement event.</p>
+
+<p>Application writers who do not want to implement the entire
+interface while can derive a class from HandlerBase, which implements
+the default functionality; parser writers can instantiate
+HandlerBase to obtain a default handler.  The application can find
+the location of any document event using the Locator interface
+supplied by the Parser through the setDocumentLocator method.</p>
+
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and Destructor ">
+<A NAME ="DOC.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="DocumentHandler">
+<A NAME ="DOC.2.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DocumentHandler()</B></TT>
+<DD>Default constructor 
+<DL></DL><P>
+<A NAME="~DocumentHandler">
+<A NAME ="DOC.2.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  ~DocumentHandler()</B></TT>
+<DD>Destructor 
+<DL></DL><P></DL>
+
+<A NAME="The virtual document handler interface ">
+<A NAME ="DOC.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  The virtual document handler interface </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="characters">
+<A NAME ="DOC.2.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  characters( const XMLCh* const chars, const unsigned int length )</B></TT>
+<DD>
+Receive notification of character data.
+
+<p>The Parser will call this method to report each chunk of
+character data.  SAX parsers may return all contiguous character
+data in a single chunk, or they may split it into several
+chunks; however, all of the characters in any single event
+must come from the same external entity, so that the Locator
+provides useful information.</p>
+
+<p>The application must not attempt to read from the array
+outside of the specified range.</p>
+
+<p>Note that some parsers will report whitespace using the
+ignorableWhitespace() method rather than this one (validating
+parsers must do so).</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>chars</B> -  The characters from the XML document.
+<br><B>length</B> -  The number of characters to read from the array.
+<br><DT><B>See Also:</B><DD><A HREF="#ignorableWhitespace">ignorableWhitespace</A> 
+<br><A HREF="Locator.html#Locator">Locator</A><br></DL><P>
+<A NAME="endDocument">
+<A NAME ="DOC.2.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  endDocument()</B></TT>
+<DD>
+Receive notification of the end of a document.
+
+<p>The SAX parser will invoke this method only once, and it will
+be the last method invoked during the parse.  The parser shall
+not invoke this method until it has either abandoned parsing
+(because of an unrecoverable error) or reached the end of
+input.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.<br></DL><P>
+<A NAME="endElement">
+<A NAME ="DOC.2.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  endElement(const XMLCh* const name)</B></TT>
+<DD>
+Receive notification of the end of an element.
+
+<p>The SAX parser will invoke this method at the end of every
+element in the XML document; there will be a corresponding
+startElement() event for every endElement() event (even when the
+element is empty).</p>
+
+<p>If the element name has a namespace prefix, the prefix will
+still be attached to the name.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.<br><DT><B>Parameters:</B><DD><B>name</B> -  The element type name
+<br></DL><P>
+<A NAME="ignorableWhitespace">
+<A NAME ="DOC.2.2.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  ignorableWhitespace( const XMLCh* const chars, const unsigned int length )</B></TT>
+<DD>
+Receive notification of ignorable whitespace in element content.
+
+<p>Validating Parsers must use this method to report each chunk
+of ignorable whitespace (see the W3C XML 1.0 recommendation,
+section 2.10): non-validating parsers may also use this method
+if they are capable of parsing and using content models.</p>
+
+<p>SAX parsers may return all contiguous whitespace in a single
+chunk, or they may split it into several chunks; however, all of
+the characters in any single event must come from the same
+external entity, so that the Locator provides useful
+information.</p>
+
+<p>The application must not attempt to read from the array
+outside of the specified range.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>chars</B> -  The characters from the XML document.
+<br><B>length</B> -  The number of characters to read from the array.
+<br><DT><B>See Also:</B><DD><A HREF="#characters">characters</A><br></DL><P>
+<A NAME="processingInstruction">
+<A NAME ="DOC.2.2.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  processingInstruction( const XMLCh* const target, const XMLCh* const data )</B></TT>
+<DD>
+Receive notification of a processing instruction.
+
+<p>The Parser will invoke this method once for each processing
+instruction found: note that processing instructions may occur
+before or after the main document element.</p>
+
+<p>A SAX parser should never report an XML declaration (XML 1.0,
+section 2.8) or a text declaration (XML 1.0, section 4.3.1)
+using this method.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.<br><DT><B>Parameters:</B><DD><B>target</B> -  The processing instruction target.
+<br><B>data</B> -  The processing instruction data, or null if
+none was supplied.
+<br></DL><P>
+<A NAME="resetDocument">
+<A NAME ="DOC.2.2.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetDocument()</B></TT>
+<DD>
+Reset the Docuemnt object on its reuse
+
+<p>This method helps in reseting the document implementational
+defaults each time the document is begun.</p>
+
+<DL></DL><P>
+<A NAME="setDocumentLocator">
+<A NAME ="DOC.2.2.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  setDocumentLocator(<!1><A HREF="Locator.html">Locator</A>* const locator)</B></TT>
+<DD>
+Receive an object for locating the origin of SAX document events.
+
+<p>SAX parsers are strongly encouraged (though not absolutely
+required) to supply a locator: if it does so, it must supply
+the locator to the application by invoking this method before
+invoking any of the other methods in the DocumentHandler
+interface.</p>
+
+<p>The locator allows the application to determine the end
+position of any document-related event, even if the parser is
+not reporting an error.  Typically, the application will
+use this information for reporting its own errors (such as
+character content that does not match an application's
+business rules).  The information returned by the locator
+is probably not sufficient for use with a search engine.</p>
+
+<p>Note that the locator will return correct information only
+during the invocation of the events in this interface.  The
+application should not attempt to use it at any other time.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>locator</B> -  An object that can return the location of
+any SAX document event.
+<br><DT><B>See Also:</B><DD><A HREF="Locator.html#Locator">Locator</A><br></DL><P>
+<A NAME="startDocument">
+<A NAME ="DOC.2.2.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  startDocument()</B></TT>
+<DD>
+Receive notification of the beginning of a document.
+
+<p>The SAX parser will invoke this method only once, before any
+other methods in this interface or in DTDHandler (except for
+setDocumentLocator).</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.<br></DL><P>
+<A NAME="startElement">
+<A NAME ="DOC.2.2.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  startElement( const XMLCh* const name, <!1><A HREF="AttributeList.html">AttributeList</A>& attrs )</B></TT>
+<DD>
+Receive notification of the beginning of an element.
+
+<p>The Parser will invoke this method at the beginning of every
+element in the XML document; there will be a corresponding
+endElement() event for every startElement() event (even when the
+element is empty). All of the element's content will be
+reported, in order, before the corresponding endElement()
+event.</p>
+
+<p>If the element name has a namespace prefix, the prefix will
+still be attached.  Note that the attribute list provided will
+contain only attributes with explicit values (specified or
+defaulted): #IMPLIED attributes will be omitted.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>name</B> -  The element type name.
+<br><B>attrs</B> -  The attributes attached to the element, if any.
+<br><DT><B>See Also:</B><DD><A HREF="#endElement">endElement</A>
+<br><A HREF="AttributeList.html#AttributeList">AttributeList</A> <br></DL><P></DL>
+
+<A NAME="operator=">
+<A NAME ="DOC.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  operator=(const <!2><A HREF="DocumentHandler.html#DOC.2.1.1">DocumentHandler</A>&)</B></TT>
+<DD>Assignment operator 
+<DL></DL><P></DL>
+<hr>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="HandlerBase.html"> HandlerBase </A><br>
+</DL>
+<DL><DT><B>See Also:</B><DD><A HREF="Parser.html#setDocumentHandler">setDocumentHandler</A>
+<br><A HREF="Locator.html#Locator">Locator</A>
+<br><A HREF="HandlerBase.html#HandlerBase">HandlerBase</A><br></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

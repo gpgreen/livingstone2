@@ -1,0 +1,264 @@
+<html><head><TITLE>SAXParseException</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   SAXParseException : public <!2><A HREF="SAXException.html#DOC.10.1.4">SAXException</A> </H2><BLOCKQUOTE>
+
+Encapsulate an XML parse error or warning
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CSAXException,MSAXException.html,CSAXParseException,MSAXParseException.html">
+<param name=before value="M,M">
+<param name=after value="Md_,M">
+<param name=indent value="0,1">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.11.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Assignment operator </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.11.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="SAXParseException.html#DOC.11.1.1">SAXParseException</A>& </TD><TD><B>operator=</B> (const <!2><A HREF="SAXParseException.html#DOC.11.1.1">SAXParseException</A>& toAssign)<br>
+<I>
+Assignment operator
+
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.11.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.11.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>SAXParseException</B> (const XMLCh* const message, const <!1><A HREF="Locator.html">Locator</A>& locator)<br>
+<I>
+Create a new SAXParseException from a message and a Locator</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.11.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>SAXParseException</B> ( const XMLCh* const message, const XMLCh* const publicId, const XMLCh* const systemId, const unsigned int lineNumber, const unsigned int columnNumber )<br>
+<I>
+Create a new SAXParseException</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.11.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>SAXParseException</B> (const <!2><A HREF="SAXParseException.html#DOC.11.1.1">SAXParseException</A>& toCopy)<br>
+<I>
+Copy constructor
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.11.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>~SAXParseException</B> ()<br>
+<I>
+Destructor</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.11.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Getter methods </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.11.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getColumnNumber</B> () const <br>
+<I>
+The column number of the end of the text where the exception occurred</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.11.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getLineNumber</B> () const <br>
+<I>
+The line number of the end of the text where the exception occurred</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.11.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getPublicId</B> () const <br>
+<I>
+Get the public identifier of the entity where the exception occurred</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.11.3.4"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getSystemId</B> () const <br>
+<I>
+Get the system identifier of the entity where the exception occurred</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<hr><H3>Inherited from <A HREF="SAXException.html">SAXException:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P> <B>Getter Methods </B>
+
+<DL>
+<DT><A HREF="#DOC.10.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh*  <B>getMessage</B>() const  </B>
+ <DD><I>
+Get the contents of the message
+</I>
+
+</DL>
+<DT><P> <B>Public Operators </B>
+
+<DL>
+<DT><A HREF="#DOC.10.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="SAXException.html#DOC.10.1.4">SAXException</A>&  <B>operator=</B>(const <!2><A HREF="SAXException.html#DOC.10.1.4">SAXException</A>& toCopy) </B>
+ <DD><I>
+Assignment operator
+
+</I>
+
+</DL>
+</DL></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+Encapsulate an XML parse error or warning.
+
+<p>This exception will include information for locating the error
+in the original XML document.  Note that although the application
+will receive a SAXParseException as the argument to the handlers
+in the ErrorHandler interface, the application is not actually
+required to throw the exception; instead, it can simply read the
+information in it and take a different action.</p>
+
+<p>Since this exception is a subclass of SAXException, it
+inherits the ability to wrap another exception.</p>
+
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and Destructor ">
+<A NAME ="DOC.11.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="SAXParseException">
+<A NAME ="DOC.11.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  SAXParseException(const XMLCh* const message, const <!1><A HREF="Locator.html">Locator</A>& locator)</B></TT>
+<DD>
+Create a new SAXParseException from a message and a Locator.
+
+<p>This constructor is especially useful when an application is
+creating its own exception from within a DocumentHandler
+callback.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>message</B> -  The error or warning message.
+<br><B>locator</B> -  The locator object for the error or warning.
+<br><DT><B>See Also:</B><DD><A HREF="Locator.html#Locator">Locator</A>
+<br><A HREF="Parser.html#setLocale">setLocale</A> <br></DL><P>
+<A NAME="SAXParseException">
+<A NAME ="DOC.11.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  SAXParseException( const XMLCh* const message, const XMLCh* const publicId, const XMLCh* const systemId, const unsigned int lineNumber, const unsigned int columnNumber )</B></TT>
+<DD>
+Create a new SAXParseException.
+
+<p>This constructor is most useful for parser writers.</p>
+
+<p>If the system identifier is a URL, the parser must resolve it
+fully before creating the exception.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>message</B> -  The error or warning message.
+<br><B>publicId</B> -  The public identifer of the entity that generated
+the error or warning.
+<br><B>systemId</B> -  The system identifer of the entity that generated
+the error or warning.
+<br><B>lineNumber</B> -  The line number of the end of the text that
+caused the error or warning.
+<br><B>columnNumber</B> -  The column number of the end of the text that
+caused the error or warning.
+<br><DT><B>See Also:</B><DD><A HREF="Parser.html#setLocale">setLocale</A><br></DL><P>
+<A NAME="SAXParseException">
+<A NAME ="DOC.11.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  SAXParseException(const <!2><A HREF="SAXParseException.html#DOC.11.1.1">SAXParseException</A>& toCopy)</B></TT>
+<DD>
+Copy constructor
+
+
+<DL><DT><B>Parameters:</B><DD><B>toCopy</B> -  The object to be copied<br></DL><P>
+<A NAME="~SAXParseException">
+<A NAME ="DOC.11.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~SAXParseException()</B></TT>
+<DD>
+Destructor
+<DL></DL><P></DL>
+
+<A NAME="Assignment operator ">
+<A NAME ="DOC.11.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Assignment operator </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="operator=">
+<A NAME ="DOC.11.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="SAXParseException.html#DOC.11.1.1">SAXParseException</A>&  operator=(const <!2><A HREF="SAXParseException.html#DOC.11.1.1">SAXParseException</A>& toAssign)</B></TT>
+<DD>
+Assignment operator
+
+
+<DL><DT><B>Parameters:</B><DD><B>toAssign</B> -  The object to be copied through assignment
+<br></DL><P></DL>
+
+<A NAME="Getter methods ">
+<A NAME ="DOC.11.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Getter methods </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getColumnNumber">
+<A NAME ="DOC.11.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getColumnNumber() const </B></TT>
+<DD>
+The column number of the end of the text where the exception occurred.
+
+<p>The first column in a line is position 1.</p>
+
+
+<DL><DT><B>Returns:</B><DD>An integer representing the column number, or -1
+if none is available.
+
+<DT><B>See Also:</B><DD><A HREF="Locator.html#getColumnNumber">getColumnNumber</A><br></DL><P>
+<A NAME="getLineNumber">
+<A NAME ="DOC.11.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getLineNumber() const </B></TT>
+<DD>
+The line number of the end of the text where the exception occurred.
+
+
+<DL><DT><B>Returns:</B><DD>An integer representing the line number, or -1
+if none is available.
+
+<DT><B>See Also:</B><DD><A HREF="Locator.html#getLineNumber">getLineNumber</A><br></DL><P>
+<A NAME="getPublicId">
+<A NAME ="DOC.11.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getPublicId() const </B></TT>
+<DD>
+Get the public identifier of the entity where the exception occurred.
+
+
+<DL><DT><B>Returns:</B><DD>A string containing the public identifier, or null
+if none is available.
+
+<DT><B>See Also:</B><DD><A HREF="Locator.html#getPublicId">getPublicId</A><br></DL><P>
+<A NAME="getSystemId">
+<A NAME ="DOC.11.3.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getSystemId() const </B></TT>
+<DD>
+Get the system identifier of the entity where the exception occurred.
+
+<p>If the system identifier is a URL, it will be resolved
+fully.</p>
+
+
+<DL><DT><B>Returns:</B><DD>A string containing the system identifier, or null
+if none is available.
+
+<DT><B>See Also:</B><DD><A HREF="Locator.html#getSystemId">getSystemId</A><br></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL><DT><B>See Also:</B><DD><A HREF="SAXException.html#SAXException">SAXException</A>
+<br><A HREF="Locator.html#Locator">Locator</A>
+<br><A HREF="ErrorHandler.html#ErrorHandler">ErrorHandler</A><br></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

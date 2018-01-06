@@ -1,0 +1,153 @@
+<html><head><TITLE>StdInInputSource</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   StdInInputSource : public <!2><A HREF="InputSource.html#DOC.7.5.5">InputSource</A> </H2><BLOCKQUOTE>
+
+This class is a derivative of the standard InputSource class
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CInputSource,MInputSource.html,CStdInInputSource,MStdInInputSource.html">
+<param name=before value="M,M">
+<param name=after value="Md_,M">
+<param name=indent value="0,1">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public Methods</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.35.2"> <IMG BORDER=0 SRC=icon1.gif></A> BinInputStream* </TD><TD><B>makeStream</B> () const <br>
+<I>
+This method will return a binary input stream derivative that will
+parse from the standard input of the local host</I>
+</TD></TR></TABLE></DL>
+<hr><H3>Inherited from <A HREF="InputSource.html">InputSource:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P>protected  <B>Constructors and Destructor </B>
+
+<DL>
+<DT><A HREF="#DOC.7.5.5"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>() </B>
+ <DD><I>Default constructor </I>
+<DT><A HREF="#DOC.7.5.1"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>(const XMLCh* const systemId) </B>
+ <DD><I>Constructor with a system identifier as XMLCh type</I>
+<DT><A HREF="#DOC.7.5.2"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>( const XMLCh* const systemId, const XMLCh* const publicId ) </B>
+ <DD><I>Constructor with a system and public identifiers 
+</I>
+<DT><A HREF="#DOC.7.5.3"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>(const char* const systemId) </B>
+ <DD><I>Constructor witha system identifier as string 
+</I>
+<DT><A HREF="#DOC.7.5.4"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>( const char* const systemId, const char* const publicId ) </B>
+ <DD><I>Constructor witha system and public identifiers</I>
+
+</DL>
+<DT><P> <B>Destructor </B>
+
+<DL>
+<DT><A HREF="#DOC.7.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <B>~InputSource</B>() </B>
+ <DD><I>
+Destructor
+</I>
+
+</DL>
+<DT><P> <B>Getter methods </B>
+
+<DL>
+<DT><A HREF="#DOC.7.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh*  <B>getEncoding</B>() const  </B>
+ <DD><I>
+An input source can be set to force the parser to assume a particular
+encoding for the data that input source reprsents, via the setEncoding()
+method</I>
+<DT><A HREF="#DOC.7.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh*  <B>getPublicId</B>() const  </B>
+ <DD><I>
+Get the public identifier for this input source</I>
+<DT><A HREF="#DOC.7.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh*  <B>getSystemId</B>() const  </B>
+ <DD><I>
+Get the system identifier for this input source</I>
+
+</DL>
+<DT><P> <B>Setter methods </B>
+
+<DL>
+<DT><A HREF="#DOC.7.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setEncoding</B>(const XMLCh* const encodingStr) </B>
+ <DD><I>
+Set the encoding which will be required for use with the XML text read
+via a stream opened by this input source</I>
+<DT><A HREF="#DOC.7.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setPublicId</B>(const XMLCh* const publicId) </B>
+ <DD><I>
+Set the public identifier for this input source</I>
+<DT><A HREF="#DOC.7.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setSystemId</B>(const XMLCh* const systemId) </B>
+ <DD><I>
+Set the system identifier for this input source</I>
+
+</DL>
+<DT><P> <B>Virtual input source interface </B>
+
+<DL>
+<DT><A HREF="#DOC.7.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  BinInputStream*  <B>makeStream</B>() const  </B>
+ <DD><I>
+Makes the byte stream for this input source</I>
+
+</DL>
+</DL></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This class is a derivative of the standard InputSource class. It provides
+for the parser access to data via the standard input. This input source
+is not commonly used, but can be useful when implementing such things
+as pipe based tools which exchange XML data.
+
+As with all InputSource derivatives. The primary objective of an input
+source is to create an input stream via which the parser can spool in
+data from the referenced source.
+
+</BLOCKQUOTE>
+<DL>
+<DL>
+
+<A NAME="StdInInputSource">
+<A NAME ="DOC.35.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  StdInInputSource()</B></TT>
+<DD>
+Since the standard input is a canned source, the constructor is very
+simple. It just uses local platform services to open up the standard
+input source as file, a new handleof which it gives to each new stream
+it creates.
+<DL></DL><P></DL>
+
+<A NAME="makeStream">
+<A NAME ="DOC.35.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> BinInputStream*  makeStream() const </B></TT>
+<DD>
+This method will return a binary input stream derivative that will
+parse from the standard input of the local host.
+
+
+<DL><DT><B>Returns:</B><DD>A dynamically allocated binary input stream derivative that
+can parse from the standardinput.
+</DL><P></DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

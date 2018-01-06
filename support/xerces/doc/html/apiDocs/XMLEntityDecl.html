@@ -1,0 +1,410 @@
+<html><head><TITLE>XMLEntityDecl</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   XMLEntityDecl  </H2><BLOCKQUOTE>
+
+This class defines that core information that defines an XML entity, no
+matter what validator is used
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CXMLEntityDecl,MXMLEntityDecl.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.46.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.46.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>XMLEntityDecl</B> ()<br>
+<I>
+Deafult Constructor</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>XMLEntityDecl</B> ( const XMLCh* const entName )<br>
+<I>Constructor with a const entity name
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>XMLEntityDecl</B> ( const XMLCh* const entName, const XMLCh* const value )<br>
+<I>
+Constructor with a const entity name and value
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>XMLEntityDecl</B> ( const XMLCh* const entName, const XMLCh value )<br>
+<I>
+Constructor with a const entity name and single XMLCh value
+
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.46.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual </TD><TD><B>~XMLEntityDecl</B> ()<br>
+<I>
+Default destructor</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Getter methods </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.46.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getId</B> () const <br>
+<I>
+Gets the pool id of this entity</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getName</B> () const <br>
+<I>
+Returns a const pointer to the name of this entity decl</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getNotationName</B> () const <br>
+<I>
+Gets the notation name, if any, declared for this entity</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.4.4"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getPublicId</B> () const <br>
+<I>
+Gets the public id declared for this entity</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.4.5"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getSystemId</B> () const <br>
+<I>
+Gets the system id declared for this entity</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.4.6"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getValue</B> () const <br>
+<I>
+This method returns the value of an internal entity</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.4.7"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getValueLen</B> () const <br>
+<I>
+This method returns the number of characters in the value returned
+by getValue()</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.4.8"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>isExternal</B> () const <br>
+<I>
+Indicates that this entity is an external entity</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.4.9"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>isUnparsed</B> () const <br>
+<I>
+Indicates whether this entity is unparsed</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.5"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Setter methods </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.46.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setName</B> ( const XMLCh* const entName )<br>
+<I>
+This method will set the entity name</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.5.2"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setNotationName</B> (const XMLCh* const newName)<br>
+<I>
+This method will set the notation name for this entity</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.5.3"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setPublicId</B> (const XMLCh* const newId)<br>
+<I>
+This method will set a new public id on this entity</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.5.4"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setSystemId</B> (const XMLCh* const newId)<br>
+<I>
+This method will set a new sysetm id on this entity</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.5.5"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setValue</B> (const XMLCh* const newValue)<br>
+<I>
+This method will set a new value for this entity</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.6"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Setter methods </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.46.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getKey</B> () const <br>
+<I>
+This method allows objects of this class to be used within a standard
+keyed collection used commonly within the parser system</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>The pure virtual methods in this interface. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.46.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool </TD><TD><B>getDeclaredInIntSubset</B> () const <br>
+<I>Get the 'declared in internal subset' flag
+
+Gets the state of the flag which indicates whether the entity was
+declared in the internal or external subset</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool </TD><TD><B>getIsParameter</B> () const <br>
+<I>Get the 'is parameter entity' flag
+
+Gets the state of the flag which indicates whether this entity is
+a parameter entity</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.46.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool </TD><TD><B>getIsSpecialChar</B> () const <br>
+<I>Get the 'is special char entity' flag
+
+Gets the state of the flag that indicates whether this entity is
+one of the special, intrinsically supported character entities</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This class defines that core information that defines an XML entity, no
+matter what validator is used. Each validator will create a derivative
+of this class which adds any extra information it requires.
+
+This class supports keyed collection semantics via the getKey() method
+which extracts the key field, the entity name in this case. The name will
+have whatever form is deemed appropriate for the type of validator in
+use.
+
+When setting the fields of this class, you must make sure that you do
+not set conflicting values. For instance, an internal entity cannot have
+a notation name. And an external entity cannot have a value string.
+These rules are defined by the XML specification. In most cases, these
+objects are created by validator objects as they parse a DTD or Schema
+or whatever, at which time they confirm the correctness of the data before
+creating the entity decl object.
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors ">
+<A NAME ="DOC.46.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="XMLEntityDecl">
+<A NAME ="DOC.46.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  XMLEntityDecl()</B></TT>
+<DD>
+Deafult Constructor
+<DL></DL><P>
+<A NAME="XMLEntityDecl">
+<A NAME ="DOC.46.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  XMLEntityDecl( const XMLCh* const entName )</B></TT>
+<DD>Constructor with a const entity name
+
+
+<DL><DT><B>Parameters:</B><DD><B>entName</B> -  The new name to give to this entity.<br></DL><P>
+<A NAME="XMLEntityDecl">
+<A NAME ="DOC.46.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  XMLEntityDecl( const XMLCh* const entName, const XMLCh* const value )</B></TT>
+<DD>
+Constructor with a const entity name and value
+
+
+<DL><DT><B>Parameters:</B><DD><B>entName</B> -  The new name to give to this entity.
+<br><B>value</B> -    The new value to give to this entity name.<br></DL><P>
+<A NAME="XMLEntityDecl">
+<A NAME ="DOC.46.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  XMLEntityDecl( const XMLCh* const entName, const XMLCh value )</B></TT>
+<DD>
+Constructor with a const entity name and single XMLCh value
+
+
+<DL><DT><B>Parameters:</B><DD><B>entName</B> -  The new name to give to this entity.
+<br><B>value</B> -    The new value to give to this entity name.<br></DL><P></DL>
+
+<A NAME="Destructor ">
+<A NAME ="DOC.46.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~XMLEntityDecl">
+<A NAME ="DOC.46.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  ~XMLEntityDecl()</B></TT>
+<DD>
+Default destructor
+<DL></DL><P></DL>
+
+<A NAME="The pure virtual methods in this interface. ">
+<A NAME ="DOC.46.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  The pure virtual methods in this interface. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getDeclaredInIntSubset">
+<A NAME ="DOC.46.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  getDeclaredInIntSubset() const </B></TT>
+<DD>Get the 'declared in internal subset' flag
+
+Gets the state of the flag which indicates whether the entity was
+declared in the internal or external subset. Some structural 
+description languages might not have an internal subset concept, in
+which case this will always return false.
+<DL></DL><P>
+<A NAME="getIsParameter">
+<A NAME ="DOC.46.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  getIsParameter() const </B></TT>
+<DD>Get the 'is parameter entity' flag
+
+Gets the state of the flag which indicates whether this entity is
+a parameter entity. If not, then its a general entity.
+<DL></DL><P>
+<A NAME="getIsSpecialChar">
+<A NAME ="DOC.46.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  getIsSpecialChar() const </B></TT>
+<DD>Get the 'is special char entity' flag
+
+Gets the state of the flag that indicates whether this entity is
+one of the special, intrinsically supported character entities
+<DL></DL><P></DL>
+
+<A NAME="Getter methods ">
+<A NAME ="DOC.46.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Getter methods </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getId">
+<A NAME ="DOC.46.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getId() const </B></TT>
+<DD>
+Gets the pool id of this entity. Validators maintain all decls in 
+pools, from which they can be quickly extracted via id.
+<DL></DL><P>
+<A NAME="getName">
+<A NAME ="DOC.46.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getName() const </B></TT>
+<DD>
+Returns a const pointer to the name of this entity decl. This name
+will be in whatever format is appropriate for the type of validator
+in use.
+<DL></DL><P>
+<A NAME="getNotationName">
+<A NAME ="DOC.46.4.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getNotationName() const </B></TT>
+<DD>
+Gets the notation name, if any, declared for this entity. If this
+entity is not a notation type entity, it will be a null pointer.
+<DL></DL><P>
+<A NAME="getPublicId">
+<A NAME ="DOC.46.4.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getPublicId() const </B></TT>
+<DD>
+Gets the public id declared for this entity. Public ids are optional
+so it can be a null pointer.
+<DL></DL><P>
+<A NAME="getSystemId">
+<A NAME ="DOC.46.4.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getSystemId() const </B></TT>
+<DD>
+Gets the system id declared for this entity. The system id is required
+so this method should never return a null pointers.
+<DL></DL><P>
+<A NAME="getValue">
+<A NAME ="DOC.46.4.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getValue() const </B></TT>
+<DD>
+This method returns the value of an internal entity. If this is not
+an internal entity (i.e. its external), then this will be a null
+pointer.
+<DL></DL><P>
+<A NAME="getValueLen">
+<A NAME ="DOC.46.4.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getValueLen() const </B></TT>
+<DD>
+This method returns the number of characters in the value returned
+by getValue(). If this entity is external, this will be zero since
+an external entity has no internal value.
+<DL></DL><P>
+<A NAME="isExternal">
+<A NAME ="DOC.46.4.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  isExternal() const </B></TT>
+<DD>
+Indicates that this entity is an external entity. If not, then it is
+assumed to be an internal entity, suprise.
+<DL></DL><P>
+<A NAME="isUnparsed">
+<A NAME ="DOC.46.4.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  isUnparsed() const </B></TT>
+<DD>
+Indicates whether this entity is unparsed. This is meaningless for
+internal entities. Some external entities are unparsed in that they
+refer to something other than XML source.
+<DL></DL><P></DL>
+
+<A NAME="Setter methods ">
+<A NAME ="DOC.46.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Setter methods </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="setName">
+<A NAME ="DOC.46.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setName( const XMLCh* const entName )</B></TT>
+<DD>
+This method will set the entity name. The format of this name is
+defined by the particular validator in use, since it will be the
+one who creates entity definitions as it parses the DTD, Schema,
+ect...
+
+
+<DL><DT><B>Parameters:</B><DD><B>entName</B> -    The new name to give to this entity.<br></DL><P>
+<A NAME="setNotationName">
+<A NAME ="DOC.46.5.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setNotationName(const XMLCh* const newName)</B></TT>
+<DD>
+This method will set the notation name for this entity. By setting
+this, you are indicating that this is an unparsed external entity.
+
+
+<DL><DT><B>Parameters:</B><DD><B>newName</B> -    The new notation name to give to this entity.<br></DL><P>
+<A NAME="setPublicId">
+<A NAME ="DOC.46.5.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setPublicId(const XMLCh* const newId)</B></TT>
+<DD>
+This method will set a new public id on this entity. The public id
+has no particular form and is purely for client consumption.
+
+
+<DL><DT><B>Parameters:</B><DD><B>newId</B> -      The new public id to give to this entity.<br></DL><P>
+<A NAME="setSystemId">
+<A NAME ="DOC.46.5.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setSystemId(const XMLCh* const newId)</B></TT>
+<DD>
+This method will set a new sysetm id on this entity. This will
+then control where the source for this entity lives. If it is
+an internal entity, then the system id is only for bookkeeping
+purposes, and to allow any external entities referenced from
+within the entity to be correctly resolved.
+
+
+<DL><DT><B>Parameters:</B><DD><B>newId</B> -      The new system id to give to the entity.<br></DL><P>
+<A NAME="setValue">
+<A NAME ="DOC.46.5.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setValue(const XMLCh* const newValue)</B></TT>
+<DD>
+This method will set a new value for this entity. This is only
+valid if the entity is to be an internal entity. By setting this
+field, you are indicating that the entity is internal.
+
+
+<DL><DT><B>Parameters:</B><DD><B>newValue</B> -   The new value to give to this entity.<br></DL><P></DL>
+
+<A NAME="Setter methods ">
+<A NAME ="DOC.46.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Setter methods </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getKey">
+<A NAME ="DOC.46.6.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getKey() const </B></TT>
+<DD>
+This method allows objects of this class to be used within a standard
+keyed collection used commonly within the parser system. The collection
+calls this method to get the key (usually to hash it) by which the
+object is to be stored.
+<DL></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

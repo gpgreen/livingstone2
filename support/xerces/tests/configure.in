@@ -1,0 +1,94 @@
+# $Log: configure.in,v $
+# Revision 1.1.1.1  2000/04/08 04:38:29  kurien
+# XML parser for C++
+#
+#
+# Revision 1.5  2000/02/26 05:45:17  rahulj
+# Fixed a typo.
+#
+# Revision 1.4  2000/02/26 05:17:06  rahulj
+# Distinguish between version of OS under HPUX.
+#
+# Revision 1.3  2000/02/18 22:52:07  abagchi
+# Added Traversal
+#
+# Revision 1.2  2000/02/17 20:18:20  abagchi
+# Added Encoding Test
+#
+# Revision 1.1  2000/01/31 22:21:53  aruna1
+# initial checkin
+#
+#
+dnl Process this file with autoconf to produce a configure script
+AC_INIT(DOM/DOMTest/DTest.h)
+
+dnl Checks for programs
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_INSTALL
+AC_CHECK_PROG(AUTOCONF, autoconf, autoconf, true)
+
+dnl Checks for libraries
+AC_CHECK_LIB(m, floor)
+
+dnl special pthread handling (AIX uses pthreads instead of pthread)
+AC_CHECK_LIB(pthread, pthread_create)
+if test $ac_cv_lib_pthread_pthread_create = no; then
+AC_CHECK_LIB(pthreads, pthread_create)
+fi
+
+dnl Checks for header files
+AC_CHECK_HEADERS(inttypes.h)
+if test $ac_cv_header_inttypes_h = no; then
+HAVE_INTTYPES_H=0
+else
+HAVE_INTTYPES_H=1
+fi
+AC_SUBST(HAVE_INTTYPES_H)
+
+dnl Determine the host system and Makefile fragment
+AC_CANONICAL_HOST
+
+dnl Platform-specific Makefile setup
+case "${host}" in
+        *-*-solaris*)   platform=SOLARIS ;;
+        *-*-linux*)     platform=LINUX ;;
+        *-*-aix*)       platform=AIX ;;
+        *-*-hp*)        platform=HPUX ;
+                        case "${host}" in
+                            *-*-hpux11*)  osver=HPUX11;;
+                            *-*-hpux10*)  osver=HPUX10;;
+                            *)            osver=HPUX11;;
+                        esac;;
+        *-*-mvs*)       platform=OS390 ;;
+        *)              platform=UNKNOWN ;;
+esac
+AC_SUBST(platform)
+AC_SUBST(osver)
+
+compiler=${CXX}
+AC_SUBST(compiler)
+
+AC_SUBST(prefix)
+
+cxxflags=${CXXFLAGS}
+AC_SUBST(cxxflags)
+
+cflags=${CFLAGS}
+AC_SUBST(cflags)
+
+libs=${LIBS}
+AC_SUBST(libs)
+
+
+dnl output the Makefiles
+AC_OUTPUT([Makefile \
+DOM/DOMMemTest/Makefile \
+DOM/DOMTest/Makefile \
+DOM/Traversal/Makefile \
+EncodingTest/Makefile \
+ThreadTest/Makefile]) 
+
+echo
+echo Having build problems? Read instructions at http://xml.apache.org/xerces-c/build.html
+

@@ -1,0 +1,207 @@
+<html><head><TITLE>ErrorHandler</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   ErrorHandler  </H2><BLOCKQUOTE>
+
+Basic interface for SAX error handlers
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CErrorHandler,MErrorHandler.html,CHandlerBase,MHandlerBase.html">
+<param name=before value="M,M^_">
+<param name=after value="M,M">
+<param name=indent value="0,0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.5.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>ErrorHandler</B> ()<br>
+<I>Default constructor </I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.5.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual </TD><TD><B>~ErrorHandler</B> ()<br>
+<I>Desctructor </I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.5.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>The error handler interface </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.5.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>warning</B> (const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)<br>
+<I>
+Receive notification of a warning</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.5.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>error</B> (const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)<br>
+<I>
+Receive notification of a recoverable error</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.5.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>fatalError</B> (const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)<br>
+<I>
+Receive notification of a non-recoverable error</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.5.2.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>resetErrors</B> ()<br>
+<I>
+Reset the Error handler object on its reuse
+
+<p>This method helps in reseting the Error handler object
+implementational defaults each time the Error handler is begun</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+Basic interface for SAX error handlers.
+
+<p>If a SAX application needs to implement customized error
+handling, it must implement this interface and then register an
+instance with the SAX parser using the parser's setErrorHandler
+method.  The parser will then report all errors and warnings
+through this interface.</p>
+
+<p> The parser shall use this interface instead of throwing an
+exception: it is up to the application whether to throw an
+exception for different types of errors and warnings.  Note,
+however, that there is no requirement that the parser continue to
+provide useful information after a call to fatalError (in other
+words, a SAX driver class could catch an exception and report a
+fatalError).</p>
+
+<p>The HandlerBase class provides a default implementation of this
+interface, ignoring warnings and recoverable errors and throwing a
+SAXParseException for fatal errors.  An application may extend
+that class rather than implementing the complete interface
+itself.</p>
+
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and Destructor ">
+<A NAME ="DOC.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="ErrorHandler">
+<A NAME ="DOC.5.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ErrorHandler()</B></TT>
+<DD>Default constructor 
+<DL></DL><P>
+<A NAME="~ErrorHandler">
+<A NAME ="DOC.5.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  ~ErrorHandler()</B></TT>
+<DD>Desctructor 
+<DL></DL><P></DL>
+
+<A NAME="The error handler interface ">
+<A NAME ="DOC.5.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  The error handler interface </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="warning">
+<A NAME ="DOC.5.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  warning(const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)</B></TT>
+<DD>
+Receive notification of a warning.
+
+<p>SAX parsers will use this method to report conditions that
+are not errors or fatal errors as defined by the XML 1.0
+recommendation.  The default behaviour is to take no action.</p>
+
+<p>The SAX parser must continue to provide normal parsing events
+after invoking this method: it should still be possible for the
+application to process the document through to the end.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>exception</B> -  The warning information encapsulated in a
+SAX parse exception.
+<br><DT><B>See Also:</B><DD><A HREF="SAXParseException.html#SAXParseException">SAXParseException</A> <br></DL><P>
+<A NAME="error">
+<A NAME ="DOC.5.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  error(const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)</B></TT>
+<DD>
+Receive notification of a recoverable error.
+
+<p>This corresponds to the definition of "error" in section 1.2
+of the W3C XML 1.0 Recommendation.  For example, a validating
+parser would use this callback to report the violation of a
+validity constraint.  The default behaviour is to take no
+action.</p>
+
+<p>The SAX parser must continue to provide normal parsing events
+after invoking this method: it should still be possible for the
+application to process the document through to the end.  If the
+application cannot do so, then the parser should report a fatal
+error even if the XML 1.0 recommendation does not require it to
+do so.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>exception</B> -  The error information encapsulated in a
+SAX parse exception.
+<br><DT><B>See Also:</B><DD><A HREF="SAXParseException.html#SAXParseException">SAXParseException</A> <br></DL><P>
+<A NAME="fatalError">
+<A NAME ="DOC.5.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  fatalError(const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)</B></TT>
+<DD>
+Receive notification of a non-recoverable error.
+
+<p>This corresponds to the definition of "fatal error" in
+section 1.2 of the W3C XML 1.0 Recommendation.  For example, a
+parser would use this callback to report the violation of a
+well-formedness constraint.</p>
+
+<p>The application must assume that the document is unusable
+after the parser has invoked this method, and should continue
+(if at all) only for the sake of collecting addition error
+messages: in fact, SAX parsers are free to stop reporting any
+other events once this method has been invoked.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>exception</B> -  The error information encapsulated in a
+SAX parse exception.  
+<br><DT><B>See Also:</B><DD><A HREF="SAXParseException.html#SAXParseException">SAXParseException</A><br></DL><P>
+<A NAME="resetErrors">
+<A NAME ="DOC.5.2.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetErrors()</B></TT>
+<DD>
+Reset the Error handler object on its reuse
+
+<p>This method helps in reseting the Error handler object
+implementational defaults each time the Error handler is begun.</p>
+
+<DL></DL><P></DL>
+</DL>
+<hr>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="HandlerBase.html"> HandlerBase </A><br>
+</DL>
+<DL><DT><B>See Also:</B><DD><A HREF="Parser.html#setErrorHandler">setErrorHandler</A>
+<br><A HREF="SAXParseException.html#SAXParseException">SAXParseException</A> 
+<br><A HREF="HandlerBase.html#HandlerBase">HandlerBase</A><br></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

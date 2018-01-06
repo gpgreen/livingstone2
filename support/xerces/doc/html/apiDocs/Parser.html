@@ -1,0 +1,287 @@
+<html><head><TITLE>Parser</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   Parser  </H2><BLOCKQUOTE>
+
+Basic interface for SAX (Simple API for XML) parsers
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CParser,MParser.html,CSAXParser,MSAXParser.html">
+<param name=before value="M,M^_">
+<param name=after value="M,M">
+<param name=indent value="0,0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.9.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.9.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Parser</B> ()<br>
+<I>The default constructor </I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.9.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual </TD><TD><B>~Parser</B> ()<br>
+<I>The destructor </I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.9.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>The parser interfaces </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.9.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>setEntityResolver</B> (<!1><A HREF="EntityResolver.html">EntityResolver</A>* const resolver)<br>
+<I>
+Allow an application to register a custom entity resolver</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.9.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>setDTDHandler</B> (<!1><A HREF="DTDHandler.html">DTDHandler</A>* const handler)<br>
+<I>
+Allow an application to register a DTD event handler</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.9.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>setDocumentHandler</B> (<!1><A HREF="DocumentHandler.html">DocumentHandler</A>* const handler)<br>
+<I>
+Allow an application to register a document event handler</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.9.2.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>setErrorHandler</B> (<!1><A HREF="ErrorHandler.html">ErrorHandler</A>* const handler)<br>
+<I>
+Allow an application to register an error event handler</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.9.2.5"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>parse</B> ( const <!1><A HREF="InputSource.html">InputSource</A>& source, const bool reuseValidator = false )<br>
+<I>
+Parse an XML document</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.9.2.6"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>parse</B> ( const XMLCh* const systemId, const bool reuseValidator = false )<br>
+<I>
+Parse an XML document from a system identifier (URI)</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.9.2.7"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>parse</B> ( const char* const systemId, const bool reuseValidator = false )<br>
+<I>
+Parse an XML document from a system identifier (URI)</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+Basic interface for SAX (Simple API for XML) parsers.
+
+All SAX parsers must implement this basic interface: it allows
+applications to register handlers for different types of events
+and to initiate a parse from a URI, or a character stream.
+
+All SAX parsers must also implement a zero-argument constructor
+(though other constructors are also allowed).
+
+SAX parsers are reusable but not re-entrant: the application
+may reuse a parser object (possibly with a different input source)
+once the first parse has completed successfully, but it may not
+invoke the parse() methods recursively within a parse.
+
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and Destructor ">
+<A NAME ="DOC.9.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="Parser">
+<A NAME ="DOC.9.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Parser()</B></TT>
+<DD>The default constructor 
+<DL></DL><P>
+<A NAME="~Parser">
+<A NAME ="DOC.9.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  ~Parser()</B></TT>
+<DD>The destructor 
+<DL></DL><P></DL>
+
+<A NAME="The parser interfaces ">
+<A NAME ="DOC.9.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  The parser interfaces </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="setEntityResolver">
+<A NAME ="DOC.9.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  setEntityResolver(<!1><A HREF="EntityResolver.html">EntityResolver</A>* const resolver)</B></TT>
+<DD>
+Allow an application to register a custom entity resolver.
+
+If the application does not register an entity resolver, the
+SAX parser will resolve system identifiers and open connections
+to entities itself (this is the default behaviour implemented in
+HandlerBase).
+
+Applications may register a new or different entity resolver
+in the middle of a parse, and the SAX parser must begin using
+the new resolver immediately.
+
+
+<DL><DT><B>Parameters:</B><DD><B>resolver</B> -  The object for resolving entities.
+<br><DT><B>See Also:</B><DD><A HREF="EntityResolver.html#EntityResolver">EntityResolver</A>
+<br><A HREF="HandlerBase.html#HandlerBase">HandlerBase</A><br></DL><P>
+<A NAME="setDTDHandler">
+<A NAME ="DOC.9.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  setDTDHandler(<!1><A HREF="DTDHandler.html">DTDHandler</A>* const handler)</B></TT>
+<DD>
+Allow an application to register a DTD event handler.
+
+If the application does not register a DTD handler, all DTD
+events reported by the SAX parser will be silently ignored (this
+is the default behaviour implemented by HandlerBase).
+
+Applications may register a new or different handler in the middle
+of a parse, and the SAX parser must begin using the new handler
+immediately.
+
+
+<DL><DT><B>Parameters:</B><DD><B>handler</B> -  The DTD handler.
+<br><DT><B>See Also:</B><DD><A HREF="DTDHandler.html#DTDHandler">DTDHandler</A>
+<br><A HREF="HandlerBase.html#HandlerBase">HandlerBase</A><br></DL><P>
+<A NAME="setDocumentHandler">
+<A NAME ="DOC.9.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  setDocumentHandler(<!1><A HREF="DocumentHandler.html">DocumentHandler</A>* const handler)</B></TT>
+<DD>
+Allow an application to register a document event handler.
+
+If the application does not register a document handler, all
+document events reported by the SAX parser will be silently
+ignored (this is the default behaviour implemented by
+HandlerBase).
+
+Applications may register a new or different handler in the
+middle of a parse, and the SAX parser must begin using the new
+handler immediately.
+
+
+<DL><DT><B>Parameters:</B><DD><B>handler</B> -  The document handler.
+<br><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#DocumentHandler">DocumentHandler</A>
+<br><A HREF="HandlerBase.html#HandlerBase">HandlerBase</A><br></DL><P>
+<A NAME="setErrorHandler">
+<A NAME ="DOC.9.2.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  setErrorHandler(<!1><A HREF="ErrorHandler.html">ErrorHandler</A>* const handler)</B></TT>
+<DD>
+Allow an application to register an error event handler.
+
+If the application does not register an error event handler,
+all error events reported by the SAX parser will be silently
+ignored, except for fatalError, which will throw a SAXException
+(this is the default behaviour implemented by HandlerBase).
+
+Applications may register a new or different handler in the
+middle of a parse, and the SAX parser must begin using the new
+handler immediately.
+
+
+<DL><DT><B>Parameters:</B><DD><B>handler</B> -  The error handler.
+<br><DT><B>See Also:</B><DD><A HREF="ErrorHandler.html#ErrorHandler">ErrorHandler</A>
+<br><A HREF="SAXException.html#SAXException">SAXException</A>
+<br><A HREF="HandlerBase.html#HandlerBase">HandlerBase</A><br></DL><P>
+<A NAME="parse">
+<A NAME ="DOC.9.2.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  parse( const <!1><A HREF="InputSource.html">InputSource</A>& source, const bool reuseValidator = false )</B></TT>
+<DD>
+Parse an XML document.
+
+The application can use this method to instruct the SAX parser
+to begin parsing an XML document from any valid input
+source (a character stream, a byte stream, or a URI).
+
+Applications may not invoke this method while a parse is in
+progress (they should create a new Parser instead for each
+additional XML document).  Once a parse is complete, an
+application may reuse the same Parser object, possibly with a
+different input source.
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><B>XMLException</B>  An exception from the parser or client
+handler code.
+<br><DT><B>Parameters:</B><DD><B>source</B> -  The input source for the top-level of the
+XML document.
+<br><B>reuseValidator</B> -  Indicates whether the validator should be
+reused, ignoring any external subset. If true, there
+cannot be any internal subset.
+<br><DT><B>See Also:</B><DD><A HREF="InputSource.html#InputSource">InputSource</A>
+<br><A HREF="#setEntityResolver">setEntityResolver</A>
+<br><A HREF="#setDTDHandler">setDTDHandler</A>
+<br><A HREF="#setDocumentHandler">setDocumentHandler</A>
+<br><A HREF="#setErrorHandler">setErrorHandler</A><br></DL><P>
+<A NAME="parse">
+<A NAME ="DOC.9.2.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  parse( const XMLCh* const systemId, const bool reuseValidator = false )</B></TT>
+<DD>
+Parse an XML document from a system identifier (URI).
+
+This method is a shortcut for the common case of reading a
+document from a system identifier.  It is the exact equivalent
+of the following:
+
+parse(new URLInputSource(systemId));
+
+If the system identifier is a URL, it must be fully resolved
+by the application before it is passed to the parser.
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><B>XMLException</B>  An exception from the parser or client
+handler code.
+<br><DT><B>Parameters:</B><DD><B>systemId</B> -  The system identifier (URI).
+<br><B>reuseValidator</B> -  Indicates whether the validator should be
+reused, ignoring any external subset. If true, there
+cannot be any internal subset.
+<br><DT><B>See Also:</B><DD><A HREF="#parse">parse</A>(<!1><A HREF="InputSource.html">InputSource</A>)<br></DL><P>
+<A NAME="parse">
+<A NAME ="DOC.9.2.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  parse( const char* const systemId, const bool reuseValidator = false )</B></TT>
+<DD>
+Parse an XML document from a system identifier (URI).
+
+This method is a shortcut for the common case of reading a
+document from a system identifier.  It is the exact equivalent
+of the following:
+
+parse(new URLInputSource(systemId));
+
+If the system identifier is a URL, it must be fully resolved
+by the application before it is passed to the parser.
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><B>XMLException</B>  An exception from the parser or client
+handler code.
+<br><DT><B>Parameters:</B><DD><B>systemId</B> -  The system identifier (URI).
+<br><B>reuseValidator</B> -  Indicates whether the validator should be
+reused, ignoring any external subset. If true, there
+cannot be any internal subset.
+<br><DT><B>See Also:</B><DD><A HREF="#parse">parse</A>(<!1><A HREF="InputSource.html">InputSource</A>)<br></DL><P></DL>
+</DL>
+<hr>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="SAXParser.html"> SAXParser </A><br>
+</DL>
+<DL><DT><B>See Also:</B><DD><A HREF="EntityResolver.html#EntityResolver">EntityResolver</A>
+<br><A HREF="DTDHandler.html#DTDHandler">DTDHandler</A>
+<br><A HREF="DocumentHandler.html#DocumentHandler">DocumentHandler</A>
+<br><A HREF="ErrorHandler.html#ErrorHandler">ErrorHandler</A>
+<br><A HREF="HandlerBase.html#HandlerBase">HandlerBase</A>
+<br><A HREF="InputSource.html#InputSource">InputSource</A><br></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

@@ -1,0 +1,169 @@
+<html><head><TITLE>Locator</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   Locator  </H2><BLOCKQUOTE>
+
+Interface for associating a SAX event with a document location
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CLocator,MLocator.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.8.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.8.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Locator</B> ()<br>
+<I>Default constructor </I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.8.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual </TD><TD><B>~Locator</B> ()<br>
+<I>Destructor </I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.8.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>The locator interface </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.8.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getPublicId</B> () const <br>
+<I>
+Return the public identifier for the current document event</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.8.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getSystemId</B> () const <br>
+<I>
+Return the system identifier for the current document event</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.8.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  int </TD><TD><B>getLineNumber</B> () const <br>
+<I>
+Return the line number where the current document event ends</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.8.2.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  int </TD><TD><B>getColumnNumber</B> () const <br>
+<I>
+Return the column number where the current document event ends</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+Interface for associating a SAX event with a document location.
+
+<p>If a SAX parser provides location information to the SAX
+application, it does so by implementing this interface and then
+passing an instance to the application using the document
+handler's setDocumentLocator method.  The application can use the
+object to obtain the location of any other document handler event
+in the XML source document.</p>
+
+<p>Note that the results returned by the object will be valid only
+during the scope of each document handler method: the application
+will receive unpredictable results if it attempts to use the
+locator at any other time.</p>
+
+<p>SAX parsers are not required to supply a locator, but they are
+very strong encouraged to do so.  If the parser supplies a
+locator, it must do so before reporting any other document events.
+If no locator has been set by the time the application receives
+the startDocument event, the application should assume that a
+locator is not available.</p>
+
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and Destructor ">
+<A NAME ="DOC.8.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="Locator">
+<A NAME ="DOC.8.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Locator()</B></TT>
+<DD>Default constructor 
+<DL></DL><P>
+<A NAME="~Locator">
+<A NAME ="DOC.8.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  ~Locator()</B></TT>
+<DD>Destructor 
+<DL></DL><P></DL>
+
+<A NAME="The locator interface ">
+<A NAME ="DOC.8.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  The locator interface </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getPublicId">
+<A NAME ="DOC.8.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getPublicId() const </B></TT>
+<DD>
+Return the public identifier for the current document event.
+<p>This will be the public identifier
+
+<DL><DT><B>Returns:</B><DD>A string containing the public identifier, or
+null if none is available.
+
+<DT><B>See Also:</B><DD><A HREF="#getSystemId">getSystemId</A><br></DL><P>
+<A NAME="getSystemId">
+<A NAME ="DOC.8.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getSystemId() const </B></TT>
+<DD>
+Return the system identifier for the current document event.
+
+<p>If the system identifier is a URL, the parser must resolve it
+fully before passing it to the application.</p>
+
+
+<DL><DT><B>Returns:</B><DD>A string containing the system identifier, or null
+if none is available.
+
+<DT><B>See Also:</B><DD><A HREF="#getPublicId">getPublicId</A><br></DL><P>
+<A NAME="getLineNumber">
+<A NAME ="DOC.8.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  int  getLineNumber() const </B></TT>
+<DD>
+Return the line number where the current document event ends.
+Note that this is the line position of the first character
+after the text associated with the document event.
+
+<DL><DT><B>Returns:</B><DD>The line number, or -1 if none is available.
+
+<DT><B>See Also:</B><DD><A HREF="#getColumnNumber">getColumnNumber</A><br></DL><P>
+<A NAME="getColumnNumber">
+<A NAME ="DOC.8.2.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  int  getColumnNumber() const </B></TT>
+<DD>
+Return the column number where the current document event ends.
+Note that this is the column number of the first
+character after the text associated with the document
+event.  The first column in a line is position 1.
+
+<DL><DT><B>Returns:</B><DD>The column number, or -1 if none is available.
+
+<DT><B>See Also:</B><DD><A HREF="#getLineNumber">getLineNumber</A><br></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#setDocumentLocator">setDocumentLocator</A> <br></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

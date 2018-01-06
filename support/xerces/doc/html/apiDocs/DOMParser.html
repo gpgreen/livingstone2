@@ -1,0 +1,850 @@
+<html><head><TITLE>DOMParser</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   DOMParser : public <!1><A HREF="XMLDocumentHandler.html">XMLDocumentHandler</A>, public <!1><A HREF="XMLErrorReporter.html">XMLErrorReporter</A>, public <!1><A HREF="XMLEntityHandler.html">XMLEntityHandler</A> </H2><BLOCKQUOTE>
+
+This class implements the Document Object Model (DOM) interface
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=125>
+<param name=classes value="CXMLEntityHandler,MXMLEntityHandler.html,CXMLErrorReporter,MXMLErrorReporter.html,CXMLDocumentHandler,MXMLDocumentHandler.html,CDOMParser,MDOMParser.html">
+<param name=before value="M,M,M,M">
+<param name=after value="Ml_,ML_,MD_,M">
+<param name=indent value="0,0,0,1">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+</DL>
+<hr><H3>Inherited from <A HREF="XMLDocumentHandler.html">XMLDocumentHandler:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P> <B>Destructor </B>
+<DT><P> <B>The document handler interface </B>
+
+<DL>
+<DT><A HREF="#DOC.44.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>docCharacters</B>( const XMLCh* const chars, const unsigned int length, const bool cdataSection ) </B>
+ <DD><I>Receive notification of character data</I>
+<DT><A HREF="#DOC.44.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>docComment</B>( const XMLCh* const comment ) </B>
+ <DD><I>Receive notification of comments in the XML content being parsed</I>
+<DT><A HREF="#DOC.44.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>docPI</B>( const XMLCh* const target, const XMLCh* const data ) </B>
+ <DD><I>Receive notification of PI's parsed in the XML content</I>
+<DT><A HREF="#DOC.44.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>endDocument</B>() </B>
+ <DD><I>Receive notification after the scanner has parsed the end of the
+document</I>
+<DT><A HREF="#DOC.44.1.5"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>endElement</B>( const <!1><A HREF="XMLElementDecl.html">XMLElementDecl</A>& elemDecl, const unsigned int uriId, const bool isRoot ) </B>
+ <DD><I>Receive notification of the end of an element</I>
+<DT><A HREF="#DOC.44.1.6"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>endEntityReference</B>( const <!1><A HREF="XMLEntityDecl.html">XMLEntityDecl</A>& entDecl ) </B>
+ <DD><I>Receive notification when a referenced entity's content ends
+
+This method is called when scanner encounters the end of an entity
+reference</I>
+<DT><A HREF="#DOC.44.1.7"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>ignorableWhitespace</B>( const XMLCh* const chars, const unsigned int length, const bool cdataSection ) </B>
+ <DD><I>Receive notification of ignorable whitespace in element content</I>
+<DT><A HREF="#DOC.44.1.8"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>resetDocument</B>() </B>
+ <DD><I>Reset the document handler's state, if required
+
+This method is used to give the registered document handler a
+chance to reset itself</I>
+<DT><A HREF="#DOC.44.1.9"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>startDocument</B>() </B>
+ <DD><I>Receive notification of the start of a new document
+
+This method is the first callback called the scanner at the
+start of every parse</I>
+<DT><A HREF="#DOC.44.1.10"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>startElement</B>( const <!1><A HREF="XMLElementDecl.html">XMLElementDecl</A>& elemDecl, const unsigned int uriId, const XMLCh* const prefixName, const RefVectorOf<<!1><A HREF="XMLAttr.html">XMLAttr</A>>& attrList, const unsigned int attrCount, const bool isEmpty, const bool isRoot ) </B>
+ <DD><I>Receive notification of a new start tag
+
+This method is called when scanner encounters the start of an element tag</I>
+<DT><A HREF="#DOC.44.1.11"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>startEntityReference</B>(const <!1><A HREF="XMLEntityDecl.html">XMLEntityDecl</A>& entDecl) </B>
+ <DD><I>Receive notification when the scanner hits an entity reference</I>
+<DT><A HREF="#DOC.44.1.12"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>XMLDecl</B>( const XMLCh* const versionStr, const XMLCh* const encodingStr, const XMLCh* const standaloneStr, const XMLCh* const autoEncodingStr ) </B>
+ <DD><I>Receive notification of an XML declaration
+
+Currently neither DOM nor SAX provide API's to return back this
+information</I>
+
+</DL>
+</DL></DL>
+<hr><H3>Inherited from <A HREF="XMLErrorReporter.html">XMLErrorReporter:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public Methods</h3><DD><DT><IMG SRC=icon2.gif> virtual  void  <B>error</B>( const unsigned int errCode, const XMLCh* const errDomain, const ErrTypes type, const XMLCh* const errorText, const XMLCh* const systemId, const XMLCh* const publicId, const unsigned int lineNum, const unsigned int colNum )
+<DT><IMG SRC=icon2.gif> virtual  void  <B>resetErrors</B>()
+</DL><DL>
+<DT><h3>Public</h3><DD><DT><P>protected  <B>Constructor </B>
+
+<DL>
+<DT><A HREF="#DOC.48.4.1"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>XMLErrorReporter</B>() </B>
+ <DD><I>
+Default constructor</I>
+
+</DL>
+<DT><P> <B>Error Handler interface </B>
+</DL></DL>
+<hr><H3>Inherited from <A HREF="XMLEntityHandler.html">XMLEntityHandler:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P> <B>The pure virtual methods in this interface. </B>
+
+<DL>
+<DT><A HREF="#DOC.47.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>endInputSource</B>(const <!1><A HREF="InputSource.html">InputSource</A>& inputSource) </B>
+ <DD><I>
+This method get called after the scanner has finished reading from
+the given input source while processing external entity references</I>
+<DT><A HREF="#DOC.47.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool  <B>expandSystemId</B>( const XMLCh* const systemId, <!1><A HREF="XMLBuffer.html">XMLBuffer</A>& toFill ) </B>
+ <DD><I>
+This method allows the passes the scanned systemId to the entity
+handler, thereby giving it a chance to provide any customized
+handling like resolving relative path names</I>
+<DT><A HREF="#DOC.47.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>resetEntities</B>() </B>
+ <DD><I>
+This method allows the entity handler to reset itself, so that
+it can be used again</I>
+<DT><A HREF="#DOC.47.2.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <!1><A HREF="InputSource.html">InputSource</A>*  <B>resolveEntity</B>( const XMLCh* const publicId, const XMLCh* const systemId ) </B>
+ <DD><I>
+This method allows the entity handler to provide customized
+application specific entity resolution</I>
+<DT><A HREF="#DOC.47.2.5"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>startInputSource</B>(const <!1><A HREF="InputSource.html">InputSource</A>& inputSource) </B>
+ <DD><I>
+This method will be called before the scanner starts reading
+from an input source while processing external entity references</I>
+
+</DL>
+</DL></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This class implements the Document Object Model (DOM) interface.
+It should be used by applications which choose to parse and
+process the XML document using the DOM api's. This implementation
+also allows the applications to install an error and an entitty
+handler (useful extensions to the DOM specification).
+
+<p>It can be used to instantiate a validating or non-validating
+parser, by setting a member flag.</p>
+
+</BLOCKQUOTE>
+<DL>
+<DL>
+
+<A NAME="DOMParser">
+<A NAME ="DOC.62.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOMParser(<!1><A HREF="XMLValidator.html">XMLValidator</A>* const valToAdopt = 0)</B></TT>
+<DD>Constructor with an instance of validator class to use for
+validation
+<DL><DT><B>Parameters:</B><DD><B>valToAdopt</B> -  Pointer to the validator instance to use. The
+parser is responsible for freeing the memory.<br></DL><P>
+<A NAME="~DOMParser">
+<A NAME ="DOC.62.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~DOMParser()</B></TT>
+<DD>
+Destructor
+<DL></DL><P></DL>
+<DL>
+
+<A NAME="getDocument">
+<A NAME ="DOC.62.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Document.html">DOM_Document</A>  getDocument()</B></TT>
+<DD>
+This method returns the DOM_Document object representing the
+root of the document tree. This object provides the primary
+access to the document's data.
+
+
+<DL><DT><B>Returns:</B><DD>The DOM_Document object which represents the entire
+XML document.
+</DL><P>
+<A NAME="getErrorHandler">
+<A NAME ="DOC.62.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="ErrorHandler.html">ErrorHandler</A>*  getErrorHandler()</B></TT>
+<DD>
+This method returns the installed error handler. Suitable
+for 'lvalue' usages.
+
+
+<DL><DT><B>Returns:</B><DD>The pointer to the installed error handler object.
+</DL><P>
+<A NAME="getErrorHandler">
+<A NAME ="DOC.62.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  <!1><A HREF="ErrorHandler.html">ErrorHandler</A>*  getErrorHandler() const </B></TT>
+<DD>
+This method returns the installed error handler. Suitable
+for 'rvalue' usages.
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to the installed error handler object.
+</DL><P>
+<A NAME="getEntityResolver">
+<A NAME ="DOC.62.2.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="EntityResolver.html">EntityResolver</A>*  getEntityResolver()</B></TT>
+<DD>
+This method returns the installed entity resolver. Suitable
+for 'lvalue' usages.
+
+
+<DL><DT><B>Returns:</B><DD>The pointer to the installed entity resolver object.
+</DL><P>
+<A NAME="getEntityResolver">
+<A NAME ="DOC.62.2.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  <!1><A HREF="EntityResolver.html">EntityResolver</A>*  getEntityResolver() const </B></TT>
+<DD>
+This method returns the installed entity resolver. Suitable
+for 'rvalue' usages.
+
+
+<DL><DT><B>Returns:</B><DD>A const pointer to the installed entity resolver object.
+</DL><P>
+<A NAME="getScanner">
+<A NAME ="DOC.62.2.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLScanner&  getScanner() const </B></TT>
+<DD>
+This method returns a reference to the underlying scanner object.
+It allows read only access to data maintained in the scanner.
+
+
+<DL><DT><B>Returns:</B><DD>A const reference to the underlying scanner object.
+</DL><P>
+<A NAME="getValidator">
+<A NAME ="DOC.62.2.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  <!1><A HREF="XMLValidator.html">XMLValidator</A>&  getValidator() const </B></TT>
+<DD>
+This method returns a reference to the parser's installed
+validator.
+
+
+<DL><DT><B>Returns:</B><DD>A const reference to the installed validator object.
+</DL><P>
+<A NAME="getDoNamespaces">
+<A NAME ="DOC.62.2.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  getDoNamespaces() const </B></TT>
+<DD>
+This method returns the state of the parser's namespace
+handling capability.
+
+
+<DL><DT><B>Returns:</B><DD>true, if the parser is currently configured to
+understand namespaces, false otherwise.
+
+<DT><B>See Also:</B><DD><A HREF="#setDoNamespaces">setDoNamespaces</A><br></DL><P>
+<A NAME="getDoValidation">
+<A NAME ="DOC.62.2.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  getDoValidation() const </B></TT>
+<DD>
+This method returns the state of the parser's validation
+handling flag which controls whether validation checks
+are enforced or not.
+
+
+<DL><DT><B>Returns:</B><DD>true, if the parser is currently configured to
+do validation, false otherwise.
+
+<DT><B>See Also:</B><DD><A HREF="#setDoValidation">setDoValidation</A><br></DL><P>
+<A NAME="getExitOnFirstFatalError">
+<A NAME ="DOC.62.2.10">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  getExitOnFirstFatalError() const </B></TT>
+<DD>
+This method returns the state of the parser's
+exit-on-First-Fatal-Error flag.
+
+
+<DL><DT><B>Returns:</B><DD>true, if the parser is currently configured to
+exit on the first fatal error, false otherwise.
+
+<DT><B>See Also:</B><DD><A HREF="#setExitOnFirstFatalError">setExitOnFirstFatalError</A><br></DL><P>
+<A NAME="getExpandEntityReferences">
+<A NAME ="DOC.62.2.11">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  getExpandEntityReferences() const </B></TT>
+<DD>
+This method returns the state of the parser's expand entity
+references flag.
+
+
+<DL><DT><B>Returns:</B><DD>'true' if the expand entity reference flag is set on
+the parser, 'false' otherwise.
+
+<DT><B>See Also:</B><DD><A HREF="#setExpandEntityReferences">setExpandEntityReferences</A><br></DL><P></DL>
+<DL>
+
+<A NAME="setErrorHandler">
+<A NAME ="DOC.62.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setErrorHandler(<!1><A HREF="ErrorHandler.html">ErrorHandler</A>* const handler)</B></TT>
+<DD>
+This method allows applications to install their own error
+handler to trap error and warning messages.
+
+
+<DL><DT><B>Parameters:</B><DD><B>handler</B> -   A const pointer to the user supplied error
+handler.
+<br><DT><B>See Also:</B><DD><A HREF="#getErrorHandler">getErrorHandler</A><br></DL><P>
+<A NAME="setEntityResolver">
+<A NAME ="DOC.62.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setEntityResolver(<!1><A HREF="EntityResolver.html">EntityResolver</A>* const handler)</B></TT>
+<DD>
+This method allows applications to install their own entity
+resolver. By installing an entity resolver, the applications
+can trap and potentially redirect references to external
+entities.
+
+
+<DL><DT><B>Parameters:</B><DD><B>handler</B> -   A const pointer to the user supplied entity
+resolver.
+<br><DT><B>See Also:</B><DD><A HREF="#getEntityResolver">getEntityResolver</A><br></DL><P>
+<A NAME="setDoNamespaces">
+<A NAME ="DOC.62.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setDoNamespaces(const bool newState)</B></TT>
+<DD>
+This method allows users to enable or disable the parser's
+namespace processing. When set to true, parser starts enforcing
+all the constraints / rules specified by the NameSpace
+specification.
+
+<p>The parser's default state is: false.</p>
+
+<p>This flag is ignored by the underlying scanner if the installed
+validator indicates that namespace constraints should be
+enforced.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>newState</B> -  The value specifying whether NameSpace rules should
+be enforced or not.
+<br><DT><B>See Also:</B><DD><A HREF="#getDoNamespaces">getDoNamespaces</A><br></DL><P>
+<A NAME="setDoValidation">
+<A NAME ="DOC.62.3.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setDoValidation(const bool newState)</B></TT>
+<DD>
+This method allows users to enable or disable the parser's validation
+checks.
+
+<p>By default, the parser does not to any validation. The default
+value is false.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>newState</B> -  The value specifying whether the parser should
+do validity checks or not against the DTD in the
+input XML document.
+<br><DT><B>See Also:</B><DD><A HREF="#getDoValidation">getDoValidation</A><br></DL><P>
+<A NAME="setExitOnFirstFatalError">
+<A NAME ="DOC.62.3.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setExitOnFirstFatalError(const bool newState)</B></TT>
+<DD>
+This method allows users to set the parser's behaviour when it
+encounters the first fatal error. If set to true, the parser
+will exit at the first fatal error. If false, then it will
+report the error and continue processing.
+
+<p>The default value is 'true' and the parser exits on the
+first fatal error.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>newState</B> -  The value specifying whether the parser should
+continue or exit when it encounters the first
+fatal error.
+<br><DT><B>See Also:</B><DD><A HREF="#getExitOnFirstFatalError">getExitOnFirstFatalError</A><br></DL><P>
+<A NAME="setExpandEntityReferences">
+<A NAME ="DOC.62.3.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setExpandEntityReferences(const bool expand)</B></TT>
+<DD>
+This method allows the user to specify whether the parser
+should expand all entity reference nodes. When the
+'do expansion' flag is true, the DOM tree does not have
+any entity reference nodes. Is is replaced by the sub-tree
+representing the replacement text  of the entity. When
+the 'do expansion' flag is false, the DOM tree contains an
+extra entity reference node, whose children is the
+sub tree of the replacement text.
+
+
+<DL><DT><B>Parameters:</B><DD><B>expand</B> -  The new state of the expand entity reference
+flag.<br></DL><P></DL>
+<DL>
+
+<A NAME="parse">
+<A NAME ="DOC.62.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  parse(const <!1><A HREF="InputSource.html">InputSource</A>& source, const bool reuseValidator = false)</B></TT>
+<DD>
+This method invokes the parsing process on the XML file specified
+by the InputSource parameter. This API is borrowed from the
+SAX Parser interface.
+
+
+<DL><DT><B>Parameters:</B><DD><B>source</B> -  A const reference to the InputSource object which
+points to the XML file to be parsed.
+<br><B>reuseValidator</B> -  The flag indicating whether the existing
+validator should be reused or not for this
+parsing run.
+<br><DT><B>See Also:</B><DD><A HREF="Parser.html#parse">parse</A>(<!1><A HREF="InputSource.html">InputSource</A>)<br></DL><P>
+<A NAME="parse">
+<A NAME ="DOC.62.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  parse(const XMLCh* const systemId, const bool reuseValidator = false)</B></TT>
+<DD>
+This method invokes the parsing process on the XML file specified by
+the Unicode string parameter 'systemId'. This method is borrowed
+from the SAX Parser interface.
+
+
+<DL><DT><B>Parameters:</B><DD><B>systemId</B> -  A const XMLCh pointer to the Unicode string which
+contains the path to the XML file to be parsed.
+<br><B>reuseValidator</B> -  The flag indicating whether the existing
+validator should be reused or not for this
+parsing run.
+<br><DT><B>See Also:</B><DD><A HREF="Parser.html#parse">parse</A>(XMLCh*)<br></DL><P>
+<A NAME="parse">
+<A NAME ="DOC.62.4.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  parse(const char* const systemId, const bool reuseValidator = false)</B></TT>
+<DD>
+This method invokes the parsing process on the XML file specified by
+the native char* string parameter 'systemId'.
+
+
+<DL><DT><B>Parameters:</B><DD><B>systemId</B> -  A const char pointer to a native string which
+contains the path to the XML file to be parsed.
+<br><B>reuseValidator</B> -  The flag indicating whether the existing
+validator should be reused or not for this
+parsing run.<br></DL><P>
+<A NAME="parseFirst">
+<A NAME ="DOC.62.4.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  parseFirst( const XMLCh* const systemId, <!1><A HREF="XMLPScanToken.html">XMLPScanToken</A>& toFill, const bool reuseValidator = false )</B></TT>
+<DD>
+<p>This method is used to start a progressive parse on a XML file.
+To continue parsing, subsequent calls must be to the parseNext
+method.<p>
+
+<p>It scans through the prolog and returns a token to be used on
+subsequent scanNext() calls. If the return value is true, then the
+token is legal and ready for further use. If it returns false, then
+the scan of the prolog failed and the token is not going to work on
+subsequent scanNext() calls.</p>
+
+
+<DL><DT><B>Returns:</B><DD>'true', if successful in parsing the prolog. It indicates the
+user can go ahead with parsing the rest of the file. It returns
+'false' to indicate that the parser could not find a proper
+prolog definition.
+
+<DT><B>Parameters:</B><DD><B>systemId</B> -  A pointer to a Unicode string represting the path
+to the XML file to be parsed.
+<br><B>toFill</B> -  A token maintaing state information to maintain
+internal consistency between invocation of 'parseNext'
+calls.
+<br><B>reuseValidator</B> -  The flag indicating whether the existing validator
+should be reused or not for this parsing
+process.
+<br><DT><B>See Also:</B><DD><A HREF="#parseNext">parseNext</A>
+<br><A HREF="#parseFirst">parseFirst</A>(char*,...)
+<br><A HREF="#parseFirst">parseFirst</A>(<!1><A HREF="InputSource.html">InputSource</A>&,...)<br></DL><P>
+<A NAME="parseFirst">
+<A NAME ="DOC.62.4.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  parseFirst( const char* const systemId, <!1><A HREF="XMLPScanToken.html">XMLPScanToken</A>& toFill, const bool reuseValidator = false )</B></TT>
+<DD>
+<p>This method is used to start a progressive parse on a XML file.
+To continue parsing, subsequent calls must be to the parseNext
+method.<p>
+
+<p>It scans through the prolog and returns a token to be used on
+subsequent scanNext() calls. If the return value is true, then the
+token is legal and ready for further use. If it returns false, then
+the scan of the prolog failed and the token is not going to work on
+subsequent scanNext() calls.</p>
+
+
+<DL><DT><B>Returns:</B><DD>'true', if successful in parsing the prolog. It indicates the
+user can go ahead with parsing the rest of the file. It returns
+'false' to indicate that the parser could not find a proper
+prolog definition.
+
+<DT><B>Parameters:</B><DD><B>systemId</B> -  A pointer to a regular native string represting
+the path to the XML file to be parsed.
+<br><B>toFill</B> -  A token maintaing state information to maintain
+internal consistency between invocation of 'parseNext'
+calls.
+<br><B>reuseValidator</B> -  The flag indicating whether the existing validator
+should be reused or not for this parsing
+run.
+<br><DT><B>See Also:</B><DD><A HREF="#parseNext">parseNext</A>
+<br><A HREF="#parseFirst">parseFirst</A>(XMLCh*,...)
+<br><A HREF="#parseFirst">parseFirst</A>(<!1><A HREF="InputSource.html">InputSource</A>&,...)<br></DL><P>
+<A NAME="parseFirst">
+<A NAME ="DOC.62.4.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  parseFirst( const <!1><A HREF="InputSource.html">InputSource</A>& source, <!1><A HREF="XMLPScanToken.html">XMLPScanToken</A>& toFill, const bool reuseValidator = false )</B></TT>
+<DD>
+<p>This method is used to start a progressive parse on a XML file.
+To continue parsing, subsequent calls must be to the parseNext
+method.<p>
+
+<p>It scans through the prolog and returns a token to be used on
+subsequent scanNext() calls. If the return value is true, then the
+token is legal and ready for further use. If it returns false, then
+the scan of the prolog failed and the token is not going to work on
+subsequent scanNext() calls.</p>
+
+
+<DL><DT><B>Returns:</B><DD>'true', if successful in parsing the prolog. It indicates the
+user can go ahead with parsing the rest of the file. It returns
+'false' to indicate that the parser could not find a proper
+prolog definition.
+
+<DT><B>Parameters:</B><DD><B>source</B> -  A const reference to the InputSource object which
+points to the XML file to be parsed.
+<br><B>toFill</B> -  A token maintaing state information to maintain
+internal consistency between invocation of 'parseNext'
+calls.
+<br><B>reuseValidator</B> -  The flag indicating whether the existing validator
+should be reused or not for this parsing
+process.
+<br><DT><B>See Also:</B><DD><A HREF="#parseNext">parseNext</A>
+<br><A HREF="#parseFirst">parseFirst</A>(XMLCh*,...)
+<br><A HREF="#parseFirst">parseFirst</A>(char*,...)<br></DL><P>
+<A NAME="parseNext">
+<A NAME ="DOC.62.4.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  parseNext(<!1><A HREF="XMLPScanToken.html">XMLPScanToken</A>& token)</B></TT>
+<DD>
+<p>This method is used to continue with progressive parsing of
+XML files started by a call to 'parseFirst' method.<p>
+
+<p>It parses the XML file and stops as soon as it comes across
+a XML token (as defined in the XML specification).</p>
+
+
+<DL><DT><B>Returns:</B><DD>'true', if successful in parsing the next XML token.
+It indicates the user can go ahead with parsing the rest
+of the file. It returns 'false' to indicate that the parser
+could not find next token as per the XML specification
+production rule.
+
+<DT><B>Parameters:</B><DD><B>token</B> -  A token maintaing state information to maintain
+internal consistency between invocation of 'parseNext'
+calls.
+<br><DT><B>See Also:</B><DD><A HREF="#parseFirst">parseFirst</A>(XMLCh*,...)
+<br><A HREF="#parseFirst">parseFirst</A>(char*,...)
+<br><A HREF="#parseFirst">parseFirst</A>(<!1><A HREF="InputSource.html">InputSource</A>&,...)<br></DL><P></DL>
+<DL>
+
+<A NAME="error">
+<A NAME ="DOC.62.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  error( const unsigned int errCode, const XMLCh* const msgDomain, const XMLErrorReporter::ErrTypes errType, const XMLCh* const errorText, const XMLCh* const systemId, const XMLCh* const publicId, const unsigned int lineNum, const unsigned int colNum )</B></TT>
+<DD>
+This method is used to report back errors found while parsing the
+XML file. This method is also borrowed from the SAX specification.
+It calls the corresponding user installed Error Handler method:
+'fatal', 'error', 'warning' depending on the severity of the error.
+This classification is defined by the XML specification.
+
+
+<DL><DT><B>Parameters:</B><DD><B>errCode</B> -  An integer code for the error.
+<br><B>msgDomain</B> -  A const pointer to an Unicode string representing
+the message domain to use.
+<br><B>errType</B> -  An enumeration classifying the severity of the error.
+<br><B>errorText</B> -  A const pointer to an Unicode string representing
+the text of the error message.
+<br><B>systemId</B> -   A const pointer to an Unicode string representing
+the system id of the XML file where this error
+was discovered.
+<br><B>publicId</B> -   A const pointer to an Unicode string representing
+the public id of the XML file where this error
+was discovered.
+<br><B>lineNum</B> -    The line number where the error occurred.
+<br><B>colNum</B> -     The column number where the error occurred.
+<br><DT><B>See Also:</B><DD><!1><A HREF="ErrorHandler.html">ErrorHandler</A><br></DL><P>
+<A NAME="resetErrors">
+<A NAME ="DOC.62.5.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetErrors()</B></TT>
+<DD>
+This method allows the user installed Error Handler
+callback to 'reset' itself.
+
+<b><font color="#FF0000">This method is a no-op for this DOM
+implementation.</font></b>
+
+<DL></DL><P></DL>
+<DL>
+
+<A NAME="endInputSource">
+<A NAME ="DOC.62.6.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  endInputSource(const <!1><A HREF="InputSource.html">InputSource</A>& inputSource)</B></TT>
+<DD>
+This method is used to indicate the end of parsing of an external
+entity file.
+
+<b><font color="#FF0000">This method is a no-op for this DOM
+implementation.</font></b>
+
+
+<DL><DT><B>Parameters:</B><DD><B>inputSource</B> -  A const reference to the InputSource object
+which points to the XML file being parsed.
+<br><DT><B>See Also:</B><DD><!1><A HREF="InputSource.html">InputSource</A><br></DL><P>
+<A NAME="expandSystemId">
+<A NAME ="DOC.62.6.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  expandSystemId( const XMLCh* const systemId, <!1><A HREF="XMLBuffer.html">XMLBuffer</A>& toFill )</B></TT>
+<DD>
+This method allows an installed XMLEntityHandler to further
+process any system id's of enternal entities encountered in
+the XML file being parsed, such as redirection etc.
+
+<b><font color="#FF0000">This method always returns 'false'
+for this DOM implementation.</font></b>
+
+
+<DL><DT><B>Returns:</B><DD>'true', if any processing is done, 'false' otherwise. 
+<DT><B>Parameters:</B><DD><B>systemId</B> -   A const pointer to an Unicode string representing
+the system id scanned by the parser.
+<br><B>toFill</B> -     A pointer to a buffer in which the application
+processed system id is stored.
+<br></DL><P>
+<A NAME="resetEntities">
+<A NAME ="DOC.62.6.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetEntities()</B></TT>
+<DD>
+This method allows the installed XMLEntityHandler to reset
+itself.
+
+<b><font color="#FF0000">This method is a no-op for this DOM
+implementation.</font></b>
+<DL></DL><P>
+<A NAME="resolveEntity">
+<A NAME ="DOC.62.6.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  <!1><A HREF="InputSource.html">InputSource</A>*  resolveEntity( const XMLCh* const publicId, const XMLCh* const systemId )</B></TT>
+<DD>
+This method allows a user installed entity handler to further
+process any pointers to external entities. The applications
+can implement 'redirection' via this callback. This method
+is also borrowed from the SAX specification.
+
+
+<DL><DT><B>Returns:</B><DD>The value returned by the user installed resolveEntity
+method or NULL otherwise to indicate no processing was done.
+
+<DT><B>Parameters:</B><DD><B>publicId</B> -  A const pointer to a Unicode string representing the
+public id of the entity just parsed.
+<br><B>systemId</B> -  A const pointer to a Unicode string representing the
+system id of the entity just parsed.
+<br><DT><B>See Also:</B><DD><!1><A HREF="EntityResolver.html">EntityResolver</A><br></DL><P>
+<A NAME="startInputSource">
+<A NAME ="DOC.62.6.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  startInputSource(const <!1><A HREF="InputSource.html">InputSource</A>& inputSource)</B></TT>
+<DD>
+This method is used to indicate the start of parsing an
+external entity file.
+
+<b><font color="#FF0000">This method is a no-op for this SAX driver
+implementation.</font></b>
+
+
+<DL><DT><B>Parameters:</B><DD><B>inputSource</B> -  A const reference to the InputSource object
+which points to the external entity 
+being parsed.<br></DL><P></DL>
+<DL>
+
+<A NAME="docCharacters">
+<A NAME ="DOC.62.7.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  docCharacters( const XMLCh* const chars, const unsigned int length, const bool cdataSection )</B></TT>
+<DD>
+This method is used to report all the characters scanned
+by the parser. This DOM implementation stores this data
+in the appropriate DOM node, creating one if necessary.
+
+
+<DL><DT><B>Parameters:</B><DD><B>chars</B> -    A const pointer to a Unicode string representing the
+character data.
+<br><B>length</B> -   The length of the Unicode string returned in 'chars'.
+<br><B>cdataSection</B> -   A flag indicating if the characters represent
+content from the CDATA section.<br></DL><P>
+<A NAME="docComment">
+<A NAME ="DOC.62.7.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  docComment( const XMLCh* const comment )</B></TT>
+<DD>
+This method is used to report any comments scanned by the parser.
+A new comment node is created which stores this data.
+
+
+<DL><DT><B>Parameters:</B><DD><B>comment</B> -  A const pointer to a null terminated Unicode
+string representing the comment text.<br></DL><P>
+<A NAME="docPI">
+<A NAME ="DOC.62.7.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  docPI( const XMLCh* const target, const XMLCh* const data )</B></TT>
+<DD>
+This method is used to report any PI scanned by the parser.
+A new PI node is created and appended as a child of the
+current node in the tree.
+
+
+<DL><DT><B>Parameters:</B><DD><B>target</B> -  A const pointer to a Unicode string representing the
+target of the PI declaration.
+<br><B>data</B> -    A const pointer to a Unicode string representing the
+data of the PI declaration. See the PI production rule
+in the XML specification for details.<br></DL><P>
+<A NAME="endDocument">
+<A NAME ="DOC.62.7.11">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  endDocument()</B></TT>
+<DD>
+This method is used to indicate the end of root element
+was just scanned by the parser
+<DL></DL><P>
+<A NAME="endElement">
+<A NAME ="DOC.62.7.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  endElement( const <!1><A HREF="XMLElementDecl.html">XMLElementDecl</A>& elemDecl, const unsigned int urlId, const bool isRoot )</B></TT>
+<DD>
+This method is used to indicate the end tag of an element.
+
+
+<DL><DT><B>Parameters:</B><DD><B>elemDecl</B> -  A const reference to the object containing element
+declaration information.
+<br><B>urlId</B> -     An id referring to the namespace prefix, if
+namespaces setting is switched on.
+<br><B>isRoot</B> -    A flag indicating whether this element was the
+root element.<br></DL><P>
+<A NAME="endEntityReference">
+<A NAME ="DOC.62.7.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  endEntityReference( const <!1><A HREF="XMLEntityDecl.html">XMLEntityDecl</A>& entDecl )</B></TT>
+<DD>
+This method is used to indicate that an end of an entity reference
+was just scanned.
+
+
+<DL><DT><B>Parameters:</B><DD><B>entDecl</B> -  A const reference to the object containing the
+entity declaration information.<br></DL><P>
+<A NAME="ignorableWhitespace">
+<A NAME ="DOC.62.7.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  ignorableWhitespace( const XMLCh* const chars, const unsigned int length, const bool cdataSection )</B></TT>
+<DD>
+This method is used to report all the whitespace characters,
+which are determined to be 'ignorable'. This distinction
+between characters is only made, if validation is enabled.
+
+<p>Any whitespace before content is ignored. If the current
+node is already of type DOM_Node::TEXT_NODE, then these
+whitespaces are appended, otherwise a new Text node is
+created which stores this data. Essentially all ignoreable
+characters are collected in one node.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>chars</B> -    A const pointer to a Unicode string representing the
+ignorable whitespace character data.
+<br><B>length</B> -   The length of the Unicode string 'chars'.
+<br><B>cdataSection</B> -   A flag indicating if the characters represent
+content from the CDATA section.<br></DL><P>
+<A NAME="resetDocument">
+<A NAME ="DOC.62.7.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetDocument()</B></TT>
+<DD>
+This method allows the user installed Document Handler
+to 'reset' itself, freeing all the memory resources. The
+scanner calls this method before starting a new parse
+event.
+<DL></DL><P>
+<A NAME="startDocument">
+<A NAME ="DOC.62.7.12">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  startDocument()</B></TT>
+<DD>
+This method is used to report the start of the parsing process
+<DL></DL><P>
+<A NAME="startElement">
+<A NAME ="DOC.62.7.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  startElement( const <!1><A HREF="XMLElementDecl.html">XMLElementDecl</A>& elemDecl, const unsigned int urlId, const XMLCh* const elemPrefix, const RefVectorOf<<!1><A HREF="XMLAttr.html">XMLAttr</A>>& attrList, const unsigned int attrCount, const bool isEmpty, const bool isRoot )</B></TT>
+<DD>
+This method is used to report the start of an element. It is
+called at the end of the element, by which time all attributes
+specified are also parsed. A new DOM Element node is created
+along with as many attribute nodes as required. This new
+element is added appended as a child of the current node in
+the tree.
+
+
+<DL><DT><B>Parameters:</B><DD><B>elemDecl</B> -  A const reference to the object containing element
+declaration information.
+<br><B>urlId</B> -     An id referring to the namespace prefix, if
+namespaces setting is switched on.
+<br><B>elemPrefix</B> -  A const pointer to a Unicode string containing
+the namespace prefix for this element. Applicable
+only when namespace processing is enabled.
+<br><B>attrList</B> -   A const reference to the object containing the
+list of attributes just scanned for this element.
+<br><B>attrCount</B> -  A count of number of attributes in the list
+specified by the parameter 'attrList'.
+<br><B>isEmpty</B> -   A flag indicating whether this is an empty element
+or not.
+<br><B>isRoot</B> -    A flag indicating whether this element was the
+root element.
+<br><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#startElement">startElement</A><br></DL><P>
+<A NAME="startEntityReference">
+<A NAME ="DOC.62.7.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  startEntityReference( const <!1><A HREF="XMLEntityDecl.html">XMLEntityDecl</A>& entDecl )</B></TT>
+<DD>
+This method is used to indicate the start of an entity reference.
+If the expand entity reference flag is true, then a new
+DOM Entity reference node is created.
+
+
+<DL><DT><B>Parameters:</B><DD><B>entDecl</B> -  A const reference to the object containing the
+entity declaration information.<br></DL><P>
+<A NAME="XMLDecl">
+<A NAME ="DOC.62.7.10">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  XMLDecl( const XMLCh* const versionStr, const XMLCh* const encodingStr, const XMLCh* const standaloneStr, const XMLCh* const actualEncStr )</B></TT>
+<DD>
+This method is used to report the XML decl scanned by the parser.
+Refer to the XML specification to see the meaning of parameters.
+
+<b><font color="#FF0000">This method is a no-op for this DOM
+implementation.</font></b>
+
+
+<DL><DT><B>Parameters:</B><DD><B>versionStr</B> -  A const pointer to a Unicode string representing
+version string value.
+<br><B>encodingStr</B> -  A const pointer to a Unicode string representing
+the encoding string value.
+<br><B>standaloneStr</B> -  A const pointer to a Unicode string
+representing the standalone string value.
+<br><B>actualEncodingStr</B> -  A const pointer to a Unicode string
+representing the actual encoding string
+value.<br></DL><P></DL>
+<DL>
+
+<A NAME="getCurrentNode">
+<A NAME ="DOC.62.8.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOM_Node.html">DOM_Node</A>  getCurrentNode()</B></TT>
+<DL></DL><P></DL>
+<DL>
+
+<A NAME="setCurrentNode">
+<A NAME ="DOC.62.9.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setCurrentNode(<!1><A HREF="DOM_Node.html">DOM_Node</A> toSet)</B></TT>
+<DD>
+This method sets the current node maintained inside the
+parser to the one specified.
+
+
+<DL><DT><B>Parameters:</B><DD><B>toSet</B> -  The DOM node which will be the current node.<br></DL><P>
+<A NAME="setDocument">
+<A NAME ="DOC.62.9.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setDocument(<!1><A HREF="DOM_Document.html">DOM_Document</A> toSet)</B></TT>
+<DD>
+This method sets the DOM Document node to the one specified.
+
+
+<DL><DT><B>Parameters:</B><DD><B>toSet</B> -  The new DOM Document node for this XML document.<br></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

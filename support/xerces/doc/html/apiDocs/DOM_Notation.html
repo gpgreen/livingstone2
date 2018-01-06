@@ -1,0 +1,339 @@
+<html><head><TITLE>DOM_Notation</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   DOM_Notation : public <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> </H2><BLOCKQUOTE>
+
+This interface represents a notation declared in the DTD
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CDOM_Node,MDOM_Node.html,CDOM_Notation,MDOM_Notation.html">
+<param name=before value="M,M">
+<param name=after value="Md_,M">
+<param name=indent value="0,1">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.29.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and assignment operator </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.29.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_Notation</B> ()<br>
+<I>
+Default constructor for DOM_Notation</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.29.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>DOM_Notation</B> (const <!2><A HREF="DOM_Notation.html#DOC.29.1.1">DOM_Notation</A> &other)<br>
+<I>
+Copy constructor</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.29.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Notation.html#DOC.29.1.1">DOM_Notation</A>& </TD><TD><B>operator = </B> (const <!2><A HREF="DOM_Notation.html#DOC.29.1.1">DOM_Notation</A> &other)<br>
+<I>
+Assignment operator</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.29.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Notation.html#DOC.29.1.1">DOM_Notation</A>& </TD><TD><B>operator = </B> (const DOM_NullPtr *val)<br>
+<I>
+Assignment operator</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.29.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.29.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>~DOM_Notation</B> ()<br>
+<I>
+Destructor for DOM_Notation</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.29.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Get functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.29.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A> </TD><TD><B>getPublicId</B> () const <br>
+<I>
+Get the public identifier of this notation</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.29.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A> </TD><TD><B>getSystemId</B> () const <br>
+<I>
+Get the system identifier of this notation</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.29.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Set functions. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.29.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setPublicId</B> (const <!1><A HREF="DOMString.html">DOMString</A> &id)<br>
+<I>
+Sets the public identifier of this notation</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.29.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setSystemId</B> (const <!1><A HREF="DOMString.html">DOMString</A> &id)<br>
+<I>
+Sets the system identifier of this notation</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<hr><H3>Inherited from <A HREF="DOM_Node.html">DOM_Node:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P> <B>Cloning function. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>cloneNode</B>(bool deep) const  </B>
+ <DD><I>
+Returns a duplicate of this node</I>
+
+</DL>
+<DT><P> <B>Constructors and assignment operators </B>
+
+<DL>
+<DT><A HREF="#DOC.25.1.1"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>DOM_Node</B>() </B>
+ <DD><I>
+Default constructor for DOM_Node</I>
+<DT><A HREF="#DOC.25.1.2"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>DOM_Node</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &other) </B>
+ <DD><I>
+Copy constructor</I>
+<DT><A HREF="#DOC.25.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>&  <B>operator = </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &other) </B>
+ <DD><I>
+Assignment operator</I>
+<DT><A HREF="#DOC.25.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>&  <B>operator = </B>(const DOM_NullPtr *val) </B>
+ <DD><I>
+Assignment operator</I>
+
+</DL>
+<DT><P> <B>Equality and Inequality operators. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator == </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> & other) const  </B>
+ <DD><I>
+The equality operator</I>
+<DT><A HREF="#DOC.25.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator == </B>(const DOM_NullPtr *other) const  </B>
+ <DD><I>
+Compare with a pointer</I>
+<DT><A HREF="#DOC.25.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator != </B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> & other) const  </B>
+ <DD><I>
+The inequality operator</I>
+<DT><A HREF="#DOC.25.3.4"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>operator != </B>(const DOM_NullPtr * other) const  </B>
+ <DD><I>
+Compare with a pointer</I>
+
+</DL>
+<DT><P> <B>Functions introduced in DOM Level 2. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.9.1"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>normalize</B>() </B>
+ <DD><I>
+Puts all <CODE>DOM_Text</CODE> 
+nodes in the full depth of the sub-tree underneath this <CODE>DOM_Node</CODE>, 
+including attribute nodes, into a "normal" form where only markup (e</I>
+<DT><A HREF="#DOC.25.9.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>supports</B>(const <!1><A HREF="DOMString.html">DOMString</A> &feature, const <!1><A HREF="DOMString.html">DOMString</A> &version) const  </B>
+ <DD><I>
+Tests whether the DOM implementation implements a specific
+feature and that feature is supported by this node</I>
+<DT><A HREF="#DOC.25.9.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getNamespaceURI</B>() const  </B>
+ <DD><I>
+Get the <em>namespace URI</em> of
+this node, or <code>null</code> if it is unspecified</I>
+<DT><A HREF="#DOC.25.9.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getPrefix</B>() const  </B>
+ <DD><I>
+Get the <em>namespace prefix</em>
+of this node, or <code>null</code> if it is unspecified</I>
+<DT><A HREF="#DOC.25.9.5"> <IMG BORDER=0 SRC=icon1.gif></A> <!1><A HREF="DOMString.html">DOMString</A>  <B>getLocalName</B>() const  </B>
+ <DD><I>
+Returns the local part of the <em>qualified name</em> of this node</I>
+<DT><A HREF="#DOC.25.9.6"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setPrefix</B>(const <!1><A HREF="DOMString.html">DOMString</A> &prefix) </B>
+ <DD><I>
+Set the <em>namespace prefix</em> of this node</I>
+
+</DL>
+<DT><P> <B>Functions to modify the DOM Node. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>insertBefore</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild, const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &refChild) </B>
+ <DD><I>
+Inserts the node <code>newChild</code> before the existing child node
+<code>refChild</code></I>
+<DT><A HREF="#DOC.25.6.2"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>replaceChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild, const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &oldChild) </B>
+ <DD><I>
+Replaces the child node <code>oldChild</code> with <code>newChild</code>
+in the list of children, and returns the <code>oldChild</code> node</I>
+<DT><A HREF="#DOC.25.6.3"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>removeChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &oldChild) </B>
+ <DD><I>
+Removes the child node indicated by <code>oldChild</code> from the list
+of children, and returns it</I>
+<DT><A HREF="#DOC.25.6.4"> <IMG BORDER=0 SRC=icon1.gif></A> <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A>  <B>appendChild</B>(const <!2><A HREF="DOM_Node.html#DOC.25.1.1">DOM_Node</A> &newChild) </B>
+ <DD><I>
+Adds the node <code>newChild</code> to the end of the list of children of
+this node</I>
+
+</DL>
+<DT><P> <B>Query functions. </B>
+
+<DL>
+<DT><A HREF="#DOC.25.7.1"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>hasChildNodes</B>() const  </B>
+ <DD><I>
+This is a convenience method to allow easy determination of whether a
+node has any children</I>
+<DT><A HREF="#DOC.25.7.2"> <IMG BORDER=0 SRC=icon1.gif></A> bool  <B>isNull</B>() const  </B>
+ <DD><I>
+Test whether this node is null</I>
+
+</DL>
+</DL></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This interface represents a notation declared in the DTD. A notation either 
+declares, by name, the format of an unparsed entity (see section 4.7 of 
+the XML 1.0 specification), or is used for formal declaration of 
+Processing Instruction targets (see section 2.6 of the XML 1.0 
+specification). The <code>nodeName</code> attribute inherited from 
+<code>Node</code> is set to the declared name of the notation.
+<p>The DOM Level 1 does not support editing <code>Notation</code> nodes; 
+they are therefore readonly.
+<p>A <code>Notation</code> node does not have any parent.
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and assignment operator ">
+<A NAME ="DOC.29.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and assignment operator </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="DOM_Notation">
+<A NAME ="DOC.29.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_Notation()</B></TT>
+<DD>
+Default constructor for DOM_Notation.  The resulting object does not
+refer to an actual Notation node; it will compare == to 0, and is similar
+to a null object reference variable in Java.  It may subsequently be
+assigned to refer to an actual Notation node.
+<p>
+New notation nodes are created by DOM_Document::createNotation().
+
+
+<DL></DL><P>
+<A NAME="DOM_Notation">
+<A NAME ="DOC.29.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  DOM_Notation(const <!2><A HREF="DOM_Notation.html#DOC.29.1.1">DOM_Notation</A> &other)</B></TT>
+<DD>
+Copy constructor.  Creates a new <code>DOM_Notation</code> that refers to the
+same underlying node as the original.  See also DOM_Node::clone(),
+which will copy the actual notation node, rather than just creating a new
+reference to the original node.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied.<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.29.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_Notation.html#DOC.29.1.1">DOM_Notation</A>&  operator = (const <!2><A HREF="DOM_Notation.html#DOC.29.1.1">DOM_Notation</A> &other)</B></TT>
+<DD>
+Assignment operator.
+
+
+<DL><DT><B>Parameters:</B><DD><B>other</B> -  The object to be copied.<br></DL><P>
+<A NAME="operator = ">
+<A NAME ="DOC.29.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!2><A HREF="DOM_Notation.html#DOC.29.1.1">DOM_Notation</A>&  operator = (const DOM_NullPtr *val)</B></TT>
+<DD>
+Assignment operator.  This overloaded variant is provided for
+the sole purpose of setting a DOM_Node reference variable to
+zero.  Nulling out a reference variable in this way will decrement
+the reference count on the underlying Node object that the variable
+formerly referenced.  This effect is normally obtained when reference
+variable goes out of scope, but zeroing them can be useful for
+global instances, or for local instances that will remain in scope
+for an extended time,  when the storage belonging to the underlying
+node needs to be reclaimed.
+
+
+<DL><DT><B>Parameters:</B><DD><B>val.</B> -   Only a value of 0, or null, is allowed.<br></DL><P></DL>
+
+<A NAME="Destructor. ">
+<A NAME ="DOC.29.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~DOM_Notation">
+<A NAME ="DOC.29.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~DOM_Notation()</B></TT>
+<DD>
+Destructor for DOM_Notation.  The object being destroyed is the reference
+object, not the underlying Notation node itself.
+
+<DL></DL><P></DL>
+
+<A NAME="Get functions. ">
+<A NAME ="DOC.29.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Get functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getPublicId">
+<A NAME ="DOC.29.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOMString.html">DOMString</A>  getPublicId() const </B></TT>
+<DD>
+Get the public identifier of this notation. 
+
+If the  public identifier was not 
+specified, this is <code>null</code>.
+
+<DL><DT><B>Returns:</B><DD>Returns the public identifier of the notation
+</DL><P>
+<A NAME="getSystemId">
+<A NAME ="DOC.29.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> <!1><A HREF="DOMString.html">DOMString</A>  getSystemId() const </B></TT>
+<DD>
+Get the system identifier of this notation. 
+
+If the  system identifier was not 
+specified, this is <code>null</code>.
+
+<DL><DT><B>Returns:</B><DD>Returns the system identifier of the notation
+</DL><P></DL>
+
+<A NAME="Set functions. ">
+<A NAME ="DOC.29.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Set functions. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="setPublicId">
+<A NAME ="DOC.29.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setPublicId(const <!1><A HREF="DOMString.html">DOMString</A> &id)</B></TT>
+<DD>
+Sets the public identifier of this notation. 
+
+This function is a non-standard IBM Extension.
+
+<DL><DT><B>Parameters:</B><DD><B>id</B> -  The string containing the public id to be set
+<br></DL><P>
+<A NAME="setSystemId">
+<A NAME ="DOC.29.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setSystemId(const <!1><A HREF="DOMString.html">DOMString</A> &id)</B></TT>
+<DD>
+Sets the system identifier of this notation. 
+
+This function is a non-standard IBM Extension.
+
+<DL><DT><B>Parameters:</B><DD><B>id</B> -  The string containing the system id to be set
+<br></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

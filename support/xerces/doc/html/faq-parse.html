@@ -1,0 +1,435 @@
+<HTML><HEAD><SCRIPT language="JavaScript" src="resources/script.js" type="text/javascript"></SCRIPT><TITLE>Parsing with Xerces-C</TITLE></HEAD><BODY alink="#ff0000" bgcolor="#ffffff" leftmargin="4" link="#0000ff" marginheight="4" marginwidth="4" text="#000000" topmargin="4" vlink="#0000aa"><TABLE border="0" cellpadding="0" cellspacing="0" width="620"><TR><TD align="left" height="60" rowspan="3" valign="top" width="135"><IMG border="0" height="60" hspace="0" src="resources/logo.gif" vspace="0" width="135"></TD><TD align="left" colspan="4" height="5" valign="top" width="456"><IMG border="0" height="5" hspace="0" src="resources/line.gif" vspace="0" width="456"></TD><TD align="left" height="60" rowspan="3" valign="top" width="29"><IMG border="0" height="60" hspace="0" src="resources/right.gif" vspace="0" width="29"></TD></TR><TR><TD align="left" bgcolor="#0086b2" colspan="4" height="35" valign="top" width="456"><IMG alt="" border="0" height="35" hspace="0" src="graphics/faq-parse-header.jpg" vspace="0" width="456"></TD></TR><TR><TD align="left" height="20" valign="top" width="168"><IMG border="0" height="20" hspace="0" src="resources/bottom.gif" vspace="0" width="168"></TD><TD align="left" height="20" valign="top" width="96"><A href="http://xml.apache.org/" onMouseOut="rolloverOff('xml');" onMouseOver="rolloverOn('xml');" target="new"><IMG alt="http://xml.apache.org/" border="0" height="20" hspace="0" name="xml" onLoad="rolloverLoad('xml','resources/button-xml-hi.gif','resources/button-xml-lo.gif');" src="resources/button-xml-lo.gif" vspace="0" width="96"></A></TD><TD align="left" height="20" valign="top" width="96"><A href="http://www.apache.org/" onMouseOut="rolloverOff('asf');" onMouseOver="rolloverOn('asf');" target="new"><IMG alt="http://www.apache.org/" border="0" height="20" hspace="0" name="asf" onLoad="rolloverLoad('asf','resources/button-asf-hi.gif','resources/button-asf-lo.gif');" src="resources/button-asf-lo.gif" vspace="0" width="96"></A></TD><TD align="left" height="20" valign="top" width="96"><A href="http://www.w3.org/" onMouseOut="rolloverOff('w3c');" onMouseOver="rolloverOn('w3c');" target="new"><IMG alt="http://www.w3.org/" border="0" height="20" hspace="0" name="w3c" onLoad="rolloverLoad('w3c','resources/button-w3c-hi.gif','resources/button-w3c-lo.gif');" src="resources/button-w3c-lo.gif" vspace="0" width="96"></A></TD></TR></TABLE><TABLE border="0" cellpadding="0" cellspacing="0" width="620"><TR><TD align="left" valign="top" width="120"><IMG border="0" height="14" hspace="0" src="resources/join.gif" vspace="0" width="120"><BR>
+  <A href="../index.html" onMouseOut="rolloverOff('side-ext-2');" onMouseOver="rolloverOn('side-ext-2');"><IMG alt="Home" border="0" height="12" hspace="0" name="side-ext-2" onLoad="rolloverLoad('side-ext-2','graphics/ext-2-label-2.jpg','graphics/ext-2-label-3.jpg');" src="graphics/ext-2-label-3.jpg" vspace="0" width="120"></A><BR>
+  
+  <IMG border="0" height="6" hspace="0" src="resources/separator.gif" vspace="0" width="120"><BR>
+  <A href="index.html" onMouseOut="rolloverOff('side-index');" onMouseOver="rolloverOn('side-index');"><IMG alt="Readme" border="0" height="12" hspace="0" name="side-index" onLoad="rolloverLoad('side-index','graphics/index-label-2.jpg','graphics/index-label-3.jpg');" src="graphics/index-label-3.jpg" vspace="0" width="120"></A><BR>
+  <A href="install.html" onMouseOut="rolloverOff('side-install');" onMouseOver="rolloverOn('side-install');"><IMG alt="Installation" border="0" height="12" hspace="0" name="side-install" onLoad="rolloverLoad('side-install','graphics/install-label-2.jpg','graphics/install-label-3.jpg');" src="graphics/install-label-3.jpg" vspace="0" width="120"></A><BR>
+  <A href="build.html" onMouseOut="rolloverOff('side-build');" onMouseOver="rolloverOn('side-build');"><IMG alt="Build" border="0" height="12" hspace="0" name="side-build" onLoad="rolloverLoad('side-build','graphics/build-label-2.jpg','graphics/build-label-3.jpg');" src="graphics/build-label-3.jpg" vspace="0" width="120"></A><BR>
+  
+  <IMG border="0" height="6" hspace="0" src="resources/separator.gif" vspace="0" width="120"><BR>
+  <A href="http://xml.apache.org/dist/" onMouseOut="rolloverOff('side-ext-14');" onMouseOver="rolloverOn('side-ext-14');"><IMG alt="Downloads" border="0" height="12" hspace="0" name="side-ext-14" onLoad="rolloverLoad('side-ext-14','graphics/ext-14-label-2.jpg','graphics/ext-14-label-3.jpg');" src="graphics/ext-14-label-3.jpg" vspace="0" width="120"></A><BR>
+  <IMG border="0" height="6" hspace="0" src="resources/separator.gif" vspace="0" width="120"><BR>
+  <A href="api.html" onMouseOut="rolloverOff('side-api');" onMouseOver="rolloverOn('side-api');"><IMG alt="API Docs" border="0" height="12" hspace="0" name="side-api" onLoad="rolloverLoad('side-api','graphics/api-label-2.jpg','graphics/api-label-3.jpg');" src="graphics/api-label-3.jpg" vspace="0" width="120"></A><BR>
+  <A href="samples.html" onMouseOut="rolloverOff('side-samples');" onMouseOver="rolloverOn('side-samples');"><IMG alt="Samples" border="0" height="12" hspace="0" name="side-samples" onLoad="rolloverLoad('side-samples','graphics/samples-label-2.jpg','graphics/samples-label-3.jpg');" src="graphics/samples-label-3.jpg" vspace="0" width="120"></A><BR>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+  <A href="program.html" onMouseOut="rolloverOff('side-program');" onMouseOver="rolloverOn('side-program');"><IMG alt="Programming" border="0" height="12" hspace="0" name="side-program" onLoad="rolloverLoad('side-program','graphics/program-label-2.jpg','graphics/program-label-3.jpg');" src="graphics/program-label-3.jpg" vspace="0" width="120"></A><BR>
+  <A href="migrate.html" onMouseOut="rolloverOff('side-migrate');" onMouseOver="rolloverOn('side-migrate');"><IMG alt="Migration" border="0" height="12" hspace="0" name="side-migrate" onLoad="rolloverLoad('side-migrate','graphics/migrate-label-2.jpg','graphics/migrate-label-3.jpg');" src="graphics/migrate-label-3.jpg" vspace="0" width="120"></A><BR>
+  
+  <A href="faqs.html" onMouseOut="rolloverOff('side-faqs');" onMouseOver="rolloverOn('side-faqs');"><IMG alt="FAQs" border="0" height="12" hspace="0" name="side-faqs" onLoad="rolloverLoad('side-faqs','graphics/faqs-label-2.jpg','graphics/faqs-label-3.jpg');" src="graphics/faqs-label-3.jpg" vspace="0" width="120"></A><BR>
+  
+  <IMG border="0" height="6" hspace="0" src="resources/separator.gif" vspace="0" width="120"><BR>
+  <A href="releases.html" onMouseOut="rolloverOff('side-releases');" onMouseOver="rolloverOn('side-releases');"><IMG alt="Releases" border="0" height="12" hspace="0" name="side-releases" onLoad="rolloverLoad('side-releases','graphics/releases-label-2.jpg','graphics/releases-label-3.jpg');" src="graphics/releases-label-3.jpg" vspace="0" width="120"></A><BR>
+  <A href="caveats.html" onMouseOut="rolloverOff('side-caveats');" onMouseOver="rolloverOn('side-caveats');"><IMG alt="Caveats" border="0" height="12" hspace="0" name="side-caveats" onLoad="rolloverLoad('side-caveats','graphics/caveats-label-2.jpg','graphics/caveats-label-3.jpg');" src="graphics/caveats-label-3.jpg" vspace="0" width="120"></A><BR>
+  <A href="feedback.html" onMouseOut="rolloverOff('side-feedback');" onMouseOver="rolloverOn('side-feedback');"><IMG alt="Feedback" border="0" height="12" hspace="0" name="side-feedback" onLoad="rolloverLoad('side-feedback','graphics/feedback-label-2.jpg','graphics/feedback-label-3.jpg');" src="graphics/feedback-label-3.jpg" vspace="0" width="120"></A><BR>
+<IMG border="0" height="14" hspace="0" src="resources/close.gif" vspace="0" width="120"><BR></TD><TD align="left" valign="top" width="500"><TABLE border="0" cellpadding="3" cellspacing="0"><TR><TD><TABLE border="0" cellpadding="0" cellspacing="0" width="494"><TR><TD bgcolor="666699" colspan="2" width="494"><TABLE border="0" cellpadding="0" cellspacing="0" width="494"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="492"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="492"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="492"><FONT color="#ffffff" face="arial,helvetica,sanserif" size="+1"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>Questions</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="492"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="492"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="484"><FONT color="#000000" face="arial,helvetica,sanserif"><UL><LI><A href="#faq-1">Why does my application crash on AIX when I run it under a          multi-threaded environment?</A></LI><LI><A href="#faq-2">What compilers are being used on the supported platforms?</A></LI><LI><A href="#faq-3">I cannot run my sample applications. What is wrong?</A></LI><LI><A href="#faq-4">I just built my own application using the Xerces parser. Why does it        crash?</A></LI><LI><A href="#faq-5">Is Xerces thread-safe?</A></LI><LI><A href="#faq-6">Why does my multi-threaded application crash on Solaris?</A></LI><LI><A href="#faq-7">How do I find out what version of Xerces I am using?</A></LI><LI><A href="#faq-8">How do I uninstall Xerces?</A></LI><LI><A href="#faq-9">How are entity reference nodes handled in DOM?</A></LI><LI><A href="#faq-10">What kinds of URLs are currently supported in Xerces?</A></LI><LI><A href="#faq-11">How can I add support for URL's with HTTP/FTP protocols?</A></LI><LI><A href="#faq-12">Can I use Xerces to parse HTML?</A></LI><LI><A href="#faq-13">I keep getting an error: &quot;invalid UTF-8 character&quot;. What's wrong?</A></LI><LI><A href="#faq-14">What encodings are supported by Xerces-C / XML4C?</A></LI><LI><A href="#faq-15">What character encoding should I use when creating XML documents?</A></LI><LI><A href="#faq-16">Is EBCDIC supported?</A></LI></UL></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="494"><TR><TD bgcolor="666699" colspan="2" width="494"><TABLE border="0" cellpadding="0" cellspacing="0" width="494"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="492"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="492"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="492"><FONT color="#ffffff" face="arial,helvetica,sanserif" size="+1"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>Answers</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="492"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="492"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="484"><FONT color="#000000" face="arial,helvetica,sanserif"><BR><A name="faq-1"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>Why does my application crash on AIX when I run it under a
+        multi-threaded environment?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+        <P>AIX maintains two kinds of libraries on the system,
+          thread-safe and non-thread safe. Multi-threaded libraries on
+          AIX follow a different naming convention, Usually the
+          multi-threaded library names are followed with &quot;_r&quot;. For
+          example, libc.a is single threaded whereas libc_r.a is
+          multi-threaded.</P>
+
+        <P>To make your multi-threaded application run on AIX, you
+          MUST ensure that you do not have a 'system library path' in
+          your LIBPATH environment variable when you run the
+          application. The appropriate libraries (threaded or
+          non-threaded) are automatically picked up at runtime. An
+          application usually crashes when you build your application
+          for multi-threaded operation but don't point to the
+          thread-safe version of the system libraries. For example,
+          LIBPATH can be simply set as:</P>
+
+<DIV align="right"><TABLE border="0" cellpadding="0" cellspacing="4" width="464"><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" height="1" width="462"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="462"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff" width="462"><FONT size="-1"><PRE>LIBPATH=$HOME/&lt;Xerces&gt;/lib</PRE></FONT></TD><TD bgcolor="#0086b2" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" height="1" width="462"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="462"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+
+        <P>Where &lt;Xerces&gt; points to the directory where
+          Xerces application resides.</P>
+
+        <P>If for any reason, unrelated to Xerces, you need to
+          keep a 'system library path' in your LIBPATH environment
+          variable, you must make sure that you have placed the
+          thread-safe path before you specify the normal system
+          path. For example, you must place <I>/lib/threads</I> before
+          <I>/lib</I> in your LIBPATH variable. That is to say your
+          LIBPATH may look like this:</P>
+
+<DIV align="right"><TABLE border="0" cellpadding="0" cellspacing="4" width="464"><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" height="1" width="462"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="462"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff" width="462"><FONT size="-1"><PRE>export LIBPATH=$HOME/&lt;Xerces&gt;/lib:/usr/lib/threads:/usr/lib</PRE></FONT></TD><TD bgcolor="#0086b2" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" height="1" width="462"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="462"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+
+        <P>Where /usr/lib is where your system libraries are.</P>
+      </FONT></TD></TR></TABLE><BR><A name="faq-2"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>What compilers are being used on the supported platforms?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      <P>Xerces has been built on the following platforms with these
+        compilers</P>
+
+      <TABLE border="0" cellpadding="2" cellspacing="2" width="100%">
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Operating System</B>&nbsp;
+      </FONT></TD><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Compiler</B>&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">Windows NT SP5/98&nbsp;
+      </FONT></TD><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">MSVC 6.0&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">Redhat Linux 6.0&nbsp;
+      </FONT></TD><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">gcc&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">AIX 4.1.4  and higher&nbsp;
+      </FONT></TD><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">xlC 3.1&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">Solaris 2.6&nbsp;
+      </FONT></TD><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">CC version 4.2&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">HP-UX B10.2&nbsp;
+      </FONT></TD><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">aCC and CC&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">HP-UX B11&nbsp;
+      </FONT></TD><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">aCC and CC&nbsp;
+      </FONT></TD></TR>
+      </TABLE>
+    </FONT></TD></TR></TABLE><BR><A name="faq-3"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>I cannot run my sample applications. What is wrong?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      <P>In order to run an application built using Xerces you
+      must set up your path and library search path properly. In the
+      standalone version from Apache, you must have the Xerces-C runtime library
+      available from your path settings. On Windows this library is called
+      <CODE><FONT face="courier, monospaced">xerces-c_1.dll</FONT></CODE> which must be available from your <CODE><FONT face="courier, monospaced">PATH</FONT></CODE>
+      settings. On UNIX platforms the library is called <CODE><FONT face="courier, monospaced">libxerces-c1_1.so</FONT></CODE>
+      (or <CODE><FONT face="courier, monospaced">.a</FONT></CODE> or <CODE><FONT face="courier, monospaced">.sl</FONT></CODE>) which must be available from your
+      <CODE><FONT face="courier, monospaced">LD_LIBRARY_PATH</FONT></CODE> (or <CODE><FONT face="courier, monospaced">SHLIB_PATH</FONT></CODE> or <CODE><FONT face="courier, monospaced">LIBPATH</FONT></CODE>)
+	  environment variable.</P>
+
+      <P>Thus, if you installed your binaries under <CODE><FONT face="courier, monospaced">$HOME/fastxmlparser</FONT></CODE>,
+      you need to point your library path to that directory.
+      </P>
+
+<DIV align="right"><TABLE border="0" cellpadding="0" cellspacing="4" width="464"><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" height="1" width="462"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="462"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff" width="462"><FONT size="-1"><PRE>export LIBPATH=$LIBPATH:$HOME/fastxmlparser/lib # (AIX)
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/fastxmlparser/lib # (Solaris, Linux)
+export SHLIB_PATH=$SHLIB_PATH:$HOME/fastxmlparser/lib # (HP-UX)</PRE></FONT></TD><TD bgcolor="#0086b2" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" height="1" width="462"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="462"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+
+      <P>If you are using the enhanced version of this parser from IBM, you will need to
+      put in two additional DLLs. In the Windows build these are <CODE><FONT face="courier, monospaced">icuuc.dll</FONT></CODE> and
+      <CODE><FONT face="courier, monospaced">icudata.dll</FONT></CODE> which must be available from your PATH settings. On UNIX,
+      these libraries are called <CODE><FONT face="courier, monospaced">libicu-uc.so</FONT></CODE> and <CODE><FONT face="courier, monospaced">libicudata.so</FONT></CODE>
+      (or <CODE><FONT face="courier, monospaced">.sl</FONT></CODE> for HP-UX or <CODE><FONT face="courier, monospaced">.a</FONT></CODE> for AIX) which must be available from
+      your library search path.
+
+      </P>
+    </FONT></TD></TR></TABLE><BR><A name="faq-4"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>I just built my own application using the Xerces parser. Why does it
+      crash?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      <P>In order to work with the Xerces parser, you have to
+        first initialize the XML subsystem. The most common mistake is
+        to forget this initialization. Before you make any calls to
+        Xerces APIs, you must call</P>
+
+<DIV align="right"><TABLE border="0" cellpadding="0" cellspacing="4" width="464"><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" height="1" width="462"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="462"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff" width="462"><FONT size="-1"><PRE>XMLPlatformUtils::Initialize():
+try {
+   XMLPlatformUtils::Initialize();
+}
+catch (const XMLException&amp; toCatch) {
+   // Do your failure processing here
+}</PRE></FONT></TD><TD bgcolor="#0086b2" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" height="1" width="462"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="462"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+
+      <P>This initializes the Xerces system and sets its
+        internal variables.  Note that you must the include
+        <CODE><FONT face="courier, monospaced">util/PlatformUtils.hpp</FONT></CODE> file for this to work.</P>
+    </FONT></TD></TR></TABLE><BR><A name="faq-5"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>Is Xerces thread-safe?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      <P>This is not a question that has a simple yes/no answer. Here are
+        the rules for using Xerces in a multi-threaded environment:</P>
+
+      <P>Within an address space, an instance of the parser may be used
+        without restriction from a single thread, or an instance of the
+        parser can be accessed from multiple threads, provided the
+        application guarantees that only one thread has entered a method
+        of the parser at any one time.</P>
+
+      <P>When two or more parser instances exist in a process, the
+        instances can be used concurrently, and without external
+        synchronization.  That is, in an application containing two
+        parsers and two threads, one pareser can be running within the
+        first thread concurrently with the second parser running
+        within the second thread.</P>
+
+      <P>The same rules apply to Xerces DOM documents -
+        multiple document instances may be concurrently accessed from
+        different threads, but any given document instance can only be
+        accessed by one thread at a time.</P>
+
+      <P>DOMStrings allow multiple concurrent readers.  All DOMString
+        const methods are thread safe, and can be concurrently entered
+        by multiple threads.  Non-const DOMString methods, such as
+        appendData(), are not thread safe and the application must
+        guarantee that no other methods (including const methods) are
+        executed concurrently with them.</P>
+    </FONT></TD></TR></TABLE><BR><A name="faq-6"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>Why does my multi-threaded application crash on Solaris?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+            <P>The problem appears because the throw call on Solaris 2.6
+            is not multi-thread safe. Sun Microsystems provides a patch to
+            solve this problem. To get the latest patch for solving this
+            problem, go to <A href="http://sunsolve.sun.com">SunSolve.sun.com</A>
+            and get the appropriate patch for your operating system.
+            For Intel machines running Solaris, you need to get Patch ID 104678.
+            For SPARC machines you need to get Patch ID #105591.</P>
+        </FONT></TD></TR></TABLE><BR><A name="faq-7"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>How do I find out what version of Xerces I am using?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      <P>The version string for Xerces happens to be in one of
+        the source files. Look inside the file
+        <CODE><FONT face="courier, monospaced">src/util/XML4CDefs.hpp</FONT></CODE> and find out what the
+        static variable <CODE><FONT face="courier, monospaced">gXML4CFullVersionStr</FONT></CODE> is defined
+        to be. (It is usually of type 3.0.0 or something
+        similar). This is the version of XML you are using.</P>
+
+      <P>If you don't have the source code, you have to find the version
+        information from the shared library name. On Windows NT/95/98
+        right click on the DLL name xerces-c_1.dll in the bin directory
+        and look up properties. The version information may be found on
+        the Version tab.</P>
+
+      <P>On AIX, just look for the library name libxerces-c1_1.a (or
+        libxerces-c1_1.so on Solaris/Linux and libxerces-c1_1.sl on
+        HP-UX).  The version number is coded in the name of the
+        library.</P>
+    </FONT></TD></TR></TABLE><BR><A name="faq-8"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>How do I uninstall Xerces?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      <P>Xerces only installs itself in a single directory and
+        does not set any registry entries. Thus, to un-install, you
+        only need to remove the directory where you installed it, and
+        all Xerces related files will be removed.</P>
+    </FONT></TD></TR></TABLE><BR><A name="faq-9"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>How are entity reference nodes handled in DOM?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      <P>If you are using the native DOM classes, the function
+        <CODE><FONT face="courier, monospaced">setExpandEntityReferences</FONT></CODE> controls how entities appear in the
+        DOM tree. When setExpandEntityReferences is set to false (the
+        default), an occurance of an entity reference in the XML
+        document will be represented by a subtree with an
+        EntityReference node at the root whose children represent the
+        entity expansion. Entity expansion will be a DOM tree
+        representing the structure of the entity expansion, not a text
+        node containing the entity expansion as text.</P>
+
+      <P>If setExpandEntityReferences is true, an entity reference in the
+        XML document is represented by only the nodes that represent the
+        entity expansion. The DOM tree will not contain any
+        entityReference nodes.</P>
+    </FONT></TD></TR></TABLE><BR><A name="faq-10"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>What kinds of URLs are currently supported in Xerces?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+
+    <P>The <CODE><FONT face="courier, monospaced">XMLURL</FONT></CODE> class provides for limited URL support. It understands
+    the <CODE><FONT face="courier, monospaced">file://, http://</FONT></CODE>, and <CODE><FONT face="courier, monospaced">ftp://</FONT></CODE> URL types, and is
+    capable or parsing them into their constituent components, and normalizing
+    them. It also supports the commonly required action of conglomerating a
+    base and relative URL into a single URL. In other words, it performs the
+    limited set of functions required by an XML parser.</P>
+
+    <P>Another thing that URLs commonly do are to create an input stream that
+    provides access to the entity referenced. The parser, as shipped, only
+    supports this functionality on URLs in the form <CODE><FONT face="courier, monospaced">file:///</FONT></CODE> and
+    <CODE><FONT face="courier, monospaced">file://localhost/</FONT></CODE>, i.e. only when the URL refers to a local file.</P>
+
+    <P>You may enable support for HTTP and FTP URLs by implementing and installing
+    a NetAccessor object. When a NetAccessor object is installed, the URL class
+    will use it to create input streams for the remote entities refered to by such URLs.</P>
+
+
+    </FONT></TD></TR></TABLE><BR><A name="faq-11"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>How can I add support for URL's with HTTP/FTP protocols?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      <P>To address the need to make remote connections to resources
+      specified using other protocols like HTTP, FTP etc..., Xerces-C
+      now provides the <CODE><FONT face="courier, monospaced">NetAccessor</FONT></CODE> interface. The header
+      file is <CODE><FONT face="courier, monospaced">src/util/XMLNetAccessor.hpp</FONT></CODE>. This interface
+      allows you to plug in your own implementation of URL networking
+      code into the Xerces-C parser.</P>
+
+      <P>One such implementation <B>(tested minimally under WinNT
+      only)</B> is already provided in Xerces-C source code
+      drop, using <A href="http://www.w3.org/Library/">W3C's Libwww
+      library</A>. Libwww is available for free and has been ported
+      to various platforms. Click <A href="build.html#BuildUsingLibwww">here</A> to read how you
+      can rebuild Xerces-C binaries with this implementation.</P>
+
+      <P>Some more notes about the NetAccessor implementation using
+      Libwww:</P>
+
+      <UL>
+        <LI>This implementation only supports HTTP and does not return
+      adequate error messages when connections cannot be made to the
+      remote resources. It however illustrates how you can add support
+      for HTTP and FTP URL's.</LI>
+
+        <LI>The Xerces-C team will <B>NOT</B> be able to address any
+      questions related to how things work in Libwww. You can get some
+      help with Libwww by subscribing to the &lt;<A href="mailto:www-lib-request@w3.org?subject=subscribe">www-lib@w3.org</A>&gt;
+      public mailing list.</LI>
+
+        <LI>However, we will welcome any feedback on the design of the
+      NetAccessor interface. Please send all such feedback to <A href="mailto:xerces-dev@xml.apache.org">xerces-dev@xml.apache.org</A>.</LI>
+
+        <LI>You do not have to recompile Xerces-C to plugin your
+      NetAccessor implementation. You can simply point the static
+      pointer variable <CODE><FONT face="courier, monospaced">XMLPlatformUtils::fgNetAccessor</FONT></CODE> to
+      an instance of your NetAccessor implementation. Please refer to
+      the files <CODE><FONT face="courier, monospaced">src/util/PlatformUtils.cpp</FONT></CODE> and
+      <CODE><FONT face="courier, monospaced">src/util/Platforms/Win32/Win32PlatformUtils.cpp</FONT></CODE> to
+      see how we have done this simple illustrative
+      implementation.</LI>
+
+      </UL>
+    </FONT></TD></TR></TABLE><BR><A name="faq-12"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>Can I use Xerces to parse HTML?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      <P>Yes, if it follows the XML spec rules. Most HTML, however,
+        does not follow the XML rules, and will therefore generate XML
+        well-formedness errors.</P>
+    </FONT></TD></TR></TABLE><BR><A name="faq-13"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>I keep getting an error: &quot;invalid UTF-8 character&quot;. What's wrong?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      <P>There are many Unicode characters that are not allowed in
+        your XML document, according to the XML spec. Typical
+        disallowed characters are control characters, even if you
+        escape them using the Character Reference form: See the XML
+        spec, sections 2.2 and 4.1 for details. If the parser is
+        generating this error, it is very likely that there's a
+        character in there that you can't see.  You can generally use
+        a UNIX command like &quot;od -hc&quot; to find it.</P>
+
+      <P>Another reason for this error is that your file is in some
+        non UTF/ASCII encoding but you gave no encoding=&quot;&quot; string in
+        your file to tell the parser what its real encoding is.</P>
+    </FONT></TD></TR></TABLE><BR><A name="faq-14"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>What encodings are supported by Xerces-C / XML4C?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+
+      <P>Xerces-C has intrinsic support for ASCII, UTF-8, UTF-16
+      (Big/Small Endian), UCS4 (Big/Small Endian), EBCDIC code pages IBM037 and
+      IBM1140 encodings, ISO-8859-1 (aka Latin1) and Windows-1252. This means that it can parse
+      input XML files in these above mentioned encodings.</P>
+
+      <P>XML4C - the version of Xerces-C available from IBM - extends
+      this set to include the encodings listed in the table below.</P>
+
+      <TABLE border="0" cellpadding="2" cellspacing="2" width="100%">
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Common Name</B>&nbsp;
+      </FONT></TD><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Use this name in XML</B>&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">8 bit Unicode&nbsp;
+      </FONT></TD>                <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">UTF-8&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO Latin 1&nbsp;
+      </FONT></TD>                  <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO-8859-1&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO Latin 2&nbsp;
+      </FONT></TD>                  <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO-8859-2&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO Latin 3&nbsp;
+      </FONT></TD>                  <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO-8859-3&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO Latin 4&nbsp;
+      </FONT></TD>                  <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO-8859-4&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO Latin Cyrillic&nbsp;
+      </FONT></TD>           <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO-8859-5&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO Latin Arabic&nbsp;
+      </FONT></TD>             <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO-8859-6&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO Latin Greek&nbsp;
+      </FONT></TD>              <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO-8859-7&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO Latin Hebrew&nbsp;
+      </FONT></TD>             <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO-8859-8&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO Latin 5&nbsp;
+      </FONT></TD>                  <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ISO-8859-9&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">EBCDIC US&nbsp;
+      </FONT></TD>                    <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ebcdic-cp-us&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">EBCDIC with Euro symbol&nbsp;
+      </FONT></TD>      <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">ibm1140&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">Chinese, PRC&nbsp;
+      </FONT></TD>                 <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">gb2312&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">Chinese, Big5&nbsp;
+      </FONT></TD>                <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">Big5&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">Cyrillic&nbsp;
+      </FONT></TD>                     <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">koi8-r&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">Japanese, Shift JIS&nbsp;
+      </FONT></TD>          <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">Shift_JIS&nbsp;
+      </FONT></TD></TR>
+        <TR><TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">Korean, Extended UNIX code&nbsp;
+      </FONT></TD>   <TD align="left" bgcolor="#a0ddf0" colspan="1" rowspan="1" valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">euc-kr&nbsp;
+      </FONT></TD></TR>
+      </TABLE>
+
+    <P>Some implementations or ports of Xerces-C provide support for
+    additional encodings.  The exact set will depend on the supplier
+    of the parser and on the character set transcoding services in use.
+    </P>
+
+    </FONT></TD></TR></TABLE><BR><A name="faq-15"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>What character encoding should I use when creating XML documents?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+
+      <P>The best choice in most cases is either utf-8 or utf-16.
+      Advantages of these encodings include </P>
+
+      <UL>
+         <LI>The best portability.  These encodings are more widely
+         supported by XML processors than any others, meaning that
+         your documents will have the best possible chance of being
+         read correctly, no matter where they end up. </LI>
+
+         <LI>Full international character support.  Both utf-8 and
+         utf-16 cover the full Unicode character set, which
+         includes all of the characters from all major national,
+         international and industry character sets. </LI>
+
+         <LI>Efficient.  utf-8 has the smaller storage requirements
+         for documents that are primarily composed of of characters
+         from the Latin alphabet.  utf-16 is more efficient for
+         encoding Asian languages.  But both encodings cover
+         all languages without loss.</LI>
+      </UL>
+
+      <P>The only drawback of utf-8 or utf-16 is that they are not
+      the native text file format for most systems, meaning that
+      common text file editors and viewers can not be directly used.</P>
+
+      <P>A second choice of encoding would be any of the others listed in
+      the table above.  This works best when the xml encoding is the same
+      as the default system encoding on the machine where the
+      XML document is being prepared, because the document will then
+      display correctly as a plain text file.  For UNIX systems
+      in countries speaking Western European languages, the encoding
+      will usually be iso-8859-1.</P>
+
+      <P>The versions of Xerces, both C and Java, distributed
+      by IBM as XML4C and XML4J, include all of the encodings
+      listed in the above table, on all platforms. </P>
+
+      <P>A word of caution for Windows users: The default character set
+      on Windows systems is windows-1252, not iso-8859-1.  While Xerces-c
+      does recognize this Windows encoding, it is a poor choice for portable
+      XML data because it is not widely recoginized by other XML processing
+      tools.  If you are using a Windows based editing tool to generate
+      XML, check which character set it generates, and make sure that the
+      resulting XML specifies the correct name in the encoding=&quot;...&quot; declaration.</P>
+
+        </FONT></TD></TR></TABLE><BR><A name="faq-16"><!--anchor--></A><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="666699" colspan="2" width="484"><TABLE border="0" cellpadding="0" cellspacing="0" width="484"><TR><TD bgcolor="#039acc" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#039acc" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#039acc" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#0086b2" width="482"><FONT color="#ffffff" face="arial,helvetica,sanserif"><IMG border="0" height="2" hspace="0" src="resources/void.gif" vspace="0" width="2"><B>Is EBCDIC supported?</B></FONT></TD><TD bgcolor="#017299" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#0086b2" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#017299" height="1" width="482"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="482"></TD><TD bgcolor="#017299" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></TD></TR><TR><TD width="10">&nbsp;</TD><TD width="474"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+    <P>Yes, Xerces-C supports EBCDIC.  When creating EBCDIC encoded XML data,
+    the preferred encoding is ibm1140.  Also supported is ibm037 (and its alternate name,
+    ebcdic-cp-us); this encoding is almost the same as ibm1140, but it lacks the Euro
+    symbol</P>
+
+    <P>These two encodings, ibm1140 and ibm037, are available on both Xerces-C and
+    IBM XML4C, on all platforms. </P>
+
+    <P>On IBM System 390, XML4C also supports two alternative forms, ibm037-s390
+    and ibm1140-s390.  These are similar to the base ibm037 and ibm1140 encodings,
+    but with alternate mappings of the EBCDIC new-line character, which allows
+    them to appear as normal text files on System 390s.  These encodings are not
+    supported on other platforms, and should not be used for portable data.</P>
+
+    <P>XML4C on System 390 and AS/400 also provides additional EBCDIC encodings, including
+    those for the character sets of different countries.  The exact set supported
+    will be platform dependent, and these encodings are not recommended for
+    portable XML data.  </P>
+
+    </FONT></TD></TR></TABLE><BR></FONT></TD></TR></TABLE><BR></TD></TR></TABLE></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="620"><TR><TD bgcolor="#0086b2"><IMG height="1" src="images/dot.gif" width="1"></TD></TR><TR><TD align="center"><FONT color="#0086b2" size="-1"><I>
+              Copyright &copy; 2000 The Apache Software Foundation.
+              All Rights Reserved.
+            </I></FONT></TD></TR></TABLE></BODY></HTML>

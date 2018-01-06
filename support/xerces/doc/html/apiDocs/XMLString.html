@@ -1,0 +1,973 @@
+<html><head><TITLE>XMLString</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   XMLString  </H2><BLOCKQUOTE>
+
+Class for representing native character strings and handling common string
+operations
+
+This class is Unicode compliant
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CXMLString,MXMLString.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.60.11"> <IMG BORDER=0 SRC=icon1.gif></A> private </TD><TD><B>Constructors and Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.11.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>XMLString</B> ()<br>
+<I>Unimplemented default constructor </I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.11.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>~XMLString</B> ()<br>
+<I>Unimplemented destructor </I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Conversion functions </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>binToText</B> ( const unsigned int toFormat, char* const toFill, const unsigned int maxChars, const unsigned int radix )<br>
+<I>Converts binary data to a text string based a given radix
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>binToText</B> ( const unsigned int toFormat, XMLCh* const toFill, const unsigned int maxChars, const unsigned int radix )<br>
+<I>Converts binary data to a text string based a given radix
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>binToText</B> ( const unsigned long toFormat, char* const toFill, const unsigned int maxChars, const unsigned int radix )<br>
+<I>Converts binary data to a text string based a given radix
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>binToText</B> ( const unsigned long toFormat, XMLCh* const toFill, const unsigned int maxChars, const unsigned int radix )<br>
+<I>Converts binary data to a text string based a given radix
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.1.5"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>binToText</B> ( const long toFormat, char* const toFill, const unsigned int maxChars, const unsigned int radix )<br>
+<I>Converts binary data to a text string based a given radix
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.1.6"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>binToText</B> ( const long toFormat, XMLCh* const toFill, const unsigned int maxChars, const unsigned int radix )<br>
+<I>Converts binary data to a text string based a given radix
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.1.7"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>binToText</B> ( const int toFormat, char* const toFill, const unsigned int maxChars, const unsigned int radix )<br>
+<I>Converts binary data to a text string based a given radix
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.1.8"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>binToText</B> ( const int toFormat, XMLCh* const toFill, const unsigned int maxChars, const unsigned int radix )<br>
+<I>Converts binary data to a text string based a given radix
+
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.9"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Conversion functions </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.9.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  char* </TD><TD><B>transcode</B> ( const XMLCh* const toTranscode )<br>
+<I>Transcodes a string to native code-page
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.9.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  bool </TD><TD><B>transcode</B> ( const XMLCh* const toTranscode, char* const toFill, const unsigned int maxChars )<br>
+<I>Transcodes a string to native code-page
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.9.3"> <IMG BORDER=0 SRC=icon1.gif></A> static  XMLCh* </TD><TD><B>transcode</B> ( const char* const toTranscode )<br>
+<I>Transcodes a string to native code-page
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.9.4"> <IMG BORDER=0 SRC=icon1.gif></A> static  bool </TD><TD><B>transcode</B> ( const char* const toTranscode, XMLCh* const toFill, const unsigned int maxChars )<br>
+<I>Transcodes a string to native code-page
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.9.5"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>trim</B> (char* const toTrim)<br>
+<I>Trims off extra space characters from the end of the string
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.9.6"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>trim</B> (XMLCh* const toTrim)<br>
+<I>Trims off extra space characters from the end of the string
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.10"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Formatting functions </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.10.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  XMLCh* </TD><TD><B>makeUName</B> ( const XMLCh* const pszURI, const XMLCh* const pszName )<br>
+<I>Creates a UName from a URI and base name</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.10.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  unsigned  int </TD><TD><B>replaceTokens</B> ( XMLCh* const errText, const unsigned int maxChars, const XMLCh* const text1, const XMLCh* const text2, const XMLCh* const text3, const XMLCh* const text4 )<br>
+<I>
+Internal function to perform token replacement for strings</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.10.3"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>upperCase</B> (XMLCh* const toUpperCase)<br>
+<I>Converts a string to uppercase
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.5"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Hash functions </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  unsigned  int </TD><TD><B>hash</B> ( const char* const tohash, const unsigned int hashModulus )<br>
+<I>Hashes a string given a modulus
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.5.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  unsigned  int </TD><TD><B>hash</B> ( const XMLCh* const toHash, const unsigned int hashModulus )<br>
+<I>Hashes a string given a modulus
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.5.3"> <IMG BORDER=0 SRC=icon1.gif></A> static  unsigned  int </TD><TD><B>hashN</B> ( const XMLCh* const toHash, const unsigned int numChars, const unsigned int hashModulus )<br>
+<I>Hashes a string given a modulus taking a maximum number of characters
+as the limit
+
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.12"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Initialization </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.12.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>initString</B> (XMLLCPTranscoder* const defToUse)<br>
+<I>Intialization function called from XMLPlatformUtils class </I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.7"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Replication function </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.7.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  char* </TD><TD><B>replicate</B> (const char* const toRep)<br>
+<I>Replicates a string
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.7.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  XMLCh* </TD><TD><B>replicate</B> (const XMLCh* const toRep)<br>
+<I>Replicates a string
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.6"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Search functions </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>indexOf</B> (const char* const toSearch, const char ch)<br>
+<I>
+Provides the index of the first occurance of a character within a string
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.6.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>indexOf</B> (const XMLCh* const toSearch, const XMLCh ch)<br>
+<I>
+Provides the index of the first occurance of a character within a string
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.6.3"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>lastIndexOf</B> (const char* const toSearch, const char ch)<br>
+<I>
+Provides the index of the last occurance of a character within a string
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.6.4"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>lastIndexOf</B> (const XMLCh* const toSearch, const XMLCh ch)<br>
+<I>
+Provides the index of the last occurance of a character within a string
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.6.5"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>lastIndexOf</B> ( const char* const toSearch, const char chToFind, const unsigned int fromIndex )<br>
+<I>
+Provides the index of the last occurance of a character within a string
+starting backward from a given index
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.6.6"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>lastIndexOf</B> ( const XMLCh* const toSearch, const XMLCh ch, const unsigned int fromIndex )<br>
+<I>
+Provides the index of the last occurance of a character within a string
+starting backward from a given index
+
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>String comparison functions </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>compareIString</B> ( const char* const str1, const char* const str2 )<br>
+<I>Lexicographically compares lowercase versions of <code>str1</code> and
+<code>str2</code> and returns a value indicating their relationship</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>compareIString</B> ( const XMLCh* const str1, const XMLCh* const str2 )<br>
+<I>Lexicographically compares lowercase versions of <code>str1</code> and
+<code>str2</code> and returns a value indicating their relationship</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>compareNString</B> ( const char* const str1, const char* const str2, const unsigned int count )<br>
+<I>Lexicographically compares, at most, the first count characters in
+<code>str1</code> and <code>str2</code> and returns a value indicating the
+relationship between the substrings</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.3.4"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>compareNString</B> ( const XMLCh* const str1, const XMLCh* const str2, const unsigned int count )<br>
+<I>Lexicographically compares, at most, the first count characters in
+<code>str1</code> and <code>str2</code> and returns a value indicating
+the relationship between the substrings</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.3.5"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>compareNIString</B> ( const char* const str1, const char* const str2, const unsigned int count )<br>
+<I>Lexicographically compares, at most, the first count characters in
+<code>str1</code> and <code>str2</code> without regard to case and
+returns a value indicating the relationship between the substrings</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.3.6"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>compareNIString</B> ( const XMLCh* const str1, const XMLCh* const str2, const unsigned int count )<br>
+<I>Lexicographically compares, at most, the first count characters in
+<code>str1</code> and <code>str2</code> without regard to case and
+returns a value indicating the relationship between the substrings</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.3.7"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>compareString</B> ( const char* const str1, const char* const str2 )<br>
+<I>Lexicographically compares <code>str1</code> and <code>str2</code> and
+returns a value indicating their relationship</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.3.8"> <IMG BORDER=0 SRC=icon1.gif></A> static  int </TD><TD><B>compareString</B> ( const XMLCh* const str1, const XMLCh* const str2 )<br>
+<I>Lexicographically compares <code>str1</code> and <code>str2</code> and
+returns a value indicating their relationship</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>String concatenation functions </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>catString</B> ( char* const target, const char* const src )<br>
+<I>Concatenates two strings</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>catString</B> ( XMLCh* const target, const XMLCh* const src )<br>
+<I>Concatenates two strings</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>String copy functions </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>copyString</B> ( char* const target, const char* const src )<br>
+<I>Copies <code>src</code>, including the terminating null character, to the
+location specified by <code>target</code></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  void </TD><TD><B>copyString</B> ( XMLCh* const target, const XMLCh* const src )<br>
+<I>Copies <code>src</code>, including the terminating null character, to
+the location specified by <code>target</code></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> static  bool </TD><TD><B>copyNString</B> ( XMLCh* const target, const XMLCh* const src, const unsigned int maxChars )<br>
+<I>Copies <code>src</code>, upto a fixed number of characters, to the
+location specified by <code>target</code></I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.8"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>String query function </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.60.8.1"> <IMG BORDER=0 SRC=icon1.gif></A> static  bool </TD><TD><B>startsWith</B> ( const char* const toTest, const char* const prefix )<br>
+<I>Tells if the sub-string appears within a string at the beginning
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.8.2"> <IMG BORDER=0 SRC=icon1.gif></A> static  bool </TD><TD><B>startsWith</B> ( const XMLCh* const toTest, const XMLCh* const prefix )<br>
+<I>Tells if the sub-string appears within a string at the beginning
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.8.3"> <IMG BORDER=0 SRC=icon1.gif></A> static  bool </TD><TD><B>startsWithI</B> ( const char* const toTest, const char* const prefix )<br>
+<I>Tells if the sub-string appears within a string at the beginning
+without regard to case
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.8.4"> <IMG BORDER=0 SRC=icon1.gif></A> static  bool </TD><TD><B>startsWithI</B> ( const XMLCh* const toTest, const XMLCh* const prefix )<br>
+<I>Tells if the sub-string appears within a string at the beginning
+without regard to case
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.8.5"> <IMG BORDER=0 SRC=icon1.gif></A> static  const  XMLCh* </TD><TD><B>findAny</B> ( const XMLCh* const toSearch, const XMLCh* const searchList )<br>
+<I>Tells if a string has any occurance of another string within itself
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.8.6"> <IMG BORDER=0 SRC=icon1.gif></A> static  XMLCh* </TD><TD><B>findAny</B> ( XMLCh* const toSearch, const XMLCh* const searchList )<br>
+<I>Tells if a string has any occurance of another string within itself
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.8.7"> <IMG BORDER=0 SRC=icon1.gif></A> static  unsigned  int </TD><TD><B>stringLen</B> (const char* const src)<br>
+<I>Get the length of the string
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.60.8.8"> <IMG BORDER=0 SRC=icon1.gif></A> static  unsigned  int </TD><TD><B>stringLen</B> (const XMLCh* const src)<br>
+<I>Get the length of the string
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+Class for representing native character strings and handling common string
+operations
+
+This class is Unicode compliant. This class is designed primarily
+for internal use, but due to popular demand, it is being made
+publicly available. Users of this class must understand that this
+is not an officially supported class. All public methods of this
+class are <i>static functions</i>.
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Conversion functions ">
+<A NAME ="DOC.60.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Conversion functions </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="binToText">
+<A NAME ="DOC.60.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  binToText( const unsigned int toFormat, char* const toFill, const unsigned int maxChars, const unsigned int radix )</B></TT>
+<DD>Converts binary data to a text string based a given radix
+
+
+<DL><DT><B>Parameters:</B><DD><B>toFormat</B> -  The beginning of the input string to convert
+<br><B>toFill</B> -  The buffer that will hold the output on return
+<br><B>maxChars</B> -  The maximum number of charcters to convert
+<br><B>radix</B> -  The radix of the input data, based on which the conversion
+will be done<br></DL><P>
+<A NAME="binToText">
+<A NAME ="DOC.60.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  binToText( const unsigned int toFormat, XMLCh* const toFill, const unsigned int maxChars, const unsigned int radix )</B></TT>
+<DD>Converts binary data to a text string based a given radix
+
+
+<DL><DT><B>Parameters:</B><DD><B>toFormat</B> -  The beginning of the input string to convert
+<br><B>toFill</B> -  The buffer that will hold the output on return
+<br><B>maxChars</B> -  The maximum number of charcters to convert
+<br><B>radix</B> -  The radix of the input data, based on which the conversion
+will be done<br></DL><P>
+<A NAME="binToText">
+<A NAME ="DOC.60.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  binToText( const unsigned long toFormat, char* const toFill, const unsigned int maxChars, const unsigned int radix )</B></TT>
+<DD>Converts binary data to a text string based a given radix
+
+
+<DL><DT><B>Parameters:</B><DD><B>toFormat</B> -  The beginning of the input string to convert
+<br><B>toFill</B> -  The buffer that will hold the output on return
+<br><B>maxChars</B> -  The maximum number of charcters to convert
+<br><B>radix</B> -  The radix of the input data, based on which the conversion
+will be done<br></DL><P>
+<A NAME="binToText">
+<A NAME ="DOC.60.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  binToText( const unsigned long toFormat, XMLCh* const toFill, const unsigned int maxChars, const unsigned int radix )</B></TT>
+<DD>Converts binary data to a text string based a given radix
+
+
+<DL><DT><B>Parameters:</B><DD><B>toFormat</B> -  The beginning of the input string to convert
+<br><B>toFill</B> -  The buffer that will hold the output on return
+<br><B>maxChars</B> -  The maximum number of charcters to convert
+<br><B>radix</B> -  The radix of the input data, based on which the conversion
+will be done<br></DL><P>
+<A NAME="binToText">
+<A NAME ="DOC.60.1.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  binToText( const long toFormat, char* const toFill, const unsigned int maxChars, const unsigned int radix )</B></TT>
+<DD>Converts binary data to a text string based a given radix
+
+
+<DL><DT><B>Parameters:</B><DD><B>toFormat</B> -  The beginning of the input string to convert
+<br><B>toFill</B> -  The buffer that will hold the output on return
+<br><B>maxChars</B> -  The maximum number of charcters to convert
+<br><B>radix</B> -  The radix of the input data, based on which the conversion
+will be done<br></DL><P>
+<A NAME="binToText">
+<A NAME ="DOC.60.1.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  binToText( const long toFormat, XMLCh* const toFill, const unsigned int maxChars, const unsigned int radix )</B></TT>
+<DD>Converts binary data to a text string based a given radix
+
+
+<DL><DT><B>Parameters:</B><DD><B>toFormat</B> -  The beginning of the input string to convert
+<br><B>toFill</B> -  The buffer that will hold the output on return
+<br><B>maxChars</B> -  The maximum number of charcters to convert
+<br><B>radix</B> -  The radix of the input data, based on which the conversion
+will be done<br></DL><P>
+<A NAME="binToText">
+<A NAME ="DOC.60.1.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  binToText( const int toFormat, char* const toFill, const unsigned int maxChars, const unsigned int radix )</B></TT>
+<DD>Converts binary data to a text string based a given radix
+
+
+<DL><DT><B>Parameters:</B><DD><B>toFormat</B> -  The beginning of the input string to convert
+<br><B>toFill</B> -  The buffer that will hold the output on return
+<br><B>maxChars</B> -  The maximum number of charcters to convert
+<br><B>radix</B> -  The radix of the input data, based on which the conversion
+will be done<br></DL><P>
+<A NAME="binToText">
+<A NAME ="DOC.60.1.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  binToText( const int toFormat, XMLCh* const toFill, const unsigned int maxChars, const unsigned int radix )</B></TT>
+<DD>Converts binary data to a text string based a given radix
+
+
+<DL><DT><B>Parameters:</B><DD><B>toFormat</B> -  The beginning of the input string to convert
+<br><B>toFill</B> -  The buffer that will hold the output on return
+<br><B>maxChars</B> -  The maximum number of charcters to convert
+<br><B>radix</B> -  The radix of the input data, based on which the conversion
+will be done<br></DL><P></DL>
+
+<A NAME="String concatenation functions ">
+<A NAME ="DOC.60.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  String concatenation functions </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="catString">
+<A NAME ="DOC.60.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  catString( char* const target, const char* const src )</B></TT>
+<DD>Concatenates two strings.
+
+<code>catString</code> appends <code>src</code> to <code>target</code> and
+terminates the resulting string with a null character. The initial character
+of <code>src</code> overwrites the terminating character of <code>target
+</code>.
+
+No overflow checking is performed when strings are copied or appended.
+The behavior of <code>catString</code> is undefined if source and
+destination strings overlap.
+
+
+<DL><DT><B>Parameters:</B><DD><B>target</B> -  Null-terminated destination string
+<br><B>src</B> -  Null-terminated source string<br></DL><P>
+<A NAME="catString">
+<A NAME ="DOC.60.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  catString( XMLCh* const target, const XMLCh* const src )</B></TT>
+<DD>Concatenates two strings.
+
+<code>catString</code> appends <code>src</code> to <code>target</code> and
+terminates the resulting string with a null character. The initial character of
+<code>src</code> overwrites the terminating character of <code>target</code>.
+No overflow checking is performed when strings are copied or appended.
+The behavior of <code>catString</code> is undefined if source and destination
+strings overlap.
+
+
+<DL><DT><B>Parameters:</B><DD><B>target</B> -  Null-terminated destination string
+<br><B>src</B> -  Null-terminated source string<br></DL><P></DL>
+
+<A NAME="String comparison functions ">
+<A NAME ="DOC.60.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  String comparison functions </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="compareIString">
+<A NAME ="DOC.60.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  compareIString( const char* const str1, const char* const str2 )</B></TT>
+<DD>Lexicographically compares lowercase versions of <code>str1</code> and
+<code>str2</code> and returns a value indicating their relationship
+<DL><DT><B>Returns:</B><DD>The return value indicates the relation of <code>str1</code> to
+<code>str2</code> as follows
+Less than 0 means <code>str1</code> is less than <code>str2</code>
+Equal to 0 means <code>str1</code> is identical to <code>str2</code> 
+Greater than 0 means <code>str1</code> is more than <code>str2</code> 
+<DT><B>Parameters:</B><DD><B>str1</B> -  Null-terminated string to compare
+<br><B>str2</B> -  Null-terminated string to compare
+<br></DL><P>
+<A NAME="compareIString">
+<A NAME ="DOC.60.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  compareIString( const XMLCh* const str1, const XMLCh* const str2 )</B></TT>
+<DD>Lexicographically compares lowercase versions of <code>str1</code> and
+<code>str2</code> and returns a value indicating their relationship
+<DL><DT><B>Returns:</B><DD>The return value indicates the relation of <code>str1</code> to
+<code>str2</code> as follows
+Less than 0 means <code>str1</code> is less than <code>str2</code>
+Equal to 0 means <code>str1</code> is identical to <code>str2</code> 
+Greater than 0 means <code>str1</code> is more than <code>str2</code> 
+<DT><B>Parameters:</B><DD><B>str1</B> -  Null-terminated string to compare
+<br><B>str2</B> -  Null-terminated string to compare
+<br></DL><P>
+<A NAME="compareNString">
+<A NAME ="DOC.60.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  compareNString( const char* const str1, const char* const str2, const unsigned int count )</B></TT>
+<DD>Lexicographically compares, at most, the first count characters in
+<code>str1</code> and <code>str2</code> and returns a value indicating the
+relationship between the substrings
+<DL><DT><B>Returns:</B><DD>The return value indicates the relation of <code>str1</code> to
+<code>str2</code> as follows
+Less than 0 means <code>str1</code> is less than <code>str2</code>
+Equal to 0 means <code>str1</code> is identical to <code>str2</code> 
+Greater than 0 means <code>str1</code> is more than <code>str2</code> 
+<DT><B>Parameters:</B><DD><B>str1</B> -  Null-terminated string to compare
+<br><B>str2</B> -  Null-terminated string to compare
+<br><B>count</B> -  The number of characters to compare
+<br></DL><P>
+<A NAME="compareNString">
+<A NAME ="DOC.60.3.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  compareNString( const XMLCh* const str1, const XMLCh* const str2, const unsigned int count )</B></TT>
+<DD>Lexicographically compares, at most, the first count characters in
+<code>str1</code> and <code>str2</code> and returns a value indicating
+the relationship between the substrings
+<DL><DT><B>Returns:</B><DD>The return value indicates the relation of <code>str1</code> to
+<code>str2</code> as follows
+Less than 0 means <code>str1</code> is less than <code>str2</code>
+Equal to 0 means <code>str1</code> is identical to <code>str2</code> 
+Greater than 0 means <code>str1</code> is more than <code>str2</code> 
+<DT><B>Parameters:</B><DD><B>str1</B> -  Null-terminated string to compare
+<br><B>str2</B> -  Null-terminated string to compare
+<br><B>count</B> -  The number of characters to compare
+<br></DL><P>
+<A NAME="compareNIString">
+<A NAME ="DOC.60.3.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  compareNIString( const char* const str1, const char* const str2, const unsigned int count )</B></TT>
+<DD>Lexicographically compares, at most, the first count characters in
+<code>str1</code> and <code>str2</code> without regard to case and
+returns a value indicating the relationship between the substrings.
+
+
+<DL><DT><B>Returns:</B><DD>The return value indicates the relation of <code>str1</code> to
+<code>str2</code> as follows
+Less than 0 means <code>str1</code> is less than <code>str2</code>
+Equal to 0 means <code>str1</code> is identical to <code>str2</code> 
+Greater than 0 means <code>str1</code> is more than <code>str2</code> 
+<DT><B>Parameters:</B><DD><B>str1</B> -  Null-terminated string to compare
+<br><B>str2</B> -  Null-terminated string to compare
+<br><B>count</B> -  The number of characters to compare
+<br></DL><P>
+<A NAME="compareNIString">
+<A NAME ="DOC.60.3.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  compareNIString( const XMLCh* const str1, const XMLCh* const str2, const unsigned int count )</B></TT>
+<DD>Lexicographically compares, at most, the first count characters in
+<code>str1</code> and <code>str2</code> without regard to case and
+returns a value indicating the relationship between the substrings.
+
+
+<DL><DT><B>Returns:</B><DD>The return value indicates the relation of <code>str1</code> to
+<code>str2</code> as follows
+Less than 0 means <code>str1</code> is less than <code>str2</code>
+Equal to 0 means <code>str1</code> is identical to <code>str2</code> 
+Greater than 0 means <code>str1</code> is more than <code>str2</code> 
+<DT><B>Parameters:</B><DD><B>str1</B> -  Null-terminated string to compare
+<br><B>str2</B> -  Null-terminated string to compare
+<br><B>count</B> -  The number of characters to compare
+<br></DL><P>
+<A NAME="compareString">
+<A NAME ="DOC.60.3.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  compareString( const char* const str1, const char* const str2 )</B></TT>
+<DD>Lexicographically compares <code>str1</code> and <code>str2</code> and
+returns a value indicating their relationship.
+
+
+<DL><DT><B>Returns:</B><DD>The return value indicates the relation of <code>str1</code> to
+<code>str2</code> as follows
+Less than 0 means <code>str1</code> is less than <code>str2</code>
+Equal to 0 means <code>str1</code> is identical to <code>str2</code> 
+Greater than 0 means <code>str1</code> is more than <code>str2</code> 
+<DT><B>Parameters:</B><DD><B>str1</B> -  Null-terminated string to compare
+<br><B>str2</B> -  Null-terminated string to compare
+<br></DL><P>
+<A NAME="compareString">
+<A NAME ="DOC.60.3.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  compareString( const XMLCh* const str1, const XMLCh* const str2 )</B></TT>
+<DD>Lexicographically compares <code>str1</code> and <code>str2</code> and
+returns a value indicating their relationship.
+
+
+<DL><DT><B>Returns:</B><DD>The return value indicates the relation of <code>str1</code> to
+<code>str2</code> as follows
+Less than 0 means <code>str1</code> is less than <code>str2</code>
+Equal to 0 means <code>str1</code> is identical to <code>str2</code> 
+Greater than 0 means <code>str1</code> is more than <code>str2</code> 
+<DT><B>Parameters:</B><DD><B>str1</B> -  Null-terminated string to compare
+<br><B>str2</B> -  Null-terminated string to compare
+<br></DL><P></DL>
+
+<A NAME="String copy functions ">
+<A NAME ="DOC.60.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  String copy functions </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="copyString">
+<A NAME ="DOC.60.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  copyString( char* const target, const char* const src )</B></TT>
+<DD>Copies <code>src</code>, including the terminating null character, to the
+location specified by <code>target</code>.
+
+No overflow checking is performed when strings are copied or appended.
+The behavior of strcpy is undefined if the source and destination strings
+overlap.
+
+
+<DL><DT><B>Parameters:</B><DD><B>target</B> -  Destination string
+<br><B>src</B> -  Null-terminated source string<br></DL><P>
+<A NAME="copyString">
+<A NAME ="DOC.60.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  copyString( XMLCh* const target, const XMLCh* const src )</B></TT>
+<DD>Copies <code>src</code>, including the terminating null character, to
+the location specified by <code>target</code>.
+
+No overflow checking is performed when strings are copied or appended.
+The behavior of <code>copyString</code> is undefined if the source and
+destination strings overlap.
+
+
+<DL><DT><B>Parameters:</B><DD><B>target</B> -  Destination string
+<br><B>src</B> -  Null-terminated source string<br></DL><P>
+<A NAME="copyNString">
+<A NAME ="DOC.60.4.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  bool  copyNString( XMLCh* const target, const XMLCh* const src, const unsigned int maxChars )</B></TT>
+<DD>Copies <code>src</code>, upto a fixed number of characters, to the
+location specified by <code>target</code>.
+
+No overflow checking is performed when strings are copied or appended.
+The behavior of <code>copyNString</code> is undefined if the source and
+destination strings overlap.
+
+
+<DL><DT><B>Parameters:</B><DD><B>target</B> -  Destination string
+<br><B>src</B> -  Null-terminated source string
+<br><B>maxChars</B> -  The maximum number of characters to copy<br></DL><P></DL>
+
+<A NAME="Hash functions ">
+<A NAME ="DOC.60.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Hash functions </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="hash">
+<A NAME ="DOC.60.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  unsigned  int  hash( const char* const tohash, const unsigned int hashModulus )</B></TT>
+<DD>Hashes a string given a modulus
+
+
+<DL><DT><B>Returns:</B><DD>Returns the hash value
+<DT><B>Parameters:</B><DD><B>toHash</B> -  The string to hash
+<br><B>hashModulus</B> -  The divisor to be used for hashing
+<br></DL><P>
+<A NAME="hash">
+<A NAME ="DOC.60.5.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  unsigned  int  hash( const XMLCh* const toHash, const unsigned int hashModulus )</B></TT>
+<DD>Hashes a string given a modulus
+
+
+<DL><DT><B>Returns:</B><DD>Returns the hash value
+<DT><B>Parameters:</B><DD><B>toHash</B> -  The string to hash
+<br><B>hashModulus</B> -  The divisor to be used for hashing
+<br></DL><P>
+<A NAME="hashN">
+<A NAME ="DOC.60.5.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  unsigned  int  hashN( const XMLCh* const toHash, const unsigned int numChars, const unsigned int hashModulus )</B></TT>
+<DD>Hashes a string given a modulus taking a maximum number of characters
+as the limit
+
+
+<DL><DT><B>Returns:</B><DD>Returns the hash value
+<DT><B>Parameters:</B><DD><B>toHash</B> -  The string to hash
+<br><B>numChars</B> -  The maximum number of characters to consider for hashing
+<br><B>hashModulus</B> -  The divisor to be used for hashing
+<br></DL><P></DL>
+
+<A NAME="Search functions ">
+<A NAME ="DOC.60.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Search functions </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="indexOf">
+<A NAME ="DOC.60.6.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  indexOf(const char* const toSearch, const char ch)</B></TT>
+<DD>
+Provides the index of the first occurance of a character within a string
+
+
+<DL><DT><B>Returns:</B><DD>If found, returns the index of the character within the string,
+else returns -1.
+<DT><B>Parameters:</B><DD><B>toSearch</B> -  The string to search
+<br><B>ch</B> -  The character to search within the string
+<br></DL><P>
+<A NAME="indexOf">
+<A NAME ="DOC.60.6.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  indexOf(const XMLCh* const toSearch, const XMLCh ch)</B></TT>
+<DD>
+Provides the index of the first occurance of a character within a string
+
+
+<DL><DT><B>Returns:</B><DD>If found, returns the index of the character within the string,
+else returns -1.
+<DT><B>Parameters:</B><DD><B>toSearch</B> -  The string to search
+<br><B>ch</B> -  The character to search within the string
+<br></DL><P>
+<A NAME="lastIndexOf">
+<A NAME ="DOC.60.6.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  lastIndexOf(const char* const toSearch, const char ch)</B></TT>
+<DD>
+Provides the index of the last occurance of a character within a string
+
+
+<DL><DT><B>Returns:</B><DD>If found, returns the index of the character within the string,
+else returns -1.
+<DT><B>Parameters:</B><DD><B>toSearch</B> -  The string to search
+<br><B>ch</B> -  The character to search within the string
+<br></DL><P>
+<A NAME="lastIndexOf">
+<A NAME ="DOC.60.6.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  lastIndexOf(const XMLCh* const toSearch, const XMLCh ch)</B></TT>
+<DD>
+Provides the index of the last occurance of a character within a string
+
+
+<DL><DT><B>Returns:</B><DD>If found, returns the index of the character within the string,
+else returns -1.
+<DT><B>Parameters:</B><DD><B>toSearch</B> -  The string to search
+<br><B>ch</B> -  The character to search within the string
+<br></DL><P>
+<A NAME="lastIndexOf">
+<A NAME ="DOC.60.6.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  lastIndexOf( const char* const toSearch, const char chToFind, const unsigned int fromIndex )</B></TT>
+<DD>
+Provides the index of the last occurance of a character within a string
+starting backward from a given index
+
+
+<DL><DT><B>Returns:</B><DD>If found, returns the index of the character within the string,
+else returns -1.
+<DT><B>Parameters:</B><DD><B>toSearch</B> -  The string to search
+<br><B>chToFInd</B> -  The character to search within the string
+<br><B>fromIndex</B> -  The index to start backward search from
+<br></DL><P>
+<A NAME="lastIndexOf">
+<A NAME ="DOC.60.6.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  lastIndexOf( const XMLCh* const toSearch, const XMLCh ch, const unsigned int fromIndex )</B></TT>
+<DD>
+Provides the index of the last occurance of a character within a string
+starting backward from a given index
+
+
+<DL><DT><B>Returns:</B><DD>If found, returns the index of the character within the string,
+else returns -1.
+<DT><B>Parameters:</B><DD><B>toSearch</B> -  The string to search
+<br><B>chToFInd</B> -  The character to search within the string
+<br><B>fromIndex</B> -  The index to start backward search from
+<br></DL><P></DL>
+
+<A NAME="Replication function ">
+<A NAME ="DOC.60.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Replication function </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="replicate">
+<A NAME ="DOC.60.7.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  char*  replicate(const char* const toRep)</B></TT>
+<DD>Replicates a string
+
+<DL><DT><B>Returns:</B><DD>Returns a pointer to the replicated string
+<DT><B>Parameters:</B><DD><B>toRep</B> -  The string to replicate
+<br></DL><P>
+<A NAME="replicate">
+<A NAME ="DOC.60.7.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLCh*  replicate(const XMLCh* const toRep)</B></TT>
+<DD>Replicates a string
+
+<DL><DT><B>Returns:</B><DD>Returns a pointer to the replicated string
+<DT><B>Parameters:</B><DD><B>toRep</B> -  The string to replicate
+<br></DL><P></DL>
+
+<A NAME="String query function ">
+<A NAME ="DOC.60.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  String query function </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="startsWith">
+<A NAME ="DOC.60.8.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  bool  startsWith( const char* const toTest, const char* const prefix )</B></TT>
+<DD>Tells if the sub-string appears within a string at the beginning
+
+<DL><DT><B>Returns:</B><DD>Returns true if the sub-string was found at the beginning of
+<code>toTest</code>, else false
+<DT><B>Parameters:</B><DD><B>toTest</B> -  The string to test
+<br><B>prefix</B> -  The sub-string that needs to be checked
+<br></DL><P>
+<A NAME="startsWith">
+<A NAME ="DOC.60.8.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  bool  startsWith( const XMLCh* const toTest, const XMLCh* const prefix )</B></TT>
+<DD>Tells if the sub-string appears within a string at the beginning
+
+<DL><DT><B>Returns:</B><DD>Returns true if the sub-string was found at the beginning of
+<code>toTest</code>, else false
+<DT><B>Parameters:</B><DD><B>toTest</B> -  The string to test
+<br><B>prefix</B> -  The sub-string that needs to be checked
+<br></DL><P>
+<A NAME="startsWithI">
+<A NAME ="DOC.60.8.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  bool  startsWithI( const char* const toTest, const char* const prefix )</B></TT>
+<DD>Tells if the sub-string appears within a string at the beginning
+without regard to case
+
+
+<DL><DT><B>Returns:</B><DD>Returns true if the sub-string was found at the beginning of
+<code>toTest</code>, else false
+<DT><B>Parameters:</B><DD><B>toTest</B> -  The string to test
+<br><B>prefix</B> -  The sub-string that needs to be checked
+<br></DL><P>
+<A NAME="startsWithI">
+<A NAME ="DOC.60.8.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  bool  startsWithI( const XMLCh* const toTest, const XMLCh* const prefix )</B></TT>
+<DD>Tells if the sub-string appears within a string at the beginning
+without regard to case
+
+
+<DL><DT><B>Returns:</B><DD>Returns true if the sub-string was found at the beginning
+of <code>toTest</code>, else false
+<DT><B>Parameters:</B><DD><B>toTest</B> -  The string to test
+<br><B>prefix</B> -  The sub-string that needs to be checked
+<br></DL><P>
+<A NAME="findAny">
+<A NAME ="DOC.60.8.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  const  XMLCh*  findAny( const XMLCh* const toSearch, const XMLCh* const searchList )</B></TT>
+<DD>Tells if a string has any occurance of another string within itself
+
+<DL><DT><B>Returns:</B><DD>Returns the pointer to the location where the sub-string was
+found, else returns 0
+<DT><B>Parameters:</B><DD><B>toSearch</B> -  The string to be searched
+<br><B>searchList</B> -  The sub-string to be searched within the string
+<br></DL><P>
+<A NAME="findAny">
+<A NAME ="DOC.60.8.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLCh*  findAny( XMLCh* const toSearch, const XMLCh* const searchList )</B></TT>
+<DD>Tells if a string has any occurance of another string within itself
+
+<DL><DT><B>Returns:</B><DD>Returns the pointer to the location where the sub-string was
+found, else returns 0
+<DT><B>Parameters:</B><DD><B>toSearch</B> -  The string to be searched
+<br><B>searchList</B> -  The sub-string to be searched within the string
+<br></DL><P>
+<A NAME="stringLen">
+<A NAME ="DOC.60.8.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  unsigned  int  stringLen(const char* const src)</B></TT>
+<DD>Get the length of the string
+
+<DL><DT><B>Returns:</B><DD>Returns the length of the string
+<DT><B>Parameters:</B><DD><B>src</B> -  The string whose length is to be determined
+<br></DL><P>
+<A NAME="stringLen">
+<A NAME ="DOC.60.8.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  unsigned  int  stringLen(const XMLCh* const src)</B></TT>
+<DD>Get the length of the string
+
+<DL><DT><B>Returns:</B><DD>Returns the length of the string
+<DT><B>Parameters:</B><DD><B>src</B> -  The string whose length is to be determined
+<br></DL><P></DL>
+
+<A NAME="Conversion functions ">
+<A NAME ="DOC.60.9">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Conversion functions </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="transcode">
+<A NAME ="DOC.60.9.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  char*  transcode( const XMLCh* const toTranscode )</B></TT>
+<DD>Transcodes a string to native code-page
+
+<DL><DT><B>Returns:</B><DD>Returns the transcoded string
+<DT><B>Parameters:</B><DD><B>toTranscode</B> -  The string to be transcoded
+<br></DL><P>
+<A NAME="transcode">
+<A NAME ="DOC.60.9.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  bool  transcode( const XMLCh* const toTranscode, char* const toFill, const unsigned int maxChars )</B></TT>
+<DD>Transcodes a string to native code-page
+
+<DL><DT><B>Returns:</B><DD>Returns true if successful, false if there was an error
+<DT><B>Parameters:</B><DD><B>toTranscode</B> -  The string tobe transcoded
+<br><B>toFill</B> -  The buffer that is filled with the transcoded value
+<br><B>maxChars</B> -  The maximum number of characters to transcode
+<br></DL><P>
+<A NAME="transcode">
+<A NAME ="DOC.60.9.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLCh*  transcode( const char* const toTranscode )</B></TT>
+<DD>Transcodes a string to native code-page
+
+<DL><DT><B>Returns:</B><DD>Returns the transcoded string
+<DT><B>Parameters:</B><DD><B>toTranscode</B> -  The string to be transcoded
+<br></DL><P>
+<A NAME="transcode">
+<A NAME ="DOC.60.9.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  bool  transcode( const char* const toTranscode, XMLCh* const toFill, const unsigned int maxChars )</B></TT>
+<DD>Transcodes a string to native code-page
+
+<DL><DT><B>Returns:</B><DD>Returns true if successful, false if there was an error
+<DT><B>Parameters:</B><DD><B>toTranscode</B> -  The string tobe transcoded
+<br><B>toFill</B> -  The buffer that is filled with the transcoded value
+<br><B>maxChars</B> -  The maximum number of characters to transcode
+<br></DL><P>
+<A NAME="trim">
+<A NAME ="DOC.60.9.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  trim(char* const toTrim)</B></TT>
+<DD>Trims off extra space characters from the end of the string
+
+<DL><DT><B>Parameters:</B><DD><B>toTrim</B> -  The string to be trimmed. On return this contains the
+trimmed string<br></DL><P>
+<A NAME="trim">
+<A NAME ="DOC.60.9.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  trim(XMLCh* const toTrim)</B></TT>
+<DD>Trims off extra space characters from the end of the string
+
+<DL><DT><B>Parameters:</B><DD><B>toTrim</B> -  The string to be trimmed. On return this contains
+the trimmed string<br></DL><P></DL>
+
+<A NAME="Formatting functions ">
+<A NAME ="DOC.60.10">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Formatting functions </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="makeUName">
+<A NAME ="DOC.60.10.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLCh*  makeUName( const XMLCh* const pszURI, const XMLCh* const pszName )</B></TT>
+<DD>Creates a UName from a URI and base name. It is in the form
+{url}name, and is commonly used internally to represent fully
+qualified names when namespaces are enabled.
+
+
+<DL><DT><B>Returns:</B><DD>Returns the complete formatted UName
+<DT><B>Parameters:</B><DD><B>pszURI</B> -  The URI part of the name
+<br><B>pszName</B> -  The base part of the name
+<br></DL><P>
+<A NAME="replaceTokens">
+<A NAME ="DOC.60.10.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  unsigned  int  replaceTokens( XMLCh* const errText, const unsigned int maxChars, const XMLCh* const text1, const XMLCh* const text2, const XMLCh* const text3, const XMLCh* const text4 )</B></TT>
+<DD>
+Internal function to perform token replacement for strings.
+
+
+<DL><DT><B>Returns:</B><DD>Returns the count of characters that are outputted
+<DT><B>Parameters:</B><DD><B>errText</B> -  The text where the replacement is to be done
+<br><B>maxChars</B> -  The maximum number of characters to consider for
+replacement
+<br><B>text1</B> -  Replacement text-one
+<br><B>text2</B> -  Replacement text-two
+<br><B>text3</B> -  Replacement text-three
+<br><B>text4</B> -  Replacement text-four
+<br></DL><P>
+<A NAME="upperCase">
+<A NAME ="DOC.60.10.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  upperCase(XMLCh* const toUpperCase)</B></TT>
+<DD>Converts a string to uppercase
+
+<DL><DT><B>Parameters:</B><DD><B>toUpperCase</B> -  The string which needs to be converted to uppercase.
+On return, this buffer also holds the converted uppercase string<br></DL><P></DL>
+
+<A NAME="Constructors and Destructor ">
+<A NAME ="DOC.60.11">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> private  Constructors and Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="XMLString">
+<A NAME ="DOC.60.11.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  XMLString()</B></TT>
+<DD>Unimplemented default constructor 
+<DL></DL><P>
+<A NAME="~XMLString">
+<A NAME ="DOC.60.11.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  ~XMLString()</B></TT>
+<DD>Unimplemented destructor 
+<DL></DL><P></DL>
+
+<A NAME="Initialization ">
+<A NAME ="DOC.60.12">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Initialization </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="initString">
+<A NAME ="DOC.60.12.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  initString(XMLLCPTranscoder* const defToUse)</B></TT>
+<DD>Intialization function called from XMLPlatformUtils class 
+<DL></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

@@ -1,0 +1,366 @@
+<html><head><TITLE>XMLPlatformUtils</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   XMLPlatformUtils  </H2><BLOCKQUOTE>
+
+Utilities that must be implemented in a platform-specific way
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CXMLPlatformUtils,MXMLPlatformUtils.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+</DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+Utilities that must be implemented in a platform-specific way.
+
+<p>This class contains functions that must be implemented in a platform-specific
+manner. This is just an abstract class. The concrete implementations of these
+functions are available in the per-platform files indide <code>src/util/Platforms</code>.</p>
+
+
+</BLOCKQUOTE>
+<DL>
+<DL>
+
+<A NAME="PanicReasons">
+<A NAME ="DOC.61.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  enum  PanicReasons</B></TT>
+<DD>Public types 
+<DL></DL><P></DL>
+<DL>
+
+<A NAME="">
+<A NAME ="DOC.61.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  </B></TT>
+<DD>Public static data 
+<DL></DL><P>
+<A NAME="fgNetAccessor">
+<A NAME ="DOC.61.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLNetAccessor*  fgNetAccessor</B></TT>
+<DD>This is the network access implementation.
+This is provided by the per-platform driver, so each platform can choose what actual
+implementation it wants to use.
+<DL></DL><P>
+<A NAME="fgTransService">
+<A NAME ="DOC.61.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLTransService*  fgTransService</B></TT>
+<DD>
+This is the transcoding service.
+This is provided by the per platform driver, so each platform can choose what implemenation
+it wants to use.
+<DL></DL><P></DL>
+<DL>
+
+<A NAME="Initialize">
+<A NAME ="DOC.61.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  Initialize()</B></TT>
+<DD>
+Initialization method.
+This must be called first in any client code.
+<DL></DL><P>
+<A NAME="panic">
+<A NAME ="DOC.61.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  panic( const <!2><A HREF="XMLPlatformUtils.html#DOC.61.1.1">PanicReasons</A> reason )</B></TT>
+<DD>
+The panic mechanism.
+
+<p>If, during initialization, we cannot even get far enough
+along to get transcoding up or get message loading working, we call
+this.</p>
+
+<p>Each platform can implement it however they want. This method is
+expected to display something meaningful and end the process. The
+enum indicates why its being called, to allow the per-platform code
+to display something more specific if desired.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>reason</B> -  The enumeration that defines the cause of the failure<br></DL><P></DL>
+<DL>
+
+<A NAME="curFilePos">
+<A NAME ="DOC.61.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  unsigned  int  curFilePos(FileHandle theFile)</B></TT>
+<DD>Get the current file position
+
+
+<DL><DT><B>Parameters:</B><DD><B>theFile</B> -  The file handle<br></DL><P>
+<A NAME="closeFile">
+<A NAME ="DOC.61.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  closeFile(FileHandle theFile)</B></TT>
+<DD>
+Closes the file handle
+
+
+<DL><DT><B>Parameters:</B><DD><B>theFile</B> -  The file handle<br></DL><P>
+<A NAME="fileSize">
+<A NAME ="DOC.61.4.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  unsigned  int  fileSize(FileHandle theFile)</B></TT>
+<DD>
+Returns the file size
+
+
+<DL><DT><B>Returns:</B><DD>Returns the size of the file in bytes
+<DT><B>Parameters:</B><DD><B>theFile</B> -  The file handle whose size you want
+<br></DL><P>
+<A NAME="openFile">
+<A NAME ="DOC.61.4.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  FileHandle  openFile(const char* const fileName)</B></TT>
+<DD>
+Opens the file
+
+
+<DL><DT><B>Returns:</B><DD>The file handle of the opened file
+<DT><B>Parameters:</B><DD><B>fileName</B> -  The string containing the name of the file
+<br></DL><P>
+<A NAME="openFile">
+<A NAME ="DOC.61.4.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  FileHandle  openFile(const XMLCh* const fileName)</B></TT>
+<DD>
+Opens the file
+
+
+<DL><DT><B>Returns:</B><DD>The file handle of the opened file
+<DT><B>Parameters:</B><DD><B>fileName</B> -  The string containing the name of the file
+<br></DL><P>
+<A NAME="openStdInHandle">
+<A NAME ="DOC.61.4.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  FileHandle  openStdInHandle()</B></TT>
+<DD>
+Opens the standard input as a file
+
+<DL><DT><B>Returns:</B><DD>The file handle of the standard input stream
+</DL><P>
+<A NAME="readFileBuffer">
+<A NAME ="DOC.61.4.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  unsigned  int  readFileBuffer( FileHandle theFile, const unsigned int toRead, XMLByte* const toFill )</B></TT>
+<DD>
+Reads the file buffer
+
+
+<DL><DT><B>Returns:</B><DD>Returns the number of bytes read from the stream or file
+<DT><B>Parameters:</B><DD><B>theFile</B> -  The file handle that you want to read
+<br><B>toRead</B> -  The number of byte to read from the current position
+<br><B>toFill</B> -  The string buffer to fill
+<br></DL><P>
+<A NAME="resetFile">
+<A NAME ="DOC.61.4.8">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  resetFile(FileHandle theFile)</B></TT>
+<DD>
+Resets the file handle
+
+<DL><DT><B>Parameters:</B><DD><B>theFile</B> -  The file handle that you want to reset<br></DL><P></DL>
+<DL>
+
+<A NAME="getFullPath">
+<A NAME ="DOC.61.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLCh*  getFullPath(const XMLCh* const srcPath)</B></TT>
+<DD>
+Gets the full path from a relative path
+
+<DL><DT><B>Returns:</B><DD>Returns the fully qualified path of the file name including the file name
+<DT><B>Parameters:</B><DD><B>srcPath</B> -  The path of the file for which you want the full path
+<br></DL><P>
+<A NAME="isRelative">
+<A NAME ="DOC.61.5.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  bool  isRelative(const XMLCh* const toCheck)</B></TT>
+<DD>
+Looks at a file name and tells if the path is specified relative to a directory, or absolute to the root
+
+<DL><DT><B>Returns:</B><DD>Returns true if the filename appears to be relative
+<DT><B>Parameters:</B><DD><B>toCheck</B> -  The file name which you want to check
+<br></DL><P>
+<A NAME="weavePaths">
+<A NAME ="DOC.61.5.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLCh*  weavePaths( const XMLCh* const basePath, const XMLCh* const relativePath )</B></TT>
+<DD>
+Utility to join two paths
+
+<DL><DT><B>Returns:</B><DD>Returns a string containing the 'woven' path
+<DT><B>Parameters:</B><DD><B>basePath</B> -  The string containing the base path
+<br><B>relativePath</B> -  The string containing the relative path
+<br></DL><P></DL>
+<DL>
+
+<A NAME="getCurrentMillis">
+<A NAME ="DOC.61.6.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  unsigned  long  getCurrentMillis()</B></TT>
+<DD>
+Gets the system time in milliseconds (for later comparison)
+
+<DL><DT><B>Returns:</B><DD>Returns the system time as an unsigned long
+</DL><P></DL>
+<DL>
+
+<A NAME="closeMutex">
+<A NAME ="DOC.61.7.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  closeMutex(void* const mtxHandle)</B></TT>
+<DD>
+Closes a mutex handle
+
+<DL><DT><B>Parameters:</B><DD><B>mtxHandle</B> -  The mutex handle that you want to close<br></DL><P>
+<A NAME="lockMutex">
+<A NAME ="DOC.61.7.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  lockMutex(void* const mtxHandle)</B></TT>
+<DD>
+Locks a mutex handle
+
+<DL><DT><B>Parameters:</B><DD><B>mtxHandle</B> -  The mutex handle that you want to lock<br></DL><P>
+<A NAME="makeMutex">
+<A NAME ="DOC.61.7.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void*  makeMutex()</B></TT>
+<DD>
+Make a new mutex
+<DL></DL><P>
+<A NAME="unlockMutex">
+<A NAME ="DOC.61.7.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  unlockMutex(void* const mtxHandle)</B></TT>
+<DD>
+Unlocks a mutex
+
+<DL><DT><B>Parameters:</B><DD><B>mtxGandle</B> -  The mutex handle that you want to unlock<br></DL><P></DL>
+<DL>
+
+<A NAME="loadMsgSet">
+<A NAME ="DOC.61.8.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLMsgLoader*  loadMsgSet(const XMLCh* const msgDomain)</B></TT>
+<DD>
+Loads the message set from among the available domains
+
+
+<DL><DT><B>Parameters:</B><DD><B>msgDomain</B> -  The message domain which you want to load<br></DL><P></DL>
+<DL>
+
+<A NAME="compareAndSwap">
+<A NAME ="DOC.61.9.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void*  compareAndSwap( void** toFill, const void* const newValue, const void* const toCompare )</B></TT>
+<DD>
+Conditionally updates or returns a single word variable atomically
+The compareAndSwap subroutine performs an atomic operation which
+compares the contents of a single word variable with a stored old value.
+If the values are equal, a new value is stored in the single word
+variable and TRUE is returned; otherwise, the old value is set to the
+current value of the single word variable and FALSE is returned.
+
+The compareAndSwap subroutine is useful when a word value must be
+updated only if it has not been changed since it was last read.
+
+Note: The word containing the single word variable must be aligned
+on a full word boundary.
+
+
+<DL><DT><B>Returns:</B><DD>Returns the new value assigned to the single word variable
+<DT><B>Parameters:</B><DD><B>toFill</B> -  Specifies the address of the single word variable
+<br><B>newValue</B> -  Specifies the new value to be conditionally assigned to the single word variable.
+<br><B>toCompare</B> -  Specifies the address of the old value to be checked against (and conditionally updated with) the value of the single word variable.
+<br></DL><P></DL>
+<DL>
+
+<A NAME="atomicIncrement">
+<A NAME ="DOC.61.10.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  atomicIncrement(int& location)</B></TT>
+<DD>
+Increments a single word variable atomically.
+The atomicIncrement subroutine increments one word in a single atomic
+operation. This operation is useful when a counter variable is shared
+between several threads or processes. When updating such a counter
+variable, it is important to make sure that the fetch, update, and
+store operations occur atomically (are not interruptible).
+
+
+<DL><DT><B>Returns:</B><DD>The function return value is positive if the result of the operation
+was positive. Zero if the result of the operation was zero. Negative
+if the result of the operation was negative. Except for the zero
+case, the value returned may differ from the actual result of the
+operation - only the sign and zero/nonzero state is guaranteed to be
+correct.
+<DT><B>Parameters:</B><DD><B>location</B> -  Specifies the address of the word variable to be incremented.
+<br></DL><P>
+<A NAME="atomicDecrement">
+<A NAME ="DOC.61.10.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  int  atomicDecrement(int& location)</B></TT>
+<DD>
+Decrements a single word variable atomically.
+The atomicDecrement subroutine increments one word in a single atomic
+operation. This operation is useful when a counter variable is shared
+between several threads or processes. When updating such a counter
+variable, it is important to make sure that the fetch, update, and
+store operations occur atomically (are not interruptible).
+
+
+<DL><DT><B>Returns:</B><DD>The function return value is positive if the result of the operation
+was positive. Zero if the result of the operation was zero. Negative
+if the result of the operation was negative. Except for the zero
+case, the value returned may differ from the actual result of the
+operation - only the sign and zero/nonzero state is guaranteed to be
+correct.
+<DT><B>Parameters:</B><DD><B>location</B> -  Specifies the address of the word variable to be decremented.
+<br></DL><P></DL>
+<DL>
+
+<A NAME="loadAMsgSet">
+<A NAME ="DOC.61.11.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLMsgLoader*  loadAMsgSet(const XMLCh* const msgDomain)</B></TT>
+<DD>Loads a message set from the available domains
+
+
+<DL><DT><B>Parameters:</B><DD><B>msgDomain</B> -  The message domain containing the message to be loaded<br></DL><P>
+<A NAME="makeNetAccessor">
+<A NAME ="DOC.61.11.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLNetAccessor*  makeNetAccessor()</B></TT>
+<DD>
+Creates a net accessor object
+<DL></DL><P>
+<A NAME="makeTransService">
+<A NAME ="DOC.61.11.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  XMLTransService*  makeTransService()</B></TT>
+<DD>
+Creates a Transoding service
+<DL></DL><P>
+<A NAME="platformInit">
+<A NAME ="DOC.61.11.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  void  platformInit()</B></TT>
+<DD>
+Does initialization for a particular platform
+Here you put in code that you wish to execute before anything else is done in the application
+<DL></DL><P></DL>
+<DL>
+
+<A NAME="fgInitFlag">
+<A NAME ="DOC.61.12.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> static  bool  fgInitFlag</B></TT>
+<DD>This is used to avoid multiple inits if the client code calls us
+more than once. They aren't supposed to, but some have trouble
+keeping up if they are COM objects and such.
+<DL></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

@@ -1,0 +1,559 @@
+<html><head><TITLE>HandlerBase</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   HandlerBase : public <!2><A HREF="EntityResolver.html#DOC.4.1.1">EntityResolver</A>, public <!1><A HREF="DTDHandler.html">DTDHandler</A>, public <!1><A HREF="DocumentHandler.html">DocumentHandler</A>, public <!1><A HREF="ErrorHandler.html">ErrorHandler</A> </H2><BLOCKQUOTE>
+
+Default base class for handlers
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=155>
+<param name=classes value="CErrorHandler,MErrorHandler.html,CDocumentHandler,MDocumentHandler.html,CDTDHandler,MDTDHandler.html,CEntityResolver,MEntityResolver.html,CHandlerBase,MHandlerBase.html">
+<param name=before value="M,M,M,M,M">
+<param name=after value="Ml_,ML_,ML_,MD_,M">
+<param name=indent value="0,0,0,0,1">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.6.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Default handlers for the DocumentHandler interface </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.6.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>characters</B> ( const XMLCh* const chars, const unsigned int length )<br>
+<I>
+Receive notification of character data inside an element</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>endDocument</B> ()<br>
+<I>
+Receive notification of the end of the document</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.1.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>endElement</B> (const XMLCh* const name)<br>
+<I>
+Receive notification of the end of an element</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.1.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>ignorableWhitespace</B> ( const XMLCh* const chars, const unsigned int length )<br>
+<I>
+Receive notification of ignorable whitespace in element content</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.1.5"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>processingInstruction</B> ( const XMLCh* const target, const XMLCh* const data )<br>
+<I>
+Receive notification of a processing instruction</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.1.6"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>resetDocument</B> ()<br>
+<I>
+Reset the Docuemnt object on its reuse
+
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Default implementation of DocumentHandler interface </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.6.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>setDocumentLocator</B> (<!1><A HREF="Locator.html">Locator</A>* const locator)<br>
+<I>
+Receive a Locator object for document events</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>startDocument</B> ()<br>
+<I>
+Receive notification of the beginning of the document</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>startElement</B> ( const XMLCh* const name, <!1><A HREF="AttributeList.html">AttributeList</A>& attributes )<br>
+<I>
+Receive notification of the start of an element</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.5"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Default implementation of DTDHandler interface. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.6.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>notationDecl</B> ( const XMLCh* const name, const XMLCh* const publicId, const XMLCh* const systemId )<br>
+<I>
+Receive notification of a notation declaration</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.5.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>resetDocType</B> ()<br>
+<I>
+Reset the DTD object on its reuse
+
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.5.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>unparsedEntityDecl</B> ( const XMLCh* const name, const XMLCh* const publicId, const XMLCh* const systemId, const XMLCh* const notationName )<br>
+<I>
+Receive notification of an unparsed entity declaration</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Default implementation of the EntityResolver interface. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.6.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <!1><A HREF="InputSource.html">InputSource</A>* </TD><TD><B>resolveEntity</B> ( const XMLCh* const publicId, const XMLCh* const systemId )<br>
+<I>
+Resolve an external entity</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Default implementation of the ErrorHandler interface </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.6.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>error</B> (const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)<br>
+<I>
+Receive notification of a recoverable parser error</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>fatalError</B> (const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)<br>
+<I>
+Report a fatal XML parsing error</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>warning</B> (const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)<br>
+<I>
+Receive notification of a parser warning</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.6.4.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>resetErrors</B> ()<br>
+<I>
+Reset the Error handler object on its reuse
+
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<hr><H3>Inherited from <A HREF="EntityResolver.html">EntityResolver:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P> <B>Constructors and Destructor </B>
+
+<DL>
+<DT><A HREF="#DOC.4.1.1"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>EntityResolver</B>() </B>
+ <DD><I>Default Constructor </I>
+<DT><A HREF="#DOC.4.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <B>~EntityResolver</B>() </B>
+ <DD><I>Destructor </I>
+
+</DL>
+<DT><P> <B>The EntityResolver interface </B>
+
+<DL>
+<DT><A HREF="#DOC.4.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <!1><A HREF="InputSource.html">InputSource</A>*  <B>resolveEntity</B>( const XMLCh* const publicId, const XMLCh* const systemId ) </B>
+ <DD><I>
+Allow the application to resolve external entities</I>
+
+</DL>
+</DL></DL>
+<hr><H3>Inherited from <A HREF="DTDHandler.html">DTDHandler:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P> <B>The DTD handler interface </B>
+
+<DL>
+<DT><A HREF="#DOC.3.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>notationDecl</B>( const XMLCh* const name, const XMLCh* const publicId, const XMLCh* const systemId ) </B>
+ <DD><I>
+Receive notification of a notation declaration event</I>
+<DT><A HREF="#DOC.3.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>unparsedEntityDecl</B>( const XMLCh* const name, const XMLCh* const publicId, const XMLCh* const systemId, const XMLCh* const notationName ) </B>
+ <DD><I>
+Receive notification of an unparsed entity declaration event</I>
+<DT><A HREF="#DOC.3.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>resetDocType</B>() </B>
+ <DD><I>
+Reset the DocType object on its reuse
+
+<p>This method helps in reseting the DTD object implementational
+defaults each time the DTD is begun</I>
+
+</DL>
+</DL></DL>
+<hr><H3>Inherited from <A HREF="DocumentHandler.html">DocumentHandler:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public Methods</h3><DD><DT><IMG SRC=icon2.gif> void  <B>operator=</B>(const <!2><A HREF="DocumentHandler.html#DOC.2.1.1">DocumentHandler</A>&)
+</DL><DL>
+<DT><h3>Public</h3><DD><DT><P> <B>The virtual document handler interface </B>
+
+<DL>
+<DT><A HREF="#DOC.2.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>characters</B>( const XMLCh* const chars, const unsigned int length ) </B>
+ <DD><I>
+Receive notification of character data</I>
+<DT><A HREF="#DOC.2.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>endDocument</B>() </B>
+ <DD><I>
+Receive notification of the end of a document</I>
+<DT><A HREF="#DOC.2.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>endElement</B>(const XMLCh* const name) </B>
+ <DD><I>
+Receive notification of the end of an element</I>
+<DT><A HREF="#DOC.2.2.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>ignorableWhitespace</B>( const XMLCh* const chars, const unsigned int length ) </B>
+ <DD><I>
+Receive notification of ignorable whitespace in element content</I>
+<DT><A HREF="#DOC.2.2.5"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>processingInstruction</B>( const XMLCh* const target, const XMLCh* const data ) </B>
+ <DD><I>
+Receive notification of a processing instruction</I>
+<DT><A HREF="#DOC.2.2.6"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>resetDocument</B>() </B>
+ <DD><I>
+Reset the Docuemnt object on its reuse
+
+<p>This method helps in reseting the document implementational
+defaults each time the document is begun</I>
+<DT><A HREF="#DOC.2.2.7"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>setDocumentLocator</B>(<!1><A HREF="Locator.html">Locator</A>* const locator) </B>
+ <DD><I>
+Receive an object for locating the origin of SAX document events</I>
+<DT><A HREF="#DOC.2.2.8"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>startDocument</B>() </B>
+ <DD><I>
+Receive notification of the beginning of a document</I>
+<DT><A HREF="#DOC.2.2.9"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>startElement</B>( const XMLCh* const name, <!1><A HREF="AttributeList.html">AttributeList</A>& attrs ) </B>
+ <DD><I>
+Receive notification of the beginning of an element</I>
+
+</DL>
+</DL></DL>
+<hr><H3>Inherited from <A HREF="ErrorHandler.html">ErrorHandler:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P> <B>The error handler interface </B>
+
+<DL>
+<DT><A HREF="#DOC.5.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>warning</B>(const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception) </B>
+ <DD><I>
+Receive notification of a warning</I>
+<DT><A HREF="#DOC.5.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>error</B>(const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception) </B>
+ <DD><I>
+Receive notification of a recoverable error</I>
+<DT><A HREF="#DOC.5.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>fatalError</B>(const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception) </B>
+ <DD><I>
+Receive notification of a non-recoverable error</I>
+<DT><A HREF="#DOC.5.2.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void  <B>resetErrors</B>() </B>
+ <DD><I>
+Reset the Error handler object on its reuse
+
+<p>This method helps in reseting the Error handler object
+implementational defaults each time the Error handler is begun</I>
+
+</DL>
+</DL></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+Default base class for handlers.
+
+<p>This class implements the default behaviour for four SAX
+interfaces: EntityResolver, DTDHandler, DocumentHandler,
+and ErrorHandler.</p>
+
+<p>Application writers can extend this class when they need to
+implement only part of an interface; parser writers can
+instantiate this class to provide default handlers when the
+application has not supplied its own.</p>
+
+<p>Note that the use of this class is optional.</p>
+
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Default handlers for the DocumentHandler interface ">
+<A NAME ="DOC.6.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Default handlers for the DocumentHandler interface </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="characters">
+<A NAME ="DOC.6.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  characters( const XMLCh* const chars, const unsigned int length )</B></TT>
+<DD>
+Receive notification of character data inside an element.
+
+<p>By default, do nothing.  Application writers may override this
+method to take specific actions for each chunk of character data
+(such as adding the data to a node or buffer, or printing it to
+a file).</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>chars</B> -  The characters.
+<br><B>length</B> -  The number of characters to use from the
+character array.
+<br><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#characters">characters</A><br></DL><P>
+<A NAME="endDocument">
+<A NAME ="DOC.6.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  endDocument()</B></TT>
+<DD>
+Receive notification of the end of the document.
+
+<p>By default, do nothing.  Application writers may override this
+method in a subclass to take specific actions at the beginning
+of a document (such as finalising a tree or closing an output
+file).</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#endDocument">endDocument</A><br></DL><P>
+<A NAME="endElement">
+<A NAME ="DOC.6.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  endElement(const XMLCh* const name)</B></TT>
+<DD>
+Receive notification of the end of an element.
+
+<p>By default, do nothing.  Application writers may override this
+method in a subclass to take specific actions at the end of
+each element (such as finalising a tree node or writing
+output to a file).</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>name</B> -  The element type name.
+<br><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#endElement">endElement</A><br></DL><P>
+<A NAME="ignorableWhitespace">
+<A NAME ="DOC.6.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  ignorableWhitespace( const XMLCh* const chars, const unsigned int length )</B></TT>
+<DD>
+Receive notification of ignorable whitespace in element content.
+
+<p>By default, do nothing.  Application writers may override this
+method to take specific actions for each chunk of ignorable
+whitespace (such as adding data to a node or buffer, or printing
+it to a file).</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>chars</B> -  The whitespace characters.
+<br><B>length</B> -  The number of characters to use from the
+character array.
+<br><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#ignorableWhitespace">ignorableWhitespace</A><br></DL><P>
+<A NAME="processingInstruction">
+<A NAME ="DOC.6.1.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  processingInstruction( const XMLCh* const target, const XMLCh* const data )</B></TT>
+<DD>
+Receive notification of a processing instruction.
+
+<p>By default, do nothing.  Application writers may override this
+method in a subclass to take specific actions for each
+processing instruction, such as setting status variables or
+invoking other methods.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>target</B> -  The processing instruction target.
+<br><B>data</B> -  The processing instruction data, or null if
+none is supplied.
+<br><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#processingInstruction">processingInstruction</A><br></DL><P>
+<A NAME="resetDocument">
+<A NAME ="DOC.6.1.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetDocument()</B></TT>
+<DD>
+Reset the Docuemnt object on its reuse
+
+
+<DL><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#resetDocument">resetDocument</A><br></DL><P></DL>
+
+<A NAME="Default implementation of DocumentHandler interface ">
+<A NAME ="DOC.6.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Default implementation of DocumentHandler interface </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="setDocumentLocator">
+<A NAME ="DOC.6.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  setDocumentLocator(<!1><A HREF="Locator.html">Locator</A>* const locator)</B></TT>
+<DD>
+Receive a Locator object for document events.
+
+<p>By default, do nothing.  Application writers may override this
+method in a subclass if they wish to store the locator for use
+with other document events.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>locator</B> -  A locator for all SAX document events.
+<br><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#setDocumentLocator">setDocumentLocator</A>
+<br><!1><A HREF="Locator.html">Locator</A><br></DL><P>
+<A NAME="startDocument">
+<A NAME ="DOC.6.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  startDocument()</B></TT>
+<DD>
+Receive notification of the beginning of the document.
+
+<p>By default, do nothing.  Application writers may override this
+method in a subclass to take specific actions at the beginning
+of a document (such as allocating the root node of a tree or
+creating an output file).</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#startDocument">startDocument</A><br></DL><P>
+<A NAME="startElement">
+<A NAME ="DOC.6.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  startElement( const XMLCh* const name, <!1><A HREF="AttributeList.html">AttributeList</A>& attributes )</B></TT>
+<DD>
+Receive notification of the start of an element.
+
+<p>By default, do nothing.  Application writers may override this
+method in a subclass to take specific actions at the start of
+each element (such as allocating a new tree node or writing
+output to a file).</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>name</B> -  The element type name.
+<br><B>attributes</B> -  The specified or defaulted attributes.
+<br><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#startElement">startElement</A><br></DL><P></DL>
+
+<A NAME="Default implementation of the EntityResolver interface. ">
+<A NAME ="DOC.6.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Default implementation of the EntityResolver interface. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="resolveEntity">
+<A NAME ="DOC.6.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  <!1><A HREF="InputSource.html">InputSource</A>*  resolveEntity( const XMLCh* const publicId, const XMLCh* const systemId )</B></TT>
+<DD>
+Resolve an external entity.
+
+<p>Always return null, so that the parser will use the system
+identifier provided in the XML document.  This method implements
+the SAX default behaviour: application writers can override it
+in a subclass to do special translations such as catalog lookups
+or URI redirection.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Returns:</B><DD>The new input source, or null to require the
+default behaviour.
+
+<DT><B>Parameters:</B><DD><B>publicId</B> -  The public identifer, or null if none is
+available.
+<br><B>systemId</B> -  The system identifier provided in the XML 
+document.
+<br><DT><B>See Also:</B><DD><A HREF="EntityResolver.html#resolveEntity">resolveEntity</A><br></DL><P></DL>
+
+<A NAME="Default implementation of the ErrorHandler interface ">
+<A NAME ="DOC.6.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Default implementation of the ErrorHandler interface </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="error">
+<A NAME ="DOC.6.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  error(const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)</B></TT>
+<DD>
+Receive notification of a recoverable parser error.
+
+<p>The default implementation does nothing.  Application writers
+may override this method in a subclass to take specific actions
+for each error, such as inserting the message in a log file or
+printing it to the console.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>exception</B> -  The warning information encoded as an exception.
+<br><DT><B>See Also:</B><DD><A HREF="ErrorHandler.html#warning">warning</A>
+<br><A HREF="SAXParseException.html#SAXParseException">SAXParseException</A><br></DL><P>
+<A NAME="fatalError">
+<A NAME ="DOC.6.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  fatalError(const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)</B></TT>
+<DD>
+Report a fatal XML parsing error.
+
+<p>The default implementation throws a SAXParseException.
+Application writers may override this method in a subclass if
+they need to take specific actions for each fatal error (such as
+collecting all of the errors into a single report): in any case,
+the application must stop all regular processing when this
+method is invoked, since the document is no longer reliable, and
+the parser may no longer report parsing events.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>e</B> -  The error information encoded as an exception.
+<br><DT><B>See Also:</B><DD><A HREF="ErrorHandler.html#fatalError">fatalError</A>
+<br><A HREF="SAXParseException.html#SAXParseException">SAXParseException</A><br></DL><P>
+<A NAME="warning">
+<A NAME ="DOC.6.4.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  warning(const <!1><A HREF="SAXParseException.html">SAXParseException</A>& exception)</B></TT>
+<DD>
+Receive notification of a parser warning.
+
+<p>The default implementation does nothing.  Application writers
+may override this method in a subclass to take specific actions
+for each warning, such as inserting the message in a log file or
+printing it to the console.</p>
+
+
+<DL><DT><B>Throws:</B><DD><B><!1><A HREF="SAXException.html">SAXException</A></B>  Any SAX exception, possibly
+wrapping another exception.
+<br><DT><B>Parameters:</B><DD><B>e</B> -  The warning information encoded as an exception.
+<br><DT><B>See Also:</B><DD><A HREF="ErrorHandler.html#warning">warning</A>
+<br><A HREF="SAXParseException.html#SAXParseException">SAXParseException</A><br></DL><P>
+<A NAME="resetErrors">
+<A NAME ="DOC.6.4.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetErrors()</B></TT>
+<DD>
+Reset the Error handler object on its reuse
+
+
+<DL><DT><B>See Also:</B><DD><A HREF="ErrorHandler.html#resetErrors">resetErrors</A><br></DL><P></DL>
+
+<A NAME="Default implementation of DTDHandler interface. ">
+<A NAME ="DOC.6.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Default implementation of DTDHandler interface. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="notationDecl">
+<A NAME ="DOC.6.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  notationDecl( const XMLCh* const name, const XMLCh* const publicId, const XMLCh* const systemId )</B></TT>
+<DD>
+Receive notification of a notation declaration.
+
+<p>By default, do nothing.  Application writers may override this
+method in a subclass if they wish to keep track of the notations
+declared in a document.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>name</B> -  The notation name.
+<br><B>publicId</B> -  The notation public identifier, or null if not
+available.
+<br><B>systemId</B> -  The notation system identifier.
+<br><DT><B>See Also:</B><DD><A HREF="DTDHandler.html#notationDecl">notationDecl</A><br></DL><P>
+<A NAME="resetDocType">
+<A NAME ="DOC.6.5.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetDocType()</B></TT>
+<DD>
+Reset the DTD object on its reuse
+
+
+<DL><DT><B>See Also:</B><DD><A HREF="DTDHandler.html#resetDocType">resetDocType</A><br></DL><P>
+<A NAME="unparsedEntityDecl">
+<A NAME ="DOC.6.5.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  unparsedEntityDecl( const XMLCh* const name, const XMLCh* const publicId, const XMLCh* const systemId, const XMLCh* const notationName )</B></TT>
+<DD>
+Receive notification of an unparsed entity declaration.
+
+<p>By default, do nothing.  Application writers may override this
+method in a subclass to keep track of the unparsed entities
+declared in a document.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>name</B> -  The entity name.
+<br><B>publicId</B> -  The entity public identifier, or null if not
+available.
+<br><B>systemId</B> -  The entity system identifier.
+<br><B>notationName</B> -  The name of the associated notation.
+<br><DT><B>See Also:</B><DD><A HREF="DTDHandler.html#unparsedEntityDecl">unparsedEntityDecl</A><br></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL><DT><B>See Also:</B><DD><A HREF="EntityResolver.html#EntityResolver">EntityResolver</A>
+<br><A HREF="DTDHandler.html#DTDHandler">DTDHandler</A>
+<br><A HREF="DocumentHandler.html#DocumentHandler">DocumentHandler</A>
+<br><A HREF="ErrorHandler.html#ErrorHandler">ErrorHandler</A><br></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

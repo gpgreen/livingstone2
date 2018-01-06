@@ -1,0 +1,230 @@
+<html><head><TITLE>URLInputSource</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   URLInputSource : public <!2><A HREF="InputSource.html#DOC.7.5.5">InputSource</A> </H2><BLOCKQUOTE>
+
+This class is a derivative of the standard InputSource class
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=65>
+<param name=classes value="CInputSource,MInputSource.html,CURLInputSource,MURLInputSource.html">
+<param name=before value="M,M">
+<param name=after value="Md_,M">
+<param name=indent value="0,1">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public Methods</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.36.5"> <IMG BORDER=0 SRC=icon1.gif></A> BinInputStream* </TD><TD><B>makeStream</B> () const <br>
+<I>
+This method will return a binary input stream derivative that will
+parse from the source refered to by the URL system id</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.36.2"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLURL& </TD><TD><B>urlSrc</B> () const <br>
+<I>
+This method will return a const reference to the URL member which
+contains the system id in pre-parsed URL form</I>
+</TD></TR></TABLE></DL>
+<hr><H3>Inherited from <A HREF="InputSource.html">InputSource:</A></h3>
+
+<DL>
+<DL>
+<DT><h3>Public</h3><DD><DT><P>protected  <B>Constructors and Destructor </B>
+
+<DL>
+<DT><A HREF="#DOC.7.5.5"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>() </B>
+ <DD><I>Default constructor </I>
+<DT><A HREF="#DOC.7.5.1"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>(const XMLCh* const systemId) </B>
+ <DD><I>Constructor with a system identifier as XMLCh type</I>
+<DT><A HREF="#DOC.7.5.2"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>( const XMLCh* const systemId, const XMLCh* const publicId ) </B>
+ <DD><I>Constructor with a system and public identifiers 
+</I>
+<DT><A HREF="#DOC.7.5.3"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>(const char* const systemId) </B>
+ <DD><I>Constructor witha system identifier as string 
+</I>
+<DT><A HREF="#DOC.7.5.4"> <IMG BORDER=0 SRC=icon1.gif></A>  <B>InputSource</B>( const char* const systemId, const char* const publicId ) </B>
+ <DD><I>Constructor witha system and public identifiers</I>
+
+</DL>
+<DT><P> <B>Destructor </B>
+
+<DL>
+<DT><A HREF="#DOC.7.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <B>~InputSource</B>() </B>
+ <DD><I>
+Destructor
+</I>
+
+</DL>
+<DT><P> <B>Getter methods </B>
+
+<DL>
+<DT><A HREF="#DOC.7.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh*  <B>getEncoding</B>() const  </B>
+ <DD><I>
+An input source can be set to force the parser to assume a particular
+encoding for the data that input source reprsents, via the setEncoding()
+method</I>
+<DT><A HREF="#DOC.7.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh*  <B>getPublicId</B>() const  </B>
+ <DD><I>
+Get the public identifier for this input source</I>
+<DT><A HREF="#DOC.7.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh*  <B>getSystemId</B>() const  </B>
+ <DD><I>
+Get the system identifier for this input source</I>
+
+</DL>
+<DT><P> <B>Setter methods </B>
+
+<DL>
+<DT><A HREF="#DOC.7.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setEncoding</B>(const XMLCh* const encodingStr) </B>
+ <DD><I>
+Set the encoding which will be required for use with the XML text read
+via a stream opened by this input source</I>
+<DT><A HREF="#DOC.7.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setPublicId</B>(const XMLCh* const publicId) </B>
+ <DD><I>
+Set the public identifier for this input source</I>
+<DT><A HREF="#DOC.7.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> void  <B>setSystemId</B>(const XMLCh* const systemId) </B>
+ <DD><I>
+Set the system identifier for this input source</I>
+
+</DL>
+<DT><P> <B>Virtual input source interface </B>
+
+<DL>
+<DT><A HREF="#DOC.7.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  BinInputStream*  <B>makeStream</B>() const  </B>
+ <DD><I>
+Makes the byte stream for this input source</I>
+
+</DL>
+</DL></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This class is a derivative of the standard InputSource class. It provides
+for the parser access to data which is referenced via a URL, as apposed to
+a local file name. The URL can be provided via an XMLURL class, as a fully
+qualified system id, or a base system id and a system id which may be
+fully qualified or may be relative to the base.
+
+As with all InputSource derivatives. The primary objective of an input
+source is to create an input stream via which the parser can spool in
+data from the referenced source.
+
+Note that the parse system does not necessarily support URL based XML
+entities out of the box. Support for socket based access is optional and
+controlled by the per-platform support.
+
+</BLOCKQUOTE>
+<DL>
+<DL>
+
+<A NAME="URLInputSource">
+<A NAME ="DOC.36.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  URLInputSource(const XMLURL& urlId)</B></TT>
+<DD>
+This constructor accepts an already built URL. It is assumed that
+it is correct and it will be used as is. In this case, no public id
+accepted, but it can still be set via the parent class' setPublicId()
+method.
+
+
+<DL><DT><B>Parameters:</B><DD><B>urlId</B> -    The URL which holds the system id of the entity
+to parse.<br></DL><P>
+<A NAME="URLInputSource">
+<A NAME ="DOC.36.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  URLInputSource( const XMLCh* const baseId, const XMLCh* const systemId )</B></TT>
+<DD>
+This constructor takes a base system id URL and a possibly relative
+system id. The relative part is parsed and, if it is indeed relative,
+it will be made relative to the passed base id. Otherwise, it will be
+taken as is.
+
+
+<DL><DT><B>Parameters:</B><DD><B>baseId</B> -       The base system id URL which provides the base
+for any relative id part.
+<br><B>systemId</B> -     The possibly relative system id URL. If its relative
+its based on baseId, else its taken as is.<br></DL><P>
+<A NAME="URLInputSource">
+<A NAME ="DOC.36.1.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  URLInputSource( const XMLCh* const baseId, const XMLCh* const systemId, const XMLCh* const publicId )</B></TT>
+<DD>
+This constructor is indentical to the previous one, except that it also
+allows you to set a public id if you want to.
+
+
+<DL><DT><B>Parameters:</B><DD><B>baseId</B> -       The base system id URL which provides the base
+for any relative id part.
+<br><B>systemId</B> -     The possibly relative system id URL. If its relative
+its based on baseId, else its taken as is.
+<br><B>publicId</B> -     The optional public id to set. This is just passed
+on to the parent class for storage.<br></DL><P>
+<A NAME="URLInputSource">
+<A NAME ="DOC.36.1.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  URLInputSource( const XMLCh* const baseId, const char* const systemId )</B></TT>
+<DD>
+This constructor is identical to the second constructor above, except that
+it accepts the relative system id part as a local code page string and
+just transcodes it internally, as a convenience.
+
+
+<DL><DT><B>Parameters:</B><DD><B>baseId</B> -       The base system id URL which provides the base
+for any relative id part.
+<br><B>systemId</B> -     The possibly relative system id URL. If its relative
+its based on baseId, else its taken as is.<br></DL><P>
+<A NAME="URLInputSource">
+<A NAME ="DOC.36.1.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  URLInputSource( const XMLCh* const baseId, const char* const systemId, const char* const publicId )</B></TT>
+<DD>
+This constructor is identical to the third constructor above, except that
+it accepts the relative and public ids as local code page strings and just
+transcodes them internally, as a convenience.
+
+
+<DL><DT><B>Parameters:</B><DD><B>baseId</B> -       The base system id URL which provides the base
+for any relative id part.
+<br><B>systemId</B> -     The possibly relative system id URL. If its relative
+its based on baseId, else its taken as is.
+<br><B>publicId</B> -     The optional public id to set. This is just passed
+on to the parent class for storage.
+on to the parent class for storage.<br></DL><P></DL>
+
+<A NAME="makeStream">
+<A NAME ="DOC.36.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> BinInputStream*  makeStream() const </B></TT>
+<DD>
+This method will return a binary input stream derivative that will
+parse from the source refered to by the URL system id
+<DL></DL><P>
+<A NAME="urlSrc">
+<A NAME ="DOC.36.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLURL&  urlSrc() const </B></TT>
+<DD>
+This method will return a const reference to the URL member which
+contains the system id in pre-parsed URL form. If you just want the
+string format, call getSystemId() on the parent class.
+
+
+<DL><DT><B>Returns:</B><DD>A const reference to a URL object that contains the current
+system id set for this input source.
+</DL><P></DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

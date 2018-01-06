@@ -1,0 +1,321 @@
+<html><head><TITLE>XMLAttr</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   XMLAttr  </H2><BLOCKQUOTE>
+
+This class defines the information about an attribute that will come out
+of the scanner during parsing
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CXMLAttr,MXMLAttr.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.39.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.39.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>XMLAttr</B> ()<br>
+<I>
+The default constructor just setsup an empty attribute to be filled
+in the later</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>XMLAttr</B> ( const unsigned int uriId, const XMLCh* const attrName, const XMLCh* const attrPrefix, const XMLCh* const attrValue, const XMLAttDef::AttTypes type = XMLAttDef::CData, const bool specified = true )<br>
+<I>
+This is the primary constructor which takes all of the information
+required to construct a complete attribute object</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor </B> <br>
+<I></I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Getter methods </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.39.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getName</B> () const <br>
+<I>
+This method gets a const pointer tot he name of the attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getPrefix</B> () const <br>
+<I>
+This method will get a const pointer to the prefix string of this
+attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getQName</B> () const <br>
+<I>
+This method will get the QName of this attribute, which will be the
+prefix if any, then a colon, then the base name</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.2.7"> <IMG BORDER=0 SRC=icon1.gif></A> bool </TD><TD><B>getSpecified</B> () const <br>
+<I>
+This method will get the specified flag, which indicates whether
+the attribute was explicitly specified or just faulted in</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.2.4"> <IMG BORDER=0 SRC=icon1.gif></A> XMLAttDef::AttTypes </TD><TD><B>getType</B> () const <br>
+<I>
+This method will get the type of the attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.2.5"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getValue</B> () const <br>
+<I>
+This method will get the value of the attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.2.6"> <IMG BORDER=0 SRC=icon1.gif></A> unsigned  int </TD><TD><B>getURIId</B> () const <br>
+<I>
+This method will get the id of the URI that this attribute's prefix
+mapped to</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Setter methods </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.39.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>set</B> ( const unsigned int uriId, const XMLCh* const attrName, const XMLCh* const attrPrefix, const XMLCh* const attrValue, const XMLAttDef::AttTypes type = XMLAttDef::CData )<br>
+<I>
+This method is called to set up a default constructed object after
+the fact, or to reuse a previously used object</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setName</B> ( const unsigned int uriId, const XMLCh* const attrName, const XMLCh* const attrPrefix )<br>
+<I>
+This method will update just the name related fields of the
+attribute object</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setSpecified</B> (const bool newValue)<br>
+<I>
+This method will update the specified state of the object</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.3.4"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setType</B> (const XMLAttDef::AttTypes newType)<br>
+<I>
+This method will update the attribute type of the object</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.3.5"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setValue</B> (const XMLCh* const newValue)<br>
+<I>
+This method will update the value field of the attribute</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.39.3.6"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setURIId</B> (const unsigned int uriId)<br>
+<I>
+This method will set the URI id field of this attribute</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This class defines the information about an attribute that will come out
+of the scanner during parsing. This information does not depend upon the
+type of validator because it is not tied to any scheme/DTD type info. Its
+just the raw XML 1.0 information that will be reported about an attribute
+in the startElement() callback method of the XMLDocumentHandler class.
+Hence it is not intended to be extended or derived from. Its designed to
+be used as is.
+
+The 'specified' field of this class indicates whether the attribute was
+actually present or whether it was faulted in because it had a fixed or
+default value.
+
+The code receiving this information can ask its validator for more info
+about the attribute, i.e. get its declaration from the DTD/Schema info.
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors ">
+<A NAME ="DOC.39.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="XMLAttr">
+<A NAME ="DOC.39.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  XMLAttr()</B></TT>
+<DD>
+The default constructor just setsup an empty attribute to be filled
+in the later. Though the initial state is a reasonable one, it is
+not documented because it should not be depended on.
+<DL></DL><P>
+<A NAME="XMLAttr">
+<A NAME ="DOC.39.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  XMLAttr( const unsigned int uriId, const XMLCh* const attrName, const XMLCh* const attrPrefix, const XMLCh* const attrValue, const XMLAttDef::AttTypes type = XMLAttDef::CData, const bool specified = true )</B></TT>
+<DD>
+This is the primary constructor which takes all of the information
+required to construct a complete attribute object.
+
+
+<DL><DT><B>Parameters:</B><DD><B>uriId</B> -        The id into the validator's URI pool of the URI
+that the prefix mapped to. Only used if namespaces
+are enabled/supported.
+<br><B>attrName</B> -     The base name of the attribute, i.e. the part
+after any prefix.
+<br><B>attrPrefix</B> -   The prefix, if any, of this attribute's name. If
+this is empty, then uriID is meaningless as well.
+<br><B>attrValue</B> -    The value string of the attribute, which should
+be fully normalized by XML rules!
+<br><B>type</B> -         The type of the attribute. This will indicate
+the type of normalization done and constrains
+the value content. Make sure that the value
+set meets the constraints!
+<br><B>specified</B> -    Indicates whether the attribute was explicitly
+specified or not. If not, then it was faulted
+in from a FIXED or DEFAULT value.<br></DL><P></DL>
+
+<A NAME="Destructor ">
+<A NAME ="DOC.39.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor </B></TT>
+<DL></DL><P>
+<A NAME="Getter methods ">
+<A NAME ="DOC.39.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Getter methods </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getName">
+<A NAME ="DOC.39.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getName() const </B></TT>
+<DD>
+This method gets a const pointer tot he name of the attribute. The
+form of this name is defined by the validator in use.
+<DL></DL><P>
+<A NAME="getPrefix">
+<A NAME ="DOC.39.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getPrefix() const </B></TT>
+<DD>
+This method will get a const pointer to the prefix string of this
+attribute. Since prefixes are optional, it may be zero.
+<DL></DL><P>
+<A NAME="getQName">
+<A NAME ="DOC.39.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getQName() const </B></TT>
+<DD>
+This method will get the QName of this attribute, which will be the
+prefix if any, then a colon, then the base name. If there was no
+prefix, its the same as the getName() method.
+<DL></DL><P>
+<A NAME="getSpecified">
+<A NAME ="DOC.39.2.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> bool  getSpecified() const </B></TT>
+<DD>
+This method will get the specified flag, which indicates whether
+the attribute was explicitly specified or just faulted in
+<DL></DL><P>
+<A NAME="getType">
+<A NAME ="DOC.39.2.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> XMLAttDef::AttTypes  getType() const </B></TT>
+<DD>
+This method will get the type of the attribute. The available types
+are defined by the XML specification.
+<DL></DL><P>
+<A NAME="getValue">
+<A NAME ="DOC.39.2.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getValue() const </B></TT>
+<DD>
+This method will get the value of the attribute. The value can be
+be an empty string, but never null if the object is correctly
+set up.
+<DL></DL><P>
+<A NAME="getURIId">
+<A NAME ="DOC.39.2.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> unsigned  int  getURIId() const </B></TT>
+<DD>
+This method will get the id of the URI that this attribute's prefix
+mapped to. If namespaces are not on, then its value is meaningless.
+<DL></DL><P></DL>
+
+<A NAME="Setter methods ">
+<A NAME ="DOC.39.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Setter methods </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="set">
+<A NAME ="DOC.39.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  set( const unsigned int uriId, const XMLCh* const attrName, const XMLCh* const attrPrefix, const XMLCh* const attrValue, const XMLAttDef::AttTypes type = XMLAttDef::CData )</B></TT>
+<DD>
+This method is called to set up a default constructed object after
+the fact, or to reuse a previously used object.
+
+
+<DL><DT><B>Parameters:</B><DD><B>uriId</B> -        The id into the validator's URI pool of the URI
+that the prefix mapped to. Only used if namespaces
+are enabled/supported.
+<br><B>attrName</B> -     The base name of the attribute, i.e. the part
+after any prefix.
+<br><B>attrPrefix</B> -   The prefix, if any, of this attribute's name. If
+this is empty, then uriID is meaningless as well.
+<br><B>attrValue</B> -    The value string of the attribute, which should
+be fully normalized by XML rules according to the
+attribute type.
+<br><B>type</B> -         The type of the attribute. This will indicate
+the type of normalization done and constrains
+the value content. Make sure that the value
+set meets the constraints!
+<br><B>specified</B> -    Indicates whether the attribute was explicitly
+specified or not. If not, then it was faulted
+in from a FIXED or DEFAULT value.<br></DL><P>
+<A NAME="setName">
+<A NAME ="DOC.39.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setName( const unsigned int uriId, const XMLCh* const attrName, const XMLCh* const attrPrefix )</B></TT>
+<DD>
+This method will update just the name related fields of the
+attribute object. The other fields are left as is.
+
+
+<DL><DT><B>Parameters:</B><DD><B>uriId</B> -        The id into the validator's URI pool of the URI
+that the prefix mapped to. Only used if namespaces
+are enabled/supported.
+<br><B>attrName</B> -     The base name of the attribute, i.e. the part
+after any prefix.
+<br><B>attrPrefix</B> -   The prefix, if any, of this attribute's name. If
+this is empty, then uriID is meaningless as well.<br></DL><P>
+<A NAME="setSpecified">
+<A NAME ="DOC.39.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setSpecified(const bool newValue)</B></TT>
+<DD>
+This method will update the specified state of the object.
+
+
+<DL><DT><B>Parameters:</B><DD><B>specified</B> -    Indicates whether the attribute was explicitly
+specified or not. If not, then it was faulted
+in from a FIXED or DEFAULT value.<br></DL><P>
+<A NAME="setType">
+<A NAME ="DOC.39.3.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setType(const XMLAttDef::AttTypes newType)</B></TT>
+<DD>
+This method will update the attribute type of the object.
+
+
+<DL><DT><B>Parameters:</B><DD><B>newType</B> -      The type of the attribute. This will indicate
+the type of normalization done and constrains
+the value content. Make sure that the value
+set meets the constraints!<br></DL><P>
+<A NAME="setValue">
+<A NAME ="DOC.39.3.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setValue(const XMLCh* const newValue)</B></TT>
+<DD>
+This method will update the value field of the attribute.
+
+
+<DL><DT><B>Parameters:</B><DD><B>attrValue</B> -    The value string of the attribute, which should
+be fully normalized by XML rules according to the
+attribute type.<br></DL><P>
+<A NAME="setURIId">
+<A NAME ="DOC.39.3.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setURIId(const unsigned int uriId)</B></TT>
+<DD>
+This method will set the URI id field of this attribute. This is
+generally only ever called internally by the parser itself during
+the parsing process.
+<DL></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

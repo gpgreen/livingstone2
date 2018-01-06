@@ -1,0 +1,186 @@
+<html><head><TITLE>XMLEntityHandler</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   XMLEntityHandler  </H2><BLOCKQUOTE>
+
+This abstract class is a callback mechanism for the scanner
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=95>
+<param name=classes value="CXMLEntityHandler,MXMLEntityHandler.html,CSAXParser,MSAXParser.html,CDOMParser,MDOMParser.html">
+<param name=before value="M,M|_,Mr_">
+<param name=after value="M,M,M">
+<param name=indent value="0,0,0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.47.3"> <IMG BORDER=0 SRC=icon1.gif></A> protected </TD><TD><B>Constructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.47.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>XMLEntityHandler</B> ()<br>
+<I>
+Protected default constructor</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.47.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.47.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual </TD><TD><B>~XMLEntityHandler</B> ()<br>
+<I>
+Default destructor</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.47.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>The pure virtual methods in this interface. </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.47.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>endInputSource</B> (const <!1><A HREF="InputSource.html">InputSource</A>& inputSource)<br>
+<I>
+This method get called after the scanner has finished reading from
+the given input source while processing external entity references</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.47.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  bool </TD><TD><B>expandSystemId</B> ( const XMLCh* const systemId, <!1><A HREF="XMLBuffer.html">XMLBuffer</A>& toFill )<br>
+<I>
+This method allows the passes the scanned systemId to the entity
+handler, thereby giving it a chance to provide any customized
+handling like resolving relative path names</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.47.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>resetEntities</B> ()<br>
+<I>
+This method allows the entity handler to reset itself, so that
+it can be used again</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.47.2.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  <!1><A HREF="InputSource.html">InputSource</A>* </TD><TD><B>resolveEntity</B> ( const XMLCh* const publicId, const XMLCh* const systemId )<br>
+<I>
+This method allows the entity handler to provide customized
+application specific entity resolution</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.47.2.5"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>startInputSource</B> (const <!1><A HREF="InputSource.html">InputSource</A>& inputSource)<br>
+<I>
+This method will be called before the scanner starts reading
+from an input source while processing external entity references</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This abstract class is a callback mechanism for the scanner. By creating
+a derivative of this class and plugging into the scanner, the scanner
+will call back on the object's methods to entity events.
+
+This class is primarily for use by those writing their own parser classes.
+If you use the standard parser classes, DOMParser and SAXParser, you won't
+use this API. You will instead use a similar mechanism defined by the SAX
+API, called EntityResolver.
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Destructor ">
+<A NAME ="DOC.47.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~XMLEntityHandler">
+<A NAME ="DOC.47.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  ~XMLEntityHandler()</B></TT>
+<DD>
+Default destructor
+<DL></DL><P></DL>
+
+<A NAME="The pure virtual methods in this interface. ">
+<A NAME ="DOC.47.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  The pure virtual methods in this interface. </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="endInputSource">
+<A NAME ="DOC.47.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  endInputSource(const <!1><A HREF="InputSource.html">InputSource</A>& inputSource)</B></TT>
+<DD>
+This method get called after the scanner has finished reading from
+the given input source while processing external entity references.
+
+
+<DL><DT><B>Parameters:</B><DD><B>inputSource</B> -  The input source for the entity<br></DL><P>
+<A NAME="expandSystemId">
+<A NAME ="DOC.47.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  bool  expandSystemId( const XMLCh* const systemId, <!1><A HREF="XMLBuffer.html">XMLBuffer</A>& toFill )</B></TT>
+<DD>
+This method allows the passes the scanned systemId to the entity
+handler, thereby giving it a chance to provide any customized
+handling like resolving relative path names. The scanner first
+calls this method before calling <code>resolveEntity</code>.
+
+
+<DL><DT><B>Parameters:</B><DD><B>systemId</B> -  The system id extracted by the scanner from the
+input source.
+<br><B>toFill</B> -  The buffer in which the fully expanded system id needs
+to be stored.<br></DL><P>
+<A NAME="resetEntities">
+<A NAME ="DOC.47.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetEntities()</B></TT>
+<DD>
+This method allows the entity handler to reset itself, so that
+it can be used again. It is called prior to a new document parse
+operation.
+<DL></DL><P>
+<A NAME="resolveEntity">
+<A NAME ="DOC.47.2.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  <!1><A HREF="InputSource.html">InputSource</A>*  resolveEntity( const XMLCh* const publicId, const XMLCh* const systemId )</B></TT>
+<DD>
+This method allows the entity handler to provide customized
+application specific entity resolution. This method is defined
+by SAX 1.0 API.
+
+
+<DL><DT><B>Parameters:</B><DD><B>systemId</B> -  The system id of the external entity reference. 
+<br><B>publicId</B> -  The public id of the external entity reference.<br></DL><P>
+<A NAME="startInputSource">
+<A NAME ="DOC.47.2.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  startInputSource(const <!1><A HREF="InputSource.html">InputSource</A>& inputSource)</B></TT>
+<DD>
+This method will be called before the scanner starts reading
+from an input source while processing external entity references.
+
+
+<DL><DT><B>Parameters:</B><DD><B>inputSource</B> -  The external input source.<br></DL><P></DL>
+
+<A NAME="Constructor ">
+<A NAME ="DOC.47.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> protected  Constructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="XMLEntityHandler">
+<A NAME ="DOC.47.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  XMLEntityHandler()</B></TT>
+<DD>
+Protected default constructor
+<DL></DL><P></DL>
+</DL>
+<hr>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="SAXParser.html"> SAXParser </A><br>
+<A HREF="DOMParser.html"> DOMParser </A><br>
+</DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

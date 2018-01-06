@@ -1,0 +1,162 @@
+<html><head><TITLE>XMLErrorReporter</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   XMLErrorReporter  </H2><BLOCKQUOTE>
+
+This abstract class defines a callback mechanism for the scanner
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=95>
+<param name=classes value="CXMLErrorReporter,MXMLErrorReporter.html,CSAXParser,MSAXParser.html,CDOMParser,MDOMParser.html">
+<param name=before value="M,M|_,Mr_">
+<param name=after value="M,M,M">
+<param name=indent value="0,0,0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public Methods</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.48.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>error</B> ( const unsigned int errCode, const XMLCh* const errDomain, const ErrTypes type, const XMLCh* const errorText, const XMLCh* const systemId, const XMLCh* const publicId, const unsigned int lineNum, const unsigned int colNum )<br>
+<I>Called to report errors from the scanner or validator
+
+This method is called back on by the scanner or validator (or any other
+internal parser component which might need to report an error in the
+future</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.48.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  void </TD><TD><B>resetErrors</B> ()<br>
+<I>Called before a new parse event to allow the handler to reset
+
+This method is called by the scanner before a new parse event is
+about to start</I>
+</TD></TR></TABLE><TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.48.4"> <IMG BORDER=0 SRC=icon1.gif></A> protected </TD><TD><B>Constructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.48.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>XMLErrorReporter</B> ()<br>
+<I>
+Default constructor</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.48.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.48.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> ErrTypes_Unknown  virtual </TD><TD><B>~XMLErrorReporter</B> ()<br>
+<I>
+Default destructor</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.48.5"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Error Handler interface </B> <br>
+<I></I>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+This abstract class defines a callback mechanism for the scanner. By
+creating a class that implements this interface and plugging an instance
+of that class into the scanner, the scanner will call back on the object's
+virtual methods to report error events. This class is also used with the
+validator, to allow it to report errors.
+
+This class is primarily for use by those writing their own parser classes.
+If you use the standard parser classes, DOMParser and SAXParser, you won't
+use this API. You will instead use a similar mechanism defined by the SAX
+API, called ErrorHandler.
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Destructor ">
+<A NAME ="DOC.48.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~XMLErrorReporter">
+<A NAME ="DOC.48.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> ErrTypes_Unknown  virtual  ~XMLErrorReporter()</B></TT>
+<DD>
+Default destructor
+<DL></DL><P></DL>
+
+<A NAME="Error Handler interface ">
+<A NAME ="DOC.48.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Error Handler interface </B></TT>
+<DL></DL><P>
+<A NAME="error">
+<A NAME ="DOC.48.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  error( const unsigned int errCode, const XMLCh* const errDomain, const ErrTypes type, const XMLCh* const errorText, const XMLCh* const systemId, const XMLCh* const publicId, const unsigned int lineNum, const unsigned int colNum )</B></TT>
+<DD>Called to report errors from the scanner or validator
+
+This method is called back on by the scanner or validator (or any other
+internal parser component which might need to report an error in the
+future.) It contains all the information that the client code might
+need to report or log the error.
+
+
+<DL><DT><B>Parameters:</B><DD><B>errCode</B> -      The error code of the error being reported. What
+this means is dependent on the domain it is from.
+<br><B>errDomain</B> -    The domain from which the error occured. The domain
+is a means of providing a hierarchical layering to
+the error system, so that a single set of error id
+numbers don't have to be split up.
+<br><B>type</B> -         The error type, which is defined mostly by XML which
+categorizes errors into warning, errors and validity
+constraints.
+<br><B>errorText</B> -    The actual text of the error. This is translatable,
+so can possibly be in the local language if a
+translation has been provided.
+<br><B>sysetmId</B> -     The system id of the entity where the error occured,
+fully qualified.
+<br><B>publicId</B> -     The optional public id of the entity were the error
+occured. It can be an empty string if non was provided. 
+<br><B>lineNum</B> -      The line number within the source XML of the error.
+<br><B>colNum</B> -       The column number within the source XML of the error.
+Because of the parsing style, this is usually just
+after the actual offending text.<br></DL><P>
+<A NAME="resetErrors">
+<A NAME ="DOC.48.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  void  resetErrors()</B></TT>
+<DD>Called before a new parse event to allow the handler to reset
+
+This method is called by the scanner before a new parse event is
+about to start. It gives the error handler a chance to reset its
+internal state.
+<DL></DL><P>
+<A NAME="Constructor ">
+<A NAME ="DOC.48.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> protected  Constructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="XMLErrorReporter">
+<A NAME ="DOC.48.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  XMLErrorReporter()</B></TT>
+<DD>
+Default constructor
+<DL></DL><P></DL>
+</DL>
+<hr>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="SAXParser.html"> SAXParser </A><br>
+<A HREF="DOMParser.html"> DOMParser </A><br>
+</DL>
+<DL></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

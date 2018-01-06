@@ -1,0 +1,314 @@
+<html><head><TITLE>InputSource</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   InputSource  </H2><BLOCKQUOTE>
+
+A single input source for an XML entity
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=155>
+<param name=classes value="CInputSource,MInputSource.html,CURLInputSource,MURLInputSource.html,CStdInInputSource,MStdInInputSource.html,CMemBufInputSource,MMemBufInputSource.html,CLocalFileInputSource,MLocalFileInputSource.html">
+<param name=before value="M,M|_,MR_,MR_,Mr_">
+<param name=after value="M,M,M,M,M">
+<param name=indent value="0,0,0,0,0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.7.5"> <IMG BORDER=0 SRC=icon1.gif></A> protected </TD><TD><B>Constructors and Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.7.5.5"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>InputSource</B> ()<br>
+<I>Default constructor </I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.5.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>InputSource</B> (const XMLCh* const systemId)<br>
+<I>Constructor with a system identifier as XMLCh type</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.5.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>InputSource</B> ( const XMLCh* const systemId, const XMLCh* const publicId )<br>
+<I>Constructor with a system and public identifiers 
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.5.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>InputSource</B> (const char* const systemId)<br>
+<I>Constructor witha system identifier as string 
+</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.5.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>InputSource</B> ( const char* const systemId, const char* const publicId )<br>
+<I>Constructor witha system and public identifiers</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.7.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual </TD><TD><B>~InputSource</B> ()<br>
+<I>
+Destructor
+</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.3"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Getter methods </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.7.3.1"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getEncoding</B> () const <br>
+<I>
+An input source can be set to force the parser to assume a particular
+encoding for the data that input source reprsents, via the setEncoding()
+method</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.3.2"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getPublicId</B> () const <br>
+<I>
+Get the public identifier for this input source</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.3.3"> <IMG BORDER=0 SRC=icon1.gif></A> const  XMLCh* </TD><TD><B>getSystemId</B> () const <br>
+<I>
+Get the system identifier for this input source</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.4"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Setter methods </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.7.4.1"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setEncoding</B> (const XMLCh* const encodingStr)<br>
+<I>
+Set the encoding which will be required for use with the XML text read
+via a stream opened by this input source</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.4.2"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setPublicId</B> (const XMLCh* const publicId)<br>
+<I>
+Set the public identifier for this input source</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.4.3"> <IMG BORDER=0 SRC=icon1.gif></A> void </TD><TD><B>setSystemId</B> (const XMLCh* const systemId)<br>
+<I>
+Set the system identifier for this input source</I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.7.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Virtual input source interface </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.7.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  BinInputStream* </TD><TD><B>makeStream</B> () const <br>
+<I>
+Makes the byte stream for this input source</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+A single input source for an XML entity.
+
+<p>This class encapsulates information about an input source in a
+single object, which may include a public identifier or a system
+identifier</p>
+
+<p>There are two places that the application will deliver this input
+source to the parser: as the argument to the Parser::parse method, or as
+the return value of the EntityResolver::resolveEntity method.</p>
+
+<p>InputSource is never used directly, but is the base class for a number
+of derived classes for particular types of input sources. Derivatives are
+provided (in the internal/ directory) for URL input sources, memory buffer
+input sources, and so on.</p>
+
+<p>When it is time to parse the input described by an input source, it
+will be asked to create a binary stream for that source. That stream will
+be used to input the data of the source. The derived class provides the
+implementation of the makeStream() method, and provides a type of stream
+of the correct type for the input source it represents.
+
+<p>An InputSource object belongs to the application: the parser never
+modifies them in any way. They are always passed by const reference so
+the parser will make a copy of any input sources that it must keep 
+around beyond the call.</p>
+
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Destructor ">
+<A NAME ="DOC.7.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="~InputSource">
+<A NAME ="DOC.7.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  ~InputSource()</B></TT>
+<DD>
+Destructor
+
+<DL></DL><P></DL>
+
+<A NAME="Virtual input source interface ">
+<A NAME ="DOC.7.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Virtual input source interface </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="makeStream">
+<A NAME ="DOC.7.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  BinInputStream*  makeStream() const </B></TT>
+<DD>
+Makes the byte stream for this input source.
+
+<p>The derived class must create and return a binary input stream of an
+appropriate type for its kind of data source. The returned stream must
+be dynamically allocated and becomes the parser's property.
+</p>
+
+
+<DL><DT><B>See Also:</B><DD>BinInputStream<br></DL><P></DL>
+
+<A NAME="Getter methods ">
+<A NAME ="DOC.7.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Getter methods </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getEncoding">
+<A NAME ="DOC.7.3.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getEncoding() const </B></TT>
+<DD>
+An input source can be set to force the parser to assume a particular
+encoding for the data that input source reprsents, via the setEncoding()
+method. This method returns name of the encoding that is to be forced.
+If the encoding has never been forced, it returns a null pointer.
+
+
+<DL><DT><B>Returns:</B><DD>The forced encoding, or null if none was supplied.
+
+<DT><B>See Also:</B><DD><A HREF="#setEncoding">setEncoding</A><br></DL><P>
+<A NAME="getPublicId">
+<A NAME ="DOC.7.3.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getPublicId() const </B></TT>
+<DD>
+Get the public identifier for this input source.
+
+
+<DL><DT><B>Returns:</B><DD>The public identifier, or null if none was supplied.
+
+<DT><B>See Also:</B><DD><A HREF="#setPublicId">setPublicId</A><br></DL><P>
+<A NAME="getSystemId">
+<A NAME ="DOC.7.3.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> const  XMLCh*  getSystemId() const </B></TT>
+<DD>
+Get the system identifier for this input source.
+
+<p>If the system ID is a URL, it will be fully resolved.</p>
+
+
+<DL><DT><B>Returns:</B><DD>The system identifier.
+
+<DT><B>See Also:</B><DD><A HREF="#setSystemId">setSystemId</A><br></DL><P></DL>
+
+<A NAME="Setter methods ">
+<A NAME ="DOC.7.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Setter methods </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="setEncoding">
+<A NAME ="DOC.7.4.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setEncoding(const XMLCh* const encodingStr)</B></TT>
+<DD>
+Set the encoding which will be required for use with the XML text read
+via a stream opened by this input source.
+
+<p>This is usually not set, allowing the encoding to be sensed in the
+usual XML way. However, in some cases, the encoding in the file is known
+to be incorrect because of intermediate transcoding, for instance
+encapsulation within a MIME document.
+
+
+<DL><DT><B>Parameters:</B><DD><B>encodingStr</B> -  The name of the encoding to force.<br></DL><P>
+<A NAME="setPublicId">
+<A NAME ="DOC.7.4.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setPublicId(const XMLCh* const publicId)</B></TT>
+<DD>
+Set the public identifier for this input source.
+
+<p>The public identifier is always optional: if the application writer
+includes one, it will be provided as part of the location information.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>publicId</B> -  The public identifier as a string.
+<br><DT><B>See Also:</B><DD><A HREF="Locator.html#getPublicId">getPublicId</A>
+<br><A HREF="SAXParseException.html#getPublicId">getPublicId</A>
+<br><A HREF="#getPublicId">getPublicId</A><br></DL><P>
+<A NAME="setSystemId">
+<A NAME ="DOC.7.4.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> void  setSystemId(const XMLCh* const systemId)</B></TT>
+<DD>
+Set the system identifier for this input source.
+
+<p>Set the system identifier for this input source.
+
+</p>The system id is always required. The public id may be used to map
+to another system id, but the system id must always be present as a fall
+back.
+
+<p>If the system ID is a URL, it must be fully resolved.</p>
+
+
+<DL><DT><B>Parameters:</B><DD><B>systemId</B> -  The system identifier as a string.
+<br><DT><B>See Also:</B><DD><A HREF="#getSystemId">getSystemId</A>
+<br><A HREF="Locator.html#getSystemId">getSystemId</A>
+<br><A HREF="SAXParseException.html#getSystemId">getSystemId</A><br></DL><P></DL>
+
+<A NAME="Constructors and Destructor ">
+<A NAME ="DOC.7.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> protected  Constructors and Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="InputSource">
+<A NAME ="DOC.7.5.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  InputSource()</B></TT>
+<DD>Default constructor 
+<DL></DL><P>
+<A NAME="InputSource">
+<A NAME ="DOC.7.5.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  InputSource(const XMLCh* const systemId)</B></TT>
+<DD>Constructor with a system identifier as XMLCh type
+<DL><DT><B>Parameters:</B><DD><B>systemId</B> -  The system identifier (URI).<br></DL><P>
+<A NAME="InputSource">
+<A NAME ="DOC.7.5.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  InputSource( const XMLCh* const systemId, const XMLCh* const publicId )</B></TT>
+<DD>Constructor with a system and public identifiers 
+
+<DL><DT><B>Parameters:</B><DD><B>systemId</B> -  The system identifier (URI).
+<br><B>publicId</B> -  The public identifier as in the entity definition.<br></DL><P>
+<A NAME="InputSource">
+<A NAME ="DOC.7.5.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  InputSource(const char* const systemId)</B></TT>
+<DD>Constructor witha system identifier as string 
+
+<DL><DT><B>Parameters:</B><DD><B>systemId</B> -  The system identifier (URI).<br></DL><P>
+<A NAME="InputSource">
+<A NAME ="DOC.7.5.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  InputSource( const char* const systemId, const char* const publicId )</B></TT>
+<DD>Constructor witha system and public identifiers. Both as string 
+
+<DL><DT><B>Parameters:</B><DD><B>systemId</B> -  The system identifier (URI).
+<br><B>publicId</B> -  The public identifier as in the entity definition.<br></DL><P></DL>
+</DL>
+<hr>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="URLInputSource.html"> URLInputSource </A><br>
+<A HREF="StdInInputSource.html"> StdInInputSource </A><br>
+<A HREF="MemBufInputSource.html"> MemBufInputSource </A><br>
+<A HREF="LocalFileInputSource.html"> LocalFileInputSource </A><br>
+</DL>
+<DL><DT><B>See Also:</B><DD><A HREF="Parser.html#parse">parse</A>
+<br><A HREF="EntityResolver.html#resolveEntity">resolveEntity</A><br></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>

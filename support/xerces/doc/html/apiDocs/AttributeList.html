@@ -1,0 +1,289 @@
+<html><head><TITLE>AttributeList</TITLE></head>
+<body>
+<H2><A HREF ="#DOC.DOCU" > <IMG BORDER=0 SRC=down.gif></A>  class   AttributeList  </H2><BLOCKQUOTE>
+
+Interface for an element's attribute specifications
+</BLOCKQUOTE>
+<hr>
+ <h2> Inheritance:</h2>
+<APPLET CODE="ClassGraph.class" WIDTH=600 HEIGHT=35>
+<param name=classes value="CAttributeList,MAttributeList.html">
+<param name=before value="M">
+<param name=after value="M">
+<param name=indent value="0">
+<param name=arrowdir value="down">
+</APPLET>
+<hr>
+
+<DL>
+<TABLE>
+<DT><h3>Public</h3><DD><TR><TD VALIGN=top><A HREF="#DOC.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>Constructors and Destructor </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.1.1.1"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>AttributeList</B> ()<br>
+<I>Default constructor </I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.1.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual </TD><TD><B>~AttributeList</B> ()<br>
+<I>Destructor </I>
+</TD></TR>
+</TABLE>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.1.2"> <IMG BORDER=0 SRC=icon1.gif></A> </TD><TD><B>The virtual attribute list interface </B> <br>
+<I></I>
+
+<TABLE>
+<TR><TD VALIGN=top><A HREF="#DOC.1.2.1"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  unsigned  int </TD><TD><B>getLength</B> () const <br>
+<I>
+Return the number of attributes in this list</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.1.2.2"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getName</B> (const unsigned int index) const <br>
+<I>
+Return the name of an attribute in this list (by position)</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.1.2.3"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getType</B> (const unsigned int index) const <br>
+<I>
+Return the type of an attribute in the list (by position)</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.1.2.4"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getValue</B> (const unsigned int index) const <br>
+<I>
+Return the value of an attribute in the list (by position)</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.1.2.5"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getType</B> (const XMLCh* const name) const <br>
+<I>
+Return the type of an attribute in the list (by name)</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.1.2.6"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getValue</B> (const XMLCh* const name) const <br>
+<I>
+Return the value of an attribute in the list (by name)</I>
+</TD></TR><TR><TD VALIGN=top><A HREF="#DOC.1.2.7"> <IMG BORDER=0 SRC=icon1.gif></A> virtual  const  XMLCh* </TD><TD><B>getValue</B> (const char* const name) const <br>
+<I>
+Return the value of an attribute in the list (by name)</I>
+</TD></TR>
+</TABLE>
+</TD></TR></TABLE></DL>
+<A NAME="DOC.DOCU">
+<hr>
+ <h2> Documentation </h2>
+<BLOCKQUOTE>
+
+Interface for an element's attribute specifications.
+
+The SAX parser implements this interface and passes an instance
+to the SAX application as the second argument of each startElement
+event.
+
+The instance provided will return valid results only during the
+scope of the startElement invocation (to save it for future
+use, the application must make a copy: the AttributeListImpl
+helper class provides a convenient constructor for doing so).
+
+An AttributeList includes only attributes that have been
+specified or defaulted: #IMPLIED attributes will not be included.
+
+There are two ways for the SAX application to obtain information
+from the AttributeList.  First, it can iterate through the entire
+list:
+
+<pre>
+public void startElement (String name, AttributeList atts) {
+for (int i = 0; i < atts.getLength(); i++) {
+String name = atts.getName(i);
+String type = atts.getType(i);
+String value = atts.getValue(i);
+[...]
+}
+}
+</pre>
+
+(Note that the result of getLength() will be zero if there
+are no attributes.)
+
+As an alternative, the application can request the value or
+type of specific attributes:
+
+<pre>
+public void startElement (String name, AttributeList atts) {
+String identifier = atts.getValue("id");
+String label = atts.getValue("label");
+[...]
+}
+</pre>
+
+The AttributeListImpl helper class provides a convenience 
+implementation for use by parser or application writers.
+
+
+
+</BLOCKQUOTE>
+<DL>
+
+<A NAME="Constructors and Destructor ">
+<A NAME ="DOC.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  Constructors and Destructor </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="AttributeList">
+<A NAME ="DOC.1.1.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  AttributeList()</B></TT>
+<DD>Default constructor 
+<DL></DL><P>
+<A NAME="~AttributeList">
+<A NAME ="DOC.1.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  ~AttributeList()</B></TT>
+<DD>Destructor 
+<DL></DL><P></DL>
+
+<A NAME="The virtual attribute list interface ">
+<A NAME ="DOC.1.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B>  The virtual attribute list interface </B></TT>
+<DL></DL><P><DL>
+
+<A NAME="getLength">
+<A NAME ="DOC.1.2.1">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  unsigned  int  getLength() const </B></TT>
+<DD>
+Return the number of attributes in this list.
+
+The SAX parser may provide attributes in any
+arbitrary order, regardless of the order in which they were
+declared or specified.  The number of attributes may be
+zero.
+
+
+<DL><DT><B>Returns:</B><DD>The number of attributes in the list.  
+</DL><P>
+<A NAME="getName">
+<A NAME ="DOC.1.2.2">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getName(const unsigned int index) const </B></TT>
+<DD>
+Return the name of an attribute in this list (by position).
+
+The names must be unique: the SAX parser shall not include the
+same attribute twice.  Attributes without values (those declared
+#IMPLIED without a value specified in the start tag) will be
+omitted from the list.
+
+If the attribute name has a namespace prefix, the prefix
+will still be attached.
+
+
+<DL><DT><B>Returns:</B><DD>The name of the indexed attribute, or null
+if the index is out of range.
+
+<DT><B>Parameters:</B><DD><B>index</B> -  The index of the attribute in the list (starting at 0).
+<br><DT><B>See Also:</B><DD><A HREF="#getLength">getLength</A> <br></DL><P>
+<A NAME="getType">
+<A NAME ="DOC.1.2.3">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getType(const unsigned int index) const </B></TT>
+<DD>
+Return the type of an attribute in the list (by position).
+
+The attribute type is one of the strings "CDATA", "ID",
+"IDREF", "IDREFS", "NMTOKEN", "NMTOKENS", "ENTITY", "ENTITIES",
+or "NOTATION" (always in upper case).
+
+If the parser has not read a declaration for the attribute,
+or if the parser does not report attribute types, then it must
+return the value "CDATA" as stated in the XML 1.0 Recommentation
+(clause 3.3.3, "Attribute-Value Normalization").
+
+For an enumerated attribute that is not a notation, the
+parser will report the type as "NMTOKEN".
+
+
+<DL><DT><B>Returns:</B><DD>The attribute type as a string, or
+null if the index is out of range.
+
+<DT><B>Parameters:</B><DD><B>index</B> -  The index of the attribute in the list (starting at 0).
+<br><DT><B>See Also:</B><DD><A HREF="#getLength">getLength</A> 
+<br><A HREF="#getType">getType</A>(String)<br></DL><P>
+<A NAME="getValue">
+<A NAME ="DOC.1.2.4">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getValue(const unsigned int index) const </B></TT>
+<DD>
+Return the value of an attribute in the list (by position).
+
+If the attribute value is a list of tokens (IDREFS,
+ENTITIES, or NMTOKENS), the tokens will be concatenated
+into a single string separated by whitespace.
+
+
+<DL><DT><B>Returns:</B><DD>The attribute value as a string, or
+null if the index is out of range.
+
+<DT><B>Parameters:</B><DD><B>index</B> -  The index of the attribute in the list (starting at 0).
+<br><DT><B>See Also:</B><DD><A HREF="#getLength">getLength</A>
+<br><A HREF="#getValue">getValue</A>(XMLCh*)
+<br><A HREF="#getValue">getValue</A>(char *)<br></DL><P>
+<A NAME="getType">
+<A NAME ="DOC.1.2.5">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getType(const XMLCh* const name) const </B></TT>
+<DD>
+Return the type of an attribute in the list (by name).
+
+The return value is the same as the return value for
+getType(int).
+
+If the attribute name has a namespace prefix in the document,
+the application must include the prefix here.
+
+
+<DL><DT><B>Returns:</B><DD>The attribute type as a string, or null if no
+such attribute exists.
+
+<DT><B>Parameters:</B><DD><B>name</B> -  The name of the attribute.
+<br><DT><B>See Also:</B><DD><A HREF="#getType">getType</A>(int)<br></DL><P>
+<A NAME="getValue">
+<A NAME ="DOC.1.2.6">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getValue(const XMLCh* const name) const </B></TT>
+<DD>
+Return the value of an attribute in the list (by name).
+
+The return value is the same as the return value for
+getValue(int).
+
+If the attribute name has a namespace prefix in the document,
+the application must include the prefix here.
+
+
+<DL><DT><B>Returns:</B><DD>The attribute value as a string, or null if
+no such attribute exists.
+
+<DT><B>Parameters:</B><DD><B>name</B> -  The name of the attribute in the list.
+<br><DT><B>See Also:</B><DD><A HREF="#getValue">getValue</A>(int)
+<br><A HREF="#getValue">getValue</A>(char *)<br></DL><P>
+<A NAME="getValue">
+<A NAME ="DOC.1.2.7">
+<DT><IMG BORDER=0 SRC=icon2.gif><TT><B> virtual  const  XMLCh*  getValue(const char* const name) const </B></TT>
+<DD>
+Return the value of an attribute in the list (by name).
+
+The return value is the same as the return value for
+getValue(int).
+
+If the attribute name has a namespace prefix in the document,
+the application must include the prefix here.
+
+
+<DL><DT><B>Returns:</B><DD>The attribute value as a string, or null if
+no such attribute exists.
+
+<DT><B>Parameters:</B><DD><B>name</B> -  The name of the attribute in the list.
+<br><DT><B>See Also:</B><DD><A HREF="#getValue">getValue</A>(int)
+<br><A HREF="#getValue">getValue</A>(XMLCh*)<br></DL><P></DL>
+</DL>
+<hr>
+ <DL><DT><B>This class has no child classes.</B></DL>
+<DL><DT><B>See Also:</B><DD><A HREF="DocumentHandler.html#startElement">startElement</A> 
+<br><A HREF="AttributeListImpl.html#AttributeListImpl">AttributeListImpl</A><br></DL><P><I><A HREF="aindex.html"> alphabetic index</A></I>  <I><A HREF="HIER.html"> hierarchy of classes</A></I><P><hr>
+<P>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="80%">
+	<TR>
+		<TD WIDTH="100%" VALIGN="TOP">
+			<P ALIGN="CENTER"><B>Xerces-C XML Parser for C++ Version 1.1</B><BR>
+			Copyright &copy; 2000 The Apache Software Foundation. All Rights Reserved.
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="100%">
+			<P ALIGN="CENTER"><IMG SRC="ApacheLogo.jpg" WIDTH="387" HEIGHT="100" ALIGN="BOTTOM" BORDER="0">
+		</TD>
+	</TR>
+</TABLE>
+
+<P Align=right><I>generated by <A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</A></I>
+</BODY>
