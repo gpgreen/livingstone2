@@ -1,0 +1,6 @@
+scenario carTest1 car
+progress test.radio.radioCmd=on
+assign test.radio.powerOut=off
+fc
+assign test.clock.powerOut=on
+fc

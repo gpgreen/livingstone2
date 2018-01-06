@@ -1,0 +1,1086 @@
+# $Id: help6.txt,v 1.1.1.1 2006/04/18 20:17:27 taylor Exp $
+
+5. Internals
+------------------
+
+This page summarizes the details of the internal architecture of the
+builder. The internal state of the builder can be examined using the
+View | Internals menu selection.
+
+3.1 Overview
+
+The program is written entirely in standard Tcl/Tk (Version 3.6 of
+Tk), using only documented elements of the language.
+
+It is intended to be a model of a visual programming tool for dataflow
+graphs. As such the visual (graphical) aspects of the system are kept
+separate from those aspects that depend on the Pirate dataflow
+language. Eventually we expect that the Pirate dependent parts of the
+system will be removed and more generic facilities will be provided
+for translating the diagram into an arbitrary scripting or command
+language.
+
+Global variables are kept to a minimum by grouping them into
+alists. Alists are lists of alternating fieldname fieldvalue
+items. Procedures for operating on alists are in the util.tcl module.
+
+The visual aspects of the diagram are kept in the following alist
+globals:
+
+pirFileInfo: pertaining to the input/output pathnames for the
+workspace.
+
+pirDisplay: pertaining to the general appearance of the canvas.
+
+pirPreferences: the currently active preference parameters.
+
+pirNodes: the canvas items for the modules (boxes).
+
+pirEdges: the canvas items for the links (lines).
+
+PirNode(n): each node has a descriptor describing its geometry and its
+semantic parameters. These parameters come from the module.cfg file
+and from the values entered explicitly by the user.
+
+pirEdge(n): each edge has a similar descriptor describing the
+properties of the sensors it links.
+
+pirTemp: used to pass parameters between popup boxes and the scripts
+to process them.
+
+pirWireFrame: used to control and remember wire-frame rectangles when
+the user is sweeping out an area of the canvas or moving a box.
+
+
+The global variables can be viewed by selecting Internal
+Representation from the View menu or by looking at the .prw file for
+the workspace.
+
+3.2 Procedure Descriptions
+
+Following is a list of the procedures defined in the builder preceded
+by a brief explanatory comment. It was produced using the
+"directoryscan" procedure in util.tcl.
+
+
+***  Source File: ./canvasBindings.tcl ***
+
+## interpret a dragging motion with Button 1 as an area select operation
+proc canvasB1StartMotion {c x y} {
+
+## during motion with B1 down, change the lower right corner of the
+##   wire frame rectangle
+proc canvasB1Motion {c x y} {
+
+## when B1 is release on the canvas, we either
+##  - select the enclosed nodes, if the mouse has moved since the
+##    button was depressed, or
+##  - treat the mouse action as a click-in-place action.
+proc canvasB1Release {c x y} {
+
+## interpret a point/click with Button 1 as a "put selected module here"
+proc canvasB1Click {c x y} {
+
+## handle double-clicks near an edge by selecting the terminals
+proc pirSelectEdge {c x y} {
+
+## select the buttons to which the edge is connected
+proc pirSelectEdgeTerminals {e} {
+
+
+***  Source File: ./cfgParse.tcl ***
+
+# Swallow up the "define module_class ..." statement from a module.cfg
+# file and return a corresponding structure of nested a-lists.
+proc chomp_cfg {file} {
+
+## Scan for the keyword "define".
+proc find_define {} {
+
+## scan past /* */ style comments, taking no action.
+proc skip_comment {} {
+
+## Set the parse string to start at the next "interesting"
+## token after the given offset, skipping comments, whitespace
+## and trailing semicolons.
+proc trim {{start 0}} {
+
+## extract the next identifier token from the parse string.
+## Square brackets, underscores, hyphens, decimal points OK.
+proc get_name {} {
+
+## Return a quote-delimited string from head of parse string.
+proc get_string {} {
+
+## Parse out an alist value field, which may be a nested alist,
+## a string or a name.
+proc get_value {} {
+
+## Parse out a {}-delimited alist from parse string.
+proc get_alist {} {
+
+# Reverse an alist (preserving pair order)
+# Note: call by reference
+proc pirArev {alistname} {
+
+## insert an attrib/value pair into alist at the end.
+## Note: call by reference
+proc pirAappend {alistname attrib value} {
+
+
+***  Source File: ./edit.tcl ***
+
+## enable edit menu patterns
+proc enableEditMenu {patterns} {
+
+## disable edit menu patterns
+proc disableEditMenu {patterns} {
+
+## cut: remove selected items. [No clipboard support]
+proc editCut {c} {
+
+## edit module parameters
+proc pirEditModule {{c .canvas.c}} {
+
+## edit edge parameters
+proc pirEditEdge {{c .canvas.c}} {
+
+## indicate by the color that the editing for the item is complete.
+## second arg is "node" or "edge", third is the item number on the canvas
+proc display_item_completed {canvas n_or_e item} {
+
+
+***  Source File: ./fileBox.tcl ***
+
+# Engage in a dialog with the user to provide a workspace pathname.
+# Allow directory changing, selection of existing workspaces,
+# user type-in and (of course) cancellation.
+proc query_file {title} {
+
+# On a user action, re-adjust the contents of the subwindows.
+proc update_dir {} {
+
+
+***  Source File: ./fileOps.tcl ***
+
+# Extract just the "name" of a pirate workspace from a pathname.
+proc workname {path} {
+
+# Put a label on the workspace window.
+proc label_workspace {} {
+
+# File menu "Quit" option.  Check for unsaved work. Does not destroy window
+proc fileQuit {} {
+
+# Establish a new workspace.
+proc fileNew {} {
+
+# Query the user to save a workspace. 
+# Return 0 if OK to continue
+# Return 1 if cancel
+proc save_dialog {} {
+
+# Warn overwrite of a file.  0 if continue, 1 if cancel
+proc exists_dialog {filenm} {
+
+# Create new named workspaced? 0 if continue, 1 if cancel
+proc create_dialog {filenm} {
+
+# File menu "Open" option. Save any work and query for pathname.
+proc fileOpen {canvas} {
+
+# File "Save" option. If unknown path, detour to "SaveAs"
+proc fileSave {} {
+
+# Ask for a filename in which to save the workspace.
+proc fileSaveAs {} {
+
+# Write a list of global variable contents to the current filename.
+# Format the file as "set" commands so a "source" of the file will
+# reset all the variables.
+proc write_workspace {{save_globals ""}} {
+
+# Read a workspace from the current filename. 
+# A "source" will set the global variables.
+proc read_workspace {} {
+
+## mark the current canvas modified, and activate the appropriate menu commands
+proc mark_modified {} {
+
+
+***  Source File: ./form.tcl ***
+
+proc mkform {class item req opt fixed label} {
+
+# update the required and optional parameters in pirXXX(n) (XXX=Node/Edge)
+proc pirFormUpdate {class item  w req opt} {
+
+proc pirFormTab {} {
+
+
+***  Source File: ./getLinks.tcl ***
+
+## check for variable sensor specifications (*) and query user. Returns
+## the true number of inputs/outputs. As side effect, replaces the
+## inputLabels or outputLabels field in the config alist with one
+## in which any asterisk (*) field is replaced with a specific list of 
+## link (edge) names. Note: more than one * field is not allowed (and silly).
+proc pirGetLinks {inOrOut family module config_alistname} {
+
+## query the user modally for the names of links to replace *
+proc pirAskLinks {inOrOut family module namedLabels} {
+
+# just reset to top level
+proc pirAskCancel {} {
+
+# collect links in the global variable
+proc pirAskOK {} {
+
+# response to "More" button
+proc pirAskMore {} {
+
+# check that entry is valid
+proc pirAskCheck {entry} {
+
+# response to tab key
+proc pirAskTab {} {
+
+## 1 iff the family is the designed 'source' family
+proc isSourcep {family} {
+
+
+***  Source File: ./getModule.tcl ***
+
+## pirGetModule returns an alist to be attached to the graphical node
+## and used by the interface to prompt for needed parameters.  
+## The fields are:
+##   required - variables which must receive a value
+##   optional - variables which may receive a value
+##   fixed    - variable values displayed for information only.
+## these three fields are simply paired lists {name value name value ..}
+## where <name> is whatever label we want to prompt the user with.
+##   outputLabels
+##   inputLabels
+## These two are simple lists of the dataflow labels for module IO
+## Note, it is possible for a label to be "*".
+## There is also a field
+##   internal
+## whose contents are arbitrary as far as the interface is concerned
+## but which will be used by code generation.
+proc pirGetModule {config_file return_alist} {
+
+## Revert the parameters of selected modules to the state from
+## the corresponding config file.  Useful if the config file has
+## been changed or user wants to wipe out edited parameters.
+proc pirRevertModule {} {
+
+## Check to see if the I/O labels in a config file are consistent
+## with the current terminal configuration on a node.
+## (*'s may have been expanded and superterminals may have been formed.)
+proc labels_changed {cfgLabels nodeLabels} {
+
+## Give the user an optional parameter to name the module instance.
+## This can be useful for readability and is needed when other
+## modules require a pointer to this module_instance.
+proc make_module_name_option {mod_class} {
+
+## get_label_names accepts the OUTPUTS or INPUTS entry from a config file
+## and extracts only the name fields, in order.
+proc get_label_names {IOlist} {
+
+## make_entry_alist accepts a variables entry from a config file and
+## formats a flat alist of <prompt, value> pairs for the user to fill in.
+proc make_entry_alist {var_alist assoc_name alist_name 
+
+## These prompts are also used as look-up keys during the compilation
+## process, and so should be given a value only once.
+proc Class_choose_message {} {
+
+proc Type_choose_message {} {
+
+## pirGetSensor returns an a_list of information about an IO port on 
+## a graphical module.
+## inputs:
+##   The source node (a subscript to pirNode)
+##   The output position on the source node
+##   The target node 
+##   The input position on the target node
+## outputs:
+##   adds a_list entries to  call-by-ref parameter return_list 
+##
+## A type check is performed.  If this edge is type-incompatible an
+## error will be signalled.
+## fields to add are REQUIRED OPTIONAL FIXED and INTERNAL - the first
+## three containing flat alists for display similarly to those returned 
+## by pirGetModule.
+## Only FIXED and REQUIRED are currently used.
+## The REQUIRED field has an entry only when the IO class is specified
+## as an {or <multiple choices>}.
+## The resulting list will be found later as the pirEdge(e) entry.
+proc pirGetSensor {source_node output_index \
+
+## return a type identifier without the SENSORS_ prefix
+proc strip_SENSORS {type_entry} {
+
+## Collapse an IO entry from a config file into a flat alist for
+## a hopefully readable display to the user.
+proc flatten_IOlist {al} {
+
+## Predicate to test if all required fields in an edge or node
+## have been filled in.  Sample call:
+## required_completed_p node 5
+proc required_completed_p {edge_or_node num} {
+
+## pirTypeCheck will create an error if an edge between two IO ports
+## is incompatible.
+## inputs:
+##   "internal" entry from source module (call by ref)
+##   IO name associated with source output port.
+##   "internal" entry from target module (call by ref)
+##   IO name associated with target input port.
+proc pirTypeCheck {source_internal source_name target_internal target_name} {
+
+## For class and type fields in an IO description, make sure
+## the input and output types are potentially compatible
+## (have at least one common type/class element).
+proc compat_test {superlist sublist label} {
+
+## In event style edges, check that the items expected by the
+## input list is a subset of those provided by the output.
+proc items_test {super sub} {
+
+## testing routine
+proc check_edge {e} {
+
+## verifyGroupOutputs:
+## Given a node (number) and a set of output indices for the node,
+## this routine will:
+## 1) Check that these indices can logically be grouped into a
+##   "SuperOutput" vector by checking the config file and sourceFields
+##   information.
+## 2) If grouping is legal, will modify the structures of the
+##   "edgesFrom", "outputLabels" and "sourceFields" entries to reflect
+##   the new grouping - The index of the new SuperOutput will be the
+##   smallest of the given indices. Any intervening or following outputs
+##   will be moved down monotonically.
+## 3) If the grouping is successful, return a 1,
+##    otherwise return 0 with no changes made.
+proc verifyGroupOutputs {node output_set} {
+
+## The analog to verifyGroupOutputs for input groupings.
+## There are no sourceFields to check in this case.
+## If the grouping is legal, perform list consolidation on
+## inputLabels and edgesTo.
+proc verifyGroupInputs {node input_set} {
+
+## As a safety measure, do not allow grouping of inputs/outputs
+## if an edge already exists to one of the group.
+proc allowNoEdges {edge_list set} {
+
+## return a list in which the given indexed elements have been
+## gathered into a sublist and placed at the first index position.
+## Indices must be given in increasing order.
+proc consolidate {list indices} {
+
+
+
+***  Source File: ./initialize.tcl ***
+
+proc globalInitialize {} {
+
+## ask user to enter name for this application
+## Note: caller needs to grab and wait for this
+proc getApplicationName {{w .name}} {
+
+proc getApplicationNameOk {w} {
+
+## establish a name for this application
+proc setApplicationName {ap} {  
+
+
+***  Source File: ./layout.tcl ***
+
+## re-initialization. If reinit is 1, we reuse the same application
+proc initialize_graph {{reinit 0}} {
+
+## create a node of a given type  at canvas coords x and y. 
+## The module is an alist containing the fields: 
+##    label labelWidth numInputs numOutputs ...
+## Returns the itemnumber of the node within the canvas
+proc mkNode {canvas x y module} {
+
+## return a window representing a node
+proc mkNodeIcon {canvas label labelWidth numInputs numOutputs} {
+
+## set up motion of a node using wire-frame graphics
+proc nodeStartMotion {canvas winpath x y} {
+
+## execute node motion. Move the "wire frame" only.
+proc nodeMotion {canvas x y} {
+
+## nodeMotionRelease -- actually move the node and delete the
+##   wire frame
+proc nodeMotionRelease {canvas item x y} {
+
+## redraw an edge during a nodeMove operation
+proc edgeMove {canvas e} {
+
+## get the fg and bg node colors, if specified (defaults if not), and
+## reconfigure the node. The bgColor and fgColor fields in the node alist
+## will have already been set by the caller.
+proc node_color_config {window nodename} {
+
+## set the fill color for the edge and redraw
+proc edge_color_config {canvas edge} {
+
+## input unselect
+proc nodeInDeselect {} {
+
+## output unselect
+proc nodeOutDeselect {} {
+
+## mark this button as the selected in/output button in preparation for
+## possible edge creation/deletion.
+proc nodeInSelectNoshift {button} {
+
+## select an output button, simple (no shift key)
+proc nodeOutSelectNoshift {button} {
+
+## select an input button, shifted (multi-select)
+proc nodeInSelectShift {button} {
+
+## select an output button, shifted (multi-select)
+proc nodeOutSelectShift {button} {
+
+## collect the button numbers from the window names
+proc nodeSelTermnos {buttons {in_out out}} {
+
+## create an edge from the selected input to the selected output button
+proc mkEdge {canvas {inbut ""} {outbut ""} {redraw 0}} {
+
+## remove the edge between two selected buttons
+proc unmkEdge {canvas {inbut ""} {outbut ""}}  {
+
+## return the item number corresponding to the window
+proc theItemContaining {w} {
+
+## return the name of the window corresponding to node n.
+proc theNodeWindowPath {n} {
+
+## adjust the "level"  of the innode in the DAG. Note that the entire 
+##  DAG must be checked at compile time for loops.
+proc adjustLevel {innode outnode} {
+
+## compute the coordinates of the edge and create the line on the canvas,
+##  returning the item
+proc drawEdge {canvas inbut innode inindex outbut outnode outindex} {
+
+## select an intermediate y value to turn the corner on the edge line
+proc drawEdgeInterimY {y1 y2} {
+
+## Redraw an edge to shift it's breakpoint cyclically
+proc shiftEdgeBreak {} {
+
+## select a new or additional set of nodes.
+proc selectNodes {c items} {
+
+proc selectNode {c n} {
+
+proc deselectNodes {c} {
+
+proc cutNode {canvas node} {
+
+## remove an edge from the display
+proc cutEdge {canvas edge} {
+
+## return the item number of the currently selected edge, or 0 if none
+proc selectedEdgeItem {{canvas .canvas.c}} {
+
+## Replace the (multiple) selected terminals by a superterminal.
+## This is much too complicated because we've combined the input and
+## output cases into a single module. (Sorry)
+proc pirSuperTerminal {{in_out out}} {
+
+## recompute the list of "group terminals" kept in the pirNode structure,
+##   given the index of the first of a new group terminal and the
+##   number of terminals in the group
+proc recomputeGroupTerminalsSet {groupTerminals buttonindex numTerminalsInGroup} {
+
+# parse the button path name to obtain the button number
+proc pirButtonNum {button in_or_out} {
+
+# check for existing edges from any of the buttons in the list
+# if found, print an error message and return 1. else return 0.
+proc exist_edges_out {buttonlist node} {
+
+# check for existing edges to any of the buttons in the list
+# if found, print an error message and return 1. else return 0.
+proc exist_edges_in {buttonlist node} {
+
+
+***  Source File: ./palette.tcl ***
+
+## read the family names from the modules directory
+proc palFamilyNames {path} {
+
+## read the module names from the family directory
+proc palModuleNames {path family} {
+
+## create the module palette. User may supply a window name, must supply
+##   a path to the modules directory
+proc palCreate { {path ""} {w .palette}} {
+
+proc palInsertModuleNames {path familyMessage families modules} {
+
+## return the name of the currently selected module, if any, in the palette
+proc selectedModuleName {{w .palette}} {
+
+## return the name of the currently selected module, if any
+proc selectedFamilyName {{w .palette}} {
+
+## clear the selection in the modules listbox
+proc clearSelectedModule {{w .palette}} {
+
+
+***  Source File: ./preferences.tcl ***
+
+## return to default "factory" settings
+## also used to determine factory settings without rewriting them
+proc pirPreferencesInit {{v pirPreferences}} {
+
+## returns the path name of the module config path (cfgpath)
+proc cfgpath {family module} {
+
+## Returns the preferred or default module directory path.
+proc cfgdirectory {} {
+
+## obtain preference. Return default if not set
+proc preferred {field} {
+
+## restore and save default preferences
+proc pirPreferencesRestore {} {
+
+## save user preferences
+proc pirSavePreferences {} {
+
+## read "preferences" if it exists and override current settings
+proc pirUserPreferences {} {
+
+## edit preferences
+proc pirEditPreferences {} {
+
+proc pirEditPrefsOK {w N} {
+
+## color preferences
+proc pirColorPreferences {{w .colors}} {
+
+proc pirColorPrefsOK {w} {
+
+
+***  Source File: ./top.tcl ***
+
+# establish preferred window position
+proc dpos {w {xoffset 0} {yoffset 0}} {
+
+# build main window for the application
+proc mainWindow {} {
+
+proc shutdown {} {
+
+## display a warning message in the main panel
+proc pirWarning {msg {severity 0}} {
+
+## disable/enable sensor menu items -- these depend on the patterns
+proc menuMakeTerminalSet {normal_disabled {in_out out}} {
+
+## Cause a menu to appear outside of the normal
+## point and click mechanism.
+proc postMenu {menu} {
+
+## Make any visible menus go away.
+proc unpostMenus {} {
+
+
+***  Source File: ./util.tcl ***
+
+# find the largest element of a  list
+proc lmax lst {
+
+# find the smallest element of a  list
+proc lmin lst {
+
+# reverse a list
+proc lreverse lst {
+
+# delete the first occurrence of a (numeric) value in the list
+proc ldelete {lst elt} {
+
+# map: apply a proc to every element in the list
+proc lmap {lst f} {
+
+# add/sub 1
+proc 1+ x {expr $x+1}
+
+proc 1- x {expr $x-1}
+
+## search an alist {attribute value attribute value ...}. 
+## Note: call by reference
+proc assoc {attrib alistname} {
+
+## insert an attrib/value pair into alist. Note: call by reference
+proc acons {attrib value alistname} {
+
+## remove the first attrib/value pair from an alist. Return
+## the old value. Note: call by ref
+proc adel {attrib alistname} {
+
+## replace an attrib value pair with a new value. Return old value
+## Note: call by ref
+proc arepl {attrib newval alistname} {
+
+## insert a value into a list associated with an attrib.
+## Note: call by ref
+proc ains {attrib newval alistname} {
+
+## pretty-print an alist
+proc aputs {fd alistname } {
+
+## generate a unique integer
+proc pirGenInt {} {
+
+## generate a unique variable name. Optional argument replaces symbol prefix
+proc pirGenSym {{s "gensym"}} {
+
+## check output file name for possible problems
+proc openOutputCheck {filepath} {
+
+proc openOutputCheckExists {filepath} {
+
+## debug trace
+proc debugPuts {msg {debugLevel 0}} {
+
+## module pushd and popd
+proc pushd {d} {
+
+proc popd {} {
+
+# ask user to confirm their choice, abort if not
+proc confirm {{msg ""}} {
+
+# 1 if the arg is numeric, 0 otherwise
+proc numericp x {
+
+# 1 if the arg is alphabetic, 0 otherwise
+proc alphabeticp x {
+
+# 1 if the arg is alphanumeric, 0 otherwise
+proc alphanumericp x {
+
+## scan comma-separated string. limit the number of fields to $maxfields"
+proc commasep {line {maxfields 9999}} {
+
+## scan forward for the index past the end of the next field.
+proc commasepField_274 {linename start} {
+
+## scan forward for the index past the end of the next whitespace/comma field
+proc commasepTrim_274 {linename start} {
+
+## extract a field and convert escapes to characters
+proc commasepEscape_274 {linename from to} {
+
+# C-like "assert" utility. Arg is evaluated in caller's context; error
+#  if result is zero. Nop unless the global DEBUG is defined.
+#  Example:  assert {expr $var > 0}
+proc assert {truth} {
+
+## returns the intersection of two lists
+proc intersection {la lb} {
+
+## "save" a file F by making a copy to F~. Return 1
+##  iff successful
+proc savefile {path} {
+
+proc copyfile {from to} {
+
+## scan a .tcl source file for proc statements and preceding comments
+proc procscan {sourcefile ostream} {
+
+## scan all .tcl source files in a given path for proc
+## statments and associated comments. Append the output to a file.
+proc directoryscan {path outfilename} {
+
+
+***  Source File: ./widgut.tcl ***
+
+# Create a labelled, scrollbarred entry widget, with associated
+# text variable and pack it where you want.
+# Return the precise entry pathname so caller can adjust contents later.
+proc entry_frame {frame_id var width label side fill} {
+
+# Create a row of buttons with associated commands to pack on top or bottom.
+# A default can be indicated by 0,1,2... in order.
+# The parent window is given separately so that the default binding
+# can be issued.
+# The last arguments are any number of (button-name, tcl-script) pairs.
+proc button_row {win newframe side default args} {
+
+# Create a labelled, two scrollbarred listbox that will perform
+# "action" when an item is double-clicked.  Pack it on "side".
+# Return the path to the listbox itself so the caller can
+# adjust the contents.
+proc list_select {frame_id label side action} {
+
+
+***  Source File: ./version.tcl ***
+
+## (re-)establish the global version field in pirDisplay 
+## and return the V/R value
+proc pirSetVersion {} {
+
+## return the current version.release number
+proc pirGetVersion {} {
+
+## upward compatibility support
+proc pirUpVersion {oldRelease newRelease} {
+
+## upgrade 0.1 -> 0.2
+proc pirUpward_{0.1} {application} {
+
+## upgrade 0.1 -> 0.2
+proc pirUpward_{0.2} {application} {
+
+## upgrade 0.3 -> 0.5
+proc pirUpward_{0.3} {application} {
+
+## upgrade 0.5 -> 1.0
+proc pirUpward_{0.5} {application} {
+
+## upgrade 1.0 -> 1.1
+proc pirUpward_{1.0} {application} {
+
+proc pirUpward_{1.1} {application} {
+
+proc pirUpward_{1.2} {application} {
+
+
+***  Source File: ./compileSpec.tcl ***
+
+## Given a dataflow graph annotated with appropriate config file 
+## declarations and developer-supplied parameters, write out a
+## syntactically valid xx.spec file.
+proc compileGraph {{output_file "rons.spec"}} {
+
+## Look over the nodes and edges in the graph and warn of all
+## "required" fields that are not completed. Compilation needs them
+## to continue.
+proc check_field_completion {} {
+
+## writeIncludes:
+## Use node list to compile a list of all UNIQUE module config files
+## and format out:
+## #include "filename.cfg";
+proc writeIncludes {fid} {
+
+## generate any c_include statements requested by the developer
+proc writeC_Includes {fid} {
+
+## defineSourceClasses:
+## for each output of the source module, create a
+## define sensor_class xxxx {...}; statement using either dictionary
+## or user-supplied sensor characteristics.
+## These entries are found on the sourceFields entry of a node.
+## The dictionary is indexed by MSID and provides the standard
+## alist entries as in dataflow.doc.
+proc defineSourceClasses {fid} {
+
+## defineModules:
+## attach a gensym name to each node.
+## For each node in graph (class_name comes from the .cfg file):
+## define module_instance <gensym> {
+##    class <class_name>;
+##    var_name <value>;  - for all instance variables declared in .cfg
+## };
+proc defineModules {fid all_nodes} {
+
+## defineEdges:
+## attach a gensym name to each edge.
+## for each edge create one of the following statements:
+## define sensor_item <gensym> {
+##    class <sensor_class_name>
+##    identifier <specific_msid>;
+## };
+## define sensor_set <gensym> {
+##    class <class_name>;
+## };
+## define async <gensym>;
+## define event <gensym>;
+## a REQUIRED user choice is in the fill-in list for modules
+## that have an ORed class on input/output defs
+proc defineEdges {fid all_nodes} {
+
+## produce the label declarations needed to assign the
+## proper IDs to the elements of a superInput array.
+proc DefineSuperInputs {fid node} {
+
+## Produce the "define" statement for the output (sensor, event etc.) 
+## at position "inx" of node.  Already known to be a single output.
+proc defineOneSensor {fid node inx} {
+
+## Produce the "define" statement for the output (sensor, event etc.) 
+## at position "inx" of node.  Already known to be a vector of like outputs.
+proc defineVectorSensor {fid node inx} {
+
+# retrieveGoodClass: extract class of edge.
+# (from config file "outputs" "class" label with 
+#  perhaps user choice.)
+# class is one of - sensor_item sensor_set event async
+proc retrieveGoodClass {outlist port_edges node inx} {
+
+## Give an edge's type label (from config file "outputs"
+## "type" field, with a user choice if more than one listed).
+proc retrieveGoodType {outlist port_edges node inx} {
+
+proc lmember {thing list} {
+
+## Traverse the graph in the logical order determined by 
+## collect_node_process_order (see below) and instantiate all
+## the nodes and their outputs.  Also issue the "add_output"
+## commands for these outputs and issue appropriate "connect"
+## commands representing all incoming edges to a node.
+proc instantiateEverything {fid all_nodes} {
+
+## Do all instantiates for each node in list.  Elements of the
+## list may be an entire subgraph embedded in a loop.
+proc instantiateNodeList {fid process_list indent loop_index} {
+
+## Output the "connect" statements at the end of a loop
+## which feed into a superInput node.  These have been
+## formatted and saved beforehand for output now.
+proc writeLoopEndConnects {fid indent node loop_index} {
+
+## Write the spec file outputs needed to instantiate and
+## properly connect one node.
+proc instantiateNode {fid node indent loop_index} {
+
+## Follow the incoming edges to a node to find the preceding nodes
+## and issue the appropriate "connect" statement for each edge.
+proc connectIncomingEdges {fid indent node} {
+
+## Issue the "instantiate" and "add_output" commands corresponding
+## to each connected output port from a node.
+proc instantiateEdgesFrom {fid node_name edges more_info indent} {
+
+## Create a list of nodes ordered by their dependencies on each other.
+proc topologically_sort_nodes {} {
+
+## Test whether a node has any inputs.
+## If not it will be a "root" in the graph.
+proc noInputs {node} {
+
+## Check that a (supposed) DAG has no directed cycles.
+## Called with a list of root nodes (nodes with no inputs)
+proc check_cycles {roots} {
+
+## Recursively traverse the graph, checking for repeat visits
+## to a node as sign of cycle.
+## On the way, label each node with it's maximum depth from some root.
+proc depth_search {node ancestors} {
+
+## Given a set of "root" nodes (not necessarily true roots),
+## Return the set of all direct descendants in the DAG (inclusive)
+## sorted in overall depth order.
+proc collect_subset {roots dim} {
+
+## Determine if a node will end a loop by virtue of its
+## having a superInput connection.
+proc LoopEndingNode {node edge dimension} {
+
+## Given a topologically sorted list of nodes in a DAG, recursively
+## traverse it, pulling out any subsets which are included in loops
+## and isolating these as sublists at the end.  Subsets are themselves
+## checked for nested loops.
+proc extract_embedded_loops {node_list} {
+
+## Look for vectorized outputs in a node (as recorded during definition
+## in the more_edge_info slot) and, if found, collect the subgraph
+## nodes following from the split and return them paired with the
+## loop index and dimension.  Note that more than one loop can be
+## started at the same node.
+proc extract_loops {node} {
+
+## Stable sort a list of nodes so that any named modules appear
+## before any other modules that require that name.
+## This is done so that later dataflow compilation can resolve
+## the references.
+proc X_module_sort {all_nodes} {
+
+
+***  Source File: ./dd.tcl ***
+
+## find and open the data dictionary, returning the fid
+proc ddOpen {} {
+
+## ask user to specify the dd path
+proc ddOpenDialog {} {
+
+## read the next (non-comment) line of the data dictionary and
+## return a list of the elements. Return empty list on eof.
+proc ddReadLine {fid} {
+
+## create a checkbox form for choosing data dictionary sensors
+## accepts an open fileid for the dd. Caller should close the fid.
+## The resultVarName is a global used to return the result.
+proc ddChoose {ddfid {w .ddchoose}} {
+
+## return a separator string, used to separate visually the items
+## in the checkbutton display. Called by both ddFormatBB and ddSplit
+proc ddSeparatorString {} {return ",   "}
+
+## format a line for the checkbutton box
+proc ddFormatBB line {
+
+## return a list of the text elements from the selected checkbuttons
+## in a named global variable. (Sorry -- that's life with 
+## asynchronous processing).
+## Then we unset all the checkbutton variables, since they are globals
+proc ddCollectSensors {w cbb} {
+
+## routine provided for callers to undo the result of the join in ddFormatBB.
+## returns a list-ified version of the string argument.
+proc ddSplit {string} {
+
+
+***  Source File: ./genConfig.tcl ***
+
+## Generate the application config file from the information
+## contained on the nodes of the dataflow graph.
+## The file created will be a template which must have values entered
+## before run time.  The values are left blank unless defaults are specified.
+proc genConfig {file_path} {
+
+## Write the section of the config file which corresponds to
+## one module's configuration options.
+proc genConfigSection {fid file_specs instances config_values} {
+
+## Format and write the header line in the config file.
+proc genConfigHeader {fid header instances} {
+
+## create a list of format arguments compatible with the
+## sprintf arg definitions for config_file headers in dataflow.doc
+proc extract_args {argslist instances} {
+
+## Retrieve an element from an a-list given a string prefix
+## of the the key field.
+proc assoc_by_prefix {word alist_name} {
+
+
+***  Source File: ./redraw.tcl ***
+
+proc pirRedraw {canvas} {
+
+# determines the index (1 relative) of the edge in the list
+proc pirEdgeIndex {edge edgesList} {
+
+# draw multi-output terminal with special color and bitmap
+proc redrawGroupOutputTerminal {nn i} {
+
+# draw multi-input terminal with special color and bitmap
+proc redrawGroupInputTerminal {nn i} {
+
+
+***  Source File: ./source.tcl ***
+
+## the global variable pirTemp is used to pass the
+## result of the source selection form back to the caller (i.e., us). 
+proc pirGetSourceMsids {config_alistname} {
+
+
+***  Source File: ./tools.tcl ***
+
+## Show selected node config info
+proc pirShowModConfig {} {
+
+## invoke the compiler
+proc pirCompile {} {
+
+## Show a compiled spec file to the user
+proc pirShowSpecFile {} {
+
+## Show a compiled spec file to the user
+proc pirShowConfigFile {} {
+
+## add/replace/delete title lines on the canvas
+proc toolTitle {{c .canvas.c}} {
+
+## write the diagram title text onto the canvas
+proc pirDiagramTitle {{c .canvas.c}} {
+
+## get new title text
+proc toolTitleAdd {} {
+
+proc toolTitleAddOK {w entry} {
+
+## change the title text
+proc toolTitleChange {existingTitle} {
+
+## remove the diagram title
+proc toolTitleDelete w {
+
+
+***  Source File: ./help.tcl ***
+
+## help table of contents
+proc pirHelp {{w .help}} {
+
+## obtain the description of a page from the label
+proc pirHelpDescription {label} {
+
+## display a help page
+proc pirHelpPage {ww page label} {
+
+
+***  Source File: ./getIncludes.tcl ***
+
+## Provide user with a fill in menu for entering filenames.
+proc pirEditIncludes {} {
+
+## Save the results of the editing session
+proc pirIncOK {} {
+
+# response to "More" button
+proc pirIncMore {} {
+
+# response to tab key
+proc pirIncTab {} {
+
+
+***  Source File: ./view.tcl ***
+
+## Create a text window containing the config file 
+## information about a node.
+proc pirShowModule {node} {
+
+## Copy config file info into window in semi-formatted way
+proc doConfigInserts {window list indent} {
+
+## Present a text file for the user's perusal. nothing fancy.
+proc pirShowFile {filename} {
+
+## Show the state of the pirate global variables.
+## This is probably only useful for system debugging.
+proc pirShowGlobals {} {
+
+## recursively insert alist structured data into a text window
+proc insertValues {window vals {ind "   "}} {
+
+## Display some useful information about any terminals
+## that are currently selected (typically the endpoints of 
+## an edge to check type compatibility).
+proc pirShowTerminals {} {
+
+## Handles formatting of information for pirShowTerminals.
+proc tellAbout {node in_out port window} {
+
+
+
+[$Id: help6.txt,v 1.1.1.1 2006/04/18 20:17:27 taylor Exp $]

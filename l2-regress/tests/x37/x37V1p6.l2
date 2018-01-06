@@ -1,0 +1,3838 @@
+L211
+dbg_enums
+27
+3 relativeValues low nominal high
+3 healthStateValues ok recoverable failed
+2 onOffValues on off
+3 batteryCell.ModeType nominal discharged unknown
+4 batteryVoltageValues warning caution nominal high
+2 voltageSensor.ModeType faulty nominal
+2 powerBus.ModeType nominal unknown
+4 statusThrow.ModeType nominal stuckOn stuckOff unknown
+7 powerThrow2.ModeType on off recoverablyOn recoverablyOff unknown stuckOn stuckOff
+3 onOffCommand noCommand on off
+8 sspcPower.ModeType on off recoverablyOn recoverablyOff unknown stuckOn stuckOff tripped
+3 onOffTrippedValues on off tripped
+5 sspcStatus.ModeType nominal stuckOn stuckOff unknown stuckTripped
+1 powerSource.ModeType nominal
+4 voter.ModeType nominal failedVoter unknown failedHighTemp
+2 engagedDisengaged engaged disengaged
+2 thresholdValues belowThreshold aboveThreshold
+4 powerElectronics.ModeType on failedPowerElectronics unknown off
+2 temperatureSensor.ModeType faulty nominal
+2 sspcControllerPower.ModeType nominal unknown
+4 emaMotor2.ModeType failedHighTemp unknown failedHighCurrent nominal
+2 rvdtValues moving notMoving
+2 currentSensor.ModeType nominal faulty
+3 rvdt.ModeType nominal sensorError unknown
+3 rvdtDiscrete noExcitation mismatch noError
+4 emaBrake2.ModeType nominal failedBrakeEngaged unknown failedBrakeDisengaged
+4 emaBrakeStatus.ModeType stuckEngaged stuckDisengaged unknown nominal
+
+dbg_variables
+478
+15 test.rightRuddervator.brake.emaBrakeStatus.brakeStatusIn
+2 test.rightRuddervator.brake.emaBrakeStatus.powerIn
+15 test.rightRuddervator.brake.emaBrakeStatus.brakeStatusOut
+26 test.rightRuddervator.brake.emaBrakeStatus.mode
+15 test.rightRuddervator.brake.emaBrake.brakeStatusOut
+15 test.rightRuddervator.brake.emaBrake.brakeOut
+15 test.rightRuddervator.brake.emaBrake.brakeIn
+25 test.rightRuddervator.brake.emaBrake.mode
+15 test.rightRuddervator.brake.brakeStatusOut
+2 test.rightRuddervator.brake.statusPowerIn
+15 test.rightRuddervator.brake.brakeOut
+15 test.rightRuddervator.brake.brakeIn
+24 test.rightRuddervator.rvdt.rvdtSensedPos.error
+21 test.rightRuddervator.rvdt.rvdtSensedPos.position
+24 test.rightRuddervator.rvdt.rvdtPosFeedback.error
+21 test.rightRuddervator.rvdt.rvdtPosFeedback.position
+23 test.rightRuddervator.rvdt.mode
+16 test.rightRuddervator.currentSensor.sensedCurrent
+16 test.rightRuddervator.currentSensor.current
+22 test.rightRuddervator.currentSensor.mode
+16 test.rightRuddervator.tempSensor.sensedTemperature
+16 test.rightRuddervator.tempSensor.temperature
+18 test.rightRuddervator.tempSensor.mode
+21 test.rightRuddervator.motor.motorState
+16 test.rightRuddervator.motor.motorCurrent
+16 test.rightRuddervator.motor.motorTemperature
+15 test.rightRuddervator.motor.brakeIn
+2 test.rightRuddervator.motor.powerIn150v
+21 test.rightRuddervator.motor.motorStateAtt
+20 test.rightRuddervator.motor.mode
+2 test.rightRuddervator.statusPowerIn
+15 test.rightRuddervator.brakeIn
+2 test.rightRuddervator.powerIn150v
+15 test.bodyFlap.brake.emaBrakeStatus.brakeStatusIn
+2 test.bodyFlap.brake.emaBrakeStatus.powerIn
+15 test.bodyFlap.brake.emaBrakeStatus.brakeStatusOut
+26 test.bodyFlap.brake.emaBrakeStatus.mode
+15 test.bodyFlap.brake.emaBrake.brakeStatusOut
+15 test.bodyFlap.brake.emaBrake.brakeOut
+15 test.bodyFlap.brake.emaBrake.brakeIn
+25 test.bodyFlap.brake.emaBrake.mode
+15 test.bodyFlap.brake.brakeStatusOut
+2 test.bodyFlap.brake.statusPowerIn
+15 test.bodyFlap.brake.brakeOut
+15 test.bodyFlap.brake.brakeIn
+24 test.bodyFlap.rvdt.rvdtSensedPos.error
+21 test.bodyFlap.rvdt.rvdtSensedPos.position
+24 test.bodyFlap.rvdt.rvdtPosFeedback.error
+21 test.bodyFlap.rvdt.rvdtPosFeedback.position
+23 test.bodyFlap.rvdt.mode
+16 test.bodyFlap.currentSensor.sensedCurrent
+16 test.bodyFlap.currentSensor.current
+22 test.bodyFlap.currentSensor.mode
+16 test.bodyFlap.tempSensor.sensedTemperature
+16 test.bodyFlap.tempSensor.temperature
+18 test.bodyFlap.tempSensor.mode
+21 test.bodyFlap.motor.motorState
+16 test.bodyFlap.motor.motorCurrent
+16 test.bodyFlap.motor.motorTemperature
+15 test.bodyFlap.motor.brakeIn
+2 test.bodyFlap.motor.powerIn150v
+21 test.bodyFlap.motor.motorStateAtt
+20 test.bodyFlap.motor.mode
+2 test.bodyFlap.statusPowerIn
+15 test.bodyFlap.brakeIn
+2 test.bodyFlap.powerIn150v
+2 test.emaController3.powerElectronics2.powerOut
+2 test.emaController3.powerElectronics2.powerIn150v
+2 test.emaController3.powerElectronics2.powerIn28v
+9 test.emaController3.powerElectronics2.motorCmdIn
+17 test.emaController3.powerElectronics2.mode
+2 test.emaController3.sspcControllerRelay2.sspcControllerPower.powerOut
+2 test.emaController3.sspcControllerRelay2.sspcControllerPower.throwStateOut
+2 test.emaController3.sspcControllerRelay2.sspcControllerPower.powerIn
+19 test.emaController3.sspcControllerRelay2.sspcControllerPower.mode
+2 test.emaController3.sspcControllerRelay2.statusThrow.statusOut
+2 test.emaController3.sspcControllerRelay2.statusThrow.throwStateIn
+2 test.emaController3.sspcControllerRelay2.statusThrow.powerIn
+7 test.emaController3.sspcControllerRelay2.statusThrow.mode
+2 test.emaController3.sspcControllerRelay2.powerOut
+2 test.emaController3.sspcControllerRelay2.powerIn
+2 test.emaController3.sspcControllerRelay2.statusIn
+2 test.emaController3.sspcControllerRelay2.statusOut
+2 test.emaController3.sspcControllerRelay1.sspcControllerPower.powerOut
+2 test.emaController3.sspcControllerRelay1.sspcControllerPower.throwStateOut
+2 test.emaController3.sspcControllerRelay1.sspcControllerPower.powerIn
+19 test.emaController3.sspcControllerRelay1.sspcControllerPower.mode
+2 test.emaController3.sspcControllerRelay1.statusThrow.statusOut
+2 test.emaController3.sspcControllerRelay1.statusThrow.throwStateIn
+2 test.emaController3.sspcControllerRelay1.statusThrow.powerIn
+7 test.emaController3.sspcControllerRelay1.statusThrow.mode
+2 test.emaController3.sspcControllerRelay1.powerOut
+2 test.emaController3.sspcControllerRelay1.powerIn
+2 test.emaController3.sspcControllerRelay1.statusIn
+2 test.emaController3.sspcControllerRelay1.statusOut
+16 test.emaController3.tempSensor.sensedTemperature
+16 test.emaController3.tempSensor.temperature
+18 test.emaController3.tempSensor.mode
+2 test.emaController3.powerElectronics1.powerOut
+2 test.emaController3.powerElectronics1.powerIn150v
+2 test.emaController3.powerElectronics1.powerIn28v
+9 test.emaController3.powerElectronics1.motorCmdIn
+17 test.emaController3.powerElectronics1.mode
+16 test.emaController3.voter.controllerTemp
+2 test.emaController3.voter.powerOut28v
+2 test.emaController3.voter.powerIn2
+2 test.emaController3.voter.powerIn1
+15 test.emaController3.voter.brakeOut2
+2 test.emaController3.voter.powerOut2
+15 test.emaController3.voter.brakeOut1
+2 test.emaController3.voter.powerIn28v
+2 test.emaController3.voter.powerOut1
+14 test.emaController3.voter.mode
+2 test.emaController3.powerOut2
+2 test.emaController3.powerOut1
+15 test.emaController3.brakeOut2
+15 test.emaController3.brakeOut1
+2 test.emaController3.statusPowerOut
+2 test.emaController3.statusPowerIn
+15 test.leftRuddervator.brake.emaBrakeStatus.brakeStatusIn
+2 test.leftRuddervator.brake.emaBrakeStatus.powerIn
+15 test.leftRuddervator.brake.emaBrakeStatus.brakeStatusOut
+26 test.leftRuddervator.brake.emaBrakeStatus.mode
+15 test.leftRuddervator.brake.emaBrake.brakeStatusOut
+15 test.leftRuddervator.brake.emaBrake.brakeOut
+15 test.leftRuddervator.brake.emaBrake.brakeIn
+25 test.leftRuddervator.brake.emaBrake.mode
+15 test.leftRuddervator.brake.brakeStatusOut
+2 test.leftRuddervator.brake.statusPowerIn
+15 test.leftRuddervator.brake.brakeOut
+15 test.leftRuddervator.brake.brakeIn
+24 test.leftRuddervator.rvdt.rvdtSensedPos.error
+21 test.leftRuddervator.rvdt.rvdtSensedPos.position
+24 test.leftRuddervator.rvdt.rvdtPosFeedback.error
+21 test.leftRuddervator.rvdt.rvdtPosFeedback.position
+23 test.leftRuddervator.rvdt.mode
+16 test.leftRuddervator.currentSensor.sensedCurrent
+16 test.leftRuddervator.currentSensor.current
+22 test.leftRuddervator.currentSensor.mode
+16 test.leftRuddervator.tempSensor.sensedTemperature
+16 test.leftRuddervator.tempSensor.temperature
+18 test.leftRuddervator.tempSensor.mode
+21 test.leftRuddervator.motor.motorState
+16 test.leftRuddervator.motor.motorCurrent
+16 test.leftRuddervator.motor.motorTemperature
+15 test.leftRuddervator.motor.brakeIn
+2 test.leftRuddervator.motor.powerIn150v
+21 test.leftRuddervator.motor.motorStateAtt
+20 test.leftRuddervator.motor.mode
+2 test.leftRuddervator.statusPowerIn
+15 test.leftRuddervator.brakeIn
+2 test.leftRuddervator.powerIn150v
+15 test.speedBrake.brake.emaBrakeStatus.brakeStatusIn
+2 test.speedBrake.brake.emaBrakeStatus.powerIn
+15 test.speedBrake.brake.emaBrakeStatus.brakeStatusOut
+26 test.speedBrake.brake.emaBrakeStatus.mode
+15 test.speedBrake.brake.emaBrake.brakeStatusOut
+15 test.speedBrake.brake.emaBrake.brakeOut
+15 test.speedBrake.brake.emaBrake.brakeIn
+25 test.speedBrake.brake.emaBrake.mode
+15 test.speedBrake.brake.brakeStatusOut
+2 test.speedBrake.brake.statusPowerIn
+15 test.speedBrake.brake.brakeOut
+15 test.speedBrake.brake.brakeIn
+24 test.speedBrake.rvdt.rvdtSensedPos.error
+21 test.speedBrake.rvdt.rvdtSensedPos.position
+24 test.speedBrake.rvdt.rvdtPosFeedback.error
+21 test.speedBrake.rvdt.rvdtPosFeedback.position
+23 test.speedBrake.rvdt.mode
+16 test.speedBrake.currentSensor.sensedCurrent
+16 test.speedBrake.currentSensor.current
+22 test.speedBrake.currentSensor.mode
+16 test.speedBrake.tempSensor.sensedTemperature
+16 test.speedBrake.tempSensor.temperature
+18 test.speedBrake.tempSensor.mode
+21 test.speedBrake.motor.motorState
+16 test.speedBrake.motor.motorCurrent
+16 test.speedBrake.motor.motorTemperature
+15 test.speedBrake.motor.brakeIn
+2 test.speedBrake.motor.powerIn150v
+21 test.speedBrake.motor.motorStateAtt
+20 test.speedBrake.motor.mode
+2 test.speedBrake.statusPowerIn
+15 test.speedBrake.brakeIn
+2 test.speedBrake.powerIn150v
+2 test.emaController2.powerElectronics2.powerOut
+2 test.emaController2.powerElectronics2.powerIn150v
+2 test.emaController2.powerElectronics2.powerIn28v
+9 test.emaController2.powerElectronics2.motorCmdIn
+17 test.emaController2.powerElectronics2.mode
+2 test.emaController2.sspcControllerRelay2.sspcControllerPower.powerOut
+2 test.emaController2.sspcControllerRelay2.sspcControllerPower.throwStateOut
+2 test.emaController2.sspcControllerRelay2.sspcControllerPower.powerIn
+19 test.emaController2.sspcControllerRelay2.sspcControllerPower.mode
+2 test.emaController2.sspcControllerRelay2.statusThrow.statusOut
+2 test.emaController2.sspcControllerRelay2.statusThrow.throwStateIn
+2 test.emaController2.sspcControllerRelay2.statusThrow.powerIn
+7 test.emaController2.sspcControllerRelay2.statusThrow.mode
+2 test.emaController2.sspcControllerRelay2.powerOut
+2 test.emaController2.sspcControllerRelay2.powerIn
+2 test.emaController2.sspcControllerRelay2.statusIn
+2 test.emaController2.sspcControllerRelay2.statusOut
+2 test.emaController2.sspcControllerRelay1.sspcControllerPower.powerOut
+2 test.emaController2.sspcControllerRelay1.sspcControllerPower.throwStateOut
+2 test.emaController2.sspcControllerRelay1.sspcControllerPower.powerIn
+19 test.emaController2.sspcControllerRelay1.sspcControllerPower.mode
+2 test.emaController2.sspcControllerRelay1.statusThrow.statusOut
+2 test.emaController2.sspcControllerRelay1.statusThrow.throwStateIn
+2 test.emaController2.sspcControllerRelay1.statusThrow.powerIn
+7 test.emaController2.sspcControllerRelay1.statusThrow.mode
+2 test.emaController2.sspcControllerRelay1.powerOut
+2 test.emaController2.sspcControllerRelay1.powerIn
+2 test.emaController2.sspcControllerRelay1.statusIn
+2 test.emaController2.sspcControllerRelay1.statusOut
+16 test.emaController2.tempSensor.sensedTemperature
+16 test.emaController2.tempSensor.temperature
+18 test.emaController2.tempSensor.mode
+2 test.emaController2.powerElectronics1.powerOut
+2 test.emaController2.powerElectronics1.powerIn150v
+2 test.emaController2.powerElectronics1.powerIn28v
+9 test.emaController2.powerElectronics1.motorCmdIn
+17 test.emaController2.powerElectronics1.mode
+16 test.emaController2.voter.controllerTemp
+2 test.emaController2.voter.powerOut28v
+2 test.emaController2.voter.powerIn2
+2 test.emaController2.voter.powerIn1
+15 test.emaController2.voter.brakeOut2
+2 test.emaController2.voter.powerOut2
+15 test.emaController2.voter.brakeOut1
+2 test.emaController2.voter.powerIn28v
+2 test.emaController2.voter.powerOut1
+14 test.emaController2.voter.mode
+2 test.emaController2.powerOut2
+2 test.emaController2.powerOut1
+15 test.emaController2.brakeOut2
+15 test.emaController2.brakeOut1
+2 test.emaController2.statusPowerOut
+2 test.emaController2.statusPowerIn
+15 test.rightFlaperon.brake.emaBrakeStatus.brakeStatusIn
+2 test.rightFlaperon.brake.emaBrakeStatus.powerIn
+15 test.rightFlaperon.brake.emaBrakeStatus.brakeStatusOut
+26 test.rightFlaperon.brake.emaBrakeStatus.mode
+15 test.rightFlaperon.brake.emaBrake.brakeStatusOut
+15 test.rightFlaperon.brake.emaBrake.brakeOut
+15 test.rightFlaperon.brake.emaBrake.brakeIn
+25 test.rightFlaperon.brake.emaBrake.mode
+15 test.rightFlaperon.brake.brakeStatusOut
+2 test.rightFlaperon.brake.statusPowerIn
+15 test.rightFlaperon.brake.brakeOut
+15 test.rightFlaperon.brake.brakeIn
+24 test.rightFlaperon.rvdt.rvdtSensedPos.error
+21 test.rightFlaperon.rvdt.rvdtSensedPos.position
+24 test.rightFlaperon.rvdt.rvdtPosFeedback.error
+21 test.rightFlaperon.rvdt.rvdtPosFeedback.position
+23 test.rightFlaperon.rvdt.mode
+16 test.rightFlaperon.currentSensor.sensedCurrent
+16 test.rightFlaperon.currentSensor.current
+22 test.rightFlaperon.currentSensor.mode
+16 test.rightFlaperon.tempSensor.sensedTemperature
+16 test.rightFlaperon.tempSensor.temperature
+18 test.rightFlaperon.tempSensor.mode
+21 test.rightFlaperon.motor.motorState
+16 test.rightFlaperon.motor.motorCurrent
+16 test.rightFlaperon.motor.motorTemperature
+15 test.rightFlaperon.motor.brakeIn
+2 test.rightFlaperon.motor.powerIn150v
+21 test.rightFlaperon.motor.motorStateAtt
+20 test.rightFlaperon.motor.mode
+2 test.rightFlaperon.statusPowerIn
+15 test.rightFlaperon.brakeIn
+2 test.rightFlaperon.powerIn150v
+15 test.leftFlaperon.brake.emaBrakeStatus.brakeStatusIn
+2 test.leftFlaperon.brake.emaBrakeStatus.powerIn
+15 test.leftFlaperon.brake.emaBrakeStatus.brakeStatusOut
+26 test.leftFlaperon.brake.emaBrakeStatus.mode
+15 test.leftFlaperon.brake.emaBrake.brakeStatusOut
+15 test.leftFlaperon.brake.emaBrake.brakeOut
+15 test.leftFlaperon.brake.emaBrake.brakeIn
+25 test.leftFlaperon.brake.emaBrake.mode
+15 test.leftFlaperon.brake.brakeStatusOut
+2 test.leftFlaperon.brake.statusPowerIn
+15 test.leftFlaperon.brake.brakeOut
+15 test.leftFlaperon.brake.brakeIn
+24 test.leftFlaperon.rvdt.rvdtSensedPos.error
+21 test.leftFlaperon.rvdt.rvdtSensedPos.position
+24 test.leftFlaperon.rvdt.rvdtPosFeedback.error
+21 test.leftFlaperon.rvdt.rvdtPosFeedback.position
+23 test.leftFlaperon.rvdt.mode
+16 test.leftFlaperon.currentSensor.sensedCurrent
+16 test.leftFlaperon.currentSensor.current
+22 test.leftFlaperon.currentSensor.mode
+16 test.leftFlaperon.tempSensor.sensedTemperature
+16 test.leftFlaperon.tempSensor.temperature
+18 test.leftFlaperon.tempSensor.mode
+21 test.leftFlaperon.motor.motorState
+16 test.leftFlaperon.motor.motorCurrent
+16 test.leftFlaperon.motor.motorTemperature
+15 test.leftFlaperon.motor.brakeIn
+2 test.leftFlaperon.motor.powerIn150v
+21 test.leftFlaperon.motor.motorStateAtt
+20 test.leftFlaperon.motor.mode
+2 test.leftFlaperon.statusPowerIn
+15 test.leftFlaperon.brakeIn
+2 test.leftFlaperon.powerIn150v
+2 test.emaController1.powerElectronics2.powerOut
+2 test.emaController1.powerElectronics2.powerIn150v
+2 test.emaController1.powerElectronics2.powerIn28v
+9 test.emaController1.powerElectronics2.motorCmdIn
+17 test.emaController1.powerElectronics2.mode
+2 test.emaController1.sspcControllerRelay2.sspcControllerPower.powerOut
+2 test.emaController1.sspcControllerRelay2.sspcControllerPower.throwStateOut
+2 test.emaController1.sspcControllerRelay2.sspcControllerPower.powerIn
+19 test.emaController1.sspcControllerRelay2.sspcControllerPower.mode
+2 test.emaController1.sspcControllerRelay2.statusThrow.statusOut
+2 test.emaController1.sspcControllerRelay2.statusThrow.throwStateIn
+2 test.emaController1.sspcControllerRelay2.statusThrow.powerIn
+7 test.emaController1.sspcControllerRelay2.statusThrow.mode
+2 test.emaController1.sspcControllerRelay2.powerOut
+2 test.emaController1.sspcControllerRelay2.powerIn
+2 test.emaController1.sspcControllerRelay2.statusIn
+2 test.emaController1.sspcControllerRelay2.statusOut
+2 test.emaController1.sspcControllerRelay1.sspcControllerPower.powerOut
+2 test.emaController1.sspcControllerRelay1.sspcControllerPower.throwStateOut
+2 test.emaController1.sspcControllerRelay1.sspcControllerPower.powerIn
+19 test.emaController1.sspcControllerRelay1.sspcControllerPower.mode
+2 test.emaController1.sspcControllerRelay1.statusThrow.statusOut
+2 test.emaController1.sspcControllerRelay1.statusThrow.throwStateIn
+2 test.emaController1.sspcControllerRelay1.statusThrow.powerIn
+7 test.emaController1.sspcControllerRelay1.statusThrow.mode
+2 test.emaController1.sspcControllerRelay1.powerOut
+2 test.emaController1.sspcControllerRelay1.powerIn
+2 test.emaController1.sspcControllerRelay1.statusIn
+2 test.emaController1.sspcControllerRelay1.statusOut
+16 test.emaController1.tempSensor.sensedTemperature
+16 test.emaController1.tempSensor.temperature
+18 test.emaController1.tempSensor.mode
+2 test.emaController1.powerElectronics1.powerOut
+2 test.emaController1.powerElectronics1.powerIn150v
+2 test.emaController1.powerElectronics1.powerIn28v
+9 test.emaController1.powerElectronics1.motorCmdIn
+17 test.emaController1.powerElectronics1.mode
+16 test.emaController1.voter.controllerTemp
+2 test.emaController1.voter.powerOut28v
+2 test.emaController1.voter.powerIn2
+2 test.emaController1.voter.powerIn1
+15 test.emaController1.voter.brakeOut2
+2 test.emaController1.voter.powerOut2
+15 test.emaController1.voter.brakeOut1
+2 test.emaController1.voter.powerIn28v
+2 test.emaController1.voter.powerOut1
+14 test.emaController1.voter.mode
+2 test.emaController1.powerOut2
+2 test.emaController1.powerOut1
+15 test.emaController1.brakeOut2
+15 test.emaController1.brakeOut1
+2 test.emaController1.statusPowerOut
+2 test.emaController1.statusPowerIn
+2 test.powerSource.powerOut
+13 test.powerSource.mode
+11 test.lcu150v.sspcSpeedBrake.sspcStatus.statusOut
+11 test.lcu150v.sspcSpeedBrake.sspcStatus.throwStateIn
+2 test.lcu150v.sspcSpeedBrake.sspcStatus.powerIn
+12 test.lcu150v.sspcSpeedBrake.sspcStatus.mode
+11 test.lcu150v.sspcSpeedBrake.sspcPower.throwState
+2 test.lcu150v.sspcSpeedBrake.sspcPower.powerOut
+2 test.lcu150v.sspcSpeedBrake.sspcPower.powerIn
+11 test.lcu150v.sspcSpeedBrake.sspcPower.switchState
+9 test.lcu150v.sspcSpeedBrake.sspcPower.cmdIn
+10 test.lcu150v.sspcSpeedBrake.sspcPower.mode
+11 test.lcu150v.sspcSpeedBrake.statusOut
+2 test.lcu150v.sspcSpeedBrake.statusIn
+2 test.lcu150v.sspcSpeedBrake.powerOut
+9 test.lcu150v.sspcSpeedBrake.cmdIn
+2 test.lcu150v.sspcSpeedBrake.powerIn
+11 test.lcu150v.sspcLeftFlaperon.sspcStatus.statusOut
+11 test.lcu150v.sspcLeftFlaperon.sspcStatus.throwStateIn
+2 test.lcu150v.sspcLeftFlaperon.sspcStatus.powerIn
+12 test.lcu150v.sspcLeftFlaperon.sspcStatus.mode
+11 test.lcu150v.sspcLeftFlaperon.sspcPower.throwState
+2 test.lcu150v.sspcLeftFlaperon.sspcPower.powerOut
+2 test.lcu150v.sspcLeftFlaperon.sspcPower.powerIn
+11 test.lcu150v.sspcLeftFlaperon.sspcPower.switchState
+9 test.lcu150v.sspcLeftFlaperon.sspcPower.cmdIn
+10 test.lcu150v.sspcLeftFlaperon.sspcPower.mode
+11 test.lcu150v.sspcLeftFlaperon.statusOut
+2 test.lcu150v.sspcLeftFlaperon.statusIn
+2 test.lcu150v.sspcLeftFlaperon.powerOut
+9 test.lcu150v.sspcLeftFlaperon.cmdIn
+2 test.lcu150v.sspcLeftFlaperon.powerIn
+11 test.lcu150v.sspcRightFlaperon.sspcStatus.statusOut
+11 test.lcu150v.sspcRightFlaperon.sspcStatus.throwStateIn
+2 test.lcu150v.sspcRightFlaperon.sspcStatus.powerIn
+12 test.lcu150v.sspcRightFlaperon.sspcStatus.mode
+11 test.lcu150v.sspcRightFlaperon.sspcPower.throwState
+2 test.lcu150v.sspcRightFlaperon.sspcPower.powerOut
+2 test.lcu150v.sspcRightFlaperon.sspcPower.powerIn
+11 test.lcu150v.sspcRightFlaperon.sspcPower.switchState
+9 test.lcu150v.sspcRightFlaperon.sspcPower.cmdIn
+10 test.lcu150v.sspcRightFlaperon.sspcPower.mode
+11 test.lcu150v.sspcRightFlaperon.statusOut
+2 test.lcu150v.sspcRightFlaperon.statusIn
+2 test.lcu150v.sspcRightFlaperon.powerOut
+9 test.lcu150v.sspcRightFlaperon.cmdIn
+2 test.lcu150v.sspcRightFlaperon.powerIn
+11 test.lcu150v.sspcRightRuddervator.sspcStatus.statusOut
+11 test.lcu150v.sspcRightRuddervator.sspcStatus.throwStateIn
+2 test.lcu150v.sspcRightRuddervator.sspcStatus.powerIn
+12 test.lcu150v.sspcRightRuddervator.sspcStatus.mode
+11 test.lcu150v.sspcRightRuddervator.sspcPower.throwState
+2 test.lcu150v.sspcRightRuddervator.sspcPower.powerOut
+2 test.lcu150v.sspcRightRuddervator.sspcPower.powerIn
+11 test.lcu150v.sspcRightRuddervator.sspcPower.switchState
+9 test.lcu150v.sspcRightRuddervator.sspcPower.cmdIn
+10 test.lcu150v.sspcRightRuddervator.sspcPower.mode
+11 test.lcu150v.sspcRightRuddervator.statusOut
+2 test.lcu150v.sspcRightRuddervator.statusIn
+2 test.lcu150v.sspcRightRuddervator.powerOut
+9 test.lcu150v.sspcRightRuddervator.cmdIn
+2 test.lcu150v.sspcRightRuddervator.powerIn
+11 test.lcu150v.sspcBodyFlap.sspcStatus.statusOut
+11 test.lcu150v.sspcBodyFlap.sspcStatus.throwStateIn
+2 test.lcu150v.sspcBodyFlap.sspcStatus.powerIn
+12 test.lcu150v.sspcBodyFlap.sspcStatus.mode
+11 test.lcu150v.sspcBodyFlap.sspcPower.throwState
+2 test.lcu150v.sspcBodyFlap.sspcPower.powerOut
+2 test.lcu150v.sspcBodyFlap.sspcPower.powerIn
+11 test.lcu150v.sspcBodyFlap.sspcPower.switchState
+9 test.lcu150v.sspcBodyFlap.sspcPower.cmdIn
+10 test.lcu150v.sspcBodyFlap.sspcPower.mode
+11 test.lcu150v.sspcBodyFlap.statusOut
+2 test.lcu150v.sspcBodyFlap.statusIn
+2 test.lcu150v.sspcBodyFlap.powerOut
+9 test.lcu150v.sspcBodyFlap.cmdIn
+2 test.lcu150v.sspcBodyFlap.powerIn
+11 test.lcu150v.sspcLeftRuddervator.sspcStatus.statusOut
+11 test.lcu150v.sspcLeftRuddervator.sspcStatus.throwStateIn
+2 test.lcu150v.sspcLeftRuddervator.sspcStatus.powerIn
+12 test.lcu150v.sspcLeftRuddervator.sspcStatus.mode
+11 test.lcu150v.sspcLeftRuddervator.sspcPower.throwState
+2 test.lcu150v.sspcLeftRuddervator.sspcPower.powerOut
+2 test.lcu150v.sspcLeftRuddervator.sspcPower.powerIn
+11 test.lcu150v.sspcLeftRuddervator.sspcPower.switchState
+9 test.lcu150v.sspcLeftRuddervator.sspcPower.cmdIn
+10 test.lcu150v.sspcLeftRuddervator.sspcPower.mode
+11 test.lcu150v.sspcLeftRuddervator.statusOut
+2 test.lcu150v.sspcLeftRuddervator.statusIn
+2 test.lcu150v.sspcLeftRuddervator.powerOut
+9 test.lcu150v.sspcLeftRuddervator.cmdIn
+2 test.lcu150v.sspcLeftRuddervator.powerIn
+2 test.lcu150v.powerRelay150v.powerThrow.throwState
+2 test.lcu150v.powerRelay150v.powerThrow.powerOut
+2 test.lcu150v.powerRelay150v.powerThrow.powerIn
+2 test.lcu150v.powerRelay150v.powerThrow.switchState
+9 test.lcu150v.powerRelay150v.powerThrow.cmdIn
+8 test.lcu150v.powerRelay150v.powerThrow.mode
+2 test.lcu150v.powerRelay150v.statusThrow.statusOut
+2 test.lcu150v.powerRelay150v.statusThrow.throwStateIn
+2 test.lcu150v.powerRelay150v.statusThrow.powerIn
+7 test.lcu150v.powerRelay150v.statusThrow.mode
+2 test.lcu150v.powerRelay150v.powerOut
+2 test.lcu150v.powerRelay150v.powerIn
+9 test.lcu150v.powerRelay150v.cmdIn
+2 test.lcu150v.powerRelay150v.statusOut
+2 test.lcu150v.powerRelay150v.statusPowerIn
+2 test.lcu150v.powerBus150v.powerOut
+2 test.lcu150v.powerBus150v.powerIn
+6 test.lcu150v.powerBus150v.mode
+2 test.lcu150v.statusIn
+4 test.battery150v.voltageSensor.sensedVoltage
+4 test.battery150v.voltageSensor.voltage
+5 test.battery150v.voltageSensor.mode
+4 test.battery150v.batteryCell1.voltageOut
+2 test.battery150v.batteryCell1.powerOut
+3 test.battery150v.batteryCell1.mode
+2 test.battery150v.powerOut
+1 test.battery150v.batteryHealthState
+0 test.battery150v.batteryTemperature
+0 test.battery150v.batteryCurrent
+
+propositions
+334 523 284 0
+2 0
+2 1
+1 0
+0 1
+5 1
+6 1
+5 0
+4 0
+4 1
+12 0
+12 1
+28 0
+28 1
+25 1
+24 1
+23 0
+27 0
+26 1
+35 0
+35 1
+34 0
+33 1
+38 1
+39 1
+38 0
+37 0
+37 1
+45 0
+45 1
+61 0
+61 1
+58 1
+57 1
+56 0
+60 0
+59 1
+66 0
+68 0
+67 0
+66 1
+69 2
+69 1
+71 0
+73 0
+72 0
+75 0
+77 0
+76 0
+75 1
+83 0
+85 0
+84 0
+87 0
+89 0
+88 0
+87 1
+98 0
+100 0
+99 0
+98 1
+101 2
+101 1
+109 1
+111 0
+110 0
+107 1
+108 0
+111 1
+108 1
+104 1
+103 1
+121 0
+121 1
+120 0
+119 1
+124 1
+125 1
+124 0
+123 0
+123 1
+131 0
+131 1
+147 0
+147 1
+144 1
+143 1
+142 0
+146 0
+145 1
+154 0
+154 1
+153 0
+152 1
+157 1
+158 1
+157 0
+156 0
+156 1
+164 0
+164 1
+180 0
+180 1
+177 1
+176 1
+175 0
+179 0
+178 1
+185 0
+187 0
+186 0
+185 1
+188 2
+188 1
+190 0
+192 0
+191 0
+194 0
+196 0
+195 0
+194 1
+202 0
+204 0
+203 0
+206 0
+208 0
+207 0
+206 1
+217 0
+219 0
+218 0
+217 1
+220 2
+220 1
+228 1
+230 0
+229 0
+226 1
+227 0
+230 1
+227 1
+223 1
+222 1
+240 0
+240 1
+239 0
+238 1
+243 1
+244 1
+243 0
+242 0
+242 1
+250 0
+250 1
+266 0
+266 1
+263 1
+262 1
+261 0
+265 0
+264 1
+273 0
+273 1
+272 0
+271 1
+276 1
+277 1
+276 0
+275 0
+275 1
+283 0
+283 1
+299 0
+299 1
+296 1
+295 1
+294 0
+298 0
+297 1
+304 0
+306 0
+305 0
+304 1
+307 2
+307 1
+309 0
+311 0
+310 0
+313 0
+315 0
+314 0
+313 1
+321 0
+323 0
+322 0
+325 0
+327 0
+326 0
+325 1
+336 0
+338 0
+337 0
+336 1
+339 2
+339 1
+347 1
+349 0
+348 0
+345 1
+346 0
+349 1
+346 1
+342 1
+341 1
+357 0
+359 0
+361 0
+360 0
+359 1
+361 1
+360 1
+359 2
+360 2
+364 0
+366 0
+365 0
+364 1
+366 1
+366 2
+365 1
+367 2
+367 1
+374 0
+376 0
+375 0
+374 1
+376 1
+375 1
+374 2
+375 2
+379 0
+381 0
+380 0
+379 1
+381 1
+381 2
+380 1
+382 2
+382 1
+389 0
+391 0
+390 0
+389 1
+391 1
+390 1
+389 2
+390 2
+394 0
+396 0
+395 0
+394 1
+396 1
+396 2
+395 1
+397 2
+397 1
+404 0
+406 0
+405 0
+404 1
+406 1
+405 1
+404 2
+405 2
+409 0
+411 0
+410 0
+409 1
+411 1
+411 2
+410 1
+412 2
+412 1
+419 0
+421 0
+420 0
+419 1
+421 1
+420 1
+419 2
+420 2
+424 0
+426 0
+425 0
+424 1
+426 1
+426 2
+425 1
+427 2
+427 1
+434 0
+436 0
+435 0
+434 1
+436 1
+435 1
+434 2
+435 2
+439 0
+441 0
+440 0
+439 1
+441 1
+441 2
+440 1
+442 2
+442 1
+450 0
+452 0
+451 0
+449 0
+452 1
+453 2
+453 1
+455 0
+457 0
+456 0
+455 1
+471 0
+472 1
+472 0
+475 2
+477 2
+476 2
+475 0
+3 0
+3 1
+3 3
+1 0
+0 1
+2 1
+7 0
+6 1
+5 1
+7 1
+7 3
+16 0
+12 0
+12 1
+16 1
+16 2
+19 0
+22 1
+28 0
+27 0
+26 1
+27 1
+26 0
+29 0
+29 2
+29 3
+24 1
+25 1
+23 0
+36 0
+36 1
+36 3
+34 0
+33 1
+35 1
+40 0
+39 1
+38 1
+40 1
+40 3
+49 0
+45 0
+45 1
+49 1
+49 2
+52 0
+55 1
+61 0
+60 0
+59 1
+60 1
+59 0
+62 0
+62 2
+62 3
+57 1
+58 1
+56 0
+69 2
+69 1
+70 0
+68 0
+67 0
+66 0
+70 1
+70 3
+74 0
+73 0
+72 0
+71 0
+78 0
+77 0
+76 0
+75 0
+77 1
+76 1
+78 1
+78 2
+86 0
+85 0
+84 0
+83 0
+90 0
+89 0
+88 0
+87 0
+89 1
+88 1
+90 1
+90 2
+97 1
+101 2
+101 1
+102 0
+100 0
+99 0
+98 0
+102 1
+102 3
+111 0
+110 0
+109 1
+108 0
+107 1
+112 0
+112 1
+103 1
+112 3
+122 0
+122 1
+122 3
+120 0
+119 1
+121 1
+126 0
+125 1
+124 1
+126 1
+126 3
+135 0
+131 0
+131 1
+135 1
+135 2
+138 0
+141 1
+147 0
+146 0
+145 1
+146 1
+145 0
+148 0
+148 2
+148 3
+143 1
+144 1
+142 0
+155 0
+155 1
+155 3
+153 0
+152 1
+154 1
+159 0
+158 1
+157 1
+159 1
+159 3
+168 0
+164 0
+164 1
+168 1
+168 2
+171 0
+174 1
+180 0
+179 0
+178 1
+179 1
+178 0
+181 0
+181 2
+181 3
+176 1
+177 1
+175 0
+188 2
+188 1
+189 0
+187 0
+186 0
+185 0
+189 1
+189 3
+193 0
+192 0
+191 0
+190 0
+197 0
+196 0
+195 0
+194 0
+196 1
+195 1
+197 1
+197 2
+205 0
+204 0
+203 0
+202 0
+209 0
+208 0
+207 0
+206 0
+208 1
+207 1
+209 1
+209 2
+216 1
+220 2
+220 1
+221 0
+219 0
+218 0
+217 0
+221 1
+221 3
+230 0
+229 0
+228 1
+227 0
+226 1
+231 0
+231 1
+222 1
+231 3
+241 0
+241 1
+241 3
+239 0
+238 1
+240 1
+245 0
+244 1
+243 1
+245 1
+245 3
+254 0
+250 0
+250 1
+254 1
+254 2
+257 0
+260 1
+266 0
+265 0
+264 1
+265 1
+264 0
+267 0
+267 2
+267 3
+262 1
+263 1
+261 0
+274 0
+274 1
+274 3
+272 0
+271 1
+273 1
+278 0
+277 1
+276 1
+278 1
+278 3
+287 0
+283 0
+283 1
+287 1
+287 2
+290 0
+293 1
+299 0
+298 0
+297 1
+298 1
+297 0
+300 0
+300 2
+300 3
+295 1
+296 1
+294 0
+307 2
+307 1
+308 0
+306 0
+305 0
+304 0
+308 1
+308 3
+312 0
+311 0
+310 0
+309 0
+316 0
+315 0
+314 0
+313 0
+315 1
+314 1
+316 1
+316 2
+324 0
+323 0
+322 0
+321 0
+328 0
+327 0
+326 0
+325 0
+327 1
+326 1
+328 1
+328 2
+335 1
+339 2
+339 1
+340 0
+338 0
+337 0
+336 0
+340 1
+340 3
+349 0
+348 0
+347 1
+346 0
+345 1
+350 0
+350 1
+341 1
+350 3
+358 0
+362 0
+361 0
+360 0
+359 0
+361 1
+360 1
+359 1
+360 2
+359 2
+362 1
+362 2
+362 4
+367 2
+367 1
+366 0
+365 0
+364 0
+366 1
+366 2
+365 1
+364 1
+368 0
+368 1
+368 2
+368 3
+368 5
+368 6
+368 7
+377 0
+376 0
+375 0
+374 0
+376 1
+375 1
+374 1
+375 2
+374 2
+377 1
+377 2
+377 4
+382 2
+382 1
+381 0
+380 0
+379 0
+381 1
+381 2
+380 1
+379 1
+383 0
+383 1
+383 2
+383 3
+383 5
+383 6
+383 7
+392 0
+391 0
+390 0
+389 0
+391 1
+390 1
+389 1
+390 2
+389 2
+392 1
+392 2
+392 4
+397 2
+397 1
+396 0
+395 0
+394 0
+396 1
+396 2
+395 1
+394 1
+398 0
+398 1
+398 2
+398 3
+398 5
+398 6
+398 7
+407 0
+406 0
+405 0
+404 0
+406 1
+405 1
+404 1
+405 2
+404 2
+407 1
+407 2
+407 4
+412 2
+412 1
+411 0
+410 0
+409 0
+411 1
+411 2
+410 1
+409 1
+413 0
+413 1
+413 2
+413 3
+413 5
+413 6
+413 7
+422 0
+421 0
+420 0
+419 0
+421 1
+420 1
+419 1
+420 2
+419 2
+422 1
+422 2
+422 4
+427 2
+427 1
+426 0
+425 0
+424 0
+426 1
+426 2
+425 1
+424 1
+428 0
+428 1
+428 2
+428 3
+428 5
+428 6
+428 7
+437 0
+436 0
+435 0
+434 0
+436 1
+435 1
+434 1
+435 2
+434 2
+437 1
+437 2
+437 4
+442 2
+442 1
+441 0
+440 0
+439 0
+441 1
+441 2
+440 1
+439 1
+443 0
+443 1
+443 2
+443 3
+443 5
+443 6
+443 7
+453 2
+453 1
+452 0
+451 0
+450 0
+449 0
+454 0
+454 1
+454 2
+454 3
+454 5
+454 6
+458 0
+457 0
+456 0
+455 0
+457 1
+456 1
+458 1
+458 2
+466 0
+470 1
+472 1
+471 0
+473 0
+473 1
+477 2
+476 2
+474 1
+474 0
+6 4
+11 6
+5 10
+4 0
+9 1
+2 8
+15 13
+14 12
+18 17
+21 20
+32 27
+25 21
+24 18
+23 15
+31 11
+30 9
+10 26
+39 37
+44 39
+38 43
+37 33
+42 34
+35 41
+48 46
+47 45
+51 50
+54 53
+65 60
+58 54
+57 51
+56 48
+64 44
+63 42
+43 59
+75 82
+81 77
+80 73
+72 76
+71 79
+87 94
+93 89
+92 85
+84 88
+83 91
+96 95
+106 111
+105 108
+110 104
+118 117
+111 99
+104 100
+109 116
+107 115
+103 96
+91 106
+79 105
+98 114
+104 68
+108 67
+66 113
+118 81
+118 93
+125 123
+130 125
+124 129
+123 119
+128 120
+121 127
+134 132
+133 131
+137 136
+140 139
+151 146
+144 140
+143 137
+142 134
+150 130
+149 128
+129 145
+158 156
+163 158
+157 162
+156 152
+161 153
+154 160
+167 165
+166 164
+170 169
+173 172
+184 179
+177 173
+176 170
+175 167
+183 163
+182 161
+162 178
+194 201
+200 196
+199 192
+191 195
+190 198
+206 213
+212 208
+211 204
+203 207
+202 210
+215 214
+225 230
+224 227
+229 223
+237 236
+230 218
+223 219
+228 235
+226 234
+222 215
+210 225
+198 224
+217 233
+223 187
+227 186
+185 232
+237 200
+237 212
+244 242
+249 244
+243 248
+242 238
+247 239
+240 246
+253 251
+252 250
+256 255
+259 258
+270 265
+263 259
+262 256
+261 253
+269 249
+268 247
+248 264
+277 275
+282 277
+276 281
+275 271
+280 272
+273 279
+286 284
+285 283
+289 288
+292 291
+303 298
+296 292
+295 289
+294 286
+302 282
+301 280
+281 297
+313 320
+319 315
+318 311
+310 314
+309 317
+325 332
+331 327
+330 323
+322 326
+321 329
+334 333
+344 349
+343 346
+348 342
+356 355
+349 337
+342 338
+347 354
+345 353
+341 334
+329 344
+317 343
+336 352
+342 306
+346 305
+304 351
+356 319
+356 331
+363 366
+373 365
+372 367
+363 360
+364 371
+370 361
+359 369
+378 381
+388 380
+387 382
+378 375
+379 386
+385 376
+374 384
+393 396
+403 395
+402 397
+393 390
+394 401
+400 391
+389 399
+408 411
+418 410
+417 412
+408 405
+409 416
+415 406
+404 414
+423 426
+433 425
+432 427
+423 420
+424 431
+430 421
+419 429
+438 441
+448 440
+447 442
+438 435
+439 446
+445 436
+434 444
+463 457
+455 462
+449 456
+461 453
+460 451
+450 459
+465 464
+464 460
+467 463
+459 448
+467 445
+459 433
+467 430
+459 418
+467 415
+459 403
+467 400
+459 388
+467 385
+459 373
+467 370
+469 468
+471 469
+472 474
+474 465
+357 467
+352 303
+354 302
+355 301
+355 268
+351 270
+353 269
+357 348
+386 330
+401 318
+357 356
+233 184
+235 183
+236 182
+236 149
+232 151
+234 150
+357 229
+371 211
+446 199
+357 237
+114 65
+116 64
+117 63
+117 30
+113 32
+115 31
+431 92
+416 80
+357 118
+357 110
+
+dbg_clauses
+798
+test.rightRuddervator.brake.emaBrakeStatus 334 0
+test.rightRuddervator.brake.emaBrakeStatus 335 1
+test.rightRuddervator.brake.emaBrakeStatus 336 337 338 1
+test.rightRuddervator.brake.emaBrakeStatus 336 339 2
+test.rightRuddervator.brake.emaBrakeStatus 336 339 3
+test.rightRuddervator.brake.emaBrake 340 341 4
+test.rightRuddervator.brake.emaBrake 340 342 5
+test.rightRuddervator.brake.emaBrake 340 857
+test.rightRuddervator.brake.emaBrake 343 6
+test.rightRuddervator.brake.emaBrake 343 7
+test.rightRuddervator.brake.emaBrake 344 4
+test.rightRuddervator.brake.emaBrake 344 8
+test.rightRuddervator.brake 858
+test.rightRuddervator.brake 859
+test.rightRuddervator.brake 860
+test.rightRuddervator.brake 861
+test.rightRuddervator.brake 862
+test.rightRuddervator.rvdt 345 863
+test.rightRuddervator.rvdt 345 864
+test.rightRuddervator.rvdt 345 346
+test.rightRuddervator.rvdt 345 347
+test.rightRuddervator.rvdt 348 9 10
+test.rightRuddervator.rvdt 349 346 347
+test.rightRuddervator.currentSensor 350 865
+test.rightRuddervator.tempSensor 351 866
+test.rightRuddervator.motor 352
+test.rightRuddervator.motor 353 354 11
+test.rightRuddervator.motor 355 12
+test.rightRuddervator.motor 356 12
+test.rightRuddervator.motor 357 13
+test.rightRuddervator.motor 358 14
+test.rightRuddervator.motor 359 360
+test.rightRuddervator.motor 359 361
+test.rightRuddervator.motor 359 353 354 15
+test.rightRuddervator.motor 359 362 16
+test.rightRuddervator.motor 359 362 17
+test.rightRuddervator.motor 11
+test.rightRuddervator 867
+test.rightRuddervator 868
+test.rightRuddervator 869
+test.rightRuddervator 870
+test.rightRuddervator 871
+test.rightRuddervator 872
+test.rightRuddervator 873
+test.bodyFlap.brake.emaBrakeStatus 363 18
+test.bodyFlap.brake.emaBrakeStatus 364 19
+test.bodyFlap.brake.emaBrakeStatus 365 366 367 19
+test.bodyFlap.brake.emaBrakeStatus 365 368 20
+test.bodyFlap.brake.emaBrakeStatus 365 368 21
+test.bodyFlap.brake.emaBrake 369 370 22
+test.bodyFlap.brake.emaBrake 369 371 23
+test.bodyFlap.brake.emaBrake 369 874
+test.bodyFlap.brake.emaBrake 372 24
+test.bodyFlap.brake.emaBrake 372 25
+test.bodyFlap.brake.emaBrake 373 22
+test.bodyFlap.brake.emaBrake 373 26
+test.bodyFlap.brake 875
+test.bodyFlap.brake 876
+test.bodyFlap.brake 877
+test.bodyFlap.brake 878
+test.bodyFlap.brake 879
+test.bodyFlap.rvdt 374 880
+test.bodyFlap.rvdt 374 881
+test.bodyFlap.rvdt 374 375
+test.bodyFlap.rvdt 374 376
+test.bodyFlap.rvdt 377 27 28
+test.bodyFlap.rvdt 378 375 376
+test.bodyFlap.currentSensor 379 882
+test.bodyFlap.tempSensor 380 883
+test.bodyFlap.motor 381
+test.bodyFlap.motor 382 383 29
+test.bodyFlap.motor 384 30
+test.bodyFlap.motor 385 30
+test.bodyFlap.motor 386 31
+test.bodyFlap.motor 387 32
+test.bodyFlap.motor 388 389
+test.bodyFlap.motor 388 390
+test.bodyFlap.motor 388 382 383 33
+test.bodyFlap.motor 388 391 34
+test.bodyFlap.motor 388 391 35
+test.bodyFlap.motor 29
+test.bodyFlap 884
+test.bodyFlap 885
+test.bodyFlap 886
+test.bodyFlap 887
+test.bodyFlap 888
+test.bodyFlap 889
+test.bodyFlap 890
+test.emaController3.powerElectronics2 392
+test.emaController3.powerElectronics2 393
+test.emaController3.powerElectronics2 394 395 396 36
+test.emaController3.powerElectronics2 394 397 37
+test.emaController3.powerElectronics2 394 397 38
+test.emaController3.powerElectronics2 398 39
+test.emaController3.powerElectronics2 399 39
+test.emaController3.powerElectronics2 40
+test.emaController3.powerElectronics2 41
+test.emaController3.sspcControllerRelay2.sspcControllerPower 400 401 402 42
+test.emaController3.sspcControllerRelay2.sspcControllerPower 400 403 43
+test.emaController3.sspcControllerRelay2.sspcControllerPower 400 403 44
+test.emaController3.sspcControllerRelay2.statusThrow 404 405 406 45
+test.emaController3.sspcControllerRelay2.statusThrow 404 407 46
+test.emaController3.sspcControllerRelay2.statusThrow 404 407 47
+test.emaController3.sspcControllerRelay2.statusThrow 404 408 48
+test.emaController3.sspcControllerRelay2.statusThrow 404 409 48
+test.emaController3.sspcControllerRelay2.statusThrow 410 45
+test.emaController3.sspcControllerRelay2.statusThrow 411 48
+test.emaController3.sspcControllerRelay2 891
+test.emaController3.sspcControllerRelay2 892
+test.emaController3.sspcControllerRelay2 893
+test.emaController3.sspcControllerRelay2 894
+test.emaController3.sspcControllerRelay2 895
+test.emaController3.sspcControllerRelay1.sspcControllerPower 412 413 414 49
+test.emaController3.sspcControllerRelay1.sspcControllerPower 412 415 50
+test.emaController3.sspcControllerRelay1.sspcControllerPower 412 415 51
+test.emaController3.sspcControllerRelay1.statusThrow 416 417 418 52
+test.emaController3.sspcControllerRelay1.statusThrow 416 419 53
+test.emaController3.sspcControllerRelay1.statusThrow 416 419 54
+test.emaController3.sspcControllerRelay1.statusThrow 416 420 55
+test.emaController3.sspcControllerRelay1.statusThrow 416 421 55
+test.emaController3.sspcControllerRelay1.statusThrow 422 52
+test.emaController3.sspcControllerRelay1.statusThrow 423 55
+test.emaController3.sspcControllerRelay1 896
+test.emaController3.sspcControllerRelay1 897
+test.emaController3.sspcControllerRelay1 898
+test.emaController3.sspcControllerRelay1 899
+test.emaController3.sspcControllerRelay1 900
+test.emaController3.tempSensor 424 901
+test.emaController3.powerElectronics1 425
+test.emaController3.powerElectronics1 426
+test.emaController3.powerElectronics1 427 428 429 56
+test.emaController3.powerElectronics1 427 430 57
+test.emaController3.powerElectronics1 427 430 58
+test.emaController3.powerElectronics1 431 59
+test.emaController3.powerElectronics1 432 59
+test.emaController3.powerElectronics1 60
+test.emaController3.powerElectronics1 61
+test.emaController3.voter 433 434 62
+test.emaController3.voter 435 63
+test.emaController3.voter 435 64
+test.emaController3.voter 436 434 65
+test.emaController3.voter 437 66
+test.emaController3.voter 437 64
+test.emaController3.voter 438 902
+test.emaController3.voter 438 903
+test.emaController3.voter 438 904
+test.emaController3.voter 439 67
+test.emaController3.voter 439 68
+test.emaController3.voter 439 69
+test.emaController3.voter 439 440
+test.emaController3.voter 441 70
+test.emaController3 905
+test.emaController3 906
+test.emaController3 907
+test.emaController3 908
+test.emaController3 909
+test.emaController3 910
+test.emaController3 911
+test.emaController3 912
+test.emaController3 913
+test.emaController3 914
+test.emaController3 915
+test.emaController3 916
+test.emaController3 917
+test.emaController3 918
+test.leftRuddervator.brake.emaBrakeStatus 442 71
+test.leftRuddervator.brake.emaBrakeStatus 443 72
+test.leftRuddervator.brake.emaBrakeStatus 444 445 446 72
+test.leftRuddervator.brake.emaBrakeStatus 444 447 73
+test.leftRuddervator.brake.emaBrakeStatus 444 447 74
+test.leftRuddervator.brake.emaBrake 448 449 75
+test.leftRuddervator.brake.emaBrake 448 450 76
+test.leftRuddervator.brake.emaBrake 448 919
+test.leftRuddervator.brake.emaBrake 451 77
+test.leftRuddervator.brake.emaBrake 451 78
+test.leftRuddervator.brake.emaBrake 452 75
+test.leftRuddervator.brake.emaBrake 452 79
+test.leftRuddervator.brake 920
+test.leftRuddervator.brake 921
+test.leftRuddervator.brake 922
+test.leftRuddervator.brake 923
+test.leftRuddervator.brake 924
+test.leftRuddervator.rvdt 453 925
+test.leftRuddervator.rvdt 453 926
+test.leftRuddervator.rvdt 453 454
+test.leftRuddervator.rvdt 453 455
+test.leftRuddervator.rvdt 456 80 81
+test.leftRuddervator.rvdt 457 454 455
+test.leftRuddervator.currentSensor 458 927
+test.leftRuddervator.tempSensor 459 928
+test.leftRuddervator.motor 460
+test.leftRuddervator.motor 461 462 82
+test.leftRuddervator.motor 463 83
+test.leftRuddervator.motor 464 83
+test.leftRuddervator.motor 465 84
+test.leftRuddervator.motor 466 85
+test.leftRuddervator.motor 467 468
+test.leftRuddervator.motor 467 469
+test.leftRuddervator.motor 467 461 462 86
+test.leftRuddervator.motor 467 470 87
+test.leftRuddervator.motor 467 470 88
+test.leftRuddervator.motor 82
+test.leftRuddervator 929
+test.leftRuddervator 930
+test.leftRuddervator 931
+test.leftRuddervator 932
+test.leftRuddervator 933
+test.leftRuddervator 934
+test.leftRuddervator 935
+test.speedBrake.brake.emaBrakeStatus 471 89
+test.speedBrake.brake.emaBrakeStatus 472 90
+test.speedBrake.brake.emaBrakeStatus 473 474 475 90
+test.speedBrake.brake.emaBrakeStatus 473 476 91
+test.speedBrake.brake.emaBrakeStatus 473 476 92
+test.speedBrake.brake.emaBrake 477 478 93
+test.speedBrake.brake.emaBrake 477 479 94
+test.speedBrake.brake.emaBrake 477 936
+test.speedBrake.brake.emaBrake 480 95
+test.speedBrake.brake.emaBrake 480 96
+test.speedBrake.brake.emaBrake 481 93
+test.speedBrake.brake.emaBrake 481 97
+test.speedBrake.brake 937
+test.speedBrake.brake 938
+test.speedBrake.brake 939
+test.speedBrake.brake 940
+test.speedBrake.brake 941
+test.speedBrake.rvdt 482 942
+test.speedBrake.rvdt 482 943
+test.speedBrake.rvdt 482 483
+test.speedBrake.rvdt 482 484
+test.speedBrake.rvdt 485 98 99
+test.speedBrake.rvdt 486 483 484
+test.speedBrake.currentSensor 487 944
+test.speedBrake.tempSensor 488 945
+test.speedBrake.motor 489
+test.speedBrake.motor 490 491 100
+test.speedBrake.motor 492 101
+test.speedBrake.motor 493 101
+test.speedBrake.motor 494 102
+test.speedBrake.motor 495 103
+test.speedBrake.motor 496 497
+test.speedBrake.motor 496 498
+test.speedBrake.motor 496 490 491 104
+test.speedBrake.motor 496 499 105
+test.speedBrake.motor 496 499 106
+test.speedBrake.motor 100
+test.speedBrake 946
+test.speedBrake 947
+test.speedBrake 948
+test.speedBrake 949
+test.speedBrake 950
+test.speedBrake 951
+test.speedBrake 952
+test.emaController2.powerElectronics2 500
+test.emaController2.powerElectronics2 501
+test.emaController2.powerElectronics2 502 503 504 107
+test.emaController2.powerElectronics2 502 505 108
+test.emaController2.powerElectronics2 502 505 109
+test.emaController2.powerElectronics2 506 110
+test.emaController2.powerElectronics2 507 110
+test.emaController2.powerElectronics2 111
+test.emaController2.powerElectronics2 112
+test.emaController2.sspcControllerRelay2.sspcControllerPower 508 509 510 113
+test.emaController2.sspcControllerRelay2.sspcControllerPower 508 511 114
+test.emaController2.sspcControllerRelay2.sspcControllerPower 508 511 115
+test.emaController2.sspcControllerRelay2.statusThrow 512 513 514 116
+test.emaController2.sspcControllerRelay2.statusThrow 512 515 117
+test.emaController2.sspcControllerRelay2.statusThrow 512 515 118
+test.emaController2.sspcControllerRelay2.statusThrow 512 516 119
+test.emaController2.sspcControllerRelay2.statusThrow 512 517 119
+test.emaController2.sspcControllerRelay2.statusThrow 518 116
+test.emaController2.sspcControllerRelay2.statusThrow 519 119
+test.emaController2.sspcControllerRelay2 953
+test.emaController2.sspcControllerRelay2 954
+test.emaController2.sspcControllerRelay2 955
+test.emaController2.sspcControllerRelay2 956
+test.emaController2.sspcControllerRelay2 957
+test.emaController2.sspcControllerRelay1.sspcControllerPower 520 521 522 120
+test.emaController2.sspcControllerRelay1.sspcControllerPower 520 523 121
+test.emaController2.sspcControllerRelay1.sspcControllerPower 520 523 122
+test.emaController2.sspcControllerRelay1.statusThrow 524 525 526 123
+test.emaController2.sspcControllerRelay1.statusThrow 524 527 124
+test.emaController2.sspcControllerRelay1.statusThrow 524 527 125
+test.emaController2.sspcControllerRelay1.statusThrow 524 528 126
+test.emaController2.sspcControllerRelay1.statusThrow 524 529 126
+test.emaController2.sspcControllerRelay1.statusThrow 530 123
+test.emaController2.sspcControllerRelay1.statusThrow 531 126
+test.emaController2.sspcControllerRelay1 958
+test.emaController2.sspcControllerRelay1 959
+test.emaController2.sspcControllerRelay1 960
+test.emaController2.sspcControllerRelay1 961
+test.emaController2.sspcControllerRelay1 962
+test.emaController2.tempSensor 532 963
+test.emaController2.powerElectronics1 533
+test.emaController2.powerElectronics1 534
+test.emaController2.powerElectronics1 535 536 537 127
+test.emaController2.powerElectronics1 535 538 128
+test.emaController2.powerElectronics1 535 538 129
+test.emaController2.powerElectronics1 539 130
+test.emaController2.powerElectronics1 540 130
+test.emaController2.powerElectronics1 131
+test.emaController2.powerElectronics1 132
+test.emaController2.voter 541 542 133
+test.emaController2.voter 543 134
+test.emaController2.voter 543 135
+test.emaController2.voter 544 542 136
+test.emaController2.voter 545 137
+test.emaController2.voter 545 135
+test.emaController2.voter 546 964
+test.emaController2.voter 546 965
+test.emaController2.voter 546 966
+test.emaController2.voter 547 138
+test.emaController2.voter 547 139
+test.emaController2.voter 547 140
+test.emaController2.voter 547 548
+test.emaController2.voter 549 141
+test.emaController2 967
+test.emaController2 968
+test.emaController2 969
+test.emaController2 970
+test.emaController2 971
+test.emaController2 972
+test.emaController2 973
+test.emaController2 974
+test.emaController2 975
+test.emaController2 976
+test.emaController2 977
+test.emaController2 978
+test.emaController2 979
+test.emaController2 980
+test.rightFlaperon.brake.emaBrakeStatus 550 142
+test.rightFlaperon.brake.emaBrakeStatus 551 143
+test.rightFlaperon.brake.emaBrakeStatus 552 553 554 143
+test.rightFlaperon.brake.emaBrakeStatus 552 555 144
+test.rightFlaperon.brake.emaBrakeStatus 552 555 145
+test.rightFlaperon.brake.emaBrake 556 557 146
+test.rightFlaperon.brake.emaBrake 556 558 147
+test.rightFlaperon.brake.emaBrake 556 981
+test.rightFlaperon.brake.emaBrake 559 148
+test.rightFlaperon.brake.emaBrake 559 149
+test.rightFlaperon.brake.emaBrake 560 146
+test.rightFlaperon.brake.emaBrake 560 150
+test.rightFlaperon.brake 982
+test.rightFlaperon.brake 983
+test.rightFlaperon.brake 984
+test.rightFlaperon.brake 985
+test.rightFlaperon.brake 986
+test.rightFlaperon.rvdt 561 987
+test.rightFlaperon.rvdt 561 988
+test.rightFlaperon.rvdt 561 562
+test.rightFlaperon.rvdt 561 563
+test.rightFlaperon.rvdt 564 151 152
+test.rightFlaperon.rvdt 565 562 563
+test.rightFlaperon.currentSensor 566 989
+test.rightFlaperon.tempSensor 567 990
+test.rightFlaperon.motor 568
+test.rightFlaperon.motor 569 570 153
+test.rightFlaperon.motor 571 154
+test.rightFlaperon.motor 572 154
+test.rightFlaperon.motor 573 155
+test.rightFlaperon.motor 574 156
+test.rightFlaperon.motor 575 576
+test.rightFlaperon.motor 575 577
+test.rightFlaperon.motor 575 569 570 157
+test.rightFlaperon.motor 575 578 158
+test.rightFlaperon.motor 575 578 159
+test.rightFlaperon.motor 153
+test.rightFlaperon 991
+test.rightFlaperon 992
+test.rightFlaperon 993
+test.rightFlaperon 994
+test.rightFlaperon 995
+test.rightFlaperon 996
+test.rightFlaperon 997
+test.leftFlaperon.brake.emaBrakeStatus 579 160
+test.leftFlaperon.brake.emaBrakeStatus 580 161
+test.leftFlaperon.brake.emaBrakeStatus 581 582 583 161
+test.leftFlaperon.brake.emaBrakeStatus 581 584 162
+test.leftFlaperon.brake.emaBrakeStatus 581 584 163
+test.leftFlaperon.brake.emaBrake 585 586 164
+test.leftFlaperon.brake.emaBrake 585 587 165
+test.leftFlaperon.brake.emaBrake 585 998
+test.leftFlaperon.brake.emaBrake 588 166
+test.leftFlaperon.brake.emaBrake 588 167
+test.leftFlaperon.brake.emaBrake 589 164
+test.leftFlaperon.brake.emaBrake 589 168
+test.leftFlaperon.brake 999
+test.leftFlaperon.brake 1000
+test.leftFlaperon.brake 1001
+test.leftFlaperon.brake 1002
+test.leftFlaperon.brake 1003
+test.leftFlaperon.rvdt 590 1004
+test.leftFlaperon.rvdt 590 1005
+test.leftFlaperon.rvdt 590 591
+test.leftFlaperon.rvdt 590 592
+test.leftFlaperon.rvdt 593 169 170
+test.leftFlaperon.rvdt 594 591 592
+test.leftFlaperon.currentSensor 595 1006
+test.leftFlaperon.tempSensor 596 1007
+test.leftFlaperon.motor 597
+test.leftFlaperon.motor 598 599 171
+test.leftFlaperon.motor 600 172
+test.leftFlaperon.motor 601 172
+test.leftFlaperon.motor 602 173
+test.leftFlaperon.motor 603 174
+test.leftFlaperon.motor 604 605
+test.leftFlaperon.motor 604 606
+test.leftFlaperon.motor 604 598 599 175
+test.leftFlaperon.motor 604 607 176
+test.leftFlaperon.motor 604 607 177
+test.leftFlaperon.motor 171
+test.leftFlaperon 1008
+test.leftFlaperon 1009
+test.leftFlaperon 1010
+test.leftFlaperon 1011
+test.leftFlaperon 1012
+test.leftFlaperon 1013
+test.leftFlaperon 1014
+test.emaController1.powerElectronics2 608
+test.emaController1.powerElectronics2 609
+test.emaController1.powerElectronics2 610 611 612 178
+test.emaController1.powerElectronics2 610 613 179
+test.emaController1.powerElectronics2 610 613 180
+test.emaController1.powerElectronics2 614 181
+test.emaController1.powerElectronics2 615 181
+test.emaController1.powerElectronics2 182
+test.emaController1.powerElectronics2 183
+test.emaController1.sspcControllerRelay2.sspcControllerPower 616 617 618 184
+test.emaController1.sspcControllerRelay2.sspcControllerPower 616 619 185
+test.emaController1.sspcControllerRelay2.sspcControllerPower 616 619 186
+test.emaController1.sspcControllerRelay2.statusThrow 620 621 622 187
+test.emaController1.sspcControllerRelay2.statusThrow 620 623 188
+test.emaController1.sspcControllerRelay2.statusThrow 620 623 189
+test.emaController1.sspcControllerRelay2.statusThrow 620 624 190
+test.emaController1.sspcControllerRelay2.statusThrow 620 625 190
+test.emaController1.sspcControllerRelay2.statusThrow 626 187
+test.emaController1.sspcControllerRelay2.statusThrow 627 190
+test.emaController1.sspcControllerRelay2 1015
+test.emaController1.sspcControllerRelay2 1016
+test.emaController1.sspcControllerRelay2 1017
+test.emaController1.sspcControllerRelay2 1018
+test.emaController1.sspcControllerRelay2 1019
+test.emaController1.sspcControllerRelay1.sspcControllerPower 628 629 630 191
+test.emaController1.sspcControllerRelay1.sspcControllerPower 628 631 192
+test.emaController1.sspcControllerRelay1.sspcControllerPower 628 631 193
+test.emaController1.sspcControllerRelay1.statusThrow 632 633 634 194
+test.emaController1.sspcControllerRelay1.statusThrow 632 635 195
+test.emaController1.sspcControllerRelay1.statusThrow 632 635 196
+test.emaController1.sspcControllerRelay1.statusThrow 632 636 197
+test.emaController1.sspcControllerRelay1.statusThrow 632 637 197
+test.emaController1.sspcControllerRelay1.statusThrow 638 194
+test.emaController1.sspcControllerRelay1.statusThrow 639 197
+test.emaController1.sspcControllerRelay1 1020
+test.emaController1.sspcControllerRelay1 1021
+test.emaController1.sspcControllerRelay1 1022
+test.emaController1.sspcControllerRelay1 1023
+test.emaController1.sspcControllerRelay1 1024
+test.emaController1.tempSensor 640 1025
+test.emaController1.powerElectronics1 641
+test.emaController1.powerElectronics1 642
+test.emaController1.powerElectronics1 643 644 645 198
+test.emaController1.powerElectronics1 643 646 199
+test.emaController1.powerElectronics1 643 646 200
+test.emaController1.powerElectronics1 647 201
+test.emaController1.powerElectronics1 648 201
+test.emaController1.powerElectronics1 202
+test.emaController1.powerElectronics1 203
+test.emaController1.voter 649 650 204
+test.emaController1.voter 651 205
+test.emaController1.voter 651 206
+test.emaController1.voter 652 650 207
+test.emaController1.voter 653 208
+test.emaController1.voter 653 206
+test.emaController1.voter 654 1026
+test.emaController1.voter 654 1027
+test.emaController1.voter 654 1028
+test.emaController1.voter 655 209
+test.emaController1.voter 655 210
+test.emaController1.voter 655 211
+test.emaController1.voter 655 656
+test.emaController1.voter 657 212
+test.emaController1 1029
+test.emaController1 1030
+test.emaController1 1031
+test.emaController1 1032
+test.emaController1 1033
+test.emaController1 1034
+test.emaController1 1035
+test.emaController1 1036
+test.emaController1 1037
+test.emaController1 1038
+test.emaController1 1039
+test.emaController1 1040
+test.emaController1 1041
+test.emaController1 1042
+test.powerSource 658 213
+test.lcu150v.sspcSpeedBrake.sspcStatus 659 660 661 214
+test.lcu150v.sspcSpeedBrake.sspcStatus 659 662 215
+test.lcu150v.sspcSpeedBrake.sspcStatus 659 662 216
+test.lcu150v.sspcSpeedBrake.sspcStatus 659 663 217
+test.lcu150v.sspcSpeedBrake.sspcStatus 659 664 217
+test.lcu150v.sspcSpeedBrake.sspcStatus 659 665 218 219
+test.lcu150v.sspcSpeedBrake.sspcStatus 659 666 220
+test.lcu150v.sspcSpeedBrake.sspcStatus 659 667 221
+test.lcu150v.sspcSpeedBrake.sspcStatus 668 214
+test.lcu150v.sspcSpeedBrake.sspcStatus 669 217
+test.lcu150v.sspcSpeedBrake.sspcStatus 670 220
+test.lcu150v.sspcSpeedBrake.sspcPower 671
+test.lcu150v.sspcSpeedBrake.sspcPower 672
+test.lcu150v.sspcSpeedBrake.sspcPower 673 674 222
+test.lcu150v.sspcSpeedBrake.sspcPower 675 223
+test.lcu150v.sspcSpeedBrake.sspcPower 675 224
+test.lcu150v.sspcSpeedBrake.sspcPower 676 225
+test.lcu150v.sspcSpeedBrake.sspcPower 677 225
+test.lcu150v.sspcSpeedBrake.sspcPower 678 225
+test.lcu150v.sspcSpeedBrake.sspcPower 679 226 227 228
+test.lcu150v.sspcSpeedBrake.sspcPower 1043
+test.lcu150v.sspcSpeedBrake.sspcPower 680 223
+test.lcu150v.sspcSpeedBrake.sspcPower 681 226
+test.lcu150v.sspcSpeedBrake.sspcPower 682 223
+test.lcu150v.sspcSpeedBrake.sspcPower 683 226
+test.lcu150v.sspcSpeedBrake.sspcPower 684 223
+test.lcu150v.sspcSpeedBrake.sspcPower 685 226
+test.lcu150v.sspcSpeedBrake.sspcPower 686 227
+test.lcu150v.sspcSpeedBrake.sspcPower 229
+test.lcu150v.sspcSpeedBrake.sspcPower 230
+test.lcu150v.sspcSpeedBrake 1044
+test.lcu150v.sspcSpeedBrake 1045
+test.lcu150v.sspcSpeedBrake 1046
+test.lcu150v.sspcSpeedBrake 1047
+test.lcu150v.sspcSpeedBrake 1048
+test.lcu150v.sspcSpeedBrake 1049
+test.lcu150v.sspcLeftFlaperon.sspcStatus 687 688 689 231
+test.lcu150v.sspcLeftFlaperon.sspcStatus 687 690 232
+test.lcu150v.sspcLeftFlaperon.sspcStatus 687 690 233
+test.lcu150v.sspcLeftFlaperon.sspcStatus 687 691 234
+test.lcu150v.sspcLeftFlaperon.sspcStatus 687 692 234
+test.lcu150v.sspcLeftFlaperon.sspcStatus 687 693 235 236
+test.lcu150v.sspcLeftFlaperon.sspcStatus 687 694 237
+test.lcu150v.sspcLeftFlaperon.sspcStatus 687 695 238
+test.lcu150v.sspcLeftFlaperon.sspcStatus 696 231
+test.lcu150v.sspcLeftFlaperon.sspcStatus 697 234
+test.lcu150v.sspcLeftFlaperon.sspcStatus 698 237
+test.lcu150v.sspcLeftFlaperon.sspcPower 699
+test.lcu150v.sspcLeftFlaperon.sspcPower 700
+test.lcu150v.sspcLeftFlaperon.sspcPower 701 702 239
+test.lcu150v.sspcLeftFlaperon.sspcPower 703 240
+test.lcu150v.sspcLeftFlaperon.sspcPower 703 241
+test.lcu150v.sspcLeftFlaperon.sspcPower 704 242
+test.lcu150v.sspcLeftFlaperon.sspcPower 705 242
+test.lcu150v.sspcLeftFlaperon.sspcPower 706 242
+test.lcu150v.sspcLeftFlaperon.sspcPower 707 243 244 245
+test.lcu150v.sspcLeftFlaperon.sspcPower 1050
+test.lcu150v.sspcLeftFlaperon.sspcPower 708 240
+test.lcu150v.sspcLeftFlaperon.sspcPower 709 243
+test.lcu150v.sspcLeftFlaperon.sspcPower 710 240
+test.lcu150v.sspcLeftFlaperon.sspcPower 711 243
+test.lcu150v.sspcLeftFlaperon.sspcPower 712 240
+test.lcu150v.sspcLeftFlaperon.sspcPower 713 243
+test.lcu150v.sspcLeftFlaperon.sspcPower 714 244
+test.lcu150v.sspcLeftFlaperon.sspcPower 246
+test.lcu150v.sspcLeftFlaperon.sspcPower 247
+test.lcu150v.sspcLeftFlaperon 1051
+test.lcu150v.sspcLeftFlaperon 1052
+test.lcu150v.sspcLeftFlaperon 1053
+test.lcu150v.sspcLeftFlaperon 1054
+test.lcu150v.sspcLeftFlaperon 1055
+test.lcu150v.sspcLeftFlaperon 1056
+test.lcu150v.sspcRightFlaperon.sspcStatus 715 716 717 248
+test.lcu150v.sspcRightFlaperon.sspcStatus 715 718 249
+test.lcu150v.sspcRightFlaperon.sspcStatus 715 718 250
+test.lcu150v.sspcRightFlaperon.sspcStatus 715 719 251
+test.lcu150v.sspcRightFlaperon.sspcStatus 715 720 251
+test.lcu150v.sspcRightFlaperon.sspcStatus 715 721 252 253
+test.lcu150v.sspcRightFlaperon.sspcStatus 715 722 254
+test.lcu150v.sspcRightFlaperon.sspcStatus 715 723 255
+test.lcu150v.sspcRightFlaperon.sspcStatus 724 248
+test.lcu150v.sspcRightFlaperon.sspcStatus 725 251
+test.lcu150v.sspcRightFlaperon.sspcStatus 726 254
+test.lcu150v.sspcRightFlaperon.sspcPower 727
+test.lcu150v.sspcRightFlaperon.sspcPower 728
+test.lcu150v.sspcRightFlaperon.sspcPower 729 730 256
+test.lcu150v.sspcRightFlaperon.sspcPower 731 257
+test.lcu150v.sspcRightFlaperon.sspcPower 731 258
+test.lcu150v.sspcRightFlaperon.sspcPower 732 259
+test.lcu150v.sspcRightFlaperon.sspcPower 733 259
+test.lcu150v.sspcRightFlaperon.sspcPower 734 259
+test.lcu150v.sspcRightFlaperon.sspcPower 735 260 261 262
+test.lcu150v.sspcRightFlaperon.sspcPower 1057
+test.lcu150v.sspcRightFlaperon.sspcPower 736 257
+test.lcu150v.sspcRightFlaperon.sspcPower 737 260
+test.lcu150v.sspcRightFlaperon.sspcPower 738 257
+test.lcu150v.sspcRightFlaperon.sspcPower 739 260
+test.lcu150v.sspcRightFlaperon.sspcPower 740 257
+test.lcu150v.sspcRightFlaperon.sspcPower 741 260
+test.lcu150v.sspcRightFlaperon.sspcPower 742 261
+test.lcu150v.sspcRightFlaperon.sspcPower 263
+test.lcu150v.sspcRightFlaperon.sspcPower 264
+test.lcu150v.sspcRightFlaperon 1058
+test.lcu150v.sspcRightFlaperon 1059
+test.lcu150v.sspcRightFlaperon 1060
+test.lcu150v.sspcRightFlaperon 1061
+test.lcu150v.sspcRightFlaperon 1062
+test.lcu150v.sspcRightFlaperon 1063
+test.lcu150v.sspcRightRuddervator.sspcStatus 743 744 745 265
+test.lcu150v.sspcRightRuddervator.sspcStatus 743 746 266
+test.lcu150v.sspcRightRuddervator.sspcStatus 743 746 267
+test.lcu150v.sspcRightRuddervator.sspcStatus 743 747 268
+test.lcu150v.sspcRightRuddervator.sspcStatus 743 748 268
+test.lcu150v.sspcRightRuddervator.sspcStatus 743 749 269 270
+test.lcu150v.sspcRightRuddervator.sspcStatus 743 750 271
+test.lcu150v.sspcRightRuddervator.sspcStatus 743 751 272
+test.lcu150v.sspcRightRuddervator.sspcStatus 752 265
+test.lcu150v.sspcRightRuddervator.sspcStatus 753 268
+test.lcu150v.sspcRightRuddervator.sspcStatus 754 271
+test.lcu150v.sspcRightRuddervator.sspcPower 755
+test.lcu150v.sspcRightRuddervator.sspcPower 756
+test.lcu150v.sspcRightRuddervator.sspcPower 757 758 273
+test.lcu150v.sspcRightRuddervator.sspcPower 759 274
+test.lcu150v.sspcRightRuddervator.sspcPower 759 275
+test.lcu150v.sspcRightRuddervator.sspcPower 760 276
+test.lcu150v.sspcRightRuddervator.sspcPower 761 276
+test.lcu150v.sspcRightRuddervator.sspcPower 762 276
+test.lcu150v.sspcRightRuddervator.sspcPower 763 277 278 279
+test.lcu150v.sspcRightRuddervator.sspcPower 1064
+test.lcu150v.sspcRightRuddervator.sspcPower 764 274
+test.lcu150v.sspcRightRuddervator.sspcPower 765 277
+test.lcu150v.sspcRightRuddervator.sspcPower 766 274
+test.lcu150v.sspcRightRuddervator.sspcPower 767 277
+test.lcu150v.sspcRightRuddervator.sspcPower 768 274
+test.lcu150v.sspcRightRuddervator.sspcPower 769 277
+test.lcu150v.sspcRightRuddervator.sspcPower 770 278
+test.lcu150v.sspcRightRuddervator.sspcPower 280
+test.lcu150v.sspcRightRuddervator.sspcPower 281
+test.lcu150v.sspcRightRuddervator 1065
+test.lcu150v.sspcRightRuddervator 1066
+test.lcu150v.sspcRightRuddervator 1067
+test.lcu150v.sspcRightRuddervator 1068
+test.lcu150v.sspcRightRuddervator 1069
+test.lcu150v.sspcRightRuddervator 1070
+test.lcu150v.sspcBodyFlap.sspcStatus 771 772 773 282
+test.lcu150v.sspcBodyFlap.sspcStatus 771 774 283
+test.lcu150v.sspcBodyFlap.sspcStatus 771 774 284
+test.lcu150v.sspcBodyFlap.sspcStatus 771 775 285
+test.lcu150v.sspcBodyFlap.sspcStatus 771 776 285
+test.lcu150v.sspcBodyFlap.sspcStatus 771 777 286 287
+test.lcu150v.sspcBodyFlap.sspcStatus 771 778 288
+test.lcu150v.sspcBodyFlap.sspcStatus 771 779 289
+test.lcu150v.sspcBodyFlap.sspcStatus 780 282
+test.lcu150v.sspcBodyFlap.sspcStatus 781 285
+test.lcu150v.sspcBodyFlap.sspcStatus 782 288
+test.lcu150v.sspcBodyFlap.sspcPower 783
+test.lcu150v.sspcBodyFlap.sspcPower 784
+test.lcu150v.sspcBodyFlap.sspcPower 785 786 290
+test.lcu150v.sspcBodyFlap.sspcPower 787 291
+test.lcu150v.sspcBodyFlap.sspcPower 787 292
+test.lcu150v.sspcBodyFlap.sspcPower 788 293
+test.lcu150v.sspcBodyFlap.sspcPower 789 293
+test.lcu150v.sspcBodyFlap.sspcPower 790 293
+test.lcu150v.sspcBodyFlap.sspcPower 791 294 295 296
+test.lcu150v.sspcBodyFlap.sspcPower 1071
+test.lcu150v.sspcBodyFlap.sspcPower 792 291
+test.lcu150v.sspcBodyFlap.sspcPower 793 294
+test.lcu150v.sspcBodyFlap.sspcPower 794 291
+test.lcu150v.sspcBodyFlap.sspcPower 795 294
+test.lcu150v.sspcBodyFlap.sspcPower 796 291
+test.lcu150v.sspcBodyFlap.sspcPower 797 294
+test.lcu150v.sspcBodyFlap.sspcPower 798 295
+test.lcu150v.sspcBodyFlap.sspcPower 297
+test.lcu150v.sspcBodyFlap.sspcPower 298
+test.lcu150v.sspcBodyFlap 1072
+test.lcu150v.sspcBodyFlap 1073
+test.lcu150v.sspcBodyFlap 1074
+test.lcu150v.sspcBodyFlap 1075
+test.lcu150v.sspcBodyFlap 1076
+test.lcu150v.sspcBodyFlap 1077
+test.lcu150v.sspcLeftRuddervator.sspcStatus 799 800 801 299
+test.lcu150v.sspcLeftRuddervator.sspcStatus 799 802 300
+test.lcu150v.sspcLeftRuddervator.sspcStatus 799 802 301
+test.lcu150v.sspcLeftRuddervator.sspcStatus 799 803 302
+test.lcu150v.sspcLeftRuddervator.sspcStatus 799 804 302
+test.lcu150v.sspcLeftRuddervator.sspcStatus 799 805 303 304
+test.lcu150v.sspcLeftRuddervator.sspcStatus 799 806 305
+test.lcu150v.sspcLeftRuddervator.sspcStatus 799 807 306
+test.lcu150v.sspcLeftRuddervator.sspcStatus 808 299
+test.lcu150v.sspcLeftRuddervator.sspcStatus 809 302
+test.lcu150v.sspcLeftRuddervator.sspcStatus 810 305
+test.lcu150v.sspcLeftRuddervator.sspcPower 811
+test.lcu150v.sspcLeftRuddervator.sspcPower 812
+test.lcu150v.sspcLeftRuddervator.sspcPower 813 814 307
+test.lcu150v.sspcLeftRuddervator.sspcPower 815 308
+test.lcu150v.sspcLeftRuddervator.sspcPower 815 309
+test.lcu150v.sspcLeftRuddervator.sspcPower 816 310
+test.lcu150v.sspcLeftRuddervator.sspcPower 817 310
+test.lcu150v.sspcLeftRuddervator.sspcPower 818 310
+test.lcu150v.sspcLeftRuddervator.sspcPower 819 311 312 313
+test.lcu150v.sspcLeftRuddervator.sspcPower 1078
+test.lcu150v.sspcLeftRuddervator.sspcPower 820 308
+test.lcu150v.sspcLeftRuddervator.sspcPower 821 311
+test.lcu150v.sspcLeftRuddervator.sspcPower 822 308
+test.lcu150v.sspcLeftRuddervator.sspcPower 823 311
+test.lcu150v.sspcLeftRuddervator.sspcPower 824 308
+test.lcu150v.sspcLeftRuddervator.sspcPower 825 311
+test.lcu150v.sspcLeftRuddervator.sspcPower 826 312
+test.lcu150v.sspcLeftRuddervator.sspcPower 314
+test.lcu150v.sspcLeftRuddervator.sspcPower 315
+test.lcu150v.sspcLeftRuddervator 1079
+test.lcu150v.sspcLeftRuddervator 1080
+test.lcu150v.sspcLeftRuddervator 1081
+test.lcu150v.sspcLeftRuddervator 1082
+test.lcu150v.sspcLeftRuddervator 1083
+test.lcu150v.sspcLeftRuddervator 1084
+test.lcu150v.powerRelay150v.powerThrow 827
+test.lcu150v.powerRelay150v.powerThrow 828
+test.lcu150v.powerRelay150v.powerThrow 829 830 316
+test.lcu150v.powerRelay150v.powerThrow 831 317
+test.lcu150v.powerRelay150v.powerThrow 831 318
+test.lcu150v.powerRelay150v.powerThrow 832 317
+test.lcu150v.powerRelay150v.powerThrow 829 319
+test.lcu150v.powerRelay150v.powerThrow 833 317
+test.lcu150v.powerRelay150v.powerThrow 834 320
+test.lcu150v.powerRelay150v.powerThrow 835 317
+test.lcu150v.powerRelay150v.powerThrow 836 320
+test.lcu150v.powerRelay150v.powerThrow 837 317
+test.lcu150v.powerRelay150v.powerThrow 838 320
+test.lcu150v.powerRelay150v.powerThrow 321
+test.lcu150v.powerRelay150v.powerThrow 322
+test.lcu150v.powerRelay150v.statusThrow 839 840 841 323
+test.lcu150v.powerRelay150v.statusThrow 839 842 324
+test.lcu150v.powerRelay150v.statusThrow 839 842 325
+test.lcu150v.powerRelay150v.statusThrow 839 843 326
+test.lcu150v.powerRelay150v.statusThrow 839 844 326
+test.lcu150v.powerRelay150v.statusThrow 845 323
+test.lcu150v.powerRelay150v.statusThrow 846 326
+test.lcu150v.powerRelay150v 1085
+test.lcu150v.powerRelay150v 1086
+test.lcu150v.powerRelay150v 1087
+test.lcu150v.powerRelay150v 1088
+test.lcu150v.powerRelay150v 1089
+test.lcu150v.powerRelay150v 1090
+test.lcu150v.powerBus150v 847 1091
+test.lcu150v 1092
+test.lcu150v 1093
+test.lcu150v 1094
+test.lcu150v 1095
+test.lcu150v 1096
+test.lcu150v 1097
+test.lcu150v 1098
+test.lcu150v 1099
+test.lcu150v 1100
+test.lcu150v 1101
+test.lcu150v 1102
+test.lcu150v 1103
+test.lcu150v 1104
+test.lcu150v 1105
+test.battery150v.voltageSensor 848 1106
+test.battery150v.batteryCell1 849 327
+test.battery150v.batteryCell1 850 328
+test.battery150v.batteryCell1 851 329
+test.battery150v.batteryCell1 852 328
+test.battery150v 853 330
+test.battery150v 854 330
+test.battery150v 855 330
+test.battery150v 856 331 332 333
+test.battery150v 1107
+test.battery150v 1108
+test 1109
+test 1110
+test 1111
+test 1112
+test 1113
+test 1114
+test 1115
+test 1116
+test 1117
+test 1118
+test 1119
+test 1120
+test 1121
+test 1122
+test 1123
+test 1124
+test 1125
+test 1126
+test 1127
+test 1128
+test 1129
+test 1130
+test 1131
+test 1132
+test 1133
+test 1134
+test 1135
+test 1136
+test 1137
+test 1138
+test 1139
+test 1140
+
+background
+734
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+81
+82
+83
+84
+85
+86
+87
+90
+91
+92
+93
+94
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+130
+131
+132
+133
+134
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+246
+247
+248
+249
+250
+251
+252
+255
+256
+257
+258
+259
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+295
+296
+297
+298
+299
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+411
+412
+413
+414
+415
+416
+417
+420
+421
+422
+423
+424
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+460
+461
+462
+463
+464
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+706
+707
+708
+709
+710
+711
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796
+797
+
+dbg_transitions
+353
+198
+stuckEngaged->stuckEngaged 3 0 0
+stuckDisengaged->stuckDisengaged 3 1 1
+unknown->unknown 3 2 2
+nominal->nominal 3 3 3
+nominal->nominal 7 0 0
+failedBrakeEngaged->failedBrakeEngaged 7 1 1
+unknown->unknown 7 2 2
+failedBrakeDisengaged->failedBrakeDisengaged 7 3 3
+nominal->nominal 16 0 0
+sensorError->sensorError 16 1 1
+unknown->unknown 16 2 2
+nominal->nominal 19 0 0
+faulty->faulty 19 1 1
+faulty->faulty 22 0 0
+nominal->nominal 22 1 1
+resetHighTemp 29 0 3 25
+resetUnknown 29 1 3 25
+resetHighCurrent 29 2 3 25
+failedHighTemp->failedHighTemp 29 0 0 36
+unknown->unknown 29 1 1 36
+failedHighCurrent->failedHighCurrent 29 2 2 36
+nominal->nominal 29 3 3
+stuckEngaged->stuckEngaged 36 0 0
+stuckDisengaged->stuckDisengaged 36 1 1
+unknown->unknown 36 2 2
+nominal->nominal 36 3 3
+nominal->nominal 40 0 0
+failedBrakeEngaged->failedBrakeEngaged 40 1 1
+unknown->unknown 40 2 2
+failedBrakeDisengaged->failedBrakeDisengaged 40 3 3
+nominal->nominal 49 0 0
+sensorError->sensorError 49 1 1
+unknown->unknown 49 2 2
+nominal->nominal 52 0 0
+faulty->faulty 52 1 1
+faulty->faulty 55 0 0
+nominal->nominal 55 1 1
+resetHighTemp 62 0 3 69
+resetUnknown 62 1 3 69
+resetHighCurrent 62 2 3 69
+failedHighTemp->failedHighTemp 62 0 0 80
+unknown->unknown 62 1 1 80
+failedHighCurrent->failedHighCurrent 62 2 2 80
+nominal->nominal 62 3 3
+motorOff 70 0 3 88
+motorOn 70 3 0 89
+on->on 70 0 0 95
+failedPowerElectronics->failedPowerElectronics 70 1 1
+unknown->unknown 70 2 2
+off->off 70 3 3 96
+nominal->nominal 74 0 0
+unknown->unknown 74 1 1
+nominal->nominal 78 0 0
+stuckOn->stuckOn 78 1 1
+stuckOff->stuckOff 78 2 2
+unknown->unknown 78 3 3
+nominal->nominal 86 0 0
+unknown->unknown 86 1 1
+nominal->nominal 90 0 0
+stuckOn->stuckOn 90 1 1
+stuckOff->stuckOff 90 2 2
+unknown->unknown 90 3 3
+faulty->faulty 97 0 0
+nominal->nominal 97 1 1
+motorOff 102 0 3 128
+motorOn 102 3 0 129
+on->on 102 0 0 135
+failedPowerElectronics->failedPowerElectronics 102 1 1
+unknown->unknown 102 2 2
+off->off 102 3 3 136
+nominal->nominal 112 0 0
+failedVoter->failedVoter 112 1 1
+unknown->unknown 112 2 2
+failedHighTemp->failedHighTemp 112 3 3
+stuckEngaged->stuckEngaged 122 0 0
+stuckDisengaged->stuckDisengaged 122 1 1
+unknown->unknown 122 2 2
+nominal->nominal 122 3 3
+nominal->nominal 126 0 0
+failedBrakeEngaged->failedBrakeEngaged 126 1 1
+unknown->unknown 126 2 2
+failedBrakeDisengaged->failedBrakeDisengaged 126 3 3
+nominal->nominal 135 0 0
+sensorError->sensorError 135 1 1
+unknown->unknown 135 2 2
+nominal->nominal 138 0 0
+faulty->faulty 138 1 1
+faulty->faulty 141 0 0
+nominal->nominal 141 1 1
+resetHighTemp 148 0 3 190
+resetUnknown 148 1 3 190
+resetHighCurrent 148 2 3 190
+failedHighTemp->failedHighTemp 148 0 0 201
+unknown->unknown 148 1 1 201
+failedHighCurrent->failedHighCurrent 148 2 2 201
+nominal->nominal 148 3 3
+stuckEngaged->stuckEngaged 155 0 0
+stuckDisengaged->stuckDisengaged 155 1 1
+unknown->unknown 155 2 2
+nominal->nominal 155 3 3
+nominal->nominal 159 0 0
+failedBrakeEngaged->failedBrakeEngaged 159 1 1
+unknown->unknown 159 2 2
+failedBrakeDisengaged->failedBrakeDisengaged 159 3 3
+nominal->nominal 168 0 0
+sensorError->sensorError 168 1 1
+unknown->unknown 168 2 2
+nominal->nominal 171 0 0
+faulty->faulty 171 1 1
+faulty->faulty 174 0 0
+nominal->nominal 174 1 1
+resetHighTemp 181 0 3 234
+resetUnknown 181 1 3 234
+resetHighCurrent 181 2 3 234
+failedHighTemp->failedHighTemp 181 0 0 245
+unknown->unknown 181 1 1 245
+failedHighCurrent->failedHighCurrent 181 2 2 245
+nominal->nominal 181 3 3
+motorOff 189 0 3 253
+motorOn 189 3 0 254
+on->on 189 0 0 260
+failedPowerElectronics->failedPowerElectronics 189 1 1
+unknown->unknown 189 2 2
+off->off 189 3 3 261
+nominal->nominal 193 0 0
+unknown->unknown 193 1 1
+nominal->nominal 197 0 0
+stuckOn->stuckOn 197 1 1
+stuckOff->stuckOff 197 2 2
+unknown->unknown 197 3 3
+nominal->nominal 205 0 0
+unknown->unknown 205 1 1
+nominal->nominal 209 0 0
+stuckOn->stuckOn 209 1 1
+stuckOff->stuckOff 209 2 2
+unknown->unknown 209 3 3
+faulty->faulty 216 0 0
+nominal->nominal 216 1 1
+motorOff 221 0 3 293
+motorOn 221 3 0 294
+on->on 221 0 0 300
+failedPowerElectronics->failedPowerElectronics 221 1 1
+unknown->unknown 221 2 2
+off->off 221 3 3 301
+nominal->nominal 231 0 0
+failedVoter->failedVoter 231 1 1
+unknown->unknown 231 2 2
+failedHighTemp->failedHighTemp 231 3 3
+stuckEngaged->stuckEngaged 241 0 0
+stuckDisengaged->stuckDisengaged 241 1 1
+unknown->unknown 241 2 2
+nominal->nominal 241 3 3
+nominal->nominal 245 0 0
+failedBrakeEngaged->failedBrakeEngaged 245 1 1
+unknown->unknown 245 2 2
+failedBrakeDisengaged->failedBrakeDisengaged 245 3 3
+nominal->nominal 254 0 0
+sensorError->sensorError 254 1 1
+unknown->unknown 254 2 2
+nominal->nominal 257 0 0
+faulty->faulty 257 1 1
+faulty->faulty 260 0 0
+nominal->nominal 260 1 1
+resetHighTemp 267 0 3 355
+resetUnknown 267 1 3 355
+resetHighCurrent 267 2 3 355
+failedHighTemp->failedHighTemp 267 0 0 366
+unknown->unknown 267 1 1 366
+failedHighCurrent->failedHighCurrent 267 2 2 366
+nominal->nominal 267 3 3
+stuckEngaged->stuckEngaged 274 0 0
+stuckDisengaged->stuckDisengaged 274 1 1
+unknown->unknown 274 2 2
+nominal->nominal 274 3 3
+nominal->nominal 278 0 0
+failedBrakeEngaged->failedBrakeEngaged 278 1 1
+unknown->unknown 278 2 2
+failedBrakeDisengaged->failedBrakeDisengaged 278 3 3
+nominal->nominal 287 0 0
+sensorError->sensorError 287 1 1
+unknown->unknown 287 2 2
+nominal->nominal 290 0 0
+faulty->faulty 290 1 1
+faulty->faulty 293 0 0
+nominal->nominal 293 1 1
+resetHighTemp 300 0 3 399
+resetUnknown 300 1 3 399
+resetHighCurrent 300 2 3 399
+failedHighTemp->failedHighTemp 300 0 0 410
+unknown->unknown 300 1 1 410
+failedHighCurrent->failedHighCurrent 300 2 2 410
+nominal->nominal 300 3 3
+motorOff 308 0 3 418
+motorOn 308 3 0 419
+on->on 308 0 0 425
+failedPowerElectronics->failedPowerElectronics 308 1 1
+unknown->unknown 308 2 2
+off->off 308 3 3 426
+nominal->nominal 312 0 0
+unknown->unknown 312 1 1
+nominal->nominal 316 0 0
+stuckOn->stuckOn 316 1 1
+stuckOff->stuckOff 316 2 2
+unknown->unknown 316 3 3
+nominal->nominal 324 0 0
+unknown->unknown 324 1 1
+nominal->nominal 328 0 0
+stuckOn->stuckOn 328 1 1
+stuckOff->stuckOff 328 2 2
+unknown->unknown 328 3 3
+faulty->faulty 335 0 0
+nominal->nominal 335 1 1
+motorOff 340 0 3 458
+motorOn 340 3 0 459
+on->on 340 0 0 465
+failedPowerElectronics->failedPowerElectronics 340 1 1
+unknown->unknown 340 2 2
+off->off 340 3 3 466
+nominal->nominal 350 0 0
+failedVoter->failedVoter 350 1 1
+unknown->unknown 350 2 2
+failedHighTemp->failedHighTemp 350 3 3
+nominal->nominal 358 0 0
+nominal->nominal 362 0 0
+stuckOn->stuckOn 362 1 1
+stuckOff->stuckOff 362 2 2
+unknown->unknown 362 3 3
+stuckTripped->stuckTripped 362 4 4
+turnOff 368 0 1 507
+turnOn 368 1 0 508
+turnOff 368 2 1 507
+turnOn 368 3 0 508
+reset 368 7 1 507
+on->on 368 0 0 524
+off->off 368 1 1 525
+recoverablyOn->recoverablyOn 368 2 2 524
+recoverablyOff->recoverablyOff 368 3 3 525
+unknown->unknown 368 4 4
+stuckOn->stuckOn 368 5 5
+stuckOff->stuckOff 368 6 6
+tripped->tripped 368 7 7 524
+nominal->nominal 377 0 0
+stuckOn->stuckOn 377 1 1
+stuckOff->stuckOff 377 2 2
+unknown->unknown 377 3 3
+stuckTripped->stuckTripped 377 4 4
+turnOff 383 0 1 543
+turnOn 383 1 0 544
+turnOff 383 2 1 543
+turnOn 383 3 0 544
+reset 383 7 1 543
+on->on 383 0 0 560
+off->off 383 1 1 561
+recoverablyOn->recoverablyOn 383 2 2 560
+recoverablyOff->recoverablyOff 383 3 3 561
+unknown->unknown 383 4 4
+stuckOn->stuckOn 383 5 5
+stuckOff->stuckOff 383 6 6
+tripped->tripped 383 7 7 560
+nominal->nominal 392 0 0
+stuckOn->stuckOn 392 1 1
+stuckOff->stuckOff 392 2 2
+unknown->unknown 392 3 3
+stuckTripped->stuckTripped 392 4 4
+turnOff 398 0 1 579
+turnOn 398 1 0 580
+turnOff 398 2 1 579
+turnOn 398 3 0 580
+reset 398 7 1 579
+on->on 398 0 0 596
+off->off 398 1 1 597
+recoverablyOn->recoverablyOn 398 2 2 596
+recoverablyOff->recoverablyOff 398 3 3 597
+unknown->unknown 398 4 4
+stuckOn->stuckOn 398 5 5
+stuckOff->stuckOff 398 6 6
+tripped->tripped 398 7 7 596
+nominal->nominal 407 0 0
+stuckOn->stuckOn 407 1 1
+stuckOff->stuckOff 407 2 2
+unknown->unknown 407 3 3
+stuckTripped->stuckTripped 407 4 4
+turnOff 413 0 1 615
+turnOn 413 1 0 616
+turnOff 413 2 1 615
+turnOn 413 3 0 616
+reset 413 7 1 615
+on->on 413 0 0 632
+off->off 413 1 1 633
+recoverablyOn->recoverablyOn 413 2 2 632
+recoverablyOff->recoverablyOff 413 3 3 633
+unknown->unknown 413 4 4
+stuckOn->stuckOn 413 5 5
+stuckOff->stuckOff 413 6 6
+tripped->tripped 413 7 7 632
+nominal->nominal 422 0 0
+stuckOn->stuckOn 422 1 1
+stuckOff->stuckOff 422 2 2
+unknown->unknown 422 3 3
+stuckTripped->stuckTripped 422 4 4
+turnOff 428 0 1 651
+turnOn 428 1 0 652
+turnOff 428 2 1 651
+turnOn 428 3 0 652
+reset 428 7 1 651
+on->on 428 0 0 668
+off->off 428 1 1 669
+recoverablyOn->recoverablyOn 428 2 2 668
+recoverablyOff->recoverablyOff 428 3 3 669
+unknown->unknown 428 4 4
+stuckOn->stuckOn 428 5 5
+stuckOff->stuckOff 428 6 6
+tripped->tripped 428 7 7 668
+nominal->nominal 437 0 0
+stuckOn->stuckOn 437 1 1
+stuckOff->stuckOff 437 2 2
+unknown->unknown 437 3 3
+stuckTripped->stuckTripped 437 4 4
+turnOff 443 0 1 687
+turnOn 443 1 0 688
+turnOff 443 2 1 687
+turnOn 443 3 0 688
+reset 443 7 1 687
+on->on 443 0 0 704
+off->off 443 1 1 705
+recoverablyOn->recoverablyOn 443 2 2 704
+recoverablyOff->recoverablyOff 443 3 3 705
+unknown->unknown 443 4 4
+stuckOn->stuckOn 443 5 5
+stuckOff->stuckOff 443 6 6
+tripped->tripped 443 7 7 704
+turnOff 454 0 1 712
+turnOn 454 1 0 713
+turnOff 454 2 1 712
+turnOn 454 3 0 713
+on->on 454 0 0 725
+off->off 454 1 1 726
+recoverablyOn->recoverablyOn 454 2 2 725
+recoverablyOff->recoverablyOff 454 3 3 726
+unknown->unknown 454 4 4
+stuckOn->stuckOn 454 5 5
+stuckOff->stuckOff 454 6 6
+nominal->nominal 458 0 0
+stuckOn->stuckOn 458 1 1
+stuckOff->stuckOff 458 2 2
+unknown->unknown 458 3 3
+nominal->nominal 466 0 0
+unknown->unknown 466 1 1
+faulty->faulty 470 0 0
+nominal->nominal 470 1 1
+nominal->nominal 473 0 0
+discharged->discharged 473 1 1
+unknown->unknown 473 2 2
+stuckEngaged 3 * 0 3
+stuckDisengaged 3 * 1 3
+unknown 3 * 2 4
+failedBrakeEngaged 7 * 1 2
+unknown 7 * 2 4
+failedBrakeDisengaged 7 * 3 2
+sensorError 16 * 1 3
+unknown 16 * 2 4
+faulty 19 * 1 3
+faulty 22 * 0 3
+failedHighTemp 29 * 0 2
+unknown 29 * 1 4
+failedHighCurrent 29 * 2 2
+stuckEngaged 36 * 0 3
+stuckDisengaged 36 * 1 3
+unknown 36 * 2 4
+failedBrakeEngaged 40 * 1 2
+unknown 40 * 2 4
+failedBrakeDisengaged 40 * 3 2
+sensorError 49 * 1 3
+unknown 49 * 2 4
+faulty 52 * 1 3
+faulty 55 * 0 3
+failedHighTemp 62 * 0 2
+unknown 62 * 1 4
+failedHighCurrent 62 * 2 2
+failedPowerElectronics 70 * 1 2
+unknown 70 * 2 4
+unknown 74 * 1 4
+stuckOn 78 * 1 3
+stuckOff 78 * 2 3
+unknown 78 * 3 6
+unknown 86 * 1 4
+stuckOn 90 * 1 3
+stuckOff 90 * 2 3
+unknown 90 * 3 6
+faulty 97 * 0 3
+failedPowerElectronics 102 * 1 2
+unknown 102 * 2 4
+failedVoter 112 * 1 3
+unknown 112 * 2 4
+failedHighTemp 112 * 3 2
+stuckEngaged 122 * 0 3
+stuckDisengaged 122 * 1 3
+unknown 122 * 2 4
+failedBrakeEngaged 126 * 1 2
+unknown 126 * 2 4
+failedBrakeDisengaged 126 * 3 2
+sensorError 135 * 1 3
+unknown 135 * 2 4
+faulty 138 * 1 3
+faulty 141 * 0 3
+failedHighTemp 148 * 0 2
+unknown 148 * 1 4
+failedHighCurrent 148 * 2 2
+stuckEngaged 155 * 0 3
+stuckDisengaged 155 * 1 3
+unknown 155 * 2 4
+failedBrakeEngaged 159 * 1 2
+unknown 159 * 2 4
+failedBrakeDisengaged 159 * 3 2
+sensorError 168 * 1 3
+unknown 168 * 2 4
+faulty 171 * 1 3
+faulty 174 * 0 3
+failedHighTemp 181 * 0 2
+unknown 181 * 1 4
+failedHighCurrent 181 * 2 2
+failedPowerElectronics 189 * 1 2
+unknown 189 * 2 4
+unknown 193 * 1 4
+stuckOn 197 * 1 3
+stuckOff 197 * 2 3
+unknown 197 * 3 6
+unknown 205 * 1 4
+stuckOn 209 * 1 3
+stuckOff 209 * 2 3
+unknown 209 * 3 6
+faulty 216 * 0 3
+failedPowerElectronics 221 * 1 2
+unknown 221 * 2 4
+failedVoter 231 * 1 3
+unknown 231 * 2 4
+failedHighTemp 231 * 3 2
+stuckEngaged 241 * 0 3
+stuckDisengaged 241 * 1 3
+unknown 241 * 2 4
+failedBrakeEngaged 245 * 1 2
+unknown 245 * 2 4
+failedBrakeDisengaged 245 * 3 2
+sensorError 254 * 1 3
+unknown 254 * 2 4
+faulty 257 * 1 3
+faulty 260 * 0 3
+failedHighTemp 267 * 0 2
+unknown 267 * 1 4
+failedHighCurrent 267 * 2 2
+stuckEngaged 274 * 0 3
+stuckDisengaged 274 * 1 3
+unknown 274 * 2 4
+failedBrakeEngaged 278 * 1 2
+unknown 278 * 2 4
+failedBrakeDisengaged 278 * 3 2
+sensorError 287 * 1 3
+unknown 287 * 2 4
+faulty 290 * 1 3
+faulty 293 * 0 3
+failedHighTemp 300 * 0 2
+unknown 300 * 1 4
+failedHighCurrent 300 * 2 2
+failedPowerElectronics 308 * 1 2
+unknown 308 * 2 4
+unknown 312 * 1 4
+stuckOn 316 * 1 3
+stuckOff 316 * 2 3
+unknown 316 * 3 6
+unknown 324 * 1 4
+stuckOn 328 * 1 3
+stuckOff 328 * 2 3
+unknown 328 * 3 6
+faulty 335 * 0 3
+failedPowerElectronics 340 * 1 2
+unknown 340 * 2 4
+failedVoter 350 * 1 3
+unknown 350 * 2 4
+failedHighTemp 350 * 3 2
+stuckOn 362 * 1 3
+stuckOff 362 * 2 3
+unknown 362 * 3 6
+stuckTripped 362 * 4 3
+recoverablyOn 368 * 2 2
+recoverablyOff 368 * 3 2
+unknown 368 * 4 4
+stuckOn 368 * 5 3
+stuckOff 368 * 6 3
+tripped 368 * 7 2
+stuckOn 377 * 1 3
+stuckOff 377 * 2 3
+unknown 377 * 3 6
+stuckTripped 377 * 4 3
+recoverablyOn 383 * 2 2
+recoverablyOff 383 * 3 2
+unknown 383 * 4 4
+stuckOn 383 * 5 3
+stuckOff 383 * 6 3
+tripped 383 * 7 2
+stuckOn 392 * 1 3
+stuckOff 392 * 2 3
+unknown 392 * 3 6
+stuckTripped 392 * 4 3
+recoverablyOn 398 * 2 2
+recoverablyOff 398 * 3 2
+unknown 398 * 4 4
+stuckOn 398 * 5 3
+stuckOff 398 * 6 3
+tripped 398 * 7 2
+stuckOn 407 * 1 3
+stuckOff 407 * 2 3
+unknown 407 * 3 6
+stuckTripped 407 * 4 3
+recoverablyOn 413 * 2 2
+recoverablyOff 413 * 3 2
+unknown 413 * 4 4
+stuckOn 413 * 5 3
+stuckOff 413 * 6 3
+tripped 413 * 7 2
+stuckOn 422 * 1 3
+stuckOff 422 * 2 3
+unknown 422 * 3 6
+stuckTripped 422 * 4 3
+recoverablyOn 428 * 2 2
+recoverablyOff 428 * 3 2
+unknown 428 * 4 4
+stuckOn 428 * 5 3
+stuckOff 428 * 6 3
+tripped 428 * 7 2
+stuckOn 437 * 1 3
+stuckOff 437 * 2 3
+unknown 437 * 3 6
+stuckTripped 437 * 4 3
+recoverablyOn 443 * 2 2
+recoverablyOff 443 * 3 2
+unknown 443 * 4 4
+stuckOn 443 * 5 3
+stuckOff 443 * 6 3
+tripped 443 * 7 2
+recoverablyOn 454 * 2 2
+recoverablyOff 454 * 3 2
+unknown 454 * 4 4
+stuckOn 454 * 5 3
+stuckOff 454 * 6 3
+stuckOn 458 * 1 3
+stuckOff 458 * 2 3
+unknown 458 * 3 6
+unknown 466 * 1 4
+faulty 470 * 0 3
+discharged 473 * 1 3
+unknown 473 * 2 4
+
+modes
+3 7 16 19 22 29 36 40 49 52 55 62 70 74 78 86 90 97 102 112 122 126 135 138 141 148 155 159 168 171 174 181 189 193 197 205 209 216 221 231 241 245 254 257 260 267 274 278 287 290 293 300 308 312 316 324 328 335 340 350 358 362 368 377 383 392 398 407 413 422 428 437 443 454 458 466 470 473
+
+commands
+69 101 188 220 307 339 372 387 402 417 432 447 461
+
+observed
+8 12 13 17 20 41 45 46 50 53 82 94 95 127 131 132 136 139 160 164 165 169 172 201 213 214 246 250 251 255 258 279 283 284 288 291 320 332 333 369 384 399 414 429 444 462 468 476 477
+
+initial
+78
+3 3
+7 0
+16 0
+19 0
+22 1
+29 3
+36 3
+40 0
+49 0
+52 0
+55 1
+62 3
+70 3
+74 0
+78 0
+86 0
+90 0
+97 1
+102 3
+112 0
+122 3
+126 0
+135 0
+138 0
+141 1
+148 3
+155 3
+159 0
+168 0
+171 0
+174 1
+181 3
+189 3
+193 0
+197 0
+205 0
+209 0
+216 1
+221 3
+231 0
+241 3
+245 0
+254 0
+257 0
+260 1
+267 3
+274 3
+278 0
+287 0
+290 0
+293 1
+300 3
+308 3
+312 0
+316 0
+324 0
+328 0
+335 1
+340 3
+350 0
+358 0
+362 0
+368 1
+377 0
+383 1
+392 0
+398 1
+407 0
+413 1
+422 0
+428 1
+437 0
+443 1
+454 1
+458 0
+466 0
+470 1
+473 0

@@ -1,0 +1,3 @@
+plan-steps 1
+assign cbAndLed.led8.ledState=on
+fc

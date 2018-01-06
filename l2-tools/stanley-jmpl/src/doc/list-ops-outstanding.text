@@ -1,0 +1,38 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+-----------------
+Stanley tag Stanley_13_VMPL will return operational state prior to Jan98
+-----------------
+
+Schedule
+==========================
+o Real-time telelmetry via DSN
+        Marla Thornton - re-establish SFOC connection & complete tests of
+        MGDS2RAX
+
+o Static telemetry from files
+        Need variant of IPC-Playback to generate IPC msgs, or
+        will the files be "pump-ed" thru the DSN interface to us
+        just like real-time
+
+o Ground Operational Readiness Tests
+        Ben Smith -- when are these scheduled
+                  -- what hosts will be supporting ground operations
+                  -- is all supporting software installed: e.g. Emacs, Tcl/Tk, etc
+
+
+Development
+==========================
+21jan98
+-------
+o Get PACKET-VIEW working, subscribing to all
+  GROUND_FROM_TLM_foo msgs. Run RAX to generate FSC_TLM_TELEMETRY_PACKET
+  msgs => GRND_TLM => PACKET-VIEW. Or use IPC-PLAYBACK in place of RAX.
+
+o Pop-up a proposition timeline by clicking on proposition name in
+  "Propositions" window.
+
+o MIR_TELEMETRY will have a bit set when the msg is a full update (Bill)

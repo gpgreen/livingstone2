@@ -1,0 +1,26 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+19jun00 - Skunkworks/L2/StanleyVJMPL release 1.0.1
+--------------------------------------------------
+Limitations:
+
+o module parameters cannot be component/module class names --
+  compiler cannot handle this, as it has no symbol table.
+
+o component "initially" assigments are not generated in .ini file,
+  since Livingstone assumes that all .ini assigments are mode variables.
+
+o Test->Load&Go for component or module with parameter args: user
+  is asked for values, but are now only used by Stanley to instantiate
+  schematic. These values need to be added to generated .ini file so that
+  Livingstone gets them.
+
+o while Load&Go was processing, I switched rooms in my window manager,
+  and Stanley crashed because tcl needs to have the window be the top
+  window to draw correctly.  Will says it's an inherent tcl limitation.
+
+  => this occurs with the CDE window manager -- it does not occur with
+     the fvwm window manager.

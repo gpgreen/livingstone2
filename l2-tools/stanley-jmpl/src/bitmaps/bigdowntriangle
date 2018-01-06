@@ -1,0 +1,4 @@
+#define bigdowntriangle_width 7
+#define bigdowntriangle_height 6
+static char bigdowntriangle_bits[] = {
+   0x7f, 0x7f, 0x7f, 0x3e, 0x1c, 0x08};

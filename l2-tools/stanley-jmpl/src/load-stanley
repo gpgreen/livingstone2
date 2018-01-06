@@ -1,0 +1,55 @@
+#!/bin/tcsh -f
+# -f Fast start. do not read the  .cshrc  file
+
+# $Id: load-stanley,v 1.1.1.1 2006/04/18 20:17:27 taylor Exp $
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+
+## with -tags arg, will build tags table (update etags with any file changes)
+
+if ( "$OSTYPE" == "solaris" ) then
+  # Ames environments
+  if ( "`/bin/uname -rs`" == "SunOS 5.6" ) then
+    # /usr/local2/GNU/bin/etags
+    set etags_flag = -f
+  else if ( "`/bin/uname -rs`" == "SunOS 5.8" ) then
+    # /usr/local/bin/etags - Exuberant Ctags 3.5.1
+    set etags_flag = "--file-tags=yes --langmap=c:.c.tcl -f"
+  else
+    echo "`/bin/uname -rs` not handled"
+  endif
+else if ( "$OSTYPE" == "linux" ) then
+  set etags_flag = -f
+else if ( ${?WINBOOTDIR} && "$OSTYPE" == "posix" ) then
+  # Windows & Cygwin
+  set etags_flag = -f
+else
+  echo "$OSTYPE not handled"
+endif
+
+if ("X$1" != "X") then
+  # compute emacs tags for Stanley
+  etags $etags_flag stanley.TAGS \
+        c/stanley.c c/tkAppInit.c \
+        stanley.tcl fileOps.tcl initialize.tcl \
+        canvasBindings.tcl form.tcl layout.tcl top.tcl \
+        cfgParse.tcl util.tcl palette.tcl version.tcl \
+        preferences.tcl view.tcl edit.tcl getModule.tcl \
+        redraw.tcl help.tcl alist.tcl dialog.tcl \
+        debug.tcl defcomponent.tcl defmodule.tcl \
+        mir-telemetry.tcl accessors.tcl accessors-button.tcl \
+        accessors-class.tcl accessors-edge.tcl accessors-node.tcl \
+        accessors-terminal.tcl accessors-array.tcl \
+        terminals.tcl balloonhelp.tcl emacsEdit.tcl assvEdit.tcl \
+        manage-canvas.tcl generate-mpl.tcl convert-to-jmpl.tcl \
+        ops-layout.tcl test-mpl.tcl corba.tcl corba-method-bodies.tcl \
+        test-scenario.tcl \
+        beth-balancebind.tcl beth-editbind.tcl beth-bindings.tcl \
+        beth-regions.tcl beth-browsebind.tcl beth-searchbind.tcl \
+        tkbind-bindxtnd.tcl tkbind-rectangle.tcl \
+        tkbind-isearch.tcl tkbind-text.tcl tkbind-prompt.tcl 
+endif
+

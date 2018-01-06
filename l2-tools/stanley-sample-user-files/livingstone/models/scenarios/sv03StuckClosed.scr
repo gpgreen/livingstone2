@@ -1,0 +1,4 @@
+scenario sv03StuckClosed mainPropulsionSystem
+assign test.sv03.microSwitch=notOpen
+progress test.sv03.sv.valveCmdIn=open
+fc

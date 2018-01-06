@@ -1,0 +1,292 @@
+# $Id: help5.txt,v 1.1.1.1 2006/04/18 20:17:27 taylor Exp $
+
+4. Reference: Menu Selections
+------------------
+
+This page describes each of the menu selections and the options for
+the dialogs they invoke.
+
+
+4.1 File Menu
+
+This menu controls the saving and restoring of the information in the
+applications diagram. When you first come up, the canvas is blank and
+the application name is set to the default, "new". You can rename the
+application via the save-as menu or load in an existing application
+via the "open" menu.
+
+New: Begin a new workspace.
+	the canvas is cleared and a new workspace is begun. You will be
+asked if you wish to save the current workspace if there is unsaved work
+on the canvas.
+
+Open: Open an existing, previously saved workspace.
+	A dialog appears to help you enter the pathname. Normally
+workspaces end in the tag ".prw". You may either enter the pathname at
+the top, or use the Subdirectory and Workspace selection boxes below
+it. After entering or selecting, push the OK button. To move up to the
+parent directory of the one shown in the "Enter file name" field, use
+the "Parent Directory" button on the left. NOTE: When you open a
+workspace, the preferences that were in effect at the time that
+workspace was saved will once more be in effect, replacing the
+current preferences. Thus you may need to open up the preferences
+editor (Tools menu) and put things back the way you like them.
+
+Save: Save the current workspace in an existing file.
+	If the current workspace has been opened from a workspace
+(-.prw) file, or has been previously saved, the current workspace will
+be saved to that file. Otherwise a "save-as" entry will be performed.
+
+Save As: Save the current workspace in a new file.
+	A dialog appears for you to name the new workspace file. See
+"Open" above for a description of the entry and button usage. You
+should, but are not required to, choose a name ending in
+".prw". Following this convention will simplify future work.
+
+Quit: Save and exit the builder.
+
+
+4.2 Edit Menu
+
+This menu controls general functions for changing or restoring the
+workspace. Currently only three options are installed:
+
+Cut: Delete all selected modules from the canvas, along with links
+     connected to the module.
+	To select the module(s), drag out a rectangle that includes
+the module(s) to be deleted. (Refer to Section 2, "Graphics and Mouse
+Conventions".) 
+
+Redraw: Erase the canvas and redraw the same application.
+	This is useful if the diagram has become corrupted for some
+reason with graphic "litter", or if you have changed your color
+preferences and wish to have them applied to the current workspace.
+
+Erase-all: Erase the canvas without saving.
+	Since this results in the loss of the current workspace, you
+will be asked to confirm your choice.
+
+
+4.3 View Menu
+
+The View menu allows you to view the source data pertaining to the
+current workspace in a separate window.
+
+Selected Module Config: 
+	This displays the .cfg file for the selected module. (See
+"Graphic and Mouse Conventions" for selecting modules.) If more than
+one module is selected, the first one in the selection list is
+displayed. The path to the <module>.cfg file is taken by looking in the
+"pirate_directory" preference (Tools | Edit Preferences) for the
+"modules" directory, the "family" subdirectory, and the "module" name
+followed by .cfg.
+
+Selected Terminals:
+	This displays class and type information about all currently
+selected input/output terminals.  This information is taken out of
+the corresponding module config files.  The presentation here is 
+more convenient for viewing the declarations of proposed connections
+at the same time.
+
+Compiled Application:
+	If the application XX.prw has been compiled, the resulting
+XX.spec file is displayed. 
+
+Application Config:
+	If the application XX.prw has been compiled, the resulting
+XX.cfg template is displayed. This template is used to supply the
+startup options to the application.
+
+Internal Representation:
+	The values of the main internal variables are shown. This is
+useful only if you are debugging. 
+
+
+4.4 Modules Menu
+
+The Modules menu offers the opportunity to modify the handling of
+selected modules.
+
+Edit Parameters for Selected Modules...
+	An entry dialog is displayed showing required, optional, and
+fixed parameters for the module. Required and optional parameters may
+be edited; any default values present in the module's .cfg file are
+present initially in the entry fields. 
+
+Group Selected Input (Output) Terminals into a Set: 
+	Oftentimes a series of output or input sensors are distinct
+but very similar, and connect to distinct but similar portions of the
+diagram. For example, there may be three (or N) pressure sensors; each
+of them are passed to a separate subdiagram in the workspace, but
+these subdiagrams are all identical except for which pressure sensor
+they read. In such cases, the N subdiagrams can be drawn once instead
+of N times. The way you indicate this on the diagram is to combine the
+N sensor terminals into one "super" output terminal. The system
+remembers that this super output terminal is really a set of N
+separate but parallel sensors, and that the portion of the workspace
+into which this super terminal flows is actually N separate but
+parallel subdiagrams.
+	You can subsequently join N parallel sensors into one node
+using the JOIN module. You do this by creating a JOIN modules with N
+input terminals, and using the "Group Selected Input Terminals..."
+item from the Modules menu. The system understands that this single
+"super" input terminal is really a set of N separate but parallel
+sensor values.
+	To combine a set of terminals (input or output) on a module
+icon into a super terminal, select the leftmost terminal using the
+left mouse button, and them holding the Shift key down select the
+rightmost terminal using the left mouse button. Both terminals and all
+terminals between them will be highlighted. Now use the Modules menu
+to select the Group Selected Input (Output) Terminals... entry. You
+will be asked to confirm this grouping, since it cannot be easily
+undone. (To undo it later, cut the module using the Edit | Cut menu
+item.) 
+	The super terminal is indicated by being slightly larger and
+by having a red color. But otherwise it is manipulated just like any
+other terminal in the diagram.
+
+
+4.5 Links Menu
+
+This menu enables you to connect (link) together sensor terminals on
+the modules, and to edit the properties of those links.
+
+Connect Together Selected Input/Output Terminals:
+	Select a terminal by clicking on it with the left mouse
+button. Only one output and one input terminal may be selected at one
+time, and they must belong to different modules. (In fact, the flow
+diagram must be acyclic, but cycles may not be detected until compile
+time.) Use this entry to create link between the currently selected
+input and output terminals. If there do not exist two such terminals,
+nothing will happen.
+	At the time you create a link, a check is made that the two
+terminals are compatible. An example of incompatible terminals would
+be an output terminal that is a DOUBLE (double floating point), and an
+input that is an EVENT (an array). If the builder complains about
+incompatible types and you don't understand why, you can display a
+terminal's description by double-clicking on the terminal with the
+left mouse. Also, you can examine the entire config file for the
+module using the View menu.
+
+Disconnect Selected Input/Output Terminals:
+	Any link between the selected input and output terminals is
+removed. 
+
+Edit Parameters for Selected Link:
+	You select a link by selecting the input and output terminals
+for the link. Using this menu option you can enter the configuration
+options for the connection.
+	An entry dialog is displayed showing required, optional, and
+fixed parameters for the link. Required and optional parameters may
+be edited; any default values present in the module's .cfg file are
+present initially in the entry fields. 
+
+
+4.6 Tools Menu
+
+This menu contains a set of utility functions for processing the flow
+diagram.
+
+Show Module Palette:
+	A palette is displayed from which the available modules can be
+selected and placed onto the canvas. The left side of the palette
+lists the "families" (groupings) of modules; this grouping makes it
+easier to locate the desired module. Having selected a family, you
+will see a list of modules in that family in the selection box on the
+right. To place a module on the canvas, click on the name of the
+module and then click on the canvas where you wish the module to be
+placed. An icon with the name of the module will be placed on the
+canvas. You can move this icon about until it is in the desired
+location; see Section 2, "Graphics and Mouse Conventions".)
+	Some modules have an unspecified number of inputs or outputs
+in their .cfg description. For these modules, a dialog box is
+exhibited before the box is placed onto the canvas. Use this dialog
+box to assign names to the inputs (or outputs), and thereby to
+determine how many of them there are. The assigned names must be
+purely alphabetic, but you may use upper and lower case letters. By
+default there are entries for up to five sensor terminals, but you may
+create more by clicking on the "More" button. Entries without names
+will not produce terminals on the resulting module icon; there will be
+exactly as many input or output terminals as there are non-blank
+entries.
+	Modules from the Source family are handled specially: for
+these you must select the input sensors (MSIDs) from the data
+dictionary. The data dictionary will be shown, or you will be asked to
+enter its pathname. You will then check off the sensor names that are
+to be read into the modules from the data acquisition source
+(currently ISP).
+
+Compile:
+	If the diagram is complete and correct, the workspace is
+translated into a .spec file. Otherwise you will be notified of any
+errors or incompletions. 
+
+Include C files:
+	This gives the opportunity to enter the names of files to
+be included (in the C sense) in the generated application code.
+Typically, these would be *.h files needed to resolve the function
+pointer references required by some modules.
+
+
+Edit Preferences:
+	Use this entry to change the preferences for your
+sessions. The preferences are saved in your home directory in a file
+entitled ".pirpreferences. Editing this file by hand is not
+recommended. A backup of this file in ".pirpreferences~" is made
+before replacing it. Also, be sure that color names and font
+identifiers are spelled correctly, and that the colormap entries are
+available on your system. (Better: use the "Select Color Preferences"
+item to select colors; see below.) The xfontsel program can be used to
+view and select appropriate fonts on your X Windows system.
+	Some of the less obvious options are:
+  pirate_directory: the path name of the directory where the pirate
+toolkit lives. This directory will normally contain a "modules"
+subdirectory.
+  module_directory: the name of the pirate toolkit subdirectory where
+the module .cfg files live.
+  source_family: the name of the modules subdirectory containing the
+modules that are "source" (i.e., data acquisition) modules.
+  windowXPosition, windowYPosition: when new windows pop up, there is
+a (feeble) attempt to place them in a reasonable location. These
+coordinates define starting points on the screen for this
+location. Play with it.
+  helpFont: the font used to display help files.
+  titleTextFont: the font used to display the title text, if any, on
+the workspace diagram. (See "Add/replace/delete title text" below.)
+
+Select Color Preferences:
+	Use this entry to select colors for standard display
+objects. First select the type of object to be displayed, then select
+a color for that object. As a general rule, background colors should
+be light and foreground colors dark. 
+
+Restore Default Preferences:
+	This option is useful if invalid preferences are causing
+errors. The default values replace your custom ones immediately.
+
+Add/Replace/Delete Title Text:
+	You can place a text title on your diagram. This title has no
+effect on the resulting compiled file: it is entirely for
+documentation purposes.
+	To create a title, drag out a rectangle on the canvas using
+the left mouse button. Then select the "Add/Replace/Delete Title Text"
+option from the Tools menu. An entry box will pop up and allow you to
+enter the title text, which will be placed into the rectangle. The
+rectangle limits the width of text, not the height. As many lines as
+needed will be used to exhibit the text. You can force a line break in
+the text by entering the characters "\n".
+	To change the text of an existing title, select this option
+and edit the text. To delete the title, select this option and click
+on the "Delete" button. The title must be deleted and recreated; it
+cannot be moved. 
+	
+
+4.7 Help menu
+	This menu (on the far right-hand side) is used to select a
+help page from the table of contents.
+	
+
+
+
+
+[$Id: help5.txt,v 1.1.1.1 2006/04/18 20:17:27 taylor Exp $]

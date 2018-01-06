@@ -1,0 +1,201 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+
+version 1.4 - 02Feb98  
+---------------------
+
+NEW FUNCTIONALITY - OPS
+-----------------------
+
+o Initial state of all MIR components in Stanley should be nodata
+  Make Tools->Reset do this as well
+
+o Dynamically update proposition lists for each component from
+  incoming telemetry -- do not use PROPOSITION_ATTRIBUTES 
+
+o Get rid of all hardcoded schematic info, e.g. IGNORE_INSTANCES,
+  POWER_DEFAULT_INSTANCES, PROPOSITION_ATTRIBUTES, NUM_COMPONENT_MODES,
+  MODULE_TO_COMPONENT.
+
+o Build ipc-recorder/playback to subscribe to GROUND_FROM_TLM_foo msgs.
+  To be used for static input generation for RUN-STANLEY-playback &
+  RUN-STANLEY-ops via/ra/ground/RUN-RAX-GROUND-IPC-PLAYBACK.csh 
+
+o 
+
+
+CHANGES IN FUNCTIONALITY - OPS
+------------------------------
+
+o 
+
+
+BUG FIXES - OPS
+---------------
+
+o 
+
+====================================================
+====================================================
+
+
+version 1.5 - 27Feb98  
+---------------------
+
+NEW FUNCTIONALITY - OPS
+-----------------------
+
+o Menu item "Preferences" now pops up a y-scrollable dialog
+  to handle the large number of preferences.  VMPL and OPS
+  legend colors are now in "Preferences".
+
+o After drawing the selected schematic, Stanley checks the
+  display state attributes of all components and modules,
+  and if any are not-present, or contain the default "no-data"
+  display state, a dialog pops up to inform the user.
+
+o 
+
+
+CHANGES IN FUNCTIONALITY - OPS
+------------------------------
+
+o 
+
+
+BUG FIXES - OPS
+---------------
+
+o 
+
+====================================================
+====================================================
+
+version 1.6 - 18Mar98  
+---------------------
+
+NEW FUNCTIONALITY - OPS
+-----------------------
+
+o Stanley now subscribes to defmessage MIR_GUI_STATE_UPDATE_RAX
+  which will be used to send MIR proposition information from
+  "ground MIR".  Stanley now determines the background color
+  state of components and modules from their "display attribute"
+  defined in VMPL. Component and module proposition pop-up
+  dialog slots are filled from their defined attributes and
+  terminals.  Unexpected propositions are added to the
+  proposition pop-up, if received in the message stream.
+
+
+CHANGES IN FUNCTIONALITY - OPS
+------------------------------
+
+o Color preferences and the node label font preference are
+  applied when the user clicks OK on the Edit->Preferences menu.
+
+o Stanley OPS is no loger dependent on "mbuild" -- it is built
+  utilizing "make".
+
+o Stanley OPS now interfaces with Livingstone file structure
+  tagged RAX_PREINIT_001.
+o 
+
+
+BUG FIXES - OPS
+---------------
+
+o 
+
+====================================================
+====================================================
+
+version 1.7 - 30Mar98  
+
+No changes were made.
+
+
+====================================================
+====================================================
+
+version 2.3 - 02Jul98  
+---------------------
+
+NEW FUNCTIONALITY - OPS
+-----------------------
+
+o Tools menu now has "Component Faults" which lists propositions
+  which are recognized as faults by Stanley.  Clicking on the
+  proposition opens the canvas to the schematic showing the fault.
+
+o
+
+CHANGES IN FUNCTIONALITY - OPS
+------------------------------
+
+o Terminals, attributes, and connections are now drawn.  All
+  schematic objects are now viewable by the user, as well
+  as the component/module header information.
+
+o
+
+
+BUG FIXES - OPS
+---------------
+
+o
+
+====================================================
+====================================================
+
+version 3.0 - 23Dec98  
+---------------------
+
+NEW FUNCTIONALITY - OPS
+-----------------------
+
+o Proposition state viewers with current, timeline, or waveform
+  formatting are now available for components and modules.
+
+o Expanded defrelations one argument types are now handled, at
+  least for the ones which are currently defined.
+
+o
+
+CHANGES IN FUNCTIONALITY - OPS
+------------------------------
+
+o
+
+
+BUG FIXES - OPS
+---------------
+
+o
+
+
+====================================================
+====================================================
+
+version 3.1 - XXMar98  
+---------------------
+
+NEW FUNCTIONALITY - OPS
+-----------------------
+
+o 
+
+CHANGES IN FUNCTIONALITY - OPS
+------------------------------
+
+o
+
+
+BUG FIXES - OPS
+---------------
+
+o
+
+

@@ -1,0 +1,254 @@
+$Id: README,v 1.1.1.1 2000/11/17 03:46:32 bhudson Exp $
+
+This package contains a fairly generic regression test utility.  It's
+geared for the requirements of Livingstone, but should be applicable
+elsewhere as well.
+
+Follow the directions in BUILD to install the package.
+
+The following instructions all assume you're in the l2-regress directory
+(the top-level directory of this package).
+
+If you have unanswered questions, ask me <bhudson@arc.nasa.gov>
+
+
+Running the tests
+=================
+
+First, figure out what group of tests you want to run.  Use
+        ./listgroups
+to get a list.  We'll use the example of the 'cb' group.
+
+Then, simply run the group of tests:
+        ./runtests cb
+This will print out a few lines saying which test it's running, and what
+the result was.  The result will be one of:
+        'passed'
+            -- the test produced identical output to what was expected.
+        'differences noted'
+            -- the test produced different output than expected.
+        'no basis for comparison'
+            -- the script didn't know what to expect.
+        'no output to compare'
+            -- running the test didn't produce any output.
+
+
+The script uses the `base' directory to store the expected output (the base
+for comparison).  You'll notice that this directory has a file
+corresponding to each test (except those that complained they didn't have a
+basis) in the test suite.  These files are under CVS control.
+
+Similarly, the script uses the `out' directory to store the observed
+output.  This directory is generated each time you run `runtests.'
+
+Lastly, the script uses the `diff' directory to store files which result
+from a `diff' (the Unix utility) of the base and out files.  Files are only
+left in this directory if there was a difference (although the directory is
+always created).
+
+Reading the diff output
+-----------------------
+
+Diff output can be hard to read.  The lines that start with a `<' sign
+correspond to lines in the base file (which is on the left).  Lines with a
+`>' correspond to the output file (on the right).  Lines that include a
+number, a letter, then another number, say what kind of operation is going on:
+        `d' means delete.  You'll see one or many lines of the base file
+                being listed; these are missing from the output file
+        `a' means add.  You'll see lines that are in the output file but
+                not the base file.
+        `c' means change.  You'll see a group of lines in the base
+                file, then a line "---", and a list of lines which is
+                what the lines in the base file changed to in the output
+                file.
+
+One thing to note: sometimes you'll see a delete operation followed by an
+add of the same lines.  This means that the order of some lines of text
+changed, as in:
+    base            output
+    ----            ------
+    a               a
+    *               c
+    c               d
+    d               *
+Which will generate a diff of:
+    2d1
+    < *
+    4a4
+    > *
+
+Even knowing how to read the diff output, it can be useful to just know the
+output differs from expected, then look at the new output and see if it's
+reasonable.
+
+
+Looking at the results again
+============================
+
+If you have run the tests, and just want to look at the results again, run:
+        ./reiterate
+This will only run the diff step, using the already-computed output.
+
+Another thing to run is:
+        ./list_no_basis
+which just lists those tests where there is no corresponding file in `base'
+
+
+
+Changing or adding base files
+=============================
+
+Having run the tests, and decided the output, while different, is ok, you
+should fix the base files in order to get rid of the warnings.  Use:
+        ./fix_basis
+
+It will create base files for tests that don't have any, and update them
+for tests that have one.  It does this by copying from the `out' directory
+and, if needed, running the tests first to generate the output file.
+
+If you only want to create base files for tests that don't have any, use:
+        ./create_basis
+
+Having changed the basis, make sure to commit the new bases to CVS so other
+developers don't have to scrutenise the results.
+
+
+
+
+
+Adding new tests
+================
+
+Look at the tests/cb directory.  This is where all the input files for the
+`cb' group of tests lie: the xmpl, hrn, and ini files; and an scr file.
+The README file is just there to visually describe the model; it's not
+actually used.
+
+From there, in a standard installation of Livingstone and the regression
+test suite, you'll have the l2test executable (the executable for
+Livingstone) in ../../../mba/cpp/bin/l2test
+
+Now go back to the l2-regress directory.  There's a file here, `testlist',
+which contains a description of the tests that the scripts use.  The first
+30-odd lines explain the syntax of the file.
+
+You'll eventually come to a line that read "group cb".  This is the
+beginning of the description to the cb group of tests.  The first few lines
+describe defaults that each test will use, unless it overrides them (which
+they don't):
+
+    dir  cb
+Specifies the directory.  `cb' is taken to be a subdirectory of `tests', so
+this line means that the tests in the cb group have their input files in
+the `tests/cb' subdirectory.
+
+    exec ../../../mba/cpp/bin/l2test
+Specifies what program to run when running a test.  We cd into the
+directory beforehand, so the first "../.." gets us back to the l2-regress
+directory, then another '..' and 'mba/cpp' to get into the installation
+area for Livingstone.  The command shouldn't require a particular path.
+
+    in   cb.scr
+Specifies what to use as stdin when running a test program.  If we don't
+say anything, the script closes stdin (by making it read from /dev/null).
+Make sure your program can handle that!  l2test does.
+
+    subs
+        s/FC time: [0-9]+(\.[0-9]+)?/FC time: **/
+    endsubs
+`subs' is short for `substitutions.'  In practice, there are some things in
+the output files that are likely to change often.  Here, for instance, it's
+the time spent doing a find candidates.  The `subs' command allows you to
+filter the output file so that you don't get false warnings when something
+you don't really care about changes.
+
+I had planned to only allow sed-like substitutions.  However, in practice,
+it was very easy to write is such that any perl was legal.  Each line must
+be a legal line of perl; there is no way to split a perl statement over
+multiple lines.  Be careful: you're running in the same instance of perl as
+the script, so if, say, you change a variable value, you could affect the
+run of the script.  Or, if you exit, the script will end there.
+
+See the perlre(1) man page for a description of perl regular expressions,
+perlop(1) for the s/// and other modification operators, perlfunc(1) for
+built-in functions.  See perlvar(1) for a description of perl-defined
+variables you may want to read. The $_ variable is set to the current line
+of the output file being processed.
+
+
+
+Finally, we have a list of tests:
+    test cbfs-5-1000-2
+        args cb cbfs 5 1000 2
+    endtest
+
+Each test here happens to specify only the arguments being passed to
+l2test.  In fact, they could specify any of the things specified above (and
+`args' could be set above); the rule is that each test has its own
+directory etc, but for convenience, the group can specify a default.
+
+Make sure all the tests within a group have a different name; preferably a
+name that means something (even if only to someone in the know).
+
+
+Philosophy
+----------
+
+The philosophy is that there should be a group or a few groups
+which are always run before checking in any change to Livingstone, however
+small -- cb should be one of those.
+
+Then there should be others which are more expensive (slower) to run and
+are only run once in a while -- such as before we do a release.
+
+Yet others should test things we know are broken; that makes us feel good
+when we get around to fixing them.  These tests should have a base file
+that says as its first line that it's broken, so that we don't get a
+message of `passed.'  Ideally there'd be support for an "expected failure"
+in the scripts; maybe later.
+
+There should never be a test in the regression suite that reports `passed'
+when in fact, it's known to be buggy.
+
+A test should succeed on a correctly-installed livingstone no matter what:
+        time of day
+        user
+        installation
+        operating system
+        hardware
+are involved.
+
+
+
+Rolling your own
+----------------
+
+You may choose to add a new test to the `cb' group, or add a new group
+entirely.
+
+First, if you're adding a new model or new input files, create a directory
+for the files.  Use a descriptive name; we have no arbitrary limits on file
+sizes (that I know of), and we don't need to type these names in much, so
+be verbose.
+
+Put all the files you need to run into the directory.
+
+Make sure you can run things by hand from that directory.  Type in
+        ../../../mba/cpp/bin/l2test cb < cb.scr
+for instance.
+
+Add the test or the group of tests to the testlist.  `cb' should be the
+first group; after that, I don't much care.
+
+Make sure to put in substitutions such that:
+        a- things like time and memory addresses are removed or at least
+           replaced by something that doesn't change from run to run,
+           machine to machine, or after a very minor change to
+           livingstone.
+        b- absolute paths are replaced by something that doesn't change
+           from user to user or OS-to-OS
+        c- sequence numbers are ignored so that adding/removing one event
+           doesn't report all further sequence numbers as being changed
+        d- the printable value of the floating-point infinity is
+           common among platforms (I've seen -1#INF, Inf, and inf)
+        e- temp files (like /tmp/0123ABCD) are replaced.

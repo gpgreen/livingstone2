@@ -1,0 +1,521 @@
+Reading model file(s): cb.{xmpl,hrn,ini}
+Read `cb'
+Search settings:
+   Search type               = cover
+   Max rank                  = 10
+   History length            = 2
+
+   Max candidates tracked    = 5
+   Progress style            = full
+   Find Candidates style     = the tracker default fc
+---------------
+Step 16; 331 variables; 0 conflicts before; 0 after.
+Cover: search termination is unimplemented
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+Step 16; 331 variables; 0 conflicts before; 3 after.
+Cover: search termination is unimplemented
+The 3 candidates are:
+   Candidate 0)
+        -#cbAndLed.cb15.modeTransition=tripped :2
+
+   Candidate 1)
+        14#cbAndLed.cb15.modeTransition=tripped :2
+
+   Candidate 2)
+        15#cbAndLed.cb15.modeTransition=tripped :2
+
+
+Step 16; 331 variables; 3 conflicts before; 32 after.
+Cover: search termination is unimplemented
+The 81 candidates are:
+   Candidate 0)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 1)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 2)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 3)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 4)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 5)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 6)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 7)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 8)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 9)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 10)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 11)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 12)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 13)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 14)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 15)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 16)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 17)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 18)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 19)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 20)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 21)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 22)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 23)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 24)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 25)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 26)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 27)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 28)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 29)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 30)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 31)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 32)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 33)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 34)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 35)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 36)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 37)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 38)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 39)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 40)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 41)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 42)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 43)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 44)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 45)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 46)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 47)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 48)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 49)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 50)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 51)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 52)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 53)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 54)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 55)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 56)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 57)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 58)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 59)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 60)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 61)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 62)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 63)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 64)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 65)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 66)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 67)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 68)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 69)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 70)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 71)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 72)
+        15#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 73)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 74)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 75)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 76)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        15#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 77)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        15#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 78)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        14#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 79)
+        14#cbAndLed.cb2.modeTransition=tripped :2
+        14#cbAndLed.cb6.modeTransition=tripped :2
+        -#cbAndLed.cb12.modeTransition=tripped :2
+        15#cbAndLed.cb4.modeTransition=tripped :2
+
+   Candidate 80)
+        -#cbAndLed.cb2.modeTransition=tripped :2
+        -#cbAndLed.cb6.modeTransition=tripped :2
+        14#cbAndLed.cb12.modeTransition=tripped :2
+        -#cbAndLed.cb4.modeTransition=tripped :2
+
+

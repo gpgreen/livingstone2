@@ -1,0 +1,90 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+#
+# VC++ 6.0 (nmake) by will taylor 20sept01
+#
+
+#
+# Project directories
+#
+# ROOT    = top of source tree
+#
+# TMPDIR  = location where .obj files should be stored during build
+#
+# TOOLS32 = location of VC++ 32-bit development tools. Note that the
+#	    VC++ 2.0 header files are broken, so you need to use the
+#	    ones that come with the developer network CD's, or later
+#	    versions of VC++.
+#
+# INSTALLDIR = where the install- targets should copy the binaries and
+#	    support files
+#
+
+TOOLS32         = $(MSVCDIR)
+TOOLS32_rc      = $(MSDEVDIR)
+
+SOURCE_ROOT     = .
+INSTALLDIR	= $(L2_ROOT)\l2-tools\stanley-jmpl\bin
+
+# Set NODEBUG to 0 to compile with symbols
+NODEBUG = 1
+
+#
+# You should not have to modify anything further in this makefile
+#
+
+
+MAKE 	  	= $(TOOLS32)\bin\nmake -f makefile.win32
+
+#
+# System calls
+#
+
+CP      		= copy
+RM      		= del
+MKDIR   		= -mkdir
+
+#
+# Source and Build Paths
+#
+C_DIR		= $(SOURCE_ROOT)\src\c
+
+bin/stanley-bin:
+   cd $(C_DIR)
+   $(MAKE) 
+   cd ..\redir
+   $(MAKE) 
+   cd ..\..\interface
+   $(MAKE) 
+
+## build XEmacs tag table -- cannot do it here
+## must be done under Cygwin
+#   cd $(L2_ROOT)\l2-tools\stanley-jmpl\src
+#   load-stanley -tags
+
+## create links, since CVS does not handle links
+   @echo "Building help1vmpl.txt soft link to README-STANLEY-VJMPL.txt"
+   cd $(L2_ROOT)\l2-tools\stanley-jmpl
+   $(CP) README-STANLEY-VJMPL.txt help1vmpl.txt
+   @echo "Building help1ops.txt soft link to README-STANLEY-OPS.txt"
+   $(CP) README-STANLEY-OPS.txt help1ops.txt
+   @echo "Building help2.txt soft link to README-SCHEMATIC.txt"
+   $(CP) README-SCHEMATIC.txt help2.txt
+   @echo "Building help3.txt soft link to README-TEST.txt"
+   $(CP) README-TEST.txt help3.txt
+   cd $(L2_ROOT)\l2-tools\stanley-jmpl\interface
+   @echo "Building stanley soft link to RUN-STANLEY-VJMPL.csh"
+   $(CP) RUN-STANLEY-VJMPL.csh stanley
+   @echo "Building l2tools soft link to RUN-L2TOOLS.csh"
+   $(CP) RUN-L2TOOLS.csh l2tools
+
+clean:
+   cd $(C_DIR)
+   $(MAKE) clean
+   cd ..\redir
+   $(MAKE) clean
+   cd ..\..\interface
+   $(MAKE) clean

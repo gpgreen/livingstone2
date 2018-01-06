@@ -1,0 +1,2596 @@
+# $Id: list-released.text,v 1.1.1.1 2006/04/18 20:17:28 taylor Exp $
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+
+Stanley VMPL Version Release Notes
+====================================================
+====================================================
+
+version 0.1 - 23Jul97
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+
+o Components, modes, and transitions can now be defined by
+  Stanley.  Stanley created components can now be instantiated
+  into modules. (Writing component Lisp code not available yet)
+
+o Added Stanley version number.
+
+
+BUG FIXES
+---------
+o The Palette isn't visible initially, which is correct.
+  The Definitions menu option to "Show Class Definition
+  Palette" is dim initially, which is correct.  I went
+  into "Open Class Definition" in File menu, cancelled
+  the dialogue.  The "Show Class Definition Palette"
+  menu item was then active, which appears incorrect. BM
+
+  Proper checking now done.
+
+o Error during module instance instantiation where
+  instance var was `?name' and value entered was
+  `(rt-name ?name)'. PN
+
+  Substitution logic corrected.
+
+o Inherited terminal of an instance of REMOTE-TERMINAL,
+  when instantiating module RT-MODULE with ?name =>
+  (rt-module ?name); and ?rt-name => (rt-name ?name):
+  was `(comm-status-in ?rt-name)', rather than
+  '(comm-status-in (rt-name ?name))'. PN
+
+  Root module was not having instance values applied 
+  to it -- this is now done.
+
+o Opening "parent-link" node leaves a tall, narrow wire
+  rectangle on the canvas. PN
+
+  Appropriate geometry offsets were applied to make it
+  disappear.
+
+o `File->New Class Defintion' marks canvas as modified, so
+  if user then enters nothing, there is still a discard
+  dialog if `File->New Class Defintion' is selected again.
+  PN
+
+  Set canvas to unmodified after `File->New Class Defintion'
+
+o In the dialogue resulting from Edit Class Definition,
+  I entered some documentation, clicked on OK, and then
+  tried looking at the documentation again, but it wasn't
+  there.  I tried twice to be sure.
+
+  Saved inputs in global variables, so they are available
+  to user.
+
+o dialog focus prevents other Stanley actions from being done
+  while in a dialog.
+
+  Use tk_focusFollowsMouse to allow other operations -
+  <tab>ing within a dialog still works
+
+o deleting an instance (palette-d ?name), and then reinstantiating 
+  with the same name causes back-to-back error popups: "instance 
+  ?NAME_P16 of component class NEW_PALETTE already exists!" and 
+  "instance (valve-x (palette-d >name)) of component class 
+  THRUST-VALVE already exists!"
+
+  .scm file contained  pirGenInt_global values which resets its
+  current value and prevents it from continually counting.
+  This behavior has been changed.
+
+o In the dialogue resulting from Edit Class Definition,
+  changing the Instance Name from ?name to ?palette,
+  and then clicking OK put Stanley into the error handler
+  offering a stack trace.
+
+  Numerous substitution problems were corrected.
+
+o In the dialogue resulting from Edit Class Definition,
+  I clicked on the FACTS canvas.  Emacs took quite a while
+  to come up.  [The emacs-livingstone emacs also popped to
+  the front for a second and then got iconified.]
+ 
+  Instead of goig thru Emacs-Livingstone, the Emacs call 
+  goes thru a shell command -- thus is much faster.
+  A synchronization dialog had to be added which requires
+  a mouse click after exiting Emacs.  Other Stanley functions
+  are avialable during Emacs sessions.
+
+
+====================================================
+====================================================
+
+
+
+====================================================
+
+version 0.2 - 29Jul97
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+
+o Class definition Lisp code can now be generated for
+  defcomponents.  Lisp code generation and formatting
+  for defmodules has been made more efficient.
+
+
+CHANGES IN FUNCTIONALITY
+-----------------
+
+o when I click on a terminal that has links associated with
+  it, I don't want to see the terminal information popup for 
+  *all* terminals on the other ends of the links. I only want
+  the terminal I've clicked on.
+
+o move "About Stanley" from File menu to Help menu.
+
+o Following a New Class Definition, the window title
+  changes to reflect the "current defmodule instance: 
+  ?name; defmodule class: DEF-2".  I think it only
+  makes sense to show the class when one is defining
+  a class -- should get rid of the instance.
+  except when no name var 
+  no def in defmodule, etc in all titles & popups, menus
+
+o In the dialogue resulting from Edit Class Definition,
+  the title of the dialogue should refer only to the
+  purpose of the dialogue, not its contents.  Remove
+  references to name, arguments, etc in title.
+
+o In the dialogue resulting from Edit Class Definition,
+  I clicked on the FACTS canvas.  The title of the 
+  Emacs window was "Edit DEF-2 Defmodule class facts".
+  Might have the title instead read 
+  "Facts Editor: Module DEF-2"
+
+o In the dialogue resulting from Edit Class Definition,
+  go for clearer labels on fields: 
+  Relabel "Livingstone defmodule name" to "Module name".  
+  Relabel "instance name" to "Instance variable".
+  Lose the labels "module documentation" and "facts
+  documentation".
+
+o In the dialogue resulting from Edit Class Definition,
+  it may be appropriate to call this something more
+  specific, since the whole definition isn't editable
+  from within the dialogue.  This is what you were trying
+  to do by clarifying the title with name, arguments, etc.
+  Might call it Edit Module Header, Edit Module Information,
+  Edit Module Infrastructure, or something like that.
+
+o In the dialogue resulting from Edit Class Definition,
+  move instance name right below module name.  Move Doc
+  Canvas below Facts Canvas.  Rename "Doc Canvas" to
+  "Documentation", and rename "Facts Canvas" to "Facts".
+
+o In the Palette, instead of having the message for
+  "Active Family: defmodules", can you modify "Item:" 
+  on the fly to indicate, for example, "Modules:" ?
+
+o In the dialogue resulting from Edit Class Definition,
+  shorter length on fields would be better.  Currently
+  fields are so long that horizontal scroll bars are
+  necessary.  I tried typing to the end of a field, and
+  eventually couldn't see what I was typing.  The field
+  should behave like Netscape's URL field -- fixed length,
+  scrolls to show you the end of what you're typing.  30
+  or 40 characters should be plenty.
+
+o In the dialogue resulting from Edit Class Definition,
+  shouldn't have vertical scroll bars unless necessary.
+
+
+BUG FIXES
+---------
+
+o Connections menu is enabled when inputs/outputs/attributes
+  are selected in a defcomponent defintion.
+
+  Disable the Connections menu for component definitions.
+
+o Connections menu is enabled when only one potential
+  terminal is selected, rather than when two are.
+
+  Proper checks are now made.
+
+o For Control-Mouse-L of mode transition grapic arrow, the
+  edit and delete choices have a redundant dialog if there is
+  only one transition form.
+
+  The redundant dialog has been removed.
+
+o Dialog graphic for mode transition editing was ? -- this 
+  seemed confusing.
+
+  Graphic is now a ? inside a user's head 
+
+o "Head" of mode transition arrow must be an ok mode.
+
+  Proper check is made.
+
+o Component mode and transition dialogs have inaccurate
+  labels.
+
+  Corrected.
+
+o Editing component mode names -- the new name is lost to subsequent
+  edits, and the displayed node label is not changed.
+
+  Changing mode name is now handled properly.
+
+o Duplicate transition names can be defined for the same
+  component mode.
+
+ Changing transition name is now handled properly.
+
+o Connections menu is displayed when its operations are 
+  enabled -- judged to be clutter.
+
+  Connections menu operations are now enabled without
+  displaying the menu.
+
+====================================================
+====================================================
+
+
+
+====================================================
+
+version 0.3 - 18Aug97
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+
+o The distinction between Edittable and ReadOnly modes is simply
+  that editting is restricted to the top level.  Dialogues in Read
+  only mode won't have an OK button, and will indicate that they're
+  read only.  Canvases will also indicate they're read only somehow.
+
+o Edit Class Definition menu item will become 'context sensitive.'
+  Introduce a new item called View Class Definition.  Items will be
+  active/dim according to context.
+
+o Issue about allowing multiple dialogues to display information,
+  especially w.r.t attributes and terminals (create unique names
+  for dialogue)
+
+
+CHANGES IN FUNCTIONALITY
+-----------------
+
+o Be consistent with two notions: accessing "local" instance info
+  with <Mouse-L>, and 'expanding, if possible' with <Control-Mouse-L>.
+
+o when editting a component class, the attention window says
+  "<Mouse-L>: component mode or terminal/attribute type; ..."
+  component mode doesn't apply in this context.  Might have
+  <Mouse-L> mean what <Control-Mouse-L> currently means, both
+  for modes and transitions.  I see no need to highlight a transition
+  with <Mouse-L>, as is currently done [the only reason was to
+  delete it via a menu item; but that can be done from within the
+  dialogue just as well].
+
+o clarify the information being conveyed to the user in "LAYOUT 
+  fileOpen mode", just to the left of the horizontal scroll bar.
+  take out LAYOUT 
+
+o Menus
+  o change menu "Help/About" to just "HELP".
+  o move Definitions menu to the left Instances menu.
+  o Power Thermometer is at best a run-time concept, so should
+    remove from VMPL menus.
+
+o Stanley Legend at the bottom needs updating.  The colors described there
+  are more suitable for a run-time Stanley than the Stanley VMPL.  Colors 
+  for VMPL are more like: green for Ok mode, red for Fault mode, orange 
+  for attribute, light green for I/O, and so on.
+
+o In all Edit transition dialogs, remove the need for 
+  "Lisp Editting Done" popup for all emacs lisp editing
+
+o In the Edit transition dialogue,
+  Title should be just "Edit Transition".  Information about
+  'From: PERMANENT_FAILURE' and 'To: NOMINAL' should be first
+  in the dialogue's content; remove from title.  [As a general
+  rule, avoid conveying too much information in the title of
+  a popup]
+
+o In the Edit transition dialogue,
+  Capitalize all field labels: 'Transition Name', 'Transition
+  Cost' and remove 'Transition' => Name & Cost.
+
+o In the Edit transition dialogue,
+  Tab key lands on DOCUMENTATION and WHEN buttons without
+  showing up.  Confusing. Skip buttons
+
+o In the Edit transition dialogue,
+  Rename WHEN to PRECONDITION.
+
+o In the Edit transition dialogue, 
+  Layout should be, Transition Name, Transition Cost, Precondition, 
+  Documentation.
+
+o In the 'Transitions from ..." and related popups,
+  DISMISS should be CANCEL.
+
+o In popup for editting component header definition,
+  change title to Edit Component.  [Component Name appears
+  first in dialogue content anyway.  Having the name in
+  the title too puts the title out of synch when the user
+  edits the name.]
+
+o In popup for editting component header definition,
+  Remove Background Documentation.  Should be possible for user
+  to make comments in along with Background Model.
+
+o In popup for editting component header definition,
+  rename Initially to Initial Conditions.
+
+o In popup for editting component header definition,
+  add Parameter Variables field beneath Instance Variable field.  
+  Allow multiple (possibly zero) args to be specified in single
+  field.
+
+o In popup for editting component header definition,
+  layout should be Component Name, Instance Variable, Parameter
+  Variables, Background Model, Initial Conditions, Initial Mode,
+  Documentation.
+
+o In popup for editting component header definition,
+  when the user clicks on OK, you correctly insist that the user enter 
+  an initial mode (by signalling an error).  You don't insist that the 
+  mode exist on the canvas, so an error currently wouldn't show up until 
+  compile time.  Options, in increasing order of desirability:
+  1) keep it as is.
+  2) warn the user that the mode doesn't exist at the moment, but allow 
+     them to proceed.
+  3) insist (by signalling an error) that the user first instantiate
+      the mode on the canvas.  This seems nice, since you now allow the
+      user to do that in parallel without exitting the current dialogue.
+  4) Figure some way of working an "option button" that is sensitive to
+     the modes currently defined on the canvas, instead of just providing
+     an arbitrary text field for Initial Mode.  [Not familiar with the
+     underlying Tcl/Tk issues with keeping option button up to date when
+     a new mode gets instantiated or one gets deleted.]
+
+  Choose 5): File->Save Class Definition signals an error if the
+  initial mode does not exist on the canvas.
+
+o when inside a module instance (e.g. named 'foo'), the method for
+  returning to the parent requires clarification.  Issues:
+  o the parent icon is currently named ?name, and needs to be named
+    more clearly (foo, something else?)
+  o the parent icon might best be removed from the cnavas all together,
+    replaced say by an accelerator button or somesuch labelled 'up',
+    for example.
+
+  Added up-arrow to node object and Mouse-L pop-up displaying
+  parent class
+
+o Allow user to define new defvalues/relations/symbol-expands without
+  having to exit their current work on a component/module definition.
+
+o When instantiating a module, the user currently does see all of 
+  the substructure of the module being instantiated, which
+  removes something that was somewhat confusing and distracting.
+
+
+
+BUG FIXES
+---------
+
+o I accidentally typed in an instance name incorrectly, and was
+  wanting to edit the instance name.  Currently must delete the
+  instance entirely and reinstantiate from scratch.  Instead,
+  should provide a mechanism for editting an instance.  This is
+  presumably just a matter of bringing up the instantiation window
+  that the Palette uses, initialized with the information for the
+  instance in question. BM & PN
+
+  Mouse-Left now will edit component and module instances, as well
+  as terminal, attribute, connection, mode, and transition
+  instances.
+
+o Bug: don't change classDefType until file:new operation is
+  complete -- user cancel causes error.
+
+  classDefType is now changed at the appropriate time.
+
+
+====================================================
+====================================================
+
+
+
+====================================================
+
+version 0.4 - 16Sep97
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+o Add capability to handle instance names of the form
+  (thrustr ?name z) -- changes to variable substitution
+  logic.
+
+o Add capability to shrink and expand canvas.
+
+o Add capability to create multiple slave canvas windows
+  in operational mode.
+
+o Add operational launch script for user specified screen
+  layout of the master and multiple slave canvas windows.
+
+
+CHANGES IN FUNCTIONALITY
+------------------------
+o None
+
+
+BUG FIXES
+---------
+o Numerous
+
+====================================================
+====================================================
+
+
+====================================================
+
+version 0.5 - 01Oct97
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+o New menu command Livingstone->Select Project:
+  allow user to select any Stanley defined module as project.
+  New menu command Livingstone->Compile Project: 
+  create a "defsystem" file based on the selected project's 
+  dependency tree and compile the corresponding MPL code in 
+  Emacs-Livingstone.
+
+o Writing MPL code (File->Save Class Definition) and
+  compiling project (Livingstone->Compile Project) now
+  return to Stanley when they begin processing in
+  Emacs-Livingstone, so that Stanley does not "freeze"
+  during processing.
+
+o New menu command "Tools->Reconnect to IPC Central Host"
+  will allow Stanley to reconnect to IPC after being
+  disconnected.
+
+
+CHANGES IN FUNCTIONALITY
+------------------------
+o 
+
+
+BUG FIXES
+---------
+o 
+
+====================================================
+====================================================
+
+
+====================================================
+
+version 0.6 - 20Oct97
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+o RUN-STANLEY-VMPL.csh will create the directories and files
+  required for the models of a new MIR project, if the
+  user specifies a value for "project" in the Livingstone
+  section of the "site configurable parameters.
+
+o for RUN-STANLEY-VMPL.csh, change multi-level recursion to 
+  recursion on-demand, i.e. only create nodes and edges that 
+  the user can see.  RUN-STANLEY-ops.csh continues to
+  use multi-level recursion to build master and slave windows.
+
+o Buttons for pop-up secondary dialogs on primary dialogs have
+  been removed.  All user dialogs (instantiate instance,
+  module header edit, component header edit, edge documentation
+  edit, defrelations/defsymbols/defvalues edit, component
+  mode edit, & component transition edit) have embedded
+  widgets, rather than pop-up dialog buttons.
+
+
+CHANGES IN FUNCTIONALITY
+------------------------
+o In the dialogue resulting from Edit Class Definition,
+  the dialogue is cluttered by type information name(token), 
+  documentation(all_characters), etc, and the Attention:
+  message with all the details.  That information is very
+  useful, but confine it to a help box for the dialogue.
+  The HELP button can go in between the OK and CANCEL
+  buttons.
+
+  The type information and Attention information are now
+  presented as "balloon help" when the mouse cursor is
+  over the particular item.
+
+o In the dialogue resulting from Edit Class Definition,
+  in the message line below the Attention: message, should
+  also relegate "<tab> to ..." to the help button.
+
+  Now in "balloon help".
+
+o In the dialogue for Instantiation, same clutter issues
+  apply here as were mentioned above for the Edit Class
+  Definition dialogue.  Introduce a HELP button, change
+  label to "Instance name", change dialogue title to, for
+  example, "Instantiate NEW-PALETTE", lose scroll bars,
+  and so on.
+
+  Label names changed and "balloon help" added.
+
+o In the dialogue resulting from Edit Class Definition,
+  I wanted to access the Palette, but it was disabled.
+  Can you make these independent?
+
+  These operations are now independent.
+
+o In the Edit transition dialogue,
+  remove '(token)', '(all characters)', and all other advice
+  about types.  Put the advice in dialogue HELP.
+
+  Balloon help now handles this.
+
+o In the Edit transition dialogue, with PRECONDITION editting,
+  don't like the need to popup into emacs.  Too many things happening
+  on the screen.  [Might consider avoiding emacs in this case, since
+  the PRECONDITION clause is usually so short.]  Can either move to
+  a Tcl/Tk lisp form editor, or invoke the one used for documentation
+  and live without lisp editting, or somehow embed the emacs window
+  into the dialogue.  In any case, embed the window as part of the 
+  content of the dialogue, rather than making it a popup.
+
+  Precondition editing is now embedded in the dialog as a text widget.
+
+o In the Edit transition dialogue, with Documentation editting,
+  consider embedding the form as part of the content of the dialogue, 
+  rather than making it a popup.  Feel free to increase the size of the 
+  scroll window to a natural size.  Embedding the documentation here makes
+  some sense since it is expected to be reasonably brief.  Need to
+  experiment with this one.
+ 
+  Done.
+
+o In popup for editting component header definition,
+  similar comments apply about removing advice about types into 
+  a HELP button.
+
+  Balloon help now handles this.
+
+o In popup for editting component header definition,
+  embed the Background Model and Initial Condition windows in the
+  main dialogue content, rather than having them be popups, similar 
+  to the PRECONDITIONS window in the Edit Transition dialogue.
+
+  Done.
+
+o In popup for editting component header definition,
+  Again need to experiment with the decision to embed Documentation
+  in the dialogue or keep it a popup.  Difference here with Documentation
+  in the Edit Transition dialogue is that documentation tends to be
+  longer, which suggests keeping it a popup.
+
+  Documentation is now embedded.
+
+o To edit transitions:
+  Let's change the sequence of popups {"Transition from ...",
+  "Edit which definition", "Edit Transition"} to a single Dialogue
+  entitled "Edit Transitions".  One way of laying this out is to provide 
+  a list of selectable transitions on the left (as in the palette) 
+  reflecting the transitions that are currently defined; when the user 
+  selects a transition, the definition of that transition appears on the 
+  right (as it appears in the Edit Transition dialogue, modulo the 
+  suggestions for changing the Edit Transition dialogue content).  There 
+  should be buttons on the left hand side for adding a new transition, and 
+  deleting the selected transition.
+
+  Transitions are now handled in a no-popups mega-widget.
+
+o 
+
+
+BUG FIXES
+---------
+o In the dialogue resulting from Edit Class Definition,
+  I editted the module name from "def-2" to "new-palette".
+  I then clicked on the FACTS canvas.  The title of the 
+  Emacs window was "Edit DEF-2 Defmodule class facts".
+  Might have the current dialogue value reflected in the
+  title, rather than the saved value.
+
+  Not applicable, since mega-widget now has overlaid Facts
+  Editor.
+
+o In the dialogue resulting from Edit Class Definition,
+  the Palette window was raised over the dialogue box.
+  Clicking on the Palette (within the x-y-coordintates
+  of the underlying the dialogue box's bounderies) 
+  resulted in the dialogue becoming active, which is
+  not what should happen.
+  
+  With independent operations, this behavior cannot be
+  replicated.
+
+o In the dialogue resulting from Edit Class Definition,
+  I clicked on the FACTS canvas.  I typed in some facts.
+  I saved the file.  It wasn't clear that I had to also
+  exit emacs.
+
+  With the coupled overlaid Facts Editor, the OK & CANCEL
+  properly handle saving what is typed in, and exiting
+  Emacs.
+
+o Editing instance value dialog for ATTITUDE-CONTROL-SYSTEM
+  <tab> in last entry does not scroll dialog to next entry
+
+  Does not apply, since the top-level dialog no longer has
+  scroll bars, rather it is sized to display all <tab>able
+  entry slots.
+
+====================================================
+====================================================
+
+
+====================================================
+
+version 0.7 - 12Nov97
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+o 
+
+
+CHANGES IN FUNCTIONALITY
+------------------------
+o "File->Save Defintion" previously was hung waiting until
+  Emacs-Livingstone completed generating the Lisp code from
+  the saved schematic file.  Now the connection to Emacs-
+  Livingstone is asynchronous and there is no wait -- the
+  user can continue using Stanley functionality.
+
+o Overlaid Emacs widgets in dialogs have been replaced by text
+  widgets which have Emacs key bindings.  They also now have no 
+  menu bars and their foreground & background colors are specified.
+  Parentheses matching is supported, indenting is not.
+
+o In File Menu remove "Class" from the menu item names.
+
+o Enlarge & shrink menu bar buttons are now in a menu named "Resize"
+
+o Defintions menu item "Show Class Definitions Palette" is now
+  "Instantiate Class Defintion".  It brings up the class definition
+  palette, allows user selection, and then is iconified.  This is
+  necessary since having the palette deiconified at all times causes
+  problems: 1) typing speed in text widgets is very slow, and 2)
+  tcl event handling of mouse clicks does not work properly.
+
+o Title "Stanley VMPL =>" is now "Stanley VMPL"
+
+o Remove "Class" from the File menu item names.  
+
+o In submenues for New and Open, remove the "Def" prefix (users
+  shouldn't have to see that syntax) and add "..." to the item
+  names to signal the ensuing dialogues.
+
+o Stanley now kills Emacs-Livingstone in response to "File->Quit",
+  after the user responds with Yes to the confirmation dialog.
+
+o Relation, Symbol-Expansion, and Values dialogues:
+  the template in each case is commented out since it isn't 
+  compilable code.
+ 
+
+
+
+BUG FIXES
+---------
+o attribute/terminal documentation widget input generated an error
+  dialog: fieldname type not recognized.
+
+  Proper fieldname type is now used.
+
+o Emacs-Livingstone does not indicate that
+  (mk::compile-system :mir-project-models) has been executed when
+  "Livinstone->Compile Project" is selected.
+
+  This is now done.
+
+o After "File->Open", attribute, terminal, and mode objects are not
+  movable with Mouse-middle dragging, when at the schematic top level.
+
+  Corrected.
+
+o The "Definitions->Edit Class Definition Header" dialog's vertical
+  size is too large for SunSparc 5 monitors.
+
+  The vertical height is now less and fits on a SunSparc 5 monitor.
+
+o The Stanley VMPL window flashes 3 times between initial creation and
+  the completion of Stanely initialization.
+
+  This has been corrected.
+
+o The Stanley VMPL window flashes after "File->Open Class Definition"
+  selection is made, and root node is temporarily shown.
+
+  This has been corrected.
+
+o Menus all have a "--------" item that result in a popup window
+  with the menu items therein.  Same problem is there in submenus as well.
+
+  The no "tear-off" option is now used.
+
+o Double clicking on components, modules, terminals, attributes, and
+  transitions generates two dialogs, rather than one.
+
+  Change key bindings and add a 0.6 second delay to dialogs to
+  correct it.
+
+o For terminal and attribute dialogs, add Type label to the 
+  option box, not just in bubble help.
+
+
+====================================================
+====================================================
+
+
+====================================================
+
+version 0.8 - 20Nov97
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+o The Lisp text widgets now support line indentation.
+
+
+
+CHANGES IN FUNCTIONALITY
+------------------------
+o The 0.5 second delay in the component/module/mode/transition/
+  terminal/attribute/edge dialogs has been removed, since a
+  new scheme to make these dialogs unique to Stanley has been
+  implemented.
+
+o Relation, symbol, and value "File->New Definition" and 
+  "File->Open Definition" dialogs are now consistent in
+  "look-and-feel" with the other New/Open Definition dialogs.
+
+o The stand-alone "Instantiate Definitions Palette" has been
+  replaced with multiple cascading menus descending from
+  "Defintions->Instantiate Defintion".  The alpha grouping
+  cascade menu is added for lists of more than 15 entries.
+  These menus are updated when new components/modules/
+  relations/symbols/values are created by the user.
+
+o The "Select Project" menu selection which produed a free
+  standing select button, has been replaced with a cascading
+  menu.
+ 
+
+
+
+BUG FIXES
+---------
+o Re-initialization of Stanley by "File->New Definition" causes
+  top-level instances to be on incorrect canvas, so that after
+  Opening them, the user cannot return via the parent link.
+
+  Re-initialization logic corrected.
+
+o Internal data structures containing instances to be instantiated
+  are being corrupted when the class instance is instantiated 
+  more than once.
+
+  The .i-scm file is always read at instantiation time to prevent
+  corruption.
+
+o Component headers incorrectly require "Background Model" and
+  "Initially" forms.
+
+  They are now optional.
+
+o Module headers incorrectly require "facts".
+
+  This is now optional.
+
+o Editing two terminal/attribute dialogs in parallel do not
+  have unique Type fields.
+
+  The Type fields are now unique.
+
+o "File->New Definition->relation/symbol/value" asks user to
+   save current modified component/module work.
+
+   Creating new relation/symbol/value schmatics now does not
+   depend on component/module status.
+
+o  Clicking OK on relation/symbol/value to save the schematic
+   turns off the "modified" flag for current component/module.
+
+   The "modified" flag is now not affected by relation/symbol/value 
+   operations.
+
+
+====================================================
+====================================================
+
+
+====================================================
+
+version 0.9 - 05Dec97
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+o I created a Value called three-silly-values.  I had a dialogue box up
+  already, and when I rechecked the available type options, the new type
+  three-silly-values wasn't available.  When I cancelled the dialogue and 
+  reopened it, the new Value was then available.  This is fine, I think.
+
+  The option menu for active terminal/attribute node dialogs are now updated
+  dynamically, when new values or one argument relations are defined.
+
+o Connect terminals of component/modules with rubber-banding, rather than
+  select an in button and an out button and click C-c. Connections are
+  selected by moving the mouse cursor over the connection.  Editing the
+  edge documenation, changing the number of connection "breaks", and 
+  deleting the connection are enabled.
+
+
+
+CHANGES IN FUNCTIONALITY
+------------------------
+
+o In ok-mode dialogue, title is 'Edit OK-MODE Mode'.  Change to 
+  'Edit OK Mode'.  Hide things that look like internal names from
+  the user when possible.  Same in FAULT-MODE dialogue.
+
+o indenting doesn't work "as expected" for me, whatever that might mean:
+(iff (nominal (status ?name))
+  (and (in ?name)
+    (out ?name)))
+
+  "Dumb" indenting has been improved to "pretty smart" indenting:
+(iff (nominal (status ?name))
+     (and (in ?name)
+          (out ?name)))
+
+o Main title bar: 'component class: DEF-2'.
+  I don't like conveying information in title bars, but if we must, I'd 
+  prefer that this current component/module definition information live 
+  instead where the 'Project: FOO' information now resides.  If there's
+  nowhere else for the 'Project: FOO' information, move it onto the title 
+  bar instead.
+
+  "Stanley VMPL" stays in window title bar; "component/module class:
+  class name" is now in a label between the horizontal scroll bar and
+  the "Attention:" label.
+
+o can't place objects in the upper left corner of the canvas -- it
+  automatically replaces the object nearer to the middle if I try.
+  I understand why you want to prevent things in the upper left
+  corner, but it's confusing to the user that it isn't marked as
+  off limits.
+
+  Draw a black rectangle around exclusion area.
+
+o in component layout, terminals appear as little boxes on the canvas
+  providing very little information content.  They aren't connected with
+  modes, for example, they just sit there on the canvas by themselves.
+  You have to click on each one to see what it refers to, since the
+  names aren't displayed as they are with modes.  What do you think
+  if we:
+  o have all terminals and attributes display their names.  They can be
+    of an appropriate fixed width, with the names truncated beyond that.
+    This would effectively display the whole interface to the user.
+  o have all terminals and attributes appear on one side of the canvas 
+    in an orderly fashion, to ease readability.  No need to have them
+    interspersed with modes if they aren't being connected with modes.
+    So the focus would be seperated into two parts -- one on the state 
+    diagram, and the other on the interface.
+
+  Display name in node for terminals and attributes.
+
+o In dialogues where you give the user the options for selecting a type,
+  such as in terminal instantiation, you're omitting relations from that 
+  option list.  The list should consist of all Values (as you have) plus
+  Relations that have a single argument, I believe.
+
+  Keep track of 1 arg relations -- add to terminal/attribute terminal
+  types list.
+
+o instantiating an input-declaration didn't request a name for the
+  terminal?  Oversight, or am I missing something?
+
+  Declarations get there name when they are connected to a component/module
+  terminal.  input/output/port-declararations and 
+  input/output/port-terminators are now only allowed for modules,
+  not for components.
+
+
+
+BUG FIXES
+---------
+o In ok-mode dialogue, Model editor has bug when user types '?'.
+  Extra spaces get appended after the '?'.  But it only happens
+  when '?' is typed inside any parens.  If it's typed outside of
+  balanced parens, there's no problem.
+
+  Character check was "glob" matching, where ? matchs any character.
+  Proper check for ? is now made.
+
+o In fault-mode dialogue, doesn't recognize various legal probabilities
+  anymore {unlikely, rare, etc.}.  Error says that 'rare' isn't a
+  defsymbol-expand, or somesuch.  But it is.  To work around it,
+  I'm forced to enter numbers directly rather than symbols.
+
+  Wrong global variable was being checked.
+
+o When a component is deleted, its modes, terminals, and attributes are
+  not.
+
+  All descendents of components are now correctly removed.
+
+o I created a Value called 3-silly-values.  The alpha-list you provide to 
+  the user to select types doesn't handle this, since it starts with a
+  digit?
+
+  There is now a non-alpha category called Other.
+
+====================================================
+====================================================
+
+
+====================================================
+
+version 0.92 - 11Dec97
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+o 
+
+
+
+CHANGES IN FUNCTIONALITY
+------------------------
+
+o when rubber-banding, it's unnecessary (in fact annoying) to
+  have the popup come up with name/type information of the
+  terminal -- first time I tried rubber-banding, the popup
+  got in the way of where I wanted to drop the head of the band,
+  and prevented the connection.  The bubble help is more than 
+  enough -- don't need the popup too -- just make sure bubble
+  help stays out of the way of anything the user might want to 
+  connect with.
+
+  name/type popup no longer exists for terminal buttons.
+
+o when filling in models, it really helps to have (as we now do) the 
+  terminal/attribute names made available for reference.  What's
+  missing is a way of conveniently accessing the legal values for 
+  the terminal.  Even editting the terminal only gives you the
+  type name, not the values.
+
+  How about right-mouse-click on the terminal/attribute popping up 
+  (like bubble help, not as a dialogue) information about the type
+  (name and possible values)?
+
+  and/or
+
+  How about right-mouse-click on the Type field in the dialogue
+  for the terminal/attribute popping up (again like bubble help)
+  the possible values?
+
+  The former is great when editting models -- then you needn't
+  open up a dialogue for the terminal/attribute to get the type 
+  name, and then *also* open up a dialogue for the definition of 
+  that type name to get the possible values.
+
+  The latter is great when instantiating the terminal/attribute in 
+  the first place -- the user wants to know what those type names 
+  really are (in terms of possible values) alot of the time.
+
+  Shall we do the former?  and the latter?
+
+  Add type value values to balloon help for terminal buttons. Update
+  them if terminal types are edited.
+  Terminal edit dialogs now have  balloon help for "Type" which
+  shows the the values of the type.
+
+
+o exclusion zone looks odd in a new component/module.
+  Keep thinking about an alternative.
+
+  exclusion zone is now colored light gray.
+
+
+BUG FIXES
+---------
+
+o don't let the user save the current definitions when there's
+  a dialogue open.  Rather, popup with a message telling them
+  to finish up with the dialogue, and perhaps also bring that
+  dialogue to the front.
+
+  In fileSave routine check for outstanding edit dialogs, inform
+  user and do not complete save operation.
+
+o there seems to be a beeping sound whenever you're in
+  a lisp-edit widget and press return in certain places.
+
+  (zero-values-equal<beep>
+   (flow-in ?name)
+   (flow-out ?name))<beep>
+
+  In the above, for example, beeps are marked.  Is this
+  under your control?  Beeps incorrectly suggest the user
+  is doing something they shouldn't.
+
+  Beeps have been removed.
+
+o Pure text widgets have Lisp mode paren matching and indenting.
+
+  Pure text widgets now do not have any Lisp mode behavior.
+
+
+====================================================
+====================================================
+
+
+====================================================
+
+version 1.0 - 18Dec97  
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+
+o Both synchronous and asynchronous calls from Stanley to 
+  Emacs-Livingstone are now available.
+
+o What about deleting definitions once they're created?
+
+  "File->Delete Definition" added.  Dependencies are checked
+  for components and modules -- deletion is not allowed if
+  dependencies exist.  For relations, symbols, and values, no
+  dependency tracking is done -- user is warned of this, and
+  asked to proceed or not.
+
+
+
+CHANGES IN FUNCTIONALITY
+------------------------
+
+o Is the Resize menu appropriate at model definition time (i.e. for 
+  VMPL), or should it be limited to operational mode?
+
+  Resize now only is available in operational mode.
+
+o Merge menus Instances and Connections (and, if appropriate, Resize)
+  into a single menu "Schematic".
+
+  Connections menu no longer exists.  Instances is renamed Schematic.
+
+o Menu item "About Stanley ..." might also include:
+    o the current version,
+    o how to report bugs and/or provide feedback,
+    o is it still appropriate to acknowledge the descendance of
+      Stanley VMPL from Laird's Dataflow code, or have we now
+      redesigned/rewritten it sufficiently to call our own?  I'm
+      happy to acknowledge the descendance in a brief "Heritage:" 
+      section after the above information is provided.
+
+  Done.
+
+o Menu item "Help ...":
+    o Generally, there is alot of reference to DS-1 development 
+      specifics that will not apply in general.  Look at how to 
+      weed those references and dependancies on DS-1 out of the
+      generic Stanley distribution for future missions.
+    o Item "Setting Up and Running Stanley":
+      o Seperate out detailed information that you currently have
+        here and provide a *minimal* set of instructions for the 
+        VMPL user.  Have different sections for Check out, Build,
+        Install, Configuration, etc.  In particular, all ops mode 
+        info and all developer info ought to be seperated out.
+    o Item "Mouse and Menu Conventions":
+      o Again, some obsolete parts here.
+
+  Done.
+
+
+BUG FIXES
+---------
+
+o File->Save Definition for class types symbol/relation/value
+  set the schematic modified flag, which only should be set
+  by changes to component/module schematics.
+
+  Corrected.
+
+o File->Open Definition of module pipe gets "divide by zero" in
+  getArrowLocation
+
+  Updating Tcl/Tk from release 8.0 to 8.0p2 requires that
+  stanley-bin be rebuilt, and requires corresponding changes 
+  to ensure that mode transitions are drawn on raised,
+  rather than buried, canvases.
+
+o Ballon help fails for component terminal which has an instance
+  name with "()"s in it.
+
+  Alternate syntax corrects the problem.
+
+o rcs-thruster-palette: moving two components close to each other
+  causes 2-break connection to not perform properly.
+
+  Calculate a new break point, each time the components are moved.
+
+o Snap to X Grid on/Off enable/disable states not set correctly.
+
+  Fixed.
+
+o In the Tools menu, I assume the "Delete all node terminal type 
+  windows" menu item can now be removed since we've replaced popups 
+  with bubble help.  The menu item "Delete all Node/Edit View Windows" 
+  has "all" twice.  It appears to even delete dialogues that have changes 
+  -- so it's like cancelling all open dialogues.  I don't think I 
+  would ever use this.  Why did you feel it was desirable?
+
+  Remove "Delete All Node Edit/View Windows".  Add active edit/view 
+  dialog check, now in "File->Save Definition" to all other File menu
+  options.
+
+o File->New Definition->relation/symbol/value and File->Open Definition->
+  relation/symbol/value editing dialogs do not check for pre-existing 
+  definition names.
+
+  These checks are now made, and the user is warned.
+
+o File->Open Definition->component/module editing dialogs do not check 
+  for pre-existing defintion names.
+
+  These checks are now made, and the user is warned.
+
+o File->New Definition->relation/symbol/value and File->Open Definition->
+  relation/symbol/value editing dialogs cannot be saved when there are
+  outstanding component/module edit dialogs.
+
+  This is now allowed.
+
+o In Help: why do some popups come up without a title bar?  In this case,
+    both the "Help..." and "About Stanley..." menu items result
+    in popups that don't have title bars.  So I can't move them
+    around.  Is this a difference between my window manager and
+    yours?
+
+  These popups are now created with "group" rather than "transient"
+  window manager option.
+
+====================================================
+====================================================
+
+
+
+====================================================
+
+version 1.1 - 08Jan98  
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+
+o 
+
+CHANGES IN FUNCTIONALITY
+------------------------
+
+o Mouse-M dragging of terminal connections, which showed a
+  rectangle during the dragging, now shows a properly
+  restricted 3-sided rectangle.
+
+o We need to allow for the case of an empty model, for example,
+  in the case of unknown modes.  An empty model simply means that
+  there are no claims made about what's true in that mode.  Please 
+  loosen the validation routines appropriately.
+
+  Allow no entry; in Lisp code, no :model form
+
+o Space constraints in the Edit Definition dialogue -- need more
+  comfortable reading room in the Background, Initially, and Doc 
+  fields.  Need to look at making them bigger, either by:
+  removing Background, Initially, and Doc fields from the Edit
+  Definition dialogue and having them instead edittable by other
+  means:
+    o directly from the Definitions menu, as (sub?)menu items.
+
+  Edit definition header becomes dynamic
+   c/m: name, variables, & documentation
+   c: background model
+   m: facts
+   c: initial conditions - initial mode & initially
+
+o In terminal dialogues, the bubble help that lists the legal
+  values for the current "Type" should be triggered when the 
+  mouse is over the clickable option box, not the "Type" label 
+  itself.
+
+  Done.
+
+o "port" ought to be called something better, like "bi-directional"
+  or "in-out" or somesuch.  MPL uses "port", but that shouldn't
+  prevent Stanley from conveying something meaningful to the user.
+  Not sure where all the places are that Stanley exposes "port" to 
+  the user, but certainly in the terminal instantiation menu item.
+
+  Show bi-directional to the user.
+
+o Show terminal type & values for component terminals via balloon help.
+
+  Done.
+
+o
+
+
+BUG FIXES
+---------
+
+o If a connected declaration terminal is reconnected to
+  another component/module terminal, the old connection
+  is not deleted.
+
+  It is now deleted.
+
+o Cannot create a transition from an OK mode to another
+  OK mode.
+
+  Transitions can now be created from either an OK or FAULT
+  mode to an OK mode.
+
+o For attributes defined in components, where are you placing the generated
+  code associated with Facts?  I gather it gets placed in the background
+  model?  In that case, I assume that code segments from multiple attribute
+  Facts would get properly conjoined to form a single legal wff.
+
+  Thus defcomponent x, merge :attribute :facts into 
+  :background :model with any input from background model dialog; and 
+  defmodule x,  merge :attribute :facts into module :facts with any 
+  input from header facts.
+
+o Typing Alt-X in a lisp widget brings up a command line right
+  beneath the edit window.  What are all of the legal commands
+  for the user?  Typing 'quit', for example, brings me into
+  the debugger.  Issues:
+    o enumerate the legal commands in the command line.
+    o enumerate the legal commands in the editor.
+    o make sure none of these do things we're not expecting.
+
+  "diamond"-x or Alt-x or Meta-x is now disabled.
+
+o Need to loosen validation routines to allow general lisp forms
+  in Facts.  For example, I have:
+
+  ;; Rules for propagating the last commanded rcs mode
+  (if (rcs-z-for-y (acs-mode-cmd-in ?name))
+   ;; then set the next value to rcs-z-for-y
+   (next (rcs-z-for-y (last-commanded-rcs-mode ?name)))
+   (if (rcs-x-for-y (acs-mode-cmd-in ?name))
+    ;; then set the next value to rcs-x-for-y
+    (next (rcs-x-for-y (last-commanded-rcs-mode ?name)))
+    ;; else sustain the current value
+    (and
+     (sustain-proposition
+      (rcs-z-for-y (last-commanded-rcs-mode ?name)))
+     (sustain-proposition
+      (rcs-x-for-y (last-commanded-rcs-mode ?name))))))
+
+  and when I click OK it reports an error.
+
+  General Lisp forms are now accepted.
+
+o
+
+
+====================================================
+====================================================
+
+
+====================================================
+
+version 1.2 - 09Jan98  
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+
+o The user can now specify the dialog text font (it is required
+  to be fixed width).  The default is 14 point, which is the
+  unix default.  Stanley dynamically determines overall widget sizes 
+  from the font specification
+
+
+CHANGES IN FUNCTIONALITY
+------------------------
+
+o 
+
+
+BUG FIXES
+---------
+
+o Mode transitions editor corrected to:
+  o in the left selection list, select each newly saved
+    transition;
+  o change CANCEL button to EXIT, since each SAVE actually
+    updates the transition data structure;
+  o after DELETEing a selected transition, disabled the DELETE
+    button to force the user to make a new selection before
+    the DELETE button becomes active.
+
+====================================================
+====================================================
+
+
+
+====================================================
+
+version 1.3 - 14Jan98  
+---------------------
+
+NEW FUNCTIONALITY
+-----------------
+
+o Menu selection "File->Preferences" added to allow users to customize
+  some initialization settings.
+
+o Menu selection "Project=>Select Project" now exits from the current
+  Emacs-Livingstone Lisp image and loads a fresh one.
+
+
+CHANGES IN FUNCTIONALITY
+------------------------
+
+o 
+
+
+BUG FIXES
+---------
+
+o Do not load :mir-project-models in RUN-STANLEY-VMPL.csh,
+  load :mir-development, do not load models until user does 
+  "Project=>Select Project".
+
+  Done.
+
+o Instantiate INPUT terminal with Name = (acs-mode-cmd-in ?name).
+  Clicked on OK. Got message: "Adding ?name to defcomponent arglist".
+  o Name in header is ?name, so this shouldn't happen.
+  o Message should reflect current component/module name: 
+    "Adding ?name to acs-control-mode arglist" 
+    [i.e. defcomponent --> acs-control-mode]
+
+  Done.
+
+
+
+====================================================
+====================================================
+
+
+
+====================================================
+
+version 1.4 - 02Feb98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o 
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o For componenets, "Definition->Init Definition Header->Initial Conditions" 
+  dialog shows an ERROR pop-up when initial mode is not entered, or does
+  not exist.  "File->Save Definition" shows an ERROR when initial mode 
+  does not exist.
+
+  These are changed to WARNINGS, giving the user the choice of proceeding
+  or not. 
+
+o 
+
+
+BUG FIXES - VMPL
+----------------
+
+o If there is an outstanding relation, symbol, or value dialog 
+  from "File->Open Definition", and "File->Open Definition" is
+  invoked again for the same class name, two dialogs result.
+
+  Before starting a relation, symbol, or value dialog, the
+  existence of the same one is checked, and if it exists it
+  is brought forward for the user. 
+  
+o In a Lisp text widget, typing "*" causes indenting behavior.
+
+  Corrected. 
+
+o When a component is being edited and a relation of the same
+  name is created, the documentation of the relation replaces
+  that of the component; and entering Lisp code for the 
+  component's background model and initial conditions is lost.
+
+  This occurs because the Stanley internal class definitions for
+  component, module, relation, symbol, and values share the same
+  name space.  This is corrected by creating a separate class name space
+  for each.  This also requires that the Livingstone models directory
+  be modified, along with the generated "compile system", such that
+  livingstone/ds1/models/module-1.lisp
+  livingstone/ds1/models/component-1.lisp
+  livingstone/ds1/models/defrelations.lisp
+  livingstone/ds1/models/defsymbols.lisp
+  livingstone/ds1/models/defvalues.lisp
+
+  becomes
+  livingstone/ds1/models/modules/module-1.lisp
+  livingstone/ds1/models/components/component-1.lisp
+  livingstone/ds1/models/defrelations.lisp
+  livingstone/ds1/models/defsymbols.lisp
+  livingstone/ds1/models/defvalues.lisp
+
+  This prevents overwrites in the case where a module and a
+  component have the same class name.
+
+o
+
+
+====================================================
+====================================================
+
+
+====================================================
+
+version 1.5 - 27Feb98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Menu item "Preferences" now pops up a y-scrollable dialog
+  to handle the large number of preferences.  VMPL and OPS
+  legend colors are now in "Preferences".
+
+o Defvalues definition "display-state-values" added -- to be used
+  for determining component/module colors in OPS mode.  This
+  schematic file is read-only, except for the Stanley "super-user"
+  who is defined by the setenv variable STANLEY_SUPERUSER in
+  RUN-STANLEY-VMPL.csh.
+
+o The setenv variable READ_ONLY_DEFS in RUN-STANLEY-VMPL.csh
+  is used to declare component/module/relation/symbol/value
+  definitions as "read-only".  Their contents may be viewed
+  but not changed.  For components and modules, "Read-only"
+  will appear below "Attention:" at the bottom of the Stanley
+  canvas.
+
+o Added menu item "Edit->Header->Display State" for user to
+  define display state attribute which will go into the 
+  generated MPL Lisp code, but will not be displayed on the
+  schematic canvas.  At "File->Save Definition" time, if
+  Stanley cannot find a display state attribute, it offers
+  the user the choice of defining it, or accepting the
+  default, prior to saving.
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o  Definitions menu:
+  o change name to Edit
+  o item Instantiate Definitions renamed to Instantiate
+  o item Edit Definition Header renamed to Header and
+    moved to top of menu
+  o remove item View Definition Header?
+  o move Delete Selected Instances from Schematic menu
+    to Edit menu -- call it Delete
+  o consider adding cut, copy, paste.
+  o move Preferences from File menu to Edit menu
+  o remove the now empty Schematic menu.
+
+o Done.
+
+o Edit Transition dialogue:
+  o remove the OK button.
+  o make sure Exit button checks for unsaved work.
+
+o Done.
+
+o
+
+
+
+BUG FIXES - VMPL
+----------------
+
+o The first time menu selection "Project->Select Project" is
+  invoked, a fresh Lisp image is loaded into Emacs-Livingstone.
+  This only needs to be done on the second and subsequent
+  invokations of "Project->Select Project", after a
+  "Project->Compile Project" has been done.
+
+  Done.
+
+o When instantiating an "OK" mode into a conponent, this error
+  occurs: arepl: `instantiateDefinitionUpdate => canvasB1Click => 
+  setClassValue => ': `nodeClassType' not found in 
+  `pirClassComponent(OK-MODE)'
+
+  Corrected setClassValue to pass an optional flag to allow
+  the replacement function to add the value, even if it does
+  not already occur. (quick fix to Bill 04feb98)
+
+o Moving mouse cursor over attribute node on right hand side of
+  canvas, which has a very long name, causes the canvas to be
+  expanded -- and then contracted after mouse moves away.
+
+  Caused by "Attention" label text string being too long for
+  the intially allocated widget width.  Logic has been added
+  to truncate the text string to prevent the canvas from
+  being expanded.
+
+o When renaming an attribute instance, the label on the attribute
+  node does not change.
+
+  Corrected.
+
+o Numerous incorrect enable/disable states for editing dialogs
+  and menus have been corrected.
+
+o
+
+
+====================================================
+====================================================
+
+version 1.6 - 18Mar98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o 
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Color preferences and the node label font preference are
+  applied when the user clicks OK on the Edit->Preferences menu.
+
+o Stanley VMPL is no loger dependent on "mbuild" -- it is built
+  utilizing "make".
+
+o Stanley VMPL now interfaces with Livingstone file structure
+  tagged RAX_PREINIT_001.
+
+o
+
+BUG FIXES - VMPL
+----------------
+
+o Instantiate component with name (x ?arg1).  Edit it and
+  rename to (x ?arg4).  The redrawing of the renamed
+  instance and its children crashes in node_config_color,
+  and the component parameter list includes both ?arg1
+  and ?arg4.
+
+  Param variables, unused by other instances, are properly
+  renamed with old name being removed and the new added.
+  node_config_color handles the change without problems.
+
+  NOTE: the parameter variables field in "Edit->Header->
+  Name, arguments, & documentation" is now always read-only.
+  The instantiation and deletion of instances with ?
+  variables in their name, adds or removes entries from
+  the "Parameter Variables" field.
+
+o When starting Stanley, component, module, relation,
+  symbol, and value node types whose schematic file has
+  a date greater than the Livingstone Lisp code file, are
+  not being written.
+
+  This has been corrected.
+
+o 
+
+
+====================================================
+====================================================
+
+version 1.7 - 30Mar98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o 
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Do not show terminal terminator labels in terminal nodes --
+  just an appropriately colored square.  Do not show balloon
+  help for its imbedded terminal "triangle".
+
+o When moving components and modules with connections, preserve
+  interim y location values, unless the movement overlays the
+  y "breaks".  This also applies to renaming components and
+  modules -- their connections are redrawn preserving their
+  y "breaks".
+
+o
+
+
+BUG FIXES - VMPL
+----------------
+
+o When module .i-scm files are created after a clean build of
+  VMPL, they are invalid since they lack dependent modules
+  whose .i-scm files have not been created yet because of the
+  alphabetic ordering of the .i-scm generation.
+
+  This is now recognized and the generation is done
+  repeatedly until all dependencies are satisfied, and all
+  module's .i-scm files are created.
+
+o neb-relay.scm component neb-throw when selected for deletion
+  produces a Tcl error.
+
+  Display state attribute was not visible, but was geometrically
+  underneath neb-throw. Since its window had been destroyed, it
+  caused an error.  The correction is to move the display
+  state attribute off the canvas so there is no interaction.
+
+o Menu "Edit->Instantiate->Attribute->attribute & display state"
+  should be Edit->Instantiate->attribute"
+
+  Corrected
+
+o Do not create input/output/port terminals on component or module
+  nodes, if those terminals are "terminators".
+
+  Done.
+
+o An error is produced when a child module terminal is deleted and
+  the module saved, and then the parent module is reloaded which has 
+  a connection between something and that child component or module 
+  terminal.
+
+  This is now handled gracefully -- the connection is discarded, the
+  user is notified via a dialog, and the schematic is marked as 
+  modified since the previously existing connection has been removed.
+
+o 
+
+====================================================
+====================================================
+
+version 1.8 - 03Apr98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Added type abstraction capability to convert one terminal type to
+  another. This adds a new class type "abstraction" to the "File->"
+  family of menus.  The MPL generated code goes into "abstractions.lisp"
+  which is in <project-name>/models/ with "defrelations.lisp", 
+  "defsymbols.lisp", and "defvalues.lisp". Internal edge structures
+  now have an attribute "abstractionType", which is specified by the
+  user when connecting two terminals that do not have the same type, and
+  is editable for existing connections.
+
+o Added optional "display labels" for attribute, component, module, and
+  terminal instances.  They are user specified when creating the instances, 
+  and are editable.
+
+o 
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o 
+
+
+BUG FIXES - VMPL
+----------------
+
+o 
+
+
+
+====================================================
+====================================================
+
+version 1.9 - 27Apr98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Added terminal ordering of components and modules as part of
+  their instantiation and editing menus.
+
+o If the node of terminal has a user specified label, display it
+  in the balloon help for that terminal.
+
+o
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o 
+
+
+BUG FIXES - VMPL
+----------------
+
+o 
+
+
+====================================================
+====================================================
+
+version 2.0 - 07May98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o At instantiation time or editing time for components and
+  modules, the user can reorder their terminals using the
+  "drop-and-drag" metaphor on boxes in the dialog representing
+  the terminals.  The user can also change the location of
+  terminals from the top of the node to the bottom, or the
+  reverse.  The terminals keep their directional sense of
+  input or output.  This replaces the multiple option box
+  metaphor which only allowed reordering.
+
+o
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Allow node labels to be arbitrary strings, including
+  embedded blanks.
+
+o 
+
+
+BUG FIXES - VMPL
+----------------
+
+o If an included component/module has the same instance name
+  as an existing component/module, Stanley tells the user, 
+  and then attempts to delete the offending nodes resulting in
+
+    bgerror failed to handle background error.
+    Original error: bad window path name ".master.canvas.acs-a"
+    Error in bgerror: bad window path name ".master.canvas.acs-a"
+
+  Stanley now checks for the existence of an included component/module 
+  prior to instantiating any nodes.
+
+o Terminal node labels are not propogating upward to their parent
+  component/module, and new terminals added to an existing
+  component/module are not propogated upward to their parent.
+
+  Stanley now properly merges terminal information from the
+  component/module class and its instance.  From the class it
+  gets the terminal name, type and label.  It checks that
+  only terminals with the same name/type remain in the instance.
+  Terminals in the class, but not in the instance are added to
+  the instance.  The ordering information of the instance is
+  preserved, if its terminals have the same name/type as the
+  class.
+
+o Mouse click hints and current canvas instance name do not 
+  reflect node labels.
+
+  Corrected.
+
+o 
+
+
+
+====================================================
+====================================================
+
+version 2.1 - 22May98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o The Edit Connection dialog shows the "from" and "to" terminals.
+  If there is no label defined, the terminal name informs the
+  user of the component/module name on which the terminal resides.
+  However, if the terminal has a label defined, information is
+  not available.  When terminal labels are defined, show the 
+  component/module label/name and the terminal label.
+
+o Remove the wide "ridge" border from modules, so that their
+  shapes are similar to components.
+
+o Add "input/output/bi-directional terminal" to the first line
+  of balloon help for terminals, and "attribute" to the first
+  line of attribute node balloon help.
+
+o How to remove the "grey area" in the upper left corner of
+  schematics?  What's another way of allowing the user
+  to navigate "up" ?  Perhaps a dedicated accelerator button
+  akin to "Back" in Netscape that resides on an accelerator
+   bar below the menu bar, rather than on the schematic.
+
+o If no abstraction is applicable between two types, the
+  abstraction dialog should come up with option list
+  <none-defined> rather than the empty list.
+
+o Edit->Preferences now supports the choosing of colors for
+  almost all facets of Stanley appearance.
+
+o Change <NOT-AVAILABLE> in bubble help to <SEE-RELATION-DEFINITON>.
+
+o Advisory dialog for links not able to be redrawn because of
+  terminal name/type/existence changes -- change it from having
+  focus to no focus, so that the user can keep it up as they
+  recreate links.  This dialog now has no focus.
+
+o overlapping connection lines -- any way to "raise" them when
+  "selected" by the mouse.  They are now raised.
+
+o Directory Browser Widget exists?  If so, look at converting
+   the Open menu item to exploit that.
+  Open and Delete menu items now use a directory browser.
+
+o 
+
+
+BUG FIXES - VMPL
+----------------
+
+o Component/module terminal balloon help displaying
+  a label when no label name is defined for the terminal.
+
+  Corrected.
+
+o Component and module background colors do not reflect changes
+  made by "Edit->Preferences" in a previous Stanley session.
+
+  Corrected.
+
+o Moving connections often fails.  The drag outline appears to move, but when
+   released, the drag outline stays on the schematic and the connection doesn't
+   move to that location.  I then have to click to clear it and try again.  The
+  link sometimes doesn't want to get selected when the mouse is placed over it.
+   Clicking elsewhere on the schematic usually clears that too.  These together
+   can frustrate a user on a detailed schematic.
+
+  The first problem is fixed by always drawing a new connection if the user has
+  moved the connection.  The second is corrected by automatically doing a
+  canvas mouse left click, when moving the cursor from the menu area to the 
+  canvas.
+
+o
+
+====================================================
+====================================================
+
+version 2.2 - 09Jun98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Select-and-paste for legal propositions.  Selections are
+  tied to terminals/attributes in the collapsed form of a
+  module/component.  Right-mouse-drag on the terminal brings
+  up a list of legal values for that terminal, release on
+  the desired value copies the proposition into the X clip
+  board, middle-mouse then pastes the proposition into a
+  lisp buffer.
+
+o Add a terminal in the lower-right corner for attributes.
+  select-and-paste applies in a cascading fashion as for
+  terminals above.
+
+o Stanley now brings up a dumped lisp image of 
+  mir-engine.system at startup in the Emacs-Livingstone window.
+
+o
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Message bar "module instance: FOO; module class: BAR"
+  is verbose.  Improve wording and formatting:
+  "Module: FOO        Instance: BAR"
+  Consider also moving Project: DS1-SPACECRAFT onto that
+  level.  Consider adding a [Modified] indicator, and
+  a [ReadOnly] indicator, perhaps placing them where the
+  Project: indicator now resides.
+
+  Done.
+
+o In Edit->Preferences when the user selects DEFAULT, Stanley
+  applys the default preferences and saves them as the user's
+  defaults.  Change the behavior to only apply the default
+  preferences -- the user will have to select  Edit->Preference->OK
+  to make the default preferences become their preferences.
+
+o Edit->Preferences now has another user selection: APPLY - apply
+  the specified preferences and leave the Edit->Preferences dialog
+  up for further use.
+  
+
+
+BUG FIXES - VMPL
+----------------
+
+o Instance dialogues:
+  o Information in title often gets cut off.
+    Avoid putting variable-length information in title.
+    Use fixed "Edit Module Instance" or somesuch.
+  o Add the class name to the dialogue.  So have fields:
+    Module: attitude-control-system (not edittable)
+    Instance Name: acs-module (edittable)
+    Label: acs (edittable)
+    Interface: (edittable)
+
+  Done.
+
+o Defvalues instance "dciu-state-report.scm does not appear
+  in the option menu lists for available terminal/attribute
+  types.
+
+  An incorrect filtering of file names to exclude port terminals
+  was corrected.
+
+o Reordering the terminals of instance name (rt sru-a) is not retained
+  after the parent schematic is saved and then reloaded.
+
+  As a result of the reordering, a complete recreation of the instance
+  is done including the no-effect name change substitution.  The 
+  substitution was not escaping "("s in the regular expression used in
+  the name substitution resulting in the name being changed from
+  (rt sru-a) to ((rt sru-a)).  This causes the terminal merging of
+  class and instance information, done when the instance is redrawn,
+  to fail and the reordering information is lost.  This has been
+  corrected.
+
+o  When Edit->Preferences applies the default preferences, it does not
+   restore the default colors.
+
+   This have been corrected.
+
+o When applying Edit->Preferences to a module with a child component
+  which has transitions, and the child component has not been viewed
+  yet -- causes an error "itemconfig -fill -- unknown option".
+
+  Check canvas ids for their tag type, so that -fill is only applied
+  to lines and arrows, not nodes.
+
+o Last two connections on ds1-spacraft.scm are moved when applying
+  Edit->Preferences.
+
+  Obsolete relocation code for connections has been removed -- 
+  connections will always use the user specified values for 
+  line break-points.
+
+o When an attempt to drag a connection line fails, a Mouse-L click 
+  on the canvas is required to reset the selection state.
+
+  This is now done automaticallly when the Mouse-M button is released.
+
+o Creating a 4-break connection from a 2-break connection between an
+  output direction terminal on the top of a component/module and an
+  input direction terminal on the bottom of a component/module results in
+  erroneous interim y positions.
+
+  This has been corrected,
+
+o Very long component/module labels are wrapped to a second line.
+
+  The no-wrap length of component/module labels has been increased.
+
+
+====================================================
+====================================================
+
+version 2.3 - 02Jul98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o 
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Select Propositions menu:
+  o remove title and borders from popup
+  o remove blank line from popup
+  o (more generally, clean up the presentation).
+  o kill popup properly when done
+
+  Done.
+
+o Connection Dialogue:
+  o Click on abstraction choices.
+  o Fix list of choices. (e.g. nominal-values-equal
+    appears in both the main list and under N in an
+    alpha-submenu.
+  o analogous issues with editting terminals that
+    you showed me.
+  o remove words "component" and "terminal" in the
+    description of the connection -- too verbose.
+    Clean up presentation.
+
+  Done.
+
+o Project:
+  o Change from <undefined-project> to <unspecified>.
+  o make sure it's always shown.
+
+  Done.
+
+o Bubble help for terminals:
+  o Clean up the presentation.
+
+  Done - default font changed from helvetica to fixed to
+  provide even alignment.
+
+o Prefs:
+  o only OK and CANCEL exit the dialogue
+  o OK applies with save/exit of prefs.
+  o APPLY applies without save/exit of prefs.
+  o DEFAULTS restores default values for
+    examination in dialogue and applies them
+    without exit.
+  o CANCEL applies currently saved user prefs
+    (or defaults if there are none) and exits.
+
+  Done.
+
+o 
+  
+
+
+BUG FIXES - VMPL
+----------------
+
+o Attribute terminal is not created when instantiating
+  a component or module, only when File->Open is invoked
+  on the saved schematic.
+
+  An attribute terminal is now created at instantiation time.
+
+o If a schematic is marked modified and the user applies 
+  Edit->Preferences changes, the schematic is then marked
+  un-modified.
+
+  This has been corrected.
+
+o Edit->Header->Name, Arguemenets, & Documentation dialog 
+  shows "focus" when mouse is over the "Parameter Variables"
+  entry.
+
+  This has been corrected, and a balloon help has been added
+  to indicate the read-only nature of this item.
+
+o
+
+
+====================================================
+====================================================
+
+version 2.4 - 09Jul98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Mode canvas objects now bind Mouse-right to pop-up the mode's proposition.
+
+o Terminal and attribute propositions are now available
+  for component editing.  Module Terminal and attribute propositions 
+  have been available.
+
+o
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o The "square" button on attribute nodes has been removed.
+
+o
+
+
+BUG FIXES - VMPL
+----------------
+
+o Selecting propositions sometimes pastes the last Emacs editor
+  selection, not the Stanley proposition.
+
+  Both the PRIMARY & CLIPBOARD selections are cleared before
+  the Stanley proposition is added.
+
+o
+
+====================================================
+====================================================
+
+
+version 2.5 - 17Jul98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Component/module terminal instance reordering which was 
+  previously done via the edit instance dialog, is now done
+  directly with the component/module in a "wysiwyg" manner.
+
+o
+
+BUG FIXES - VMPL
+----------------
+
+o 
+
+
+====================================================
+====================================================
+
+
+version 2.6 - 17Aug98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Component and module inherited terminal nodes which up until
+  now were only status checked to the next lower level, are
+  now checked down to the level of their instance.  This means
+  that terminal instance deletion or label changes are inherited
+  up to the component/module.  Terminal names, not some unique id,
+  are the terminal identifiers.  This means that changing a 
+  terminal instance's name will result in that terminal being
+  deleted in the inheritance, and a new one created.
+
+o If a component or module schematic adds parameter variables,
+  when modules which include it are loaded, the user is prompted
+  for the instance values of the new parameter variables and the
+  schematic is marked modified, since the "pointer" information
+  has been changed.
+
+o
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o The component/module name, prior to user specification in 
+  "Edit->Header->Name, Arguments, & Documentation->Name", is no
+  longer "def-nn" -- is is now blank in the dialog, and
+  "<UNSPECIFIED>" in the legend bar.
+o
+
+
+BUG FIXES - VMPL
+----------------
+
+o When saving a schematic, Stanley now checks that the "Edit->Header->
+  Name, Arguments, & Documentation->Instance Variable" is used in at
+  least one component or module instance at the top (editable) level.
+  The prevents problems in variable substitution when doing terminal
+  inheritance.
+
+o Stack trace while attempting to change the label on an attribute.
+
+  Corrected.
+
+o Component, module, attribute, terminal, and mode propositions are
+  not available, except at the schematic's top level.
+
+  Node propositions are now available at all levels.
+
+o It is now possible to successfully change a component or module's
+  "Edit->Header->Name, Arguments, & Documentation->Instance Variable" 
+  value.
+
+o While reordering terminals on a module, received stack error in
+  selectEdge.
+
+  selectEdge now checks for existance of the edge before processing it.
+
+o
+
+
+====================================================
+====================================================
+NOTE: rebuild stanley-livingstone-io.lisp
+
+      rebuild all .terms file to include instanceLabel in
+       g_NM_inheritedClassInstances entries -> for inherited labels
+
+      delete defrelations.lisp to force creation of expanded defrelations file
+
+version 2.7 - 27Aug98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o One argument defrelation terminal types are now expanded
+  as part of the saving of defrelation schematics. This allows
+  "cut-and-paste" of the appropriate propositions, which were
+  not available, here to fore.
+
+o Balloon help terminal labels now show interitance.
+
+o
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o
+
+BUG FIXES - VMPL
+----------------
+
+o Alert user to required instance edit when there is a mismatch
+  of top-level instance arguments and values, caused by the
+  saving of a schematic with changed parameter arguments.
+
+o
+
+====================================================
+====================================================
+
+version 2.8 - 09Oct98  
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Add Tcl debugging and profiling capability.
+
+o
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o
+
+BUG FIXES - VMPL
+----------------
+
+o  Remove 1+ and 1- procs and replace usage with
+   expr.
+
+o
+
+====================================================
+====================================================
+
+version 2.9 - 02Nov98
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Stanley VMPL has been modified to be invoked in one step -- 
+  no more sourcing of environment variable files.  Thus:
+  > cd /home/mars/DS1-1/R3/ra/mir/gui/stanley/user-template/
+  > ./RUN-STANLEY-VMPL.csh -nokill
+
+o Compile Project will generate the file create-spacecraft.lisp
+  containing "new-command" and "new-monitor" directives derived
+  from terminal nodes which have been thus designated via their
+  instance dialogs.  The file will be added to the defsystem and
+  compiled, thus creating the MPL structures for the project.
+  The Project pull-down menu now has these commands: Select,
+  Generate/Compile, Instantiate, and Clean/Compile.
+
+  NOTE: The command and monitor designations are done by
+        component or module class, so that all instances of
+        a component or module will reflect the designation.
+
+o
+
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Performance enhancements --
+        VMPL            OPS
+        ----            ---
+- version 2.8 - loading ds1-spacecraft.scm & RESET
+        17 sec          56 sec
+- Performance enhancements 1 --
+  - convert pirPreferences assoc list to an array
+  - convert cross-references assoc lists to arrays:
+    g_NM_instanceToNode, g_NM_componentToNode,
+    g_NM_moduleToNode, g_NM_nodeGroupToInstances,
+    g_NM_classToInstances, g_NM_canvasIdToPirNode, &
+    g_NM_windowPathToPirNode
+        15 sec          54 sec   
+- Performance enhancements 1 + tcltk plus patch compiler
+        13 sec (23%)    42 sec (25%)  - % improvement over v2.8
+- Performance enhancements 1 + Performance enhancements 2 --
+  - convert pirNode alist accesses to array accesses
+        18 sec          59 sec
+- Performance enhancements 1 + 2 + tcltk plus patch compiler
+        13 sec (23%)    42 sec (25%)  - % improvement over v2.8
+- Conclusion - preformance enhancement 2 does *not* improve
+        performance - discard it
+
+o 
+
+BUG FIXES - VMPL
+----------------
+
+o I get a Tcl error when I select File->NewDefintion->Value
+        "Error: can't read "state": no such variable".
+  Corrected.
+  
+o Same thing for File->NewDefintion->Symbol.
+  Corrected.
+
+o Changing the type of a terminal with a connection to a
+  component or module does not check for connection type
+  compatibility and delete the connection if the new
+  connection type is not compatible.
+
+  Corrected.
+
+o
+
+
+====================================================
+====================================================
+
+version 3.0 - 23Dec98
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Dialog editing of display state attributes will now allow
+  an instance label, in addition to the instance name.
+
+o The value lists of one argument defrelations which are used for
+  terminal/attribute types, have been changed from "<See Defrelation>"
+  to derived values using MPL functions CLAUSIFY and 
+  CONVERT-TO-CNF.
+
+o The Project pull-down menu now includes: Compile, Execute, & Clean.
+  Compile compiles the module sub-tree defined by "Project->Select.
+  This includes function "create-<module-class-name>" and supporing
+  functions to handle user defined terminal commands and monitors.
+  Execute instantiates the module-class-name with dummy arguments
+  and intializes the all propostion monitors, generating IPC messages
+  from MIR running in the Emacs-Livingstone process, which are
+  handled by Stanley in a "VMPL test" mode -- essentially a temporary
+  Stanley OPS mode.  Terminals and connections are highlighted
+  appropriately to the propositions received.  Clean removes all Lisp
+  compiled files for the selected project.
+
+o The "Step" accelerator button has been added to allow the user to process
+  values assigned to previously designated terminal commands and monitors.  The
+  values are assigned using the Right-Mouse binding, and are shown to the
+  user in semi-permanent balloon help windows
+
+o The Tools pull-down menu now includes "Display Toplevel State Viewer Windows"
+  which brings up for the user all relevent proposition values for the 
+  module-class-name being tested via "Project->Execute" and the "Step"
+  accelerator.
+
+o
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o -compiled is now the default for RUN-STANLEY-VMPL.csh and
+  RUN-STANLEY-OPS.csh.  Actually the parameter is now -nocomp,
+  defaulted to 0.
+
+o
+
+
+BUG FIXES - VMPL
+----------------
+
+o Adding a label to a terminal does not update the terminal's
+  balloon help.
+
+  Corrected.
+
+o Viewing attribute facts, mode models, component initial conditions,
+  and component background models shows erroneous "~" characters.
+
+  Corrected.
+
+o Viewing component initial conditions, and component background models
+  does not reflect instantiation of instance variables.
+
+  Corrected.
+
+o Title bar shows <UNSPECIFIED> for instantiated module/component names,
+  if the schematic class name has not been defined by the user.
+
+  Corrected.
+
+o SIMPLE-DYNAMICS component attribute propositions dialog fails.
+
+  Instantiable variable substitution was not working because a subform
+  contained two types of substitution (")" & "~").  The substitution
+  procedure has been changed to drop down one more level in the node
+  data structure to properly handle multiple substitutions.
+
+o Creating attributes and terminal terminators/declarations fails.
+
+  Proper checks are now done to skip input/output/port command-monitor
+  processing.
+
+o Updating a terminal with no connections fails attempting to process
+  a non-existant connection.
+
+  Corrected.
+
+o Moving a component/module inherited terminal connected to a
+  terminator, from top to bottom of the node, or the reverse
+  causes errors.
+
+  Corrected.
+
+o Determining at "save" time which top-level terminals are connected
+  to components/modules, when the inherited terminal end of the
+  connection has been moved from top to bottom of the node, or the 
+  reverse, is done improperly.
+
+  Corrected.
+
+o Stanley improperly checks for the usage of component/module
+  parameter variables when deleting instantiated components and
+  modules.  This can result in a parameter variable being removed
+  from the header list, even though it is still in use.
+
+  Corrected.
+
+o
+
+
+====================================================
+====================================================
+
+version 3.1 - XXMar99
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Add "Tools->Generate MPL Completion Forms" to generate a
+  "visual completion" defmodule form for Ground-MIR to 
+  instantiate into MPL to generate addtional propositions for
+  handling by the Stanley OPS enhanced "visual" schematic of
+  the DS1 RAX models.
+
+o Enhance the schematics to handle all RAX model propositions.
+
+o Enter Lisp code for component and module display state
+  attributes, which is included in the "visual completion" defmodule
+  file.
+
+o
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o When "Parameter Variables" is read-only (for Editing a Component) it
+  only displays the help bubble when the mouse is above the label
+  "Parameter Variables" and not when you are over the form. Having it
+  display the help bubble at both locations would be nice. (Greg Whelan) 
+
+  Done. 
+
+o It would be helpful if it was more obvious when you are in a
+  read-only mode (perhaps by changing the background color from pale
+  blue -- or by displaying across the top "READ-ONLY MODE"). (Greg Whelan) 
+
+  The little text slot at the left end of the horizontal scroll bar,
+  which shows "modified" when at the top level of a modified schematic,
+  will now show "read-only" when at levels of the schematic lower 
+  than top-level.
+
+o When modes are initially placed on the canvas they appear in the
+  same location, thus requiring the user to immidiately reposition
+  them. Howabouts placing them where they are not overlapping any
+  objects? (Greg Whelan) 
+
+  The instances will now be placed near the upper left hand corner.
+
+o The balloon help for the "from" terminal in a terminal connection
+  operation now remains visible, as the user moves the mouse to
+  select the "to" terminal.
+
+o
+
+
+BUG FIXES - VMPL
+----------------
+
+o When I resize the Stanley window vertically the "Attention" and
+  "Node" frames disappear (well, they disappear entirely when you
+  reduce the vertical size of the entire window by their vertical
+  size). (Greg Whelan)
+
+  Corrected.
+
+o
+
+
+
+
+
+
+
+
+
+
+
+

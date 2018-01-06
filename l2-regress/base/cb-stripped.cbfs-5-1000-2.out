@@ -1,0 +1,54 @@
+Reading model file(s): cb.l2s
+Read `cb.l2s'
+Search settings:
+   Search type               = cbfs
+   Max candidates returned   = 5
+   Max candidates searched   = 1000
+   Max candidate classes     = 0
+   Max rank                  = 100
+   History length            = 2
+
+   Max candidates tracked    = 5
+   Progress style            = full
+   Find Candidates style     = the tracker default fc
+---------------
+Step 5; 331 variables; 0 conflicts before; 1 after.
+CBFS: search found 5 candidate(s), more possible (searched 6)
+The 5 candidates are:
+   Candidate 0)
+        4#49Transition=2 :2
+
+   Candidate 1)
+        3#49Transition=2 :2
+
+   Candidate 2)
+        -#49Transition=2 :2
+
+   Candidate 3)
+        -#53Transition=2 :2
+
+   Candidate 4)
+        3#67Transition=2 :2
+
+
+Step 7; 331 variables; 4 conflicts before; 17 after.
+CBFS: search found 5 candidate(s), more possible (searched 19)
+The 5 candidates are:
+   Candidate 0)
+     *  4#49Transition=2 :2
+
+   Candidate 1)
+     *  3#49Transition=2 :2
+
+   Candidate 2)
+     *  -#49Transition=2 :2
+
+   Candidate 3)
+     *  -#53Transition=2 :2
+        -#49Transition=4 :4
+
+   Candidate 4)
+     *  -#53Transition=2 :2
+        6#49Transition=4 :4
+
+

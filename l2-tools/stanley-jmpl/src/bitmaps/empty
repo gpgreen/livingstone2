@@ -1,0 +1,4 @@
+#define empty_width 7
+#define empty_height 5
+static char empty_bits[] = {
+   0x00, 0x00, 0x00, 0x00, 0x00};

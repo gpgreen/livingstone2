@@ -1,0 +1,4 @@
+#define square_width 7
+#define square_height 5
+static char square_bits[] = {
+   0x3e, 0x3e, 0x3e, 0x3e, 0x3e};

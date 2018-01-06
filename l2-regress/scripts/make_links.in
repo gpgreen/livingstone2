@@ -1,0 +1,19 @@
+#! /bin/sh
+
+common=scripts/common
+test -r $common || {
+    echo "Error: '$common' is not present!"
+    exit 1
+}
+
+echo "chmodding $common"
+chmod a+x $common
+
+SCRIPTS="create_basis fix_basis list_no_basis listgroups \
+         listtests reiterate runtests"
+
+for x in $SCRIPTS ; do
+    echo "creating $x"
+    rm -f $x
+    @LN_S@ $common $x
+done

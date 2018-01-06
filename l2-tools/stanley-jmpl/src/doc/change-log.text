@@ -1,0 +1,277 @@
+# $Id: change-log.text,v 1.1.1.1 2006/04/18 20:17:28 taylor Exp $
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+
+current R1 model definitions: ~millar/ds1/models/*.lisp
+                              ~millar/ds1/models/import
+current R1 Livingstone code: ~nayak/lisp/newmaap/nm_root
+
+
+o editing Livingstone defcomponent files from Stanley with Emacs
+        templates
+o updating Stanley schematic components from Livingstone
+        defcomponent files
+o writing Livingstone "basic" defdevice representing Stanley created
+        component schematic
+o running Livingstone from Stanley with Stanley displaying run status
+
+version 1.0: 26jan96
+--------------------
+
+29jan96: disable menu items for left-mouse click on canvas
+30jan96: attach all dialogs to Stanley main window, so they cannot be "lost"
+30jan96: Edit->Edit Component ...: change from dialog to ListBox
+01feb96: remove "update mode" -> do updates automatically after edit
+         - make enable/disable of "Save" & "Save-as" properly reflect modified state
+         - fix bug in x.scm knowledge of its file path
+05feb96: unchanged component instance links are not lost when component class is
+         edited to either add or subtract input/output other terminals
+09feb96: automagic defcomponent.lisp/a-component.cfg/schematic.scm file
+         integrity capability
+
+version 1.1: 09feb96
+--------------------
+
+15feb96: reorganize pull-down menus -- differentiate between classes and
+         instances; add menus for specifications; now have 3 modes:
+         specification, layout, & operational
+10feb96: definition palette should have components, but also modules, 
+         devices, relations, and values.
+19feb96: parse "forall" mulitple terminals from defcomponent - prompt user 
+           for values at instantiation.
+         - use (clausify (convert-to-cnf <forall-form>)) when instantiating
+           defintion instances
+20feb96: allow multiple input connections to a single terminal
+22feb96: pop-up label on terminals to show their name and type
+         - prompt for arg values when creating defcomponent instances
+26feb96: write defmodule form to ../stanley-user/livingstone/DS_1/defmodules/
+         - menu cmd to load defmodule & definition files into Livingstone
+
+version 1.5: 26feb96
+--------------------
+
+27feb96: - corrected RUN-STANLEY-layout.csh bug that produced spurious output msgs:
+           Warning: trying to connect to muir.arc.nasa.gov.
+           .....
+           ERROR: Can not establish a connection to the server.
+         - use Livingstone to process all input/output terminals
+01mar96: - when clicking on terminal node of existing connection, pop-up the opposite
+           terminal node name/type info.
+04mar96: - allow unlimited pop-up terminal name/type windows
+05mar96: - change from Mouse-L on component => replace instance name with state;
+           with pop-up window showing state and responding to state changes as needed
+         - have fixed width for terminal v's, so they are not too close together
+06mar96: - use Mouse-2 to do x/y "rubber-band" component connections
+         - refine Livingstone terminal parsing to use both :attributes and 
+           :declarations; handle terminal attributes, e.g. low nominal high
+10mar96: - add install mode for installing Stanley in other directory locations and
+           preserving existing schematic files (assumes Livingstone model files,
+           Stanley configuration files, and Stanley schematic files are
+           consistent prior to the directory move and installation).
+13mar95: - when not in install mode, delete instances whose definitions have changed,
+           thus requiring the user to re-instantiate the instances.
+         - instantiate the DS1-R1 schematic
+         - link connection: for default 2 break case, ask user 2 or 4 breaks to enable
+           better linking around other boxes
+         - memu items to kill all terminal pop-up windows; and all instance state windows
+
+version 2.0: 14mar96
+--------------------
+        
+15apr96: - created make files for ../gui/stanley & ../gui/stanley-user to automate
+           building Stanley
+17apr96: - corrected bug with g_NM_mirExecTranslationsTimestamp, and added
+                Format_Internal_Time to stanley.c
+20apr96: - pirClass (className) global array to hold common definition
+           info for multiple instances -> save space in .scm files
+         - when raising Stanley main window, raise terminal windows, state windows, &
+           state-diagram windows also
+         - use g_NM_componentInstanceToNode to speed up MI->EXERC msg processing
+           instead of searching pirNodes; also check other pirNode searching
+         - deleted RUN-STANLEY-ops-living.csh & RUN-STANLEY-ops-canned.csh --
+           their functions can be done in RUN-STANLEY-layout.csh
+21apr96: - rework parsing of Livingstone terminals: match "terminal type" from
+           parsing of model file "defvalues" forms, to "terminal values" which
+           result from expanding defcomponent args; replace "terminal values"
+           with "terminal type" in terminal pop-up windows.
+29apr96: - wrote defmodule form from schematic instances (partial -- does not
+                handle defmodules)
+
+10may96: - automate the "make"ing of Stanley
+13may96: - add editing of instances: name, description and arguments
+21may96: - add support for "port" terminals, which do not have in/out properties
+30may96: - remove mission (e.g. DS1-R1-S2) directories from all stanley-user directories
+
+01jun96: - refine terminal type processing; add capability for Stanley to define 
+           terminal types in order to handle Livingstone terminal types which are 
+           propositions or defrelations.
+14jun96: - make Stanley compatible with mbuild
+18jun96: - implement hierarchical schematics with automatic updating of defmodule
+           bg colors base on containing components/modules
+
+09jul96: - implement multiple overlay schematic panes, thus discarding slow redrawing
+           of components/modules when a another defmodule or parent-root is opened.
+           Handle recursive deletion of defmodules.
+11jul96: - fix existing bugs:
+              - eliminate "background" from state diagrams
+              - state diagram transitions are single or double headed arrows,
+                    depending of whether the defining form has expressions going
+                    one-way or both-ways (this actually already worked)
+              - expanding the state diagram does not work correctly
+              - all transitions are not shown - parsing problem
+         - allow schematic canvas to be resized
+22jul96: - add -update option to automate the comparison of new model definitions
+           with existing schematics.
+
+
+        SHORT-TERM
+         - allow canvas to scroll to negative x&y
+         - implement pure mbuild directives in Make files
+         - implement Stanley ops-mode standalone testing using MIR clash test panel code
+         - integrate ACS-CONTROL-MODE degraded mode into defcomponent form for
+           generalized processing by Stanley (then remove specialized code)
+         - add power table processing - show power on/off and power thermometer
+         - visually mark out-of-date components/modules based on source comparison of
+           existing .cfg file and changes MIR model file (use highlight thickness)
+         - C-Mouse-L to bring up diagram of defmodule tree, allowing user to go to
+           any defmodule with one more click  
+         - make each schematic pane a standalone top-level window, which can be resized
+           using X-window mgr 
+         - select group of modules - make defmodule out of them with external terminals
+           prompt user for module inputs and outputs & write defmodule form
+         - read power table to get instance info - user types in ext. name FSC_1553_A,
+           Stanley gets internal name bc-a from its knowledge of the table
+         - read power table file to get component instance names, ok/fault modes
+           (cross-check against defcomponent defs), and power on states.
+         - parse Livingstone defmodule to get defcomponent arg values
+         - put screen dump of DS1 Stanley schematic on WWW with hot-spots to link
+           to source code of components
+
+        MEDIUM-TERM
+         - investigate Tcl/Tk compiler
+         - provide selectable menu of attribute options when entering attrs
+           for create instance
+         - links: Might augment terminal-selection process to ensure that
+	   2 terminals can be highlighted simultaneously only if they
+	   are indeed compatible;; Item should remain dim until 2 compatible terminals
+	   have been chosen; alternatively, might allow item to
+	   be selected and provide information about what user
+	   must do to create a legal link.
+         - application-specific initialization failed: could not bind to server address:
+           Address already in use --> Othar will send code ptr
+         - in operational mode check a schematic's instance names against allowable
+           list; read power table file to get component instance names, ok/fault modes
+           (cross-check against defcomponent defs), and power on states.  
+
+
+        LONG-TERM
+         - state diagrams: click on links to edit transitions
+         - fast insert from palette mode -- do not ask for instance vars, just
+           assign default name and edit instance vars later.
+
+===========================================================================
+19apr97 (since jul96 this file has not been updated -- 
+                SHORT-TERM/MEDIUM-TERM/LONG-TERM list are obsolete)
+===========================================================================
+
+LONG-TERM-GOAL => enhance layout -mpl mode to be visual editor for defmodule MPL code
+
+28apr97 => make STANLEY_USER user configurable: cvs checkout would be
+   cvs checkout -r R3_Dev ra/mir/gui/stanley
+   ra/mir/gui/stanley/user-template will contain what is now in ra/mir/gui/stanley-user
+   top-level and a script to build the users's instance of the stanley-user 
+   directory structure. the user would then point STANLEY_USER to it 
+
+28apr97 => README-SCHEMATIC.txt: section II -> document what env vars do; Add OPS_SCHEMATIC_FILE
+   as user-configurable -- SCHEMATIC_SUBDIR & DEFN_SUBDIR are not.
+
+29apr97 => remove syncronization delay from Stanley when starting Emacs-Livingstone
+          remove iconify Stanley functionality
+
+30apr97 => make -mpl the default for RUN-STANLEY-layout.csh; New Defmodule automatically
+   opens "root" to display working area.
+
+30apr97 => "opening/closing" modules leaves "sketeton" rectangle on canvas
+
+01may97 => do not prompt user for defmodule name & args with New Defmodule; allow user to 
+   enter/change it at any time; require it when writing MPL code; do not have 2
+   modify flags to satisfy -> just one (merge functionality of schematic & MPL code).
+   ?token def is missing in dialog.
+
+01may97 =>  make "2-breaks" the default for connections (^C) -- make another cmd for 
+   "4 breaks"
+
+01may97 => type values are not needed in terminal forms. Call to Emacs-Livingstone 
+   not needed
+
+01may97 => instantiating terminals: provide a selectable list of all valid types; check that
+   terminalName is unique and contains the defmodule name var.
+
+02may97 => File Save/Save-as should automatically save MPL code -- will not need 
+   Livingstone-> Write Livingstone Defmodule.
+
+02may97 ==> name defmodule instance on schematic foo, rather than ?name which is the name 
+    variable; make parent module's displayed name be foo, not foo_p; do not display
+    root level of module to user
+
+02may97 ==> validity check terminal (input/output/port) names to include defmodule name var
+    e.g. (output1 ?name) not output1  -- so that multiple instantiation of the
+    module will not create conflicts
+
+02may97 => when saving schematic/defmodule use same file name - default is defmodule name.
+
+03may97 => defmodule args are determined when user enters ? variables when instantiating 
+   components.
+
+07may97 => do not save into .scm unneeded info in pirNode, pirEdge; do not save unneeded
+    pir* globals ==> reduce size of .scm files
+
+08may97 ==> do not parse forall's (properly handle expansion of foralls -- 
+    acs.lisp is test case)
+
+08may97 ==> in instantiateDefmodule properly instantiate args value to eliminate ACS-A-TURN,
+    rather than ACS-TURN-A problem
+
+18may97 ==> do not write redundant defmodule class schematic info into more than one file: 
+    use "pointers"
+
+19may97 ==> force user to enter defmodule name before "File -> Save Class Definition"
+
+
+==> allow user to change defmodule arg vars: update current schematic display and
+    add code to allow distributed .scm files to handle these changes
+
+==> integrate -auto/-mpl modes: user can instantiate from Palette and -auto will 
+    create .scm and .i-scm file; since other .scm's will have "ptr" to it, it can
+    be instantiated in with "messed-up layout" and reorganized at any time, and
+    "boot-strapping" is eliminated.
+
+=> generated MPL code: 
+        o is :declarations needed, NO, it is redundant to :connections
+        o use pretty-print format for Stanley generated code: defmodule form -- continue
+                to use read/write line for other existing code in file.
+        o omit sections with no content
+        o move :application-data info into Stanley -- correspondance between defmodule
+                name and schematic file which represents it.
+
+==> TP:<parsing-accesors> to replace stanley-livingstone-io.lisp positional parsing
+
+==> livingstone accesors to replace telemetry 
+    prop states of component
+    mode-state of component 
+
+==> defrelations - parse in stanley-livingstone-io.lisp - use convert-to-cnf to
+    recursively expand form; add to palette; instantiate as a circle with 
+    terminal names like (comm (comm-status-out ?component))
+    ==> how to deal with forall's ???
+    ==> defrelation - how to get type of (health-state ?pde) 
+
+==> put all MPL syntax dependent code in separate file
+
+
+
+
+

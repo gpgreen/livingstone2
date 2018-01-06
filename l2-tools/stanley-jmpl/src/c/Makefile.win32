@@ -1,0 +1,118 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+#
+# VC++ 6.0 (nmake) by will taylor 20sept01
+#
+
+# User Configurable
+#
+### STANLEY_CORBA_P = STANLEY_CORBA_P
+# test without itcl, mico, combat
+STANLEY_CORBA_P = 
+COMBAT_VERSION  = 0.6.2
+COMBAT_VER      = 062
+MICO_VERSION    = 2.3.5
+MICO_VER        = 235
+TCL_VERSION     = 8.3
+TCL_VER         = 83
+ITCL_VER        = 32
+TKTABLE_VERION  = 2.6
+DEST_DIR	= $(L2_ROOT)\l2-tools\stanley-jmpl\support
+# Assume that TCL, ITCL, MICO already installed
+MICO_ROOT       = $(DEST_DIR)\mico\$(MICO_VERSION)\mico
+TCL_ROOT        = $(DEST_DIR)\tclTk$(TCL_VERSION)
+
+#
+# Project directories
+#
+# ROOT    = top of source tree
+#
+# TMPDIR  = location where .obj files should be stored during build
+#
+# TOOLS32 = location of VC++ 32-bit development tools. Note that the
+#	    VC++ 2.0 header files are broken, so you need to use the
+#	    ones that come with the developer network CD's, or later
+#	    versions of VC++.
+#
+# INSTALLDIR = where the install- targets should copy the binaries and
+#	    support files
+#
+
+TOOLS32         = $(MSVCDIR)
+TOOLS32_rc      = $(MSDEVDIR)
+
+SOURCE          = .
+TMP_DIR		= .
+INSTALLDIR	= $(L2_ROOT)\l2-tools\stanley-jmpl\bin
+
+
+# Set NODEBUG to 0 to compile with symbols
+NODEBUG = 1
+
+#
+# You should not have to modify anything further in this makefile
+#
+
+#
+# System calls
+#
+
+PATH	= $(TOOLS32)\bin;$(PATH)
+cc32	= "$(TOOLS32)\bin\cl.exe" 
+link    = "$(TOOLS32)\bin\link.exe"
+CP      		= copy
+RM      		= del
+MKDIR   		= -mkdir
+
+#
+# Source and Build Paths
+#
+TCL_LIBS      = $(DEST_DIR)\tclTk$(TCL_VERSION)\lib\tcl$(TCL_VER).lib \
+                $(DEST_DIR)\tclTk$(TCL_VERSION)\lib\tk$(TCL_VER).lib \
+                $(DEST_DIR)\tclTk$(TCL_VERSION)\lib\itcl$(ITCL_VER).lib \
+                $(DEST_DIR)\tclTk$(TCL_VERSION)\lib\Tktable$(TKTABLE_VERION)\Tktable.lib
+
+## do not build mico and combat
+## use windows binary l2-tools\stanley-jmpl\support\combat-win32\combat.dll
+# TCL_MICO_LIBS = $(DEST_DIR)\combat-$(COMBAT_VERSION)\lib\combat-$(COMBAT_VER).lib \
+#                $(MICO_ROOT)\lib\mico$(MICO_VER).lib
+
+
+
+INCLUDES	= -I. -I"$(TCL_ROOT)\include" -I..\include              
+
+DEFINES = -D_WINDOWS -DTK_NO_SECURITY 
+## from ../tk8.3/unix/Makefile
+DEFINES = $(DEFINES) -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_SYS_SELECT_H=1 -DHAVE_SYS_TIME_H=1 -DNO_XIDPROC -DI18N_IMPROVE -D$(STANLEY_CORBA_P)
+# STANLEY_CORBA_P is used by tkAppinit.c
+
+#
+# Global makefile settings
+#
+
+.SUFFIXES:	.c .cc .cpp .obj .o 
+
+SRCS =  stanley.c tkAppInit.c 
+OBJS = $(SRCS:.c=.obj)
+
+#
+# Targets
+#
+
+.c.obj:
+	$(cc32) /c /GX /TC /MD $(DEFINES) \
+	$(INCLUDES) -Fo$(TMP_DIR)\ $<
+
+..\..\bin\stanley-bin.exe: $(OBJS)
+	$(link) $(TCL_LIBS) -out:$@ $(OBJS)
+
+clean:
+	-$(RM) $(TMP_DIR)\*.obj >nul
+	-$(RM)  ..\..\bin\stanley-bin.exe
+
+
+
+

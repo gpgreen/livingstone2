@@ -1,0 +1,72 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+#
+# VC++ 6.0 (nmake) by will taylor 20sept01
+#
+
+# User Configurable
+#
+
+#
+# Project directories
+#
+# ROOT    = top of source tree
+#
+# TMP_DIR  = location where .obj files should be stored during build
+#
+# TOOLS32 = location of VC++ 32-bit development tools. 
+#
+
+TOOLS32         = $(MSVCDIR)
+TOOLS32_rc      = $(MSDEVDIR)
+
+SOURCE          = .
+TMP_DIR		= .
+
+
+# Set NODEBUG to 0 to compile with symbols
+NODEBUG = 1
+
+#
+# You should not have to modify anything further in this makefile
+#
+
+#
+# System calls
+#
+
+PATH	= $(TOOLS32)\bin;$(PATH)
+cc32	= "$(TOOLS32)\bin\cl.exe" 
+link    = "$(TOOLS32)\bin\link.exe"
+CP      		= copy
+RM      		= del
+MKDIR   		= -mkdir
+
+# Global makefile settings
+#
+
+.SUFFIXES:	.c .cc .cpp .obj .o 
+
+SRCS =  redir.c
+OBJS = $(SRCS:.c=.obj)
+
+#
+# Targets
+#
+
+.c.obj:
+	$(cc32) /c /GX /TC /MD -Fo$(TMP_DIR)\ $<
+
+..\..\bin\redir.exe: $(OBJS)
+	$(link) -out:$@ $(OBJS)
+
+clean:
+	-$(RM) $(TMP_DIR)\*.obj >nul
+	-$(RM)  ..\..\bin\redir.exe
+
+
+
+

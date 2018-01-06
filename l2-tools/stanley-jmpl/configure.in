@@ -1,0 +1,569 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(src/stanley.tcl)
+AC_PREREQ(2.13)
+
+## invoke with ./configure --prefix=`pwd`
+
+# allow more lib dirs to be searched
+AC_ARG_WITH(libs,             [  --with-libs=DIRS        Additional lib DIRS (separated by ':')])
+
+more_libs="`echo $with_libs     | sed 's/:/ /g'`"
+
+# allow gcc bin directory to be specified, in order to get libstdc++.so directory
+AC_ARG_WITH(gcc,              [  --with-gcc=DIR          gcc in DIR], with_gcc=${withval})
+
+# require user to specify Java jdk1.2.2
+AC_ARG_WITH(java,             [  --with-java=DIR         Java lib and bin in DIR], with_java=${withval})
+
+#
+# checking that jdk is version 1.4
+#
+
+AC_MSG_CHECKING([for Java])
+if test x"${JAVA_HOME}" != x ; then
+  with_java="$JAVA_HOME"
+fi
+if test x"${with_java}" = x ; then
+  with_java=""
+fi
+if test x"${with_java}" != x ; then
+  rm -f config.jv
+  ${with_java}/bin/java -version 2> config.jv
+  java_version=`cat config.jv`
+  # echo java_version $java_version
+  # java version "1.4.0_02"
+  version_2=`echo $java_version | awk -F\" '{print $2}'`
+  # echo version_2 $version_2
+  match_test_4=`expr match $version_2 '.*1\.4\.*'`
+  match_test_5=`expr match $version_2 '.*1\.5\.*'`
+  match_test_6=`expr match $version_2 '.*1\.6\.*'`
+  if test $match_test_4 -eq 0 -a $match_test_5 -eq 0 -a $match_test_6 -eq 0 ; then
+    AC_MSG_ERROR( $with_java not jdk1.4.* jdk1.5.* or jdk1.6.*)
+  fi
+
+  AC_MSG_RESULT($with_java)
+  JAVA_HOME=$with_java
+else
+  AC_MSG_ERROR(use --with-java to specify Java home directory or setenv JAVA_HOME)
+fi
+
+#
+# proc to look for a file in a number of places (from combat-0.6/configure.in)
+#
+
+AC_DEFUN(FP_FIND_FILE, [
+    if test "x$4" = "x" ; then
+	ff_name=[`echo $1 | sed 's/[-.*/ ]/_/g'`]
+    else
+	ff_name="$4"
+    fi
+    eval $ff_name=
+    eval ${ff_name}_dir=
+    ff_file=
+    ff_file_dir=
+    for ff_dir in $2 ; do
+	if test -f $ff_dir/$1 ; then
+	    ff_file_dir=$ff_dir
+	    ff_file=$ff_dir/$1
+	    break
+	fi
+	for ff_subdir in $3 ; do
+	    if test -f $ff_dir/$ff_subdir/$1 ; then
+		ff_file_dir=$ff_dir/$ff_subdir
+		ff_file=$ff_dir/$ff_subdir/$1
+		break
+	    fi
+	done
+	if test "x$ff_file" != "x" ; then
+	    break
+	fi
+    done
+    eval ${ff_name}_dir="$ff_file_dir"
+    eval $ff_name="$ff_file"
+])
+
+# from tk8.3.1/unix/aclocal.m4
+#--------------------------------------------------------------------
+# SC_PATH_X
+#
+#	Locate the X11 header files and the X11 library archive.  Try
+#	the ac_path_x macro first, but if it doesn't find the X stuff
+#	(e.g. because there's no xmkmf program) then check through
+#	a list of possible directories.  Under some conditions the
+#	autoconf macro will return an include directory that contains
+#	no include files, so double-check its result just to be safe.
+#
+# Arguments:
+#	none
+#	
+# Results:
+#
+#	Sets the the following vars:
+#		XINCLUDES
+#		XLIBSW
+#
+#--------------------------------------------------------------------
+
+AC_DEFUN(SC_PATH_X, [
+    AC_PATH_X
+    not_really_there=""
+    if test "$no_x" = ""; then
+	if test "$x_includes" = ""; then
+	    AC_TRY_CPP([#include <X11/XIntrinsic.h>], , not_really_there="yes")
+	else
+	    if test ! -r $x_includes/X11/Intrinsic.h; then
+		not_really_there="yes"
+	    fi
+	fi
+    fi
+    if test "$no_x" = "yes" -o "$not_really_there" = "yes"; then
+	AC_MSG_CHECKING(for X11 header files)
+	XINCLUDES="# no special path needed"
+	AC_TRY_CPP([#include <X11/Intrinsic.h>], , XINCLUDES="nope")
+	if test "$XINCLUDES" = nope; then
+	    dirs="/usr/unsupported/include /usr/local/include /usr/X386/include /usr/X11R6/include /usr/X11R5/include /usr/include/X11R5 /usr/include/X11R4 /usr/openwin/include /usr/X11/include /usr/sww/include"
+	    for i in $dirs ; do
+		if test -r $i/X11/Intrinsic.h; then
+		    AC_MSG_RESULT($i)
+		    XINCLUDES=" -I$i"
+		    break
+		fi
+	    done
+	fi
+    else
+	if test "$x_includes" != ""; then
+	    XINCLUDES=-I$x_includes
+	else
+	    XINCLUDES="# no special path needed"
+	fi
+    fi
+    if test "$XINCLUDES" = nope; then
+	AC_MSG_RESULT(couldn't find any!)
+	XINCLUDES="# no include files found"
+    fi
+
+    if test "$no_x" = yes; then
+	AC_MSG_CHECKING(for X11 libraries)
+	XLIBSW=nope
+	dirs="/usr/unsupported/lib /usr/local/lib /usr/X386/lib /usr/X11R6/lib /usr/X11R5/lib /usr/lib/X11R5 /usr/lib/X11R4 /usr/openwin/lib /usr/X11/lib /usr/sww/X11/lib"
+	for i in $dirs ; do
+	    if test -r $i/libX11.a -o -r $i/libX11.so -o -r $i/libX11.sl; then
+		AC_MSG_RESULT($i)
+		XLIBSW="-L$i -lX11"
+		x_libraries="$i"
+		break
+	    fi
+	done
+    else
+	if test "$x_libraries" = ""; then
+	    XLIBSW=-lX11
+	else
+	    XLIBSW="-L$x_libraries -lX11"
+	fi
+    fi
+    if test "$XLIBSW" = nope ; then
+	AC_CHECK_LIB(Xwindow, XCreateWindow, XLIBSW=-lXwindow)
+    fi
+    if test "$XLIBSW" = nope ; then
+	AC_MSG_RESULT(couldn't find any!  Using -lX11.)
+	XLIBSW=-lX11
+    fi
+])
+
+# from mba/cpp/aclocal.m4
+dnl  LIV_DEREFF(into,from)
+dnl  Read $$from -- the value of the variable whose name is stored in
+dnl  $from; store the result in $into.
+dnl  Note that for additonal fun, into=$1 and from=$2; hence the
+dnl  multiple eval's.
+AC_DEFUN(LIV_DEREFF, [ eval "$1=\$`eval echo \$$2`" ])
+
+dnl  LIV_ARG_ENABLE(FEATURE, HELP-STRING [, DEFAULT])
+dnl  LIV_ARG_WITH(FEATURE, HELP-STRING [, DEFAULT])
+dnl  Do what their namesakes do, but also print a message.
+AC_DEFUN(LIV_ARG_ENABLE,
+[
+    AC_MSG_CHECKING([feature: $1])
+    ac_name=[enable_]patsubst([$1], -, _)
+    AC_ARG_ENABLE($1,[$2])
+    LIV_DEREFF(ac_var,ac_name)
+    if test "x$ac_var" = "x" ; then
+        eval "${ac_name}=$3"
+        LIV_DEREFF(ac_var,ac_name)
+    fi
+    AC_MSG_RESULT([$ac_var])
+])
+AC_DEFUN(LIV_ARG_WITH,
+[
+    AC_MSG_CHECKING([feature: $1])
+    ac_name=[with_]patsubst([$1], -, _)
+    AC_ARG_WITH($1,[$2])
+    LIV_DEREFF(ac_var,ac_name)
+    if test "x$ac_var" = "x" ; then
+        eval "${ac_name}=$3"
+        LIV_DEREFF(ac_var,ac_name)
+    fi
+    AC_MSG_RESULT([$ac_var])
+])
+
+#
+# Determine OSTYPE  
+#
+
+AC_MSG_CHECKING( OSTYPE )
+ostype=`uname -s`
+if test "$ostype" = "SunOS" ; then
+   # since this is not set by Solaris
+   sun_version=`uname -r`
+   version_1=`echo $sun_version | awk -F. '{print $1}'`
+   if test "$version_1" = "5" ; then
+      OSTYPE=solaris
+      AC_MSG_RESULT( $OSTYPE)
+   else
+      AC_MSG_ERROR( $ostype OSTYPE not determined)
+   fi
+elif test "$ostype" = "Linux" ; then
+   OSTYPE=linux
+   AC_MSG_RESULT( $OSTYPE)
+else
+   AC_MSG_ERROR( OSTYPE not determined)
+fi
+
+AC_MSG_CHECKING([for CC])
+## sets CC
+AC_PROG_CC 
+AC_MSG_RESULT($CC)
+
+AC_MSG_CHECKING([for CXX])
+## sets CXX
+AC_PROG_CXX
+if test "x$CXX" != xg++ ; then
+   CXX=g++
+fi
+AC_MSG_RESULT($CXX)
+
+# this is for MICO, which uses $(CXX) in its Makefiles,
+# rather than @CXX@
+GNU_ENV="CC=${CC} CXX=${CXX}"
+
+# echo CFLAGS $CFLAGS
+# echo LDFLAGS $LDFLAGS
+
+#
+# get gcc libstdc++ directory
+#
+
+AC_MSG_CHECKING(for libstdc++ directory)
+AC_PATH_PROG(gcc_path, $CC, "", $with_gcc:$PATH)
+if test "x$gcc_path" = "x" ; then
+   AC_MSG_RESULT(not found)
+   AC_MSG_ERROR(use --with-gcc to locate gcc)
+fi
+up_1=`dirname $gcc_path`
+up_2=`dirname $up_1`
+CPP_LIB=$up_2/lib
+AC_MSG_RESULT(found in $CPP_LIB)
+
+#
+# Determine GCC version 2.95.2, 2.95.3, or >= 3.2.2
+#
+# operators -ge -gt -lt -le =
+
+AC_MSG_CHECKING([gcc version])
+gcc_version_ok=no
+gcc_version=`$gcc_path -dumpversion`
+version_1=`echo $gcc_version | awk -F. '{print $1}'`
+version_2=`echo $gcc_version | awk -F. '{print $2}'`
+version_3=`echo $gcc_version | awk -F. '{print $3}'`
+# echo version_1 $version_1 
+# echo version_2 $version_2
+# echo version_3 $version_3
+if test $version_1 -eq 2 && test $version_2 -eq 95 && test $version_3 -eq 2 ; then
+  GCC_VERSION=2.95.2
+  version_ok=yes
+fi
+if test $version_1 -eq 2 &&  test $version_2 -eq 95 && test $version_3 -eq 3 ; then
+  GCC_VERSION=2.95.3
+  version_ok=yes
+fi
+if test $version_1 -eq 3 &&  test $version_2 -ge 2 ; then
+  GCC_VERSION=3.2.2
+  version_ok=yes
+fi
+if test $version_1 -eq 4 &&  test $version_2 -ge 0 && test $version_3 -ge 1 ; then
+  GCC_VERSION=3.2.2
+  version_ok=yes
+fi
+if test "$version_ok" = "yes" ; then
+   AC_MSG_RESULT($gcc_version)
+else 
+   AC_MSG_ERROR($gcc_version not = 2.95.2 or 2.95.3 or >= 3.2.2; rm config.cache; configure --with-gcc to locate gcc)
+fi
+
+
+dnl Checks for programs.
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AC_MSG_CHECKING([for libm.so])
+FP_FIND_FILE(libm.so, /lib /usr/lib /usr/local/lib $more_libs, lib)
+   if test "x$libm_so_dir" = "x" ; then
+      AC_MSG_RESULT(not found)
+      AC_MSG_ERROR(use --with-libs to locate libm.so)
+   fi
+AC_MSG_RESULT(found in $libm_so_dir)
+GENERIC_LIBS=$libm_so_dir
+
+#
+# Determine STANLEY_ROOT TOOLS_ROOT LIVINGSTONE_ROOT & SUPPORT_ROOT 
+#
+
+STANLEY_ROOT=`pwd`
+base=`pwd`
+u1=`dirname $base`
+TOOLS_ROOT=$u1
+LIVINGSTONE_ROOT=`dirname $u1`/mba
+SUPPORT_ROOT=`dirname $u1`/support
+
+#
+# set Tcl/Tk variables
+#
+STANLEY_TCL_TK_VERSION=8.3
+STANLEY_TCL_VERSION=8.3.2
+STANLEY_TK_VERSION=8.3.2
+STANLEY_ITCL_VERSION=3.1.0
+STANLEY_ITCL_LIB_VERSION=3.1
+STANLEY_TKTABLE_VERSION=2.6
+STANLEY_TCL_L=tcl${STANLEY_TCL_TK_VERSION}
+STANLEY_TK_L=tk${STANLEY_TCL_TK_VERSION}
+STANLEY_ITCL_L=itcl${STANLEY_ITCL_LIB_VERSION}
+STANLEY_TCL_TK_INC=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION}/include
+STANLEY_TCL_TK_LIB=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION}/lib
+STANLEY_TKTABLE_LIB=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}
+STANLEY_TKTABLE_L=Tktable${STANLEY_TKTABLE_VERSION}
+
+#
+# set CORBA variables
+#
+# build CORBA Interface
+if test \( "$GCC_VERSION" = "2.95.2" \) -o \( "$GCC_VERSION" = "2.95.3" \) ; then
+  STANLEY_MICO_VERSION=2.3.1
+  STANLEY_MICO_LIB_VERSION=2.3.2
+  STANLEY_COMBAT_VERSION=0.6
+  MICO_LIB_LIR=mico${STANLEY_MICO_LIB_VERSION}
+elif  test "$GCC_VERSION" = "3.2.2" ; then
+  STANLEY_MICO_VERSION=2.3.12
+  STANLEY_MICO_LIB_VERSION=2.3.12
+  STANLEY_COMBAT_VERSION=0.7.3
+  MICO_LIB_LIR=micoir${STANLEY_MICO_LIB_VERSION}
+fi
+STANLEY_CORBA_P=STANLEY_CORBA_P
+TCL_MICO_BIN=$STANLEY_ROOT/support/combat-${STANLEY_COMBAT_VERSION}/bin
+TCL_MICO_LIB=$STANLEY_ROOT/support/combat-${STANLEY_COMBAT_VERSION}/lib
+TCL_MICO_LIB_L=combat
+MICO_LIB=$STANLEY_ROOT/support/mico/${STANLEY_MICO_VERSION}/mico/lib
+MICO_LIB_L=mico${STANLEY_MICO_LIB_VERSION}
+CORBA_DIR=$STANLEY_ROOT/interface/livingstone/corba
+
+#
+# Set variables based on OSTYPE 
+#
+#
+# find X lib and include directories
+# using aclocal.m4 macros taken from tk8.3.1/unix
+#
+if test "$OSTYPE" = "solaris" ; then
+    OTHER_MICO_LIBS="-lelf -lsocket"
+    PS_CMD=/usr/ucb/ps
+    # since CDE window manager for Sparcs only works from openwin library
+    X11_LIB_DIR=/usr/openwin/lib
+    X11_INC_DIR=/usr/openwin/include
+    AC_MSG_CHECKING([for X])
+    AC_MSG_RESULT([libraries $X11_LIB_DIR, headers $X11_INC_DIR])
+
+elif test "$OSTYPE" = "linux" ; then
+    # Linux puts -lelf -lsocket in other standard libraries
+    OTHER_MICO_LIBS=""
+    PS_CMD=/bin/ps
+    SC_PATH_X
+    X11_LIB_DIR=$x_libraries
+    X11_INC_DIR=$x_includes
+fi
+
+
+dnl Checks for header files.
+AC_HEADER_STDC
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+
+dnl Checks for library functions.
+AC_CHECK_FUNCS(strdup)
+
+# set @VAR@ variables for Makefile.in, stanley.csh.in,
+# interface/Makefile.in, src/c/Makefile.in
+AC_SUBST(JAVA_HOME)
+
+AC_SUBST(CC)
+AC_SUBST(CXX)
+AC_SUBST(GNU_ENV)
+AC_SUBST(CFLAGS)
+AC_SUBST(LDFLAGS)
+AC_SUBST(OSTYPE)
+AC_SUBST(PS_CMD)
+AC_SUBST(STANLEY_ROOT)
+AC_SUBST(TOOLS_ROOT)
+AC_SUBST(LIVINGSTONE_ROOT)
+AC_SUBST(SUPPORT_ROOT)
+
+AC_SUBST(X11_LIB_DIR)
+AC_SUBST(X11_INC_DIR)
+AC_SUBST(CPP_LIB)
+AC_SUBST(GENERIC_LIBS) 
+
+AC_SUBST(STANLEY_TCL_TK_VERSION)
+AC_SUBST(STANLEY_TCL_VERSION)
+AC_SUBST(STANLEY_TK_VERSION)
+AC_SUBST(STANLEY_ITCL_VERSION)
+AC_SUBST(STANLEY_ITCL_LIB_VERSION)
+AC_SUBST(STANLEY_TKTABLE_VERSION)
+AC_SUBST(STANLEY_TCL_L)
+AC_SUBST(STANLEY_TK_L)
+AC_SUBST(STANLEY_ITCL_L)
+AC_SUBST(STANLEY_TCL_TK_INC)
+AC_SUBST(STANLEY_TCL_TK_LIB)
+AC_SUBST(STANLEY_TKTABLE_LIB)
+AC_SUBST(STANLEY_TKTABLE_L)
+
+AC_SUBST(STANLEY_MICO_VERSION)
+AC_SUBST(STANLEY_MICO_LIB_VERSION)
+AC_SUBST(STANLEY_COMBAT_VERSION)
+AC_SUBST(TCL_MICO_BIN)
+AC_SUBST(TCL_MICO_LIB)
+AC_SUBST(TCL_MICO_LIB_L)
+AC_SUBST(MICO_LIB)
+AC_SUBST(MICO_LIB_L)
+AC_SUBST(MICO_LIB_LIR)
+AC_SUBST(STANLEY_CORBA_P)
+AC_SUBST(OTHER_MICO_LIBS)
+AC_SUBST(CORBA_DIR)
+
+#
+# Stanley configure
+#
+echo " "
+echo "$STANLEY_ROOT"
+echo " "
+# make csh script executable
+cd $STANLEY_ROOT
+AC_OUTPUT(Makefile stanley.csh interface/Makefile src/c/Makefile, chmod a+x stanley.csh)
+
+
+#
+# run configure for stanley-support-src packages
+#
+
+# after building support libraries in l2-tools/stanley-jmpl/support/
+# support/stanley-support/src/ (~225mb) can be removed.
+# check for this, so than re-configure of Stanley can be done successfully
+if test ! -d ${SUPPORT_ROOT}/stanley-support-src  ; then 
+  echo " "
+  echo "${SUPPORT_ROOT}/stanley-support-src does not exist -- no support configuration" 
+  exit
+fi
+
+# TCL
+echo " "
+echo "$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix"
+echo " "
+# these configure files get the same args as configure file in
+# this directory
+# NOTE:	--enable-threads	Tk on Unix currently does not support
+#				threaded builds,
+#     so do not specify it for tcl, either ==> causes exec to hang in wish.
+cd $SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix
+./configure --enable-gcc --enable-shared --prefix=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION} --exec_prefix=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION}
+
+
+# TK
+echo " "
+echo "$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tk${STANLEY_TK_VERSION}/unix"
+echo " "
+# NOTE:	--enable-threads	Tk on Unix currently does not support
+# 				threaded builds.
+# In unix/Makefile.in, uncomment
+#SECURITY_FLAGS = -DTK_NO_SECURITY
+# so that tkUnixSend.c will not require x-authorization
+# then will not have to compile and link tkUnixSend.c in stanley-jmpl/src/c/Makefile
+cd $SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tk${STANLEY_TK_VERSION}/unix
+./configure --enable-gcc --enable-shared --prefix=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION} --exec_prefix=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION} --with-tcl=$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix 
+
+
+# ITCL
+# itcl 3.2 does not have itclConfig.sh
+# which combat requires -- so we use 3.1.0
+echo " "
+echo "Configure $SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}"
+echo " "
+# In configure.in edit
+# AC_CONFIG_SUBDIRS(itcl/unix itk/unix )
+# then run autoconf
+cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}
+./configure --enable-gcc --enable-shared --prefix=${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION} --with-tcl=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-tk=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tk${STANLEY_TK_VERSION}/unix
+
+
+# TKTABLE
+echo " "
+echo "$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}/unix"
+echo " "
+cd $SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}/unix
+./configure --prefix=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION} --exec-prefix=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION} --with-tcl=$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-tk=$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tk${STANLEY_TK_VERSION}/unix 
+
+
+# MICO
+echo " "
+echo "$SUPPORT_ROOT/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico"
+echo " "
+# cd $SUPPORT_ROOT/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico
+# 2.3.3 + cvs updates as of 13nov00
+# combat version 0.6.1 needs fp-mico-patch-2.3.3 to compile with mico 2.3.3
+## this is perl patch, rather than gnu patch (-p   -- defaults to zero)
+# % patch -p 0 < fp-mico-patch-2.3.3
+
+# mico 2.3.11
+# in mico/${STANLEY_MICO_VERSION}/mico/Makefile
+# LIBDIRS = orb ir idl 
+# PRGDIRS = orb idl  cpp ir 
+# EXTRADIRS = 
+# imr is in ALLDIRS because make clean will be run on it -- another
+# direectory compiles and includes imr_all.pic.o
+# ALLDIRS = admin orb ir imr idl cpp 
+# INSTALLDIRS = admin orb ir idl cpp include 
+
+# in in mico/${STANLEY_MICO_VERSION}/mico/configure.in
+# AC_OUTPUT(MakeVars admin/mico-c++ admin/mico-shc++
+#  admin/mico-ld admin/mico-ar admin/mico-setup.sh admin/mico-setup.csh)
+# run autoconf
+
+# mico 2.3.12 -- the above changes to its Makefile were *not* done
+# since combat 0.7.3 IIRC is not thread safe, specify --disable-threads 
+cd $SUPPORT_ROOT/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico
+./configure --prefix=$STANLEY_ROOT/support/mico/${STANLEY_MICO_VERSION}/mico --disable-mini-stl --enable-final --with-tcl=$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION} --disable-static --disable-coss --disable-threads 
+
+
+# COMBAT
+# since combat configure must find libitcl${STANLEY_ITCL_VERSION}.so
+# --with-itcl=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION}/lib
+# to complete configure, do configure in Makefile.in, after it is built
+# echo " "
+# echo "$SUPPORT_ROOT/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}"
+# echo " "
+# cd $SUPPORT_ROOT/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}
+# ./configure --prefix=$STANLEY_ROOT/support/combat-${STANLEY_COMBAT_VERSION} --with-tcl=$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-mico=$SUPPORT_ROOT/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico/admin --with-itcl=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION}/lib --enable-shared
+
+
+

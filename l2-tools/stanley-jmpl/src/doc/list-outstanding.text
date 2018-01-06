@@ -1,0 +1,626 @@
+# $Id: list-outstanding.text,v 1.1.1.1 2006/04/18 20:17:28 taylor Exp $
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+
+Outstanding Issues to be Resolved to Improve Stanley
+====================================================
+
+====================================================
+**NEW**
+====================================================
+
+==> MIR model representation reduced from:
+    model.lisp, model.cfg, & model.scm
+    to
+    Lisp model data structs, & model.scm
+
+    model.cfg files will be eliminated (cfg files are
+    Tcl equivalent of .lisp files containing info 
+    Stanley needed)
+
+   o Stanley component/module requests will access Lisp
+      model data structs "on-the-fly"
+   o Stanley will no longer parse model.lisp files
+   o at init time Stanley will generate "rough layout" .scm
+      files for module defs found in Lisp model data structs,
+      if .scm does not exist, or if timestamp of Lisp data struct
+      is newer than .scm file
+   o MIR will write .lisp file from Lisp data structs at
+      Stanley request
+
+==> "visual" editing of defcomponents, as well as defmodules
+     o instantiate onto defcomponent canvas from palette:
+        ok mode states, fault mode states.
+     o connect states to define transitions
+     o "visual" editing of mode behaviors
+
+   MIR requirements -- Lisp data structs will contain:
+     o .lisp file timestamps for defcomponents/defmodules
+     o model code forms for defcomponents to allow "visual"
+        editing by Stanley
+     o list of all defmodules
+     o list of all components
+     o list of all defvalues
+     o writing of .lisp files from Lisp data structs for
+        defmodules, defcomponents
+
+     
+
+
+====================================================
+**IN-PROCESS**
+====================================================
+05may97 moved to list-dependencies.text
+o Model switch components use _ in MIR, rather than
+  -, do not follow convention => add a hack to translateMIRtoken
+  ==> allow _ or - !!!
+
+o  Save compact schematics: contents would be toplevel widgets 
+   -- lower level widgets would be saved as file ptrs => this is
+        being done
+      Localize the layout info ==> unnecessary info being saved
+
+   reduce size of pirEdge instance:
+     07may97 o remove terminal_values
+     07may97 o buttonTo/buttonFrom & canvas
+        now => buttonFrom .canvas.ds1-sc.c.w5.out.b1 canvas .canvas.ds1-sc.c
+        change => remove canvas; use getCanvasFromButton to get canvas
+                   to replace [assoc canvas pirEdge(x)]
+
+   reduce size of pirNode instance:
+     COMPONENT/MODULE/TERMINAL (remove permanently)
+     o remove canvas - 
+        get from: [string range window 0 [1- [string last "." window]]]
+     o remove optional {} fixed {}
+     o remove nodeDescription ?? is this useful
+     07may97 o remove terminal_values from inputs
+     o remove inputLabels { in1 } outputLabels 
+        get from: inputs {in1 {type {IN HEALTH-STATE-VALUES} terminal_name 
+               {(HEALTH-STATE FSC_IPS_DCIU_SW1)}}}
+        or numInputs 1 numOutputs 0 => "in$i", etc
+     COMPONENT ONLY
+     o remove nodePropList when saving - create it on re-instantiation
+
+     ds1-spacecraft.scm
+        867,000 bytes => eliminate unneeded forms => 780,000 => 10% savings
+
+        56 edges                                ~ 19% savings
+       151 modules (62 are parent links)        ~ 23% savings 
+       448 terminals                            ~ 22% savings 
+       189 components                           ~ 36% savings
+
+
+02may97 ==> bug in connecting/disconnecting two component
+  outputs to single terminal input.
+   ** could not recreate **
+
+03may97 => saving defaults for form input: later field data is 
+  lost when earlier fields are changed (instantiating a terminal)
+   ** could not recreate **
+
+====================================================
+**DONE**
+====================================================
+
+01may97 moved to change-log.text
+o .cfg files have terminal type; it is sent to Emacs-Livingstone
+  to be expanded into type values; then getTerminalTypeFromValues
+  gets type from g_NM_defvaluesAList -- then terminal forms have
+  type/type-values/name ?? why is this done ??  
+  componentTerminalsEqualP formerly checked for equality with
+  type values, now it uses just type ====> thus most of
+  this processing is not needed -- simplify -- type values are not
+  needed in terminal forms.
+  
+03may97 moved to change-log.text
+o Editing ds1-spacecraft.scm is require to replace ACS-A-TURN
+  with ACS-TURN-A.  This problem will have to be fixed by
+  substitution in the Lisp env, rather than the Tcl env - 
+  proc instantiateDefmodule.
+  regexp - take length into account in matching
+
+  substitute to have " "'s between "(" & ")"
+  % set z "( acs acs-a )"
+  %  regsub -all " acs " $z " ACS " zz
+  1
+  % set zz
+  ( ACS acs-a )
+
+====================================================
+====================================================
+Bill Millar's review of defmodule capability 11jul97
+====================================================
+====================================================
+
+
+High Priority (or easy to do)
+====================================================
+
+
+Low Priority (or difficult to do)
+====================================================
+
+
+More Information Needed
+====================================================
+
+o In the dialogue resulting from Edit Class Definition,
+  I clicked on the FACTS canvas.  Emacs reported that 
+  'X server cannot allocate color: "DeepPink"'.
+  ==> need more context
+      no action now
+
+o I managed to somehow instantiate a module onto a portion
+  of the canvas that wasn't visible.  Can't reproduce it
+  at the moment, but it definitely happened.
+  ==> need to be able to reproduce it
+
+
+
+====================================================
+====================================================
+Bill Millar's review of defcomponent capability 06aug97
+====================================================
+====================================================
+
+Testing week approaching 08/11/97 meeting.
+
+Overview:
+=========
+
+Some of these items are errors, and others are improvements.
+Shelve the improvements for now, and address the errors at 
+your discretion.  You should keep the suggested improvements
+that come in a central list somewhere, and we can prioritize 
+them at a later meeting.  Let's stick to the scheduled items
+as much as possible, and fix only those errors that prevent
+us from continuing with testing in a meaningful fashion.
+
+
+Comments:
+=========
+
+o In the Edit transition dialogue,
+  Fixed-length scrolling fields are great.
+
+o restriction to only legal transitions (i.e. transition to 
+  an ok-mode) looks fine.
+
+o the ability to see and manipulate the canvas while in a
+  dialogue is excellent.
+
+o In popup for editting component header definition,
+  something to keep in mind:  it's an oddity of MPL that one
+  must specify an Initial Condition and Initial Mode in the
+  class definition.  In other languages, initial values are
+  specified at instantiation time.  Note that the user *must* 
+  currently specify an initial mode with a component definition,
+  and every instance of the component class must initially be in
+  that mode.  This limitation of MPL will potentially be lifted 
+  in the future.  It may, however, be appropriate to have the user
+  specify a Default Mode in place of an Initial Mode, for example.
+
+
+Suggestions:
+============
+
+General
+-------
+
+o Menus
+  o Item names require clarification (ignore -- I'll elaborate later)
+  o review the need for each menu and item. (ignore -- I'll elaborate later)
+  o Help is very DS-1 specific, need a mission-independent view.
+  o Help describing menu items.
+
+
+Editting Transitions
+--------------------
+
+o In the Edit transition dialogue, 
+  Tab key doesn't land you on OK or CANCEL.  How does one say OK 
+  or CANCEL without the mouse?  Return and Escape don't do the trick.
+  Not sure they should.  Not sure what the policy should be here for 
+  dealing with no mouse.
+?? nothing now
+
+
+
+Editting Components
+-------------------
+
+
+Editting Modes
+--------------
+
+
+
+Editting Attributes
+-------------------
+
+
+Editting Terminals
+------------------
+
+
+Generated Code
+--------------
+
+Instantiating Modules
+---------------------
+
+
+======================================================
+====================================================
+
+
+Bill's Comments 05nov97 => version 0.7
+==================================================
+
+General Comments:
+=================
+
+o Title "Stanley VMPL =>".  Put the current file
+  name in the same vicinity as the current project rather than in the 
+  window title.  I have a general concern about some window managers
+  not supporting things that others support, so I'd prefer to avoid
+  conveying critical information via a window manager -- stick to
+  conveying it with a tcl/tk construct in the main body of the window.
+
+o Colours for Project: <undefined-project>, Attention:, and Legend:
+  are difficult to read.  Not sure if it's just my environment.
+
+o Are there alt-<foo> keys for all menu items and submenu items, as 
+  there are for all menues?  Doesn't appear so.
+
+
+File Menu:
+==========
+
+o Open menu item leads to a dialogue that exposes the file system and
+  internal file names to the user, which shouldn't need to occur.  A 
+  list of the appropriate class names would be more appropriate.  
+
+o Should Open menu item be removed, and replaced with a menu item in 
+  the Definitions menu (it's more about editting a definition, than
+  opening a file)?  Similar question for New menu item and Save menu
+  item.
+
+o
+
+
+Definitions Menu:
+=================
+
+o "Edit/View Class Definition Header" menu items.  As we've discussed
+  in the past, these are strange in that they house information for
+  schematic, but aren't explicitly represented in the schematic.  Do
+  we want to add a node for accessing info about the header, as we did 
+  with attribute information?
+
+
+Instances Menu:
+===============
+
+o rename Menu item "Delete Selected Instance(s)" to 
+  "Delete Selected Region"?
+
+
+Livingstone Menu:
+=================
+
+o need to discuss how user can create a new project.  This might
+  need to include the concept of "library", which would be a list 
+  of directories that Stanley knows about for dragging in and viewing 
+  definitions.
+
+
+Editting Modes:
+===============
+
+o single-clicking on mode brings up Edit {OK-MODE, FAULT-MODE} Mode
+  dialogue.  Might want to make it a double click?
+
+o make a single dialogue for OK-MODE and FAULT-MODE (i.e. specify
+  the mode type in the dialogue)?
+
+
+
+======================================================
+====================================================
+Bill's Comments 28Nov97 => version 0.8
+==================================================
+
+
+o I created a component called pipe-segment.  I then created a module
+  called pipe with 4 pipe-segments named seg-1, seg-2, seg-3, seg-4,
+  and connected (out seg-1) to (in seg-2) and so on.  I then changed
+  the names of the 4 instances to from seg-1 to (seg-1 ?name), seg-2
+  to (seg-2 ?name), etc.  This not only messed up the connections,
+  but crashed stanley with `Error: bad window path name ""' and stack
+  trace:
+
+  Bill will try to re-create.
+
+o I restarted Stanley, created pipe again using (seg-1 ?name), etc. from
+  the start and saved it.  I then selected PIPE as the project.  I then
+  compiled, and got in Emacs-Livingstone (this is the last whole s-expr
+  in the buffer):
+
+                            (progn (stanley::compile-project :livingstone-path
+"/home/mars/DS1-1/R3/ra/mir/livingstone/ds3/models/mir-project-models.system" :project-name "pipe"
+:component-files-list '( pipe-segment) :module-files-list '() :relsymval-files-list '( defrelations
+defsymbols defvalues)) (lep::eval-in-emacs "(progn (server-edit) nil)"))
+
+  It didn't make progress on this after several minutes.  I couldn't seem
+  to interrupt the image to get more info.
+
+  Bill will try to re-create.
+
+
+
+======================================================
+====================================================
+Bill's Comments 10dec97 => version 0.9
+==================================================
+
+
+Maybe in next release ...
+=========================
+
+o what's the algorithm for deciding how to lay out a 4-break connection?
+  It looks really silly when it isn't necessary.  How does one know
+  when it's necessary, and can that decision be automated?  I also
+  note that a 4-break connection can be made to look like a 2-break
+  connection, so that raises the question: why not always lay down
+  a 4-break connection, and have the default be to lay it out like
+  a 2-break connection if that suffices, and have it go with the
+  4-break layout otherwise; this always gives the user the flexibility 
+  of the 4-break.
+
+
+Not in next release ...
+=======================
+
+o Naming conventions for terminals/attributes like (cmd-in ?name) that 
+  include the ?name explicitly are a real pain in the butt, both to write 
+  and to read.  It would be good if the user could instead just say 'cmd-in'
+  and have the code generator expand that to (cmd-in ?name).  We could
+  still *allow* the user to specify the full name (cmd-in ?name), but
+  not *require* it.  The ?name object could be considered akin to the 
+  'this' pointer in C++ -- the user can exploit it if desired, but usually 
+  the compiler generates it when it isn't provided.
+
+  Not sure what the full ramifications are of having stanley help
+  out with this:
+
+  o how do models refer to (cmd-in ?name) ?  What about something
+    like (cmd-in (rt ?name)) ?  One possibility is: cmd-in, and
+    rt.cmd-in, respectively.  Question is: does Stanley expand
+    this at code gen time, or does (an augmented) MPL expand this 
+    at compilation time.  Could do either.
+
+  o what happens if user refers to rt.cmdin which doesn't exist?
+    How would the error be reported?  If Stanley is doing the
+    expansion, I'm not sure.  If MPL is doing it, it would be the
+    standard compile-time reporting of an error.
+
+  o the representation chosen above (e.g. rt.cmd-in) would need
+    to be reflected not only in terminal/attributes, but in places 
+    like bubble help that currently display the generated version 
+    (e.g. (cmd-in (rt ?name))).
+
+o icons instead of rectangles to display nodes ... yes, it's the next 
+  big leap for Stanley!  Let's start looking at how to define bitmaps 
+  and how to allow the user to tie them to components and modules.
+
+============================================================
+============================================================
+
+
+Bill's Comments 12dec97 
+==================================================
+
+o The "File: Open Definition..." menu item provides choices in a 
+  submenu for "Component ..." etc.  The question arose before w.r.t.
+  possibly avoiding the file manager and going instead with another
+  submenu.  That would be nice, but:
+
+  o without a file manager, we're limited to the list of definitions that 
+    Stanley already has locally or that the user defines.  [I assume the
+    way the user indicates what definitions Stanley is to "load" is done up
+    front with some (environment) variable, and can't be augmented on the
+    fly -- you have to restart Stanley?]
+
+  o without a file manager, do we then want to allow the user to "import"
+    various definitions from another directory on the fly?  
+
+  o how do we handle re-definitions at the moment, if at all?  Is it
+    simply that, without warning, the last time a definition FOO is
+    loaded is the one that counts (the previous loaded defs named FOO
+    are overwritten)?  [this re-definition issue isn't problem at the
+    moment because all definitions live in the same directory, so you
+    can't have 2 modules of the same name.  But if seperate source
+    dirs are allowed, then this becomes an issue.]
+
+o In the Help menu:
+
+  o Menu item "About Stanley ..." might also include:
+    o is copyright information required for distribution
+      to other NASA centers?  Outside of NASA?
+      Let's *not* open this can of worms right now but 
+      rather note it for future reference.
+
+    o Item "Building Schematics with Stanley":
+      o what's here is mostly out of date.
+      o it's probably best to provide a detailed example here for
+        starters, rather than attempting a reference manual or 
+        somesuch.  Not sure what the best approach is for explaining
+        things to users -- a text-file isn't exactly the most
+        natural medium for discussing GUI's.
+
+  Bill will look at this.
+
+o Have we thought about recursive module definitions?  Haven't thought 
+  about what this means for Stanley allowing/preventing the user from, 
+  for example, instantiating a module FOO inside FOO.
+
+  deferred
+
+o Relation, Symbol, Value dialogues could use a HELP button to provide
+  an example to resolve format questions.
+
+  defer
+
+
+============================================================
+============================================================
+
+
+Bill's Comments 
+==================================================
+
+19Dec:
+
+When I pull menus down, I notice that the first item is already
+selected, and if it's a submenu, that submenu is displayed, and
+the first item in the submenu is selected, and if *that* is
+expandable then it's already expanded, etc.  Single click on the
+Definitions menu to see what I mean.
+
+Maybe that was a feature you put in, though I don't believe
+it's standard.
+
+Tk standard
+
+======================
+
+13Jan98 - Summary of above
+==========================
+o icons with names on the bottom, ala Macintosh
+o ?name handled without showing it to user, and
+  generated in Lisp code.
+o libraries of schematics / file manager issues
+o 2/4 break links
+==========================
+==========================
+
+14Jan98 - 
+==========================
+o indenting in lisp-edit widgets: is there something akin to <tab> in 
+  emacs for indenting the current line appropriately?
+  Place mouse cursor anywhere on line of text -- use <tab> to
+  indent it.
+
+
+14Jan98 - highest priority 
+==========================
+o in the project menu, add an item "Simulation".  The idea is to
+   allow the user to test the selected project (module).  The user
+   must be able to provide values for various terminals, and then
+   press "execute" to see what the resulting state looks like, by
+   examining the visual display, and the current values of various
+   propositions, etc.  User might then want to continue from there
+   by specifying another set of terminal values and clicking again
+   on "execute"; or the user might want to start over, say by
+   clicking on "refresh" or "defaults" or somesuch.
+
+Issues with the above:
+
+o we can further discuss/design the interface/implementation
+   details.
+o this will likely involve tighter interaction between Stanley
+   and Livingstone, so we should discuss any issues with
+   the emacs server, etc, that might complicate this.
+o this simulation facility is a big win from the modeling
+   perspective.
+==========================
+
+
+02feb98 -
+==========================
+o The defsystem file generated by menu selection "Project->Compile Project"
+  the order of modules should reflect hierarchial dependencies,
+  so that MPL warnings do not occur:
+  (rcs-thruster-palette (palette-d ?name)) is neither a module nor a component instance
+
+o 
+
+
+17feb98 - Mark Shirley, Bill Millar discussion
+==============================================
+o make component initial mode visual, rather than in the dialog
+
+o "scratch pad" to allow cut&paste of wff prototypes to aid 
+  beginning user
+
+o symbol completion in text widget editing?
+
+o resizable dialogs
+
+o icon library for components/modules - line-art rather than'
+  bitmaps => scalable
+
+o use shapes other than rectangles to differentiate between class
+  types -- use color gradations as well
+
+o inheriting terminals - ask user if not explicit terminal or terminator
+
+o ground ops custom UI: expand, collapse, hide functions on basic
+  schematic to create an contextual aggregate view. allow users to
+  annotate or add informative graphics
+
+o separate terminals/attributes from modes on component canvas. 
+
+
+27mar98 - Bill Millar discussion 
+==============================================
+o How to rename child terminals which are inherited up to parent 
+  module, so that existing connections to it are prererved.
+  Currently, connections would not be drawn since the match is 
+  make by name and type. - put component/module "buttons" into
+  their own array pirButton so that their internal identification
+  would be by pirButton index, not e.g. .master.canvas.?name.c.acs-a.b1
+  In this way the names could be changed and the connections would
+  be able to be redrawn with matching done by pirButtonIndex.
+
+
+01may98 - summary of "later" items from Bill Millar
+==============================================
+o smart default for module terminal ordering as a part of the
+  header -- editible at any time.
+
+o public/private designation in the instantiate/edit instance
+  dialog to specify public/private terminals -- this would
+  replace terminator nodes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

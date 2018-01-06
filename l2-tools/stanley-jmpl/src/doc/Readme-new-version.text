@@ -1,0 +1,123 @@
+# $Id: Readme-new-version.text,v 1.1.1.1 2006/04/18 20:17:28 taylor Exp $
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+
+## Version 2.0 (DS1-R1)
+--------------
+cd $DS1_ROOT
+# create branched tag version 
+cvs tag -b Version-2-0 ra/mir/gui 
+
+cd ~/autosat
+# get branched tag version
+cvs checkout -r Version-2-0 ra/mir/gui 
+
+# check other updates
+cvs update -r Version-2-0 ra/mir/gui
+# commit updates 
+cvs commit -r Version-2-0 ra/mir/gui
+
+# in other working directories - to get these updates
+cvs update -r Version-2-0 ra/mir/gui
+
+ALIAS TAGS: R1_00 & R1_001_Stage_01
+% cvs rtag -b -r R1_00 R1_001_Stage_01 ra/mir/gui
+
+## --------------------------------------------------
+Mainline and branches:
+1) New development should be done by checkout from the mainline 
+        % cvs checkout ra/mir/gui 
+2) when development is ready for others to use, e.g. Livingstone users,
+   commit it to the mainline
+        % cvs commit ra/mir/gui
+   step 2) can be repeated as development progresses
+3) when the mainline is ready for release to FST Integration
+        % cvs tag DS1_00 ra/mir/gui
+   this establishes a reference point for all FST released DS1 code
+4) create a branch for patches/updates to FST released code
+        % cvs tag -b DS1_001_Stage_00 ra/mir/gui
+   FST checks it out
+        % cvs checkout -r DS1_001_Stage_00 ra/mir/gui 
+5) create patch for FST released code
+        % cvs checkout -r DS1_001_Stage_00 ra/mir/gui 
+        # make changes
+        % cvs commit -r DS1_001_Stage_00 ra/mir/gui 
+   these changes go to the branch, DS1_001_Stage_00, not to the mainline
+   FST gets latest patch
+        % cvs update -r DS1_001_Stage_00 ra/mir/gui 
+6) further development is done on the mainline by using 1) & 2)
+
+Note that to get a branch integrated into the mainline, all changes to
+to the branch must be commited to the branch, then the branch must be
+merged into the mainline.
+% cvs update -j <branch-tag>
+
+## --------------------------------------------------
+## folowing versions
+DS1-R2-S1
+## create 
+cvs tag -b DS1-R2-S1 ra/mir/gui 
+## checkout
+cvs checkout -r DS1-R2-S1 ra/mir/gui 
+## update
+cvs -n update -r DS1-R2-S1 ra/mir/gui 
+cvs update -r DS1-R2-S1 ra/mir/gui 
+## commit
+cvs commit -r DS1-R2-S1 ra/mir/gui
+## merge into mainline
+
+
+
+cvs update -A ra/mir/gui  # reset all sticky tags
+>>> Edit the 'C' files and remove the overlaps.
+>>> Edit some more to make it all compile and work.
+cvs update -j DS1-R2-S1 ra/mir/gui
+cvs commit ra/mir/gui
+
+##--------------------------------------------------
+
+get file from mainline onto branch
+cvs update -A file      # removes dates, tags ,etc
+cvs tag -b R3_Dev file  # puts R3_Dev tag on it
+
+##--------------------------------------------------
+
+##--------------------------------------------------
+
+## working directory files must be commited BEFORE tagging
+tag all files in repository
+cvs update ra/mir/gui
+cvs commit ra/mir/gui
+cvs tag R3_MIR_GUI_MAT_001 ra/mir/gui
+
+##--------------------------------------------------
+   One way to get a "sticky tag" type of problem is to checkout 
+  one of the global tags such as "cvs checkout -r R3_global_00x" and
+  later try to update it - it will not update to R3_Dev, but to
+  R3_global_00x - which of course hasn't changed.  Changing this
+  file and then committing also has not effect on the repository
+  since CVS will not allow you to overwrite a tagged version. One
+  would need to "cvs update -r R3_Dev <file>" and then commit the 
+  file for the repository to change.
+
+##--------------------------------------------------
+
+CVS DIRECTORY PROBLEM
+cvs update ra/mir/gui
+cvs [update aborted]: cannot open fasl/CVS/Tag: No such file or directory
+
+/bin/rm -rf ra/mir/gui/bin; cvs checkout ra/mir/gui/bin
+/bin/rm -rf ra/mir/gui/fasl; cvs checkout ra/mir/gui/fasl
+/bin/rm -rf ra/mir/gui/stanley/lisp/bin; cvs checkout ra/mir/gui/stanley/lisp/bin
+/bin/rm -rf ra/mir/gui/stanley/lisp/fasl; cvs checkout ra/mir/gui/stanley/lisp/fasl
+# re-install Stanley
+mbuild install
+THIS DOES NOT WORK
+
+instead bypass problem by substituting 
+cvs update -l ra/mir/gui
+cvs update ra/mir/gui/stanley
+cvs update ra/mir/gui/stanley-user 

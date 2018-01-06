@@ -1,0 +1,111 @@
+# $Id: Makefile.in,v 1.1.1.1 2006/04/18 20:17:28 taylor Exp $
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+
+# Building C binary front-end for Stanley Tcl interpreted code
+
+## THE FIRST CHARACTER OF EACH commandList must be tab
+#  targetList:   dependencyList
+#	commandList
+## evaluate (setq-default indent-tabs-mode t)
+
+.SILENT:
+
+STANLEY_ROOT = @STANLEY_ROOT@
+CC = @CC@
+STANLEY_TCL_TK_INC = @STANLEY_TCL_TK_INC@
+STANLEY_TCL_TK_LIB = @STANLEY_TCL_TK_LIB@
+STANLEY_TK_L = @STANLEY_TK_L@
+STANLEY_TCL_L = @STANLEY_TCL_L@
+STANLEY_ITCL_L = @STANLEY_ITCL_L@
+STANLEY_TKTABLE_LIB = @STANLEY_TKTABLE_LIB@
+STANLEY_TKTABLE_L = @STANLEY_TKTABLE_L@
+X11_LIB_DIR = @X11_LIB_DIR@
+X11_INC_DIR = @X11_INC_DIR@
+STANLEY_CORBA_P = @STANLEY_CORBA_P@
+TCL_MICO_LIB = @TCL_MICO_LIB@
+TCL_MICO_LIB_L = @TCL_MICO_LIB_L@
+MICO_LIB = @MICO_LIB@
+MICO_LIB_L = @MICO_LIB_L@  
+MICO_LIB_LIR = @MICO_LIB_LIR@  
+CPP_LIB = @CPP_LIB@
+OTHER_MICO_LIBS = @OTHER_MICO_LIBS@
+GENERIC_LIBS = @GENERIC_LIBS@
+
+RM = rm -f
+
+# In tcl8.3.3/unix/Makefile, uncomment
+# SECURITY_FLAGS = -DTK_NO_SECURITY
+# and run skunkworks/stanley-jmpl/configure
+# so that tkUnixSend.c will not require x-authorization
+# then will not have to compile and link tkUnixSend.c in stanley-jmpl/src/c/Makefile
+
+cSOURCES = stanley.c tkAppInit.c 
+cOBJS = stanley.o tkAppInit.o 
+
+## if using tkSteal      tkXAccess.c
+
+#	tkXAccess.c - TkSteal allows Emacs to be imbedded in a tk widget
+
+# Added to access Tcl8.0/Tk8.0
+INCDIRS += -I$(STANLEY_TCL_TK_INC)
+# tcl/tk
+cEXTERNLIBS += -L$(STANLEY_TCL_TK_LIB) -l$(STANLEY_TK_L) -l$(STANLEY_TCL_L) 
+# Itcl
+cEXTERNLIBS += -l$(STANLEY_ITCL_L)
+# tkTable
+cEXTERNLIBS += -L$(STANLEY_TKTABLE_LIB) -l$(STANLEY_TKTABLE_L) 
+# BLT package
+# cEXTERNLIBS += -L$(STANLEY_BLT_LIB) -l$(STANLEY_BLT_L)
+
+# uncomment to link with Tcl_X at Ames; also uncomment TCL_X in tkAppInit.c
+#  cEXTERNLIBS += -L$(STANLEY_TCL_TK_LIB) -ltclx8.0.0
+
+# uncomment to link with TIX at Ames; also uncomment TIX in tkAppInit.c
+#  cEXTERNLIBS += -L$(STANLEY_TCL_TK_LIB) -ltix4.1.8.0
+
+## for ames - since use_x=1 uses /usr/local2/X.V11R6/lib
+## which has libX11.so, but not libX11.a, which Ames Tcl/Tk requires
+cEXTERNLIBS += -L$(X11_LIB_DIR) -lX11
+
+## Tcl-DP 4.0 (compatible with tcl7.6/tk4.2)
+##   cEXTERNLIBS += -L$(TCL_LIBRARY)/../tcl-dp/unix -ldp40
+##       INCDIRS += -I$(TCL_LIBRARY)/../tcl-dp/generic
+
+## from ../tk8.2/unix/Makefile
+AC_FLAGS = -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_SYS_SELECT_H=1 -DHAVE_SYS_TIME_H=1 -DNO_XIDPROC -DI18N_IMPROVE -D${STANLEY_CORBA_P}
+# STANLEY_CORBA_P is used by tkAppinit.c
+
+
+X11_INC = -I$(STANLEY_ROOT)/src/include -I$(X11_INC_DIR)
+#		<X11/Xlib.h>	gui/stanley-jmpl/include/X11/Xlib.h to prevent compiler warnings, e.g.
+#     /opt/X11R5/include/X11/Xlib.h:135: warning: function declaration isn't a prototype
+
+#	TkSteal allows Emacs to be imbedded in a tk widget
+#	-DUSE_XACCESS is set for TkSteal 
+#	-DUSE_TCL_DP inits Tcl-DP
+
+# Combat (tclMico) ORB -- Combat_Init called in tkAppInit.c 
+TCLMICO_LIBS      = -L$(TCL_MICO_LIB) -l$(TCL_MICO_LIB_L) -L$(MICO_LIB) -l$(MICO_LIB_L) -l$(MICO_LIB_LIR) -L$(CPP_LIB) -lstdc++ -L$(GENERIC_LIBS) -ldl $(OTHER_MICO_LIBS) -lnsl 
+### TCLMICO_LIBS      = -L$(TCL_MICO_LIB) -ltclmico -L$(MICO_LIB) -lmico -L$(CPP_LIB) -lg++ -lstdc++ -L/usr/local/gnu/gcc-2.8.1/lib/gcc-lib/sparc-sun-solaris2.6/2.8.1 -lgcc -ldl -lelf -lsocket -lnsl
+CFLAGS += $(AC_FLAGS) $(X11_INC) $(INCDIRS) -pedantic -O -fno-fast-math -g
+
+OBJS = $(cSOURCES:.c=.o)
+
+
+../bin/stanley-bin:	$(OBJS) 
+	$(CC) $(CFLAGS) -o ../../bin/stanley-bin $(OBJS) $(cEXTERNLIBS) $(TCLMICO_LIBS) -lc -lm
+
+%.o : %.c 
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	@echo "Remove stanley-bin from ${STANLEY_ROOT}/bin"
+	(cd ${STANLEY_ROOT}/bin; \
+	$(RM) stanley-bin)
+	$(RM) $(cOBJS) 
+
+

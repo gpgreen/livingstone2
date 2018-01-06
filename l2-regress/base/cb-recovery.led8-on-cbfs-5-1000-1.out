@@ -1,0 +1,24 @@
+Reading model file(s): cb.{xmpl,hrn,ini}
+Read `cb'
+Search settings:
+   Search type               = cbfs
+   Max candidates returned   = 5
+   Max candidates searched   = 1000
+   Max candidate classes     = 0
+   Max rank                  = 100
+   History length            = 2
+
+   Max candidates tracked    = 5
+   Progress style            = full
+   Find Candidates style     = the tracker default fc
+---------------
+Step 2; 197 variables; 0 conflicts before; 12 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 13)
+The 1 candidates are:
+   Candidate 0)
+        1#cbAndLed.cb8.cmdIn=on :1
+        1#cbAndLed.cb12.cmdIn=on :1
+        1#cbAndLed.cb14.cmdIn=on :1
+        1#cbAndLed.cb15.cmdIn=on :1
+
+

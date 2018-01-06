@@ -1,0 +1,4 @@
+#define x_width 7
+#define x_height 5
+static char x_bits[] = {
+   0x7f, 0x41, 0x22, 0x14, 0x1c};

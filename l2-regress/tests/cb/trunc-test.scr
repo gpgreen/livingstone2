@@ -1,0 +1,36 @@
+// A test of the truncation algorithm.
+// Just for the easiest stuff: idle everything until we automatically
+// truncate a few times; then truncate by hand; then truncate again, but
+// a timestep that no longer exists.
+
+// We run with a history of 3.
+
+// we have a history depth of 2 after this
+progress
+oldest-time
+
+// we have a history depth of 3 after this
+progress
+oldest-time
+
+// cause an automatic truncate
+progress
+oldest-time
+
+// make sure it worked: oldest-time should be 1
+values
+
+// truncate by hand
+truncate 3
+oldest-time
+values
+
+// truncate the same again
+truncate 3
+oldest-time
+values
+
+// truncate in the past; should be ignored
+truncate 2
+oldest-time
+values

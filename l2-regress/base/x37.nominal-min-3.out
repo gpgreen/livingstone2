@@ -1,0 +1,82 @@
+Reading model file(s): x37V1p6.l2
+Optimizing model ...
+Read `x37V1p6.l2'
+Search settings:
+   Search type               = cbfs
+   Max candidates returned   = 5
+   Max candidates searched   = 1000
+   Max candidate classes     = 0
+   Max rank                  = 100
+   History length            = 3
+
+   Max candidates tracked    = 5
+   Progress style            = min
+   Find Candidates style     = the tracker default fc
+---------------
+Step 8; 326 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+Step 8; 326 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+Step 9; 326 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+Step 11; 326 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+Step 13; 326 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+Step 15; 326 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+Step 17; 326 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+Step 19; 326 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+Step 20; 326 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+Tracker has 1 candidates
+Tracker debugger has 0 checkpoints
+Conflict_db has 326 variables, 0 conflicts
+LTMS has 960 propositions, 2978 clauses

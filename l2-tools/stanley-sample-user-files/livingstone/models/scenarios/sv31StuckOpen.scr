@@ -1,0 +1,6 @@
+scenario sv31StuckOpen mainPropulsionSystem
+progress test.sv31.sv.valveCmdIn=open
+assign test.sv31.microSwitch=open
+fc
+progress test.sv31.sv.valveCmdIn=close
+fc

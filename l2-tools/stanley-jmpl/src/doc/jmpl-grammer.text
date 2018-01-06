@@ -1,0 +1,111 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+Notes:
+o there is no assignment (=) operator in jmpl, just the equality (==)
+  operator, since jmpl only specifies constraints;
+o there are no bitwise operators (|, &), just conditionals (||, &&) --
+  so both (a | b) and (a || b) are the same;
+
+// this is an example jmpl file generated in parallel with the grammar
+// by andrew bachmann 1/14/2000
+
+include "this is a string literal (including quotes)"
+
+// namedEnumeration*
+enum something {sowanr="messed",ewLLT="up",mrwee="seriously"};
+enum another {yet,another,thing};
+enum namedEnumIdent {something,totally,different} {
+  relation tpersist () {
+    switch(this) {
+      case something: next(this=something);
+          case totally: next(this=totally);
+          case different: next(this=different);
+    }
+  }
+  {
+    if (this=something)
+      this!=totally;
+    else if (this=totally) {
+      this!=different;
+      this!=something;
+    } else {
+      this!=something;
+    }
+  }   
+};
+
+// namedClass*
+class dummy {
+  public namedEnumIdent nea1,nea2;
+  
+  stateVector nea1;
+
+  relation holds(namedEnumIdent var1, namedEnumIdent var2) {
+    if (var1=something) {
+      var2=different;
+    }
+  }
+
+  {
+    next(nea1=something);
+    holds(nea1,nea2);
+    nea1 = nea2;
+  }
+}
+
+// namedClass*
+class ClassIdent extends dummy {
+  // classEntry
+
+  // stateVector?
+  stateVector [stMode1,stMode2];
+
+  // enumerations
+  // anonEnumerationInstance
+  private enum {state1,state2,state3,state4} stMode1=state1;
+  public enum {state1b,state2b,stateNot2b,state3b} stMode2;
+  enum {up,down,left,right} aeii, aeii2=left;
+  // namedEnumeration
+  enum namedEnumIdent {yes,no,maybe,so};
+  // namedEnumerationInstances
+  public enum namedEnumInstIdent {oh,yeah,baby} neii=yeah,neii2;
+
+  // instantiations
+  namedEnumIdent nea1,nea2;
+  private dummy b,r;
+
+  // transitions
+  transition transitionIdent([*,state2b],[+,stateNot2b],high) {
+    (neii = oh | neii = yeah) & (neii2 = baby);
+    (aeii = up | aeii = down);
+    switch (nea1) {
+      case yes: next(nea1=no);
+      case no: next(nea1=maybe);
+      case maybe: next(nea1=yes);
+    }
+  }
+
+  failure ([,*],state3,unlikely) {
+    iff (aeii2 = left | aeii2 = right) 
+        (nea1 = no | nea2 = yes);
+    if (aeii = up) {
+       neii = oh;
+    } else {
+       neii = baby;
+    }
+  }
+
+  // constructors
+  ClassIdent (namedEnumIdent baz = so) {
+    b.nea1 = baz;
+  }
+
+  // constraints
+  { 
+    r.nea2 = nea2;
+  }
+}
+

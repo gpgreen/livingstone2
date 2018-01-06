@@ -1,0 +1,56 @@
+Reading model file(s): cb.{xmpl,hrn,ini}
+Optimizing model ...
+Read `cb'
+Search settings:
+   Search type               = cbfs
+   Max candidates returned   = 5
+   Max candidates searched   = 1000
+   Max candidate classes     = 0
+   Max rank                  = 100
+   History length            = unlimited
+
+   Max candidates tracked    = 5
+   Progress style            = min
+   Find Candidates style     = the tracker default fc
+---------------
+Step 5; 100 variables; 0 conflicts before; 1 after.
+CBFS: search found 5 candidate(s), more possible (searched 6)
+The 5 candidates are:
+   Candidate 0)
+        4#cbAndLed.cb8.modeTransition=tripped :3
+
+   Candidate 1)
+        -#cbAndLed.cb8.modeTransition=tripped :3
+
+   Candidate 2)
+        3#cbAndLed.cb12.modeTransition=tripped :3
+
+   Candidate 3)
+        -#cbAndLed.cb14.modeTransition=tripped :3
+
+   Candidate 4)
+        -#cbAndLed.cb12.modeTransition=tripped :3
+
+
+Step 7; 106 variables; 1 conflicts before; 16 after.
+CBFS: search found 5 candidate(s), more possible (searched 27)
+The 5 candidates are:
+   Candidate 0)
+        4#cbAndLed.cb8.modeTransition=tripped :3
+
+   Candidate 1)
+        -#cbAndLed.cb8.modeTransition=tripped :3
+
+   Candidate 2)
+        -#cbAndLed.cb12.modeTransition=tripped :3
+        3#cbAndLed.cb12.modeTransition=unknownCbFault :4
+
+   Candidate 3)
+        3#cbAndLed.cb12.modeTransition=tripped :3
+        -#cbAndLed.cb8.modeTransition=unknownCbFault :4
+
+   Candidate 4)
+        -#cbAndLed.cb14.modeTransition=tripped :3
+        -#cbAndLed.cb12.modeTransition=unknownCbFault :4
+
+

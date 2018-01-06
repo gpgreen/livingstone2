@@ -1,0 +1,775 @@
+#! @PERL@ -w
+
+###########################################################################
+# @configure_input@
+# $Id: common.in,v 1.2 2001/07/20 00:22:53 bhudson Exp $
+
+# This file is the common perl script that all the regression test suite
+# scripts are links to.  In runOne, we use $0 to figure out what the script
+# should actually do.
+
+
+
+use Cwd;  # getcwd()
+use strict;
+
+# straight out of perlipc(1)
+use Config;
+my(%signo,@signame);
+defined $Config{"sig_name"} || die "No sigs?";
+{
+    my $i=0;
+    foreach my $name (split(' ', $Config{"sig_name"})) {
+        $signo{$name} = $i;
+        $signame[$i] = $name;
+        $i++;
+    }
+}
+
+
+
+# A group is a hash:
+# key     type
+# --------------
+# name    scalar
+# tests   ref to list
+
+# A test is a hash:
+# key     type
+# --------------
+# name    scalar
+# dir     scalar
+# exec    scalar
+# args    reference to list
+# in      scalar
+# out     scalar
+# subs    reference to list
+# inlist  scalar (defined/undefined)
+
+# testlist is a LoH; testhash is a HoH.
+my @testlist;
+my %testhash;
+
+
+# grouplist is a LoLoH; grouphash is a HoLoH.
+my @grouplist;
+my %grouphash;
+
+
+# list of lines of perl code to eval
+my @require_diff = (); my $ran_require_diff = 0;
+my @require_run  = (); my $ran_require_run  = 0;
+
+
+# constants for diffTest return values.
+my $PASS = 0;
+my $FAIL = 1;
+my $NOBASE=2;
+my $NOOUT =3;
+
+# So that we can know about some directory.
+my $home_directory = getcwd();
+
+
+###########################################################################
+#### Access the data structures
+my $IGNORE_ERROR = 0;
+my $PARSE_ERROR = 1;
+my $ERROR = 2;
+sub getgroup_byname($$) {
+    my $name = shift;
+    my $barf = shift;
+    my $group = $grouphash{$name};
+    if(!defined($group)) {
+        if($barf == $PARSE_ERROR) {
+            parse_error("No group named `$name'");
+        }
+        elsif($barf == $ERROR) {
+            error("No group named `$name'");
+        }
+    }
+    return $group;
+}
+
+sub gettest_byname($$) {
+    my $name = shift;
+    my $barf = shift;
+    my $test = $testhash{$name};
+    if(!defined($test)) {
+        if($barf == $PARSE_ERROR) {
+            parse_error("No test named `$name'");
+        }
+        elsif($barf == $ERROR) {
+            error("No test named `$name'");
+        }
+    }
+    return $test;
+}
+
+
+
+
+
+###########################################################################
+#### Implement listtests
+
+sub printTestList($@) {
+    my $verbose = shift;
+    foreach my $test (@_) {
+        if($verbose) {
+            printTest($test);
+        } else {
+            print '    ', $test->{'name'}, "\n";
+        }
+    }
+}
+
+###########################################################################
+#### Implement runtests
+
+# run and diff
+sub runTestList(@) {
+    runRequire("run");
+    return internal_runTests(1, @_);
+}
+
+###########################################################################
+#### Implement reiterate
+
+# just diff
+sub rediffTestList(@) {
+    return internal_runTests(0, @_);
+}
+
+
+###########################################################################
+#### For both runtests and reiterate
+
+sub internal_runTests($@) {
+    my $dorun = shift;
+    my($npassed, $nfailed, $nnobase) = (0,0,0);
+    runRequire("run");
+
+    foreach my $test (@_) {
+        print "Testing " . $test->{'name'} . " ... ";
+        runTest($test) if $dorun;
+
+        my $ret = diffTest($test, 1);
+        if($ret==$PASS)       { $npassed++; }
+        elsif($ret==$FAIL)    { $nfailed++; }
+        elsif($ret==$NOBASE)  { $nnobase++; }
+    }
+
+    printf("Ran %d tests: %d passed, %d failed\n",
+            $npassed+$nfailed+$nnobase, $npassed, $nfailed+$nnobase);
+    return $nfailed==0;
+}
+
+
+
+###########################################################################
+#### Implement list_no_basis
+
+sub printNoBase(@) {
+    my @nobase_list = ();
+    foreach my $test (@_) {
+        my $ret = diffTest($test, 0);
+        push @nobase_list, $test->{'name'} if ($ret==$NOBASE);
+    }
+    if($#nobase_list==-1) {
+        print "Base found for every test\n";
+    }
+    else {
+        print join("\n    ",
+                "No basis for comparison in tests:",
+                @nobase_list);
+        print "\n";
+    }
+}
+
+###########################################################################
+#### Implement create_basis and fix_basis
+
+sub createManyBases($@) {
+    my $expect_ret = shift;
+    foreach my $test (@_) {
+        my $ret = diffTest($test);
+        my $tname = $test->{'name'};
+        if($ret==$NOOUT) {
+            print "Running $tname ... ";
+            runTest($test);
+            $ret = diffTest($test,1);
+        }
+
+        if($ret==$FAIL && $expect_ret==$FAIL) {
+            print "Updating $tname ...";
+            createBasis($test);
+            print "\n";
+        } elsif($ret==$NOBASE && $expect_ret==$NOBASE) {
+            print "Creating base for $tname ...";
+            createBasis($test);
+            print "\n";
+        }
+    }
+}
+
+###########################################################################
+#### Print a single test.
+sub printTest($) {
+    my $test = shift;
+    print "test ", $test->{'name'}, "\n";
+    print "     dir  ", $test->{'dir'}, "\n";
+    print "     exec ", $test->{'exec'}, "\n";
+
+    if(scalar(@{$test->{'args'}}) != 0) {
+        print "     args '", join("' '", @{$test->{'args'}}), "'\n";
+    }
+
+    print "     in   ", $test->{'in'}, "\n";
+    print "     out  ", $test->{'out'}, "\n";
+
+    if(scalar(@{$test->{'subs'}}) != 0) {
+        print "     subs\n";
+        foreach my $sub (@{$test->{'subs'}}) {
+            print "        $sub\n";
+        }
+    }
+}
+
+###########################################################################
+#### Run a single test.
+# Just runs the test -- doesn't diff.
+sub runTest($) {
+    mkdir('out',  0777) unless -d 'out';
+    my $test = shift;
+
+    # Save the current STDIN, STDOUT and STDERR.
+    open(OLDIN, "<&STDIN");
+    open(OLDOUT, ">&STDOUT");
+    open(OLDERR, ">&STDERR");
+
+    # First, go to the appropriate directory.
+    my $here = getcwd();
+    my $there = "tests/" . $test->{'dir'};
+    chdir($there);
+
+    # Next, run the program with the specified arguments (if any)
+    my $exec = $test->{'exec'};
+
+    error("$exec does not exist")    unless -f $exec;
+    error("$exec is not executable") unless -x $exec;
+    my @CmdLine = ($exec, @{$test->{'args'}});
+
+    # where to redirect input from; default is /dev/null so we
+    # don't hang waiting on the keyboard
+    my $infile = $test->{'in'};
+    error("$infile is not readable") unless -r $infile;
+    open(STDIN, "<$infile");
+
+    # where to redirect output from:
+    # if '-' redirect from stdout
+    # if '-&' redirect from both stdout and stderr
+    # if something else, copy that file
+    my $outfile;
+    if($test->{'out'} eq '-') {
+        $outfile = "$here/out/" . $test->{'name'} . ".out.tmp";
+        open(STDOUT, ">$outfile");
+    } elsif($test->{'out'} eq '-&' ){
+        $outfile = "$here/out/" . $test->{'name'} . ".out.tmp";
+        open(STDOUT, ">$outfile");
+        open(STDERR, ">&STDOUT");
+    } else {
+        $outfile = $test->{'out'}
+    }
+    system $exec (@CmdLine);
+    if($? != 0) {
+        my $sig = $? & 0x7f;
+        my $core= $? & 0x80;
+        if($sig) {
+            print STDERR "Killed by signal $sig `$signame[$sig]'";
+            if($core) {
+                print STDERR " (core dumped)\n";
+            } else {
+                print STDERR "\n";
+            }
+        }
+    }
+
+    # Restore STDIN
+    close(STDIN);
+    open(STDIN, "<&OLDIN");
+    close(OLDIN);
+
+    # Restore STDOUT.
+    close(STDOUT);
+    open(STDOUT, ">&OLDOUT");
+    close(OLDOUT);
+
+    # Restore STDERR.
+    close(STDERR);
+    open(STDERR, ">&OLDERR");
+    close(OLDERR);
+
+    open(OUTFILE, $outfile) or
+        die "Can't open output file `$outfile': $!";
+    unlink($outfile); # so we don't forget
+
+    my $filtered = "$here/out/" . $test->{'name'} . ".out";
+    open(FILTERED, ">$filtered") or
+        die "Can't open filtered output file `$filtered': $!";
+    while(<OUTFILE>) {
+        foreach my $sub (@{$test->{'subs'}}) {
+            eval $sub;
+        }
+        print FILTERED $_;
+    }
+    close(FILTERED);
+    close(OUTFILE);
+
+    # go back to the l2regression directory
+    chdir($here);
+}
+
+
+###########################################################################
+#### Diff a single test.
+# Just diff the test.  Doesn't run the test.
+# If verbose, print a message on return.
+sub diffTest($$) {
+    my $test = shift;
+    my $verbose = shift;
+    my $ret = internal_diffTest($test);
+    if($verbose) {
+        if($ret==$PASS)       { print "passed\n"; }
+        elsif($ret==$FAIL)    { print "differences noted\n"; }
+        elsif($ret==$NOBASE)  { print "no basis for comparison\n"; }
+        elsif($ret==$NOOUT)   { print "no output to compare\n"; }
+        else                  { die "internal_diffTest returned `$ret'\n"; }
+    }
+    return $ret;
+}
+
+# Used to implement diffTest.
+sub internal_diffTest($) {
+    my $test = shift;
+
+    my $testname = $test->{'name'};
+    my $filename = $testname . ".out";
+    my $outfile = "out/".$filename;
+    my $basefile= "base/".$filename;
+    my $difffile= "diff/".$filename;
+
+    return $NOOUT  unless(-r $outfile);
+    return $NOBASE unless(-r $basefile);
+
+    # make the output directory, and run diff
+    mkdir('diff', 0777) unless -d 'diff';
+
+    # Save old STDOUT.
+    open(OLDOUT, ">&STDOUT");
+
+    open(STDOUT, ">$difffile");
+    my $retval = system("diff -w '$basefile' '$outfile'");
+    $retval >>= 8;
+
+    # Restore STDOUT.
+    close(STDOUT);
+    open(STDOUT, ">&OLDOUT");
+    close(OLDOUT);
+
+    if($retval==0) {
+        unlink $difffile;
+        return $PASS;
+    } elsif($retval==1) {
+        return $FAIL;
+    }
+    print "unknown error with diff (exit code $retval)\n";
+    return $FAIL;
+}
+
+
+sub createBasis($) {
+    my $test = shift;
+    my $fname = $test->{'name'} . ".out";
+    system("cp out/$fname base/$fname");
+}
+
+
+
+###########################################################################
+#### Run the 'require' lines.
+sub runRequire($) {
+    my $type = shift;
+    my $ran;
+    my @run;
+    eval "\$ran = \$ran_require_$type";
+    eval "\@run = \@require_$type";
+    if(!$ran) {
+        eval "\$ran_require_$type = 1;";
+        foreach (@run) {
+            eval $_;
+        }
+    }
+}
+
+
+###########################################################################
+#### An error function.  Print and exit.
+
+sub parse_error($) {
+    print "$0: Parse error at line $. : @_ \n";
+    exit;
+}
+
+sub error($) {
+    print "$0: Error: @_ \n";
+    exit;
+}
+
+
+###########################################################################
+#### Parsing routines
+
+# Data used to store stuff before we're done parsing.
+
+# Defaults for all groups and tests.
+my($global_dir, $global_exec, @global_args, $global_in, $global_out);
+my(@global_subs);
+my($parsing_global) = 0;
+
+# The name: if defined, we're parsing a group currently.
+my($group_name);
+
+# Defaults for each test in the group.
+my($group_dir, $group_exec, @group_args, $group_in, $group_out);
+my(@group_subs);
+
+# List of tests within this group.  Each test is a hash (see top of file).
+my(@group_tests) = ();
+
+# test_name: if defined, we're parsing a test now.  Includes 'group_name.'
+my($test_name);
+
+# Overrides for the defaults.
+my($test_dir, $test_exec, @test_args, $test_in, $test_out);
+my(@test_subs);
+
+# Simplifies parse_generic; parse_endsubs and parse_endrequire
+# each figure out where to put collect_generic.
+my($parsing_require); my(@parsing_require_what);
+my($parsing_subs);
+
+my($parsing_generic) = 0;
+my(@collect_generic);
+
+sub parse_simple($$) {
+    my $type = shift;
+    my $value = shift;
+    if(defined($test_name)) {
+        eval "\$test_$type = '$value'";
+    } elsif(defined($group_name)) {
+        eval "\$group_$type = '$value'";
+    } elsif($parsing_global) {
+        eval "\$global_$type = '$value'";
+    } else {
+        parse_error("Expected `group' or `test' before `$type'");
+    }
+}
+
+sub parse_dir($)  { parse_simple('dir',  shift); }
+sub parse_exec($) { parse_simple('exec', shift); }
+sub parse_in($)   { parse_simple('in',   shift); }
+sub parse_out($)  { parse_simple('out',  shift); }
+
+sub parse_args($) {
+    my $arglist = shift @_;
+    if(defined($test_name)) {
+        @test_args = split(/[ \t]+/,$arglist); # FIX: allow quoted spaces
+    } elsif(defined($group_name)) {
+        @group_args = split(/[ \t]+/,$arglist); # FIX: allow quoted spaces
+    } elsif($parsing_global) {
+        @global_args = split(/[ \t]+/,$arglist); # FIX: allow quoted spaces
+    } else {
+        parse_error("Expected `group' or `test' before `args'");
+    }
+}
+
+
+sub parse_subs($) {
+    parse_error("Expected `test' or `group' before `subs'") unless
+        defined($test_name) ||
+        defined($group_name) ||
+        $parsing_global
+        ;
+    $parsing_subs = $parsing_generic = 1;
+}
+sub parse_endsubs($) {
+    parse_error("Expected `subs' before `endsubs'") unless ($parsing_subs);
+    $parsing_subs = $parsing_generic = 0;
+    if(defined($test_name)) {
+        push(@test_subs, @collect_generic);
+    } elsif(defined($group_name)) {
+        push(@group_subs, @collect_generic);
+    } elsif($parsing_global) {
+        push(@global_subs, @collect_generic);
+    }
+    @collect_generic = ();
+}
+
+sub parse_require($) {
+    s/require[ \t]*//;
+    push(@parsing_require_what, "run") if /run/;
+    push(@parsing_require_what, "diff") if /diff/;
+    $parsing_generic = $parsing_require = 1;
+}
+sub parse_endrequire($) {
+    parse_error("Expected `require' before `endrequire'")
+        unless ($parsing_require);
+    $parsing_generic = 0;
+    foreach(@parsing_require_what) {
+        eval "push(\@require_$_, \@collect_generic)";
+    }
+    @parsing_require_what = @collect_generic = ();
+}
+
+sub parse_use($) {
+    parse_error("Saw `use' in a test") if defined($test_name);
+    parse_error("Saw `use' in global") if ($parsing_global);
+    $_ = shift;
+    s/^use[ \t]*//;
+    if(/^group/) {
+        s/^group[ \t]*//;
+        my $thegroup = getgroup_byname($_, $PARSE_ERROR);
+        push(@group_tests, @{$thegroup->{'tests'}});
+    }
+    elsif(/^test/) {
+        s/^test[ \t]*//;
+        my $thetest = gettest_byname($_, $PARSE_ERROR);
+        push(@group_tests, $thetest);
+    }
+}
+
+sub parse_group($) {
+    parse_error("Saw `group' in a test") if defined($test_name);
+    parse_error("Saw `group' in global") if ($parsing_global);
+    $group_name = shift;
+    parse_error("Group `$group_name' already defined")
+        if defined($grouphash{$group_name});
+}
+sub parse_endgroup($) {
+    parse_error("Expected `group' before `endgroup'") unless defined($group_name);
+    my $thegroup = {};
+    $thegroup->{'name'} = $group_name;
+    $thegroup->{'tests'}= [ @group_tests ];
+
+    push(@grouplist, $thegroup);
+    $grouphash{$group_name} = $thegroup;
+
+    foreach my $x ($group_name,$group_dir,$group_exec,$group_in,$group_out)
+    { $x = undef; }
+    @group_args = @group_subs = @group_tests = ();
+}
+
+
+sub parse_global($) {
+    $parsing_global = 1;
+}
+sub parse_endglobal($) {
+    $parsing_global = 0;
+}
+
+
+sub parse_test($) {
+    parse_error("Saw `test' in global") if ($parsing_global);
+    parse_error("Already parsing test `$test_name'") if defined($test_name);
+    $test_name = shift @_;
+    $test_name = "${group_name}." . $test_name if defined($group_name);
+    parse_error("Test `$test_name' already defined")
+        if defined($testhash{$test_name});
+}
+
+## This routine actually builds the hash entry, and appends it to the 'testlist'
+## variable.
+sub parse_endtest($) {
+    my $thetest = {};
+    parse_error("Expected `test' before `endtest'") unless defined($test_name);
+
+    # adjust name and values if we're in a group, and we're missing
+    # any values.
+    if(defined($group_name)) {
+        $test_dir  = $group_dir     if !defined($test_dir);
+        $test_exec = $group_exec    if !defined($test_exec);
+        $test_in   = $group_in      if !defined($test_in);
+        $test_out  = $group_out     if !defined($test_out);
+        push(@test_subs, @group_subs); # append
+    }
+    # adjust values for global values, if not overloaded
+    {
+        $test_dir  = $global_dir     if !defined($test_dir);
+        $test_exec = $global_exec    if !defined($test_exec);
+        $test_in   = $global_in      if !defined($test_in);
+        $test_out  = $global_out     if !defined($test_out);
+        push(@test_subs, @global_subs); # append
+    }
+
+    # check to make sure things are defined that don't have defaults.
+    # we implicitely are checking for group_* b/c of the assignments
+    # above.
+    parse_error("Test $test_name missing `dir'")  unless defined($test_dir);
+    parse_error("Test $test_name missing `exec'") unless defined($test_exec);
+
+    $thetest->{'name'} = $test_name;
+    $thetest->{'dir'}  = $test_dir;
+    $thetest->{'exec'} = $test_exec;
+    $thetest->{'in'}   = defined($test_in)  ? $test_in  : "/dev/null";
+    $thetest->{'out'}  = defined($test_out) ? $test_out : "-&";
+
+    $thetest->{'args'}  = [ @test_args ];
+    $thetest->{'subs'}  = [ @test_subs ];
+
+    # put it into the global lists, and into the group's list
+    push(@group_tests, $thetest);
+    push(@testlist, $thetest);
+    $testhash{$thetest->{'name'}} = $thetest;
+
+    # clear the fields.
+    $test_name = $test_dir = $test_exec = $test_in = $test_out = undef;
+    @test_args = ();
+    @test_subs = ();
+}
+
+## Parse something that didn't otherwise parse.
+## I use this for the substitutions.
+sub parse_generic($) {
+    my $line = shift @_;
+    parse_error("`$line'") unless($parsing_generic);
+    push(@collect_generic, $line);
+}
+
+###########################################################################
+#### Calls the appropriate parse function if the input matches
+#### the keyword.
+sub try_parse($$) {
+    my $testname = shift;
+    my $inputline = shift;
+    if($inputline =~ /^$testname[ \t]*/) {
+        $inputline =~ s/^$testname[ \t]*//;
+        eval "parse_$testname('$inputline');";
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+###########################################################################
+## Run the appropriate stuff on a list of tests.
+sub run(@) {
+    if($0 =~ "runtests") {
+        runTestList(@_);
+    } elsif($0 =~ "reiterate") {
+        rediffTestList(@_);
+    } elsif($0 =~ "listtests") {
+        printTestList(0, @_);
+    } elsif($0 =~ "listtests_verbose") {
+        printTestList(1, @_);
+    } elsif($0 =~ "list_no_basis") {
+        printNoBase(@_);
+    } elsif($0 =~ "create_basis") {
+        createManyBases($NOBASE, @_);
+    } elsif($0 =~ "fix_basis") {
+        createManyBases($NOBASE, @_);
+        createManyBases($FAIL, @_);
+    }
+}
+
+
+###########################################################################
+# mainline
+###########################################################################
+open(TESTS, 'testlist') or die "Can't open `testlist': $!";
+while(<TESTS>) {
+    # get rid of newline, comments, leading and trailing characters
+    # must get rid of comments before whitespace.
+    chomp;
+    s/#.*$//;
+    s/^[ \t]+//;
+    s/[ \t]+$//;
+    next if /^$/;
+
+    parse_generic($_) unless try_parse("test", $_)
+        || try_parse("dir", $_)
+        || try_parse("exec", $_)
+        || try_parse("args", $_)
+        || try_parse("in", $_)
+        || try_parse("out", $_)
+        || try_parse("subs", $_)
+        || try_parse("endsubs", $_)
+        || try_parse("endtest", $_)
+
+        || try_parse("group", $_)
+        || try_parse("use", $_)
+        || try_parse("endgroup", $_)
+
+        || try_parse("global", $_)
+        || try_parse("require", $_)
+        || try_parse("endrequire", $_)
+        || try_parse("endglobal", $_)
+        ;
+}
+# make sure we're done parsing
+parse_error("Unexpected end of file parsing test `$test_name'")
+    if defined($test_name);
+parse_error("Unexpected end of file parsing group `$group_name'")
+    if defined($group_name);
+parse_error("Unexpected end of file parsing global")
+    if ($parsing_global);
+close TESTS;
+
+# handle this one specially
+if($0 =~ "listgroups") {
+    if($#ARGV==-1) {
+        foreach my $grp (@grouplist) {
+            print $grp->{'name'}, ' ';
+        }
+        print "\n";
+    }
+    else {
+        foreach my $grp (@ARGV) {
+            if(defined($grouphash{$grp})) {
+                print $grouphash{$grp}->{'name'}, ' ';
+            }
+            print "\n";
+        }
+    }
+    exit 0;
+}
+
+
+#################
+# Collect the list of tests
+# Use 'inlist' to avoid taking the test in twice.
+my @tests;
+sub addtest($) {
+    my $t = shift;
+    return if defined($t->{'inlist'});
+    $t->{'inlist'} = 1;
+    push(@tests, $t);
+}
+
+foreach my $arg (@ARGV) {
+    if(defined($grouphash{$arg})) {
+        foreach my $t (@{$grouphash{$arg}->{'tests'}}) {
+            addtest($t);
+        }
+    } elsif(defined($testhash{$arg})) {
+        addtest($testhash{$arg});
+    } else {
+        error("No group or test named `$arg'");
+    }
+}
+
+
+
+# require a group name
+error("No tests specified.") if($#tests==-1);
+run(@tests);

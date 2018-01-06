@@ -1,0 +1,76 @@
+# all preference names which are colors must have "Color" in their name
+# the order of items in this file must be identical with prefLabels
+# empty lines and those with # in column 1, are skipped.
+
+#
+# LIVINGSTONE PREFERENCES 
+#
+L2SearchMethod = cbfs
+# 0 indicates unbounded classes
+L2MaxCBFSCandidateClasses = 0
+L2MaxCBFSCandidates = 5
+L2MaxCBFSSearchSpace = 3000
+L2MaxCBFSCutoffWeight = 100
+L2MaxCoverCandidateRank = 8
+# 0 indicates unbounded history
+L2MaxHistorySteps = 3
+L2ProgressCmdType = full
+L2NumTrajectoriesTracked = 5
+L2FindCandidatesCmdType = prune-search
+#
+# STANLEY PREFERENCES
+#
+StanleyEliminateUnreferencedJmplVars = off
+StanleyTestPermanentBalloons = off
+StanleyShowNodeLegendBarP = 0
+StanleyWindowXPosition =  200
+StanleyWindowYPosition =  100
+StanleyInitialCanvasWidth = 950
+StanleyInitialCanvasHeight = 645
+StanleySchematicCanvasBackgroundColor = lightblue3
+StanleyTestCanvasBackgroundColor = MediumSeaGreen
+StanleySelectedColor =  yellow
+StanleyNodeConnectionBgColor = black
+StanleyModeTransitionBgColor = black
+StanleyMenuDialogBackgroundColor = gray77
+StanleyMenuDialogForegroundColor = black
+StanleyDialogButtonColor = gray77
+StanleyDialogEntryBackgroundColor = white
+StanleyDialogEntryForegroundColor = black
+StanleyLegendBgColor = gray77
+StanleyLegendFgColor = black
+StanleyTitleBgColor = maroon
+StanleyTitleFgColor = white
+StanleyRubberBandColor = yellow
+StanleyBalloonHelpBackgroundColor = lightYellow
+StanleyBalloonHelpForegroundColor = black
+StanleyNodeLabelForegroundColor = black
+StanleyScrollBarColor = gray77
+StanleyScrollBarTroughColor = gray60
+StanleyAttentionBgColor = gray77
+StanleyAttentionFgColor = black
+StanleyAttentionWarningBgColor = red
+StanleyAttentionWarningFgColor = white
+StanleyComponentLabelFont = -adobe-fixed-normal-r-normal-*-10-*-*-*-*-*-*-*
+# Windows platforms running Exceed to a unix host, cannot handle size 14, use 13
+StanleyDialogEntryFont = -adobe-fixed-normal-r-normal-*-13-*-*-*-*-*-*-*
+StanleyDefaultFont = -adobe-helvetica-normal-r-normal-*-12-*-*-*-*-*-*-*
+StanleyTerminalTypeFont = -adobe-fixed-normal-r-normal-*-13-*-*-*-*-*-*-*
+StanleyHelpFont = -adobe-helvetica-normal-r-normal-*-12-*-*-*-*-*-*-*
+StanleyModuleNodeBgColor = gray90
+StanleyComponentNodeBgColor = gray90
+StanleyOkModeNodeBgColor = lightgreen
+StanleyFaultModeNodeBgColor = red1
+StanleyAttributeNodeBgColor = orange
+StanleyTerminalNodeBgColor = gray90
+StanleyNodataStateBgColor = pink
+StanleyIndeterminateStateBgColor = hotPink
+StanleyUnknownL2ValueStateBgColor = magenta
+StanleyNonCurrentModeBgColor = gray60
+StanleyCurrentOkModeBgColor = LawnGreen
+StanleyCurrentFaultModeBgColor = red
+# currently not used
+# StanleyPropsWaveformColor = lawnGreen
+StanleyScenarioMgrExecColor = lawnGreen
+StanleyScenarioMgrEditColor = yellow
+StanleyScenarioMgrBreakPointColor = red

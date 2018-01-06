@@ -1,0 +1,8 @@
+scenario carTest3 car
+progress test.starter.starterCmdIn=on
+assign test.engine.engineOut=off
+fc
+progress test.battery.jumperCmdIn=jump
+progress test.starter.starterCmdIn=on
+assign test.engine.engineOut=on
+fc

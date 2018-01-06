@@ -1,0 +1,218 @@
+# $Id: Makefile.in,v 1.2 2006/04/29 00:47:37 taylor Exp $
+
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+# ./configure writes Makefile from this file
+## Makefile ==> Stanley VXML and Stanley OPS
+
+## build Stanley components
+
+## THE FIRST CHARACTER OF EACH commandList must be tab
+#  targetList:   dependencyList
+#	commandList
+## evaluate (setq-default indent-tabs-mode t)
+
+GNU_ENV = @GNU_ENV@
+STANLEY_ROOT = @STANLEY_ROOT@
+SUPPORT_ROOT = @SUPPORT_ROOT@
+CORBA_DIR = @CORBA_DIR@
+STANLEY_TCL_TK_VERSION = @STANLEY_TCL_TK_VERSION@
+STANLEY_TCL_VERSION = @STANLEY_TCL_VERSION@
+STANLEY_TK_VERSION = @STANLEY_TK_VERSION@
+STANLEY_ITCL_VERSION = @STANLEY_ITCL_VERSION@
+STANLEY_ITCL_LIB_VERSION = @STANLEY_ITCL_LIB_VERSION@
+STANLEY_TKTABLE_VERSION = @STANLEY_TKTABLE_VERSION@
+STANLEY_MICO_VERSION = @STANLEY_MICO_VERSION@
+STANLEY_MICO_LIB_VERSION = @STANLEY_MICO_LIB_VERSION@
+STANLEY_COMBAT_VERSION = @STANLEY_COMBAT_VERSION@
+
+RM = rm -f
+TOUCH = touch
+
+.SILENT:
+
+build: support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so \
+	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so \
+	support/combat-${STANLEY_COMBAT_VERSION}/lib/libcombat.so \
+	bin/stanley-bin
+
+# Tcl
+support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so: 
+	@echo " "
+	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}"
+	@echo " "
+# date of ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/generic/tclStubInit.c
+# must be greater than tcl.decls & tclInt.decls for
+# tcl8.3.2 to compile successfully. If the dates are the same this error
+#  occurs:
+#  invalid command name "namespace"
+#    while executing
+#  "namespace eval genStubs {
+#    # libraryName --
+#    #
+#    #   The name of the entire library.  This value is used to compute
+#    #   the USE_*_STUB_PROCS m ..."
+#    (file "./../tools/genStubs.tcl" line 13)
+#   make[1]: *** [../generic/tclStubInit.c] Error 1
+# Checking out from CVS results in the dates being the same, so
+# make tclStubInit.c's date to be later
+	$(TOUCH) ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/generic/tclStubInit.c
+	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix; make; make install)
+
+
+#Tk
+support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so: \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so
+	@echo " "
+	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tk${STANLEY_TK_VERSION}"
+	@echo " "
+	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tk${STANLEY_TK_VERSION}/unix; make; make install)
+
+
+# Itcl
+support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libitcl${STANLEY_ITCL_LIB_VERSION}.so: \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so
+# configure for itcl3.2 requires that the tcl/tk stub libraries already be built
+# so do here rather than in stanley-jmpl/configure.in
+#	@echo " "
+#	@echo "Configure ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}"
+#	@echo " "
+## In configure.in edit
+## AC_CONFIG_SUBDIRS(itcl itk iwidgets2.2.0 iwidgets3.0.0)
+## AC_CONFIG_SUBDIRS(itcl itk )
+## then run autoconf
+#	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}; make distclean; ./configure --enable-shared --prefix=${STANLEY_ROOT}/lib/tclTk${STANLEY_TCL_TK_VERSION} --with-tcl=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-tk=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tk${STANLEY_TK_VERSION}/unix)
+	@echo " "
+	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}"
+	@echo " "
+# cd config; chmod a+x mkinstalldirs; chmod a+x install-sh; cd ..
+# and
+# cp ${SUPPORT_ROOT}/stanley-support-src/tclTk .....
+# are to fix errors in itcl version 3.1.0
+# itcl 3.2 does not have these problems, but it does not have itclConfig.sh
+# which combat requires -- so we use 3.1.0
+	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}; make all; cd config; chmod a+x mkinstalldirs; chmod a+x install-sh; cd ..; make install)
+	cp ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}/itcl/generic/itclDecls.h ${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/include
+
+
+# TkTable
+support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so: \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so
+	@echo " "
+	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}"
+	@echo " "
+	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}/unix; make; make install)
+	mv ${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/Tktable.so.${STANLEY_TKTABLE_VERSION} ${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so 
+
+
+# Mico
+# combat version 0.6.1 needs fp-mico-patch-2.3.3 to compile with mico 2.3.3
+## this is perl patch, rather than gnu patch (-p   -- defaults to zero)
+# % patch -p 0 < fp-mico-patch-2.3.3
+support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so: \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so
+	@echo " "
+	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico"
+	@echo " "
+	PATH=${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/bin:${PATH}
+	(cd ${SUPPORT_ROOT}/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico; ${GNU_ENV} make; ${GNU_ENV} make install)
+
+
+# Combat
+support/combat-${STANLEY_COMBAT_VERSION}/lib/libcombat.so: \
+	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so
+# combat needs itcl installed prior to running configure
+# so do here rather than in stanley-jmpl/configure.in
+	@echo " "
+	@echo "Configure ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}"
+	@echo " "
+# since combat configure is not done in stanley-jmpl/configure,
+	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; ./configure --prefix=${STANLEY_ROOT}/support/combat-${STANLEY_COMBAT_VERSION} --with-tcl=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-mico=${SUPPORT_ROOT}/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico/admin --with-itcl=${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib --enable-shared)
+	@echo " "
+	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}"
+	@echo " "
+	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; make; make install)
+
+
+# Stanley
+bin/stanley-bin: \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so \
+	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so \
+	support/combat-${STANLEY_COMBAT_VERSION}/lib/libcombat.so
+	@echo " "
+	@echo "Build ${STANLEY_ROOT}/bin/stanley-bin"
+	@echo " "
+## build XEmacs tag table
+	(cd ${STANLEY_ROOT}/src; chmod a+x load-stanley; ./load-stanley -tags)
+
+## create links, since CVS does not handle links
+	@echo "Building help1vmpl.txt soft link to README-STANLEY-VJMPL.txt"
+	(cd ${STANLEY_ROOT}; rm -f help1vmpl.txt; \
+	ln -s README-STANLEY-VJMPL.txt help1vmpl.txt)
+	@echo "Building help1ops.txt soft link to README-STANLEY-OPS.txt"
+	(cd ${STANLEY_ROOT}; rm -f help1ops.txt; \
+	ln -s README-STANLEY-OPS.txt help1ops.txt)
+	@echo "Building help2.txt soft link to README-SCHEMATIC.txt"
+	(cd ${STANLEY_ROOT}; rm -f help2.txt; ln -s README-SCHEMATIC.txt help2.txt)
+	@echo "Building help3.txt soft link to README-TEST.txt"
+	(cd ${STANLEY_ROOT}; rm -f help3.txt; ln -s README-TEST.txt help3.txt)
+	@echo "Building stanley soft link to RUN-STANLEY-VJMPL.csh"
+	(cd ${STANLEY_ROOT}/interface; chmod a+x RUN-STANLEY-VJMPL.csh)
+	(cd ${STANLEY_ROOT}/interface; rm -f stanley; ln -s RUN-STANLEY-VJMPL.csh stanley)
+	@echo "Building l2tools soft link to RUN-L2TOOLS.csh"
+	(cd ${STANLEY_ROOT}/interface; chmod a+x RUN-L2TOOLS.csh)
+	(cd ${STANLEY_ROOT}/interface; rm -f l2tools ; ln -s RUN-L2TOOLS.csh l2tools)
+	@echo "Building stanley-gpu soft link to RUN-STANLEY-OPS.csh"
+	(cd ${STANLEY_ROOT}/interface; chmod a+x RUN-STANLEY-OPS.csh)
+	(cd ${STANLEY_ROOT}/interface; rm -f stanley-gpu ; ln -s RUN-STANLEY-OPS.csh stanley-gpu)
+
+	(cd ${STANLEY_ROOT}/src/c; make)
+	(cd ${STANLEY_ROOT}/interface; make)
+## nothing  to make for ${CORBA_DIR}
+## idl -> tcl generation is done by Stanley during initialization
+
+clean:
+	@echo "Clean stanley-jmpl/c, and stanley-jmpl/interface/livingstone/corba directories"
+	(cd ${STANLEY_ROOT}/src/c; make clean)
+	(cd ${STANLEY_ROOT}/interface; make clean)
+##      idl2tcl does not work, so do not delete these
+##      idl2tcl only needed if CORBA interface changes 04/20/06
+##      (cd ${CORBA_DIR}; $(RM) LivingstoneCorba.tcl LivingstoneCorba_impl.tcl)
+
+distclean: clean
+	$(RM) config.*
+	$(RM) Makefile
+	$(RM) stanley.csh
+	$(RM) ${STANLEY_ROOT}/src/c/Makefile
+	$(RM) ${STANLEY_ROOT}/interface/Makefile
+	@echo "Distclean Stanley support applications: tcl/Tk, itcl, tkTable, mico, & combat"
+	$(RM) -rf ${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}
+	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix; make distclean)
+	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tk${STANLEY_TK_VERSION}/unix; make distclean)
+	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}; make distclean)
+	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}/unix; make distclean)
+	$(RM) -rf ${STANLEY_ROOT}/support/mico/${STANLEY_MICO_VERSION}
+	(cd ${SUPPORT_ROOT}/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico; make distclean)
+	$(RM) -rf ${STANLEY_ROOT}/support/combat-${STANLEY_COMBAT_VERSION}
+# since combat configure is not done in stanley-jmpl/configure,
+# check for a Makefile existing
+	if [ -f ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}/Makefile ] ; \
+	then \
+	  (cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; make distclean) ; \
+	fi
+
+
+
+

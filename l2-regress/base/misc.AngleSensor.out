@@ -1,0 +1,170 @@
+Reading model file(s): AngleSensor.l2
+Read `AngleSensor.l2'
+Search settings:
+   Search type               = cbfs
+   Max candidates returned   = 5
+   Max candidates searched   = 1000
+   Max candidate classes     = 0
+   Max rank                  = 100
+   History length            = 1
+
+   Max candidates tracked    = 5
+   Progress style            = full
+   Find Candidates style     = the tracker default fc
+---------------
+Step 2; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+1	OK
+now	low
+
+Step 3; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+2	low
+now	OK
+
+Step 4; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+3	OK
+now	high
+
+Step 5; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+4	high
+now	OK
+
+Step 6; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+5	OK
+now	limit
+
+Step 7; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+6	limit
+now	low
+
+Step 8; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+7	low
+now	high
+
+Step 9; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+8	high
+now	low
+
+Step 10; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+9	low
+now	limit
+
+Step 11; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+10	limit
+now	high
+
+Step 12; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+11	high
+now	limit
+
+Step 13; 9 variables; 0 conflicts before; 0 after.
+CBFS: exhaustive search, returned fewer than 5 candidate(s) (searched 1)
+The 1 candidates are:
+   Candidate 0)
+        <the empty candidate>
+
+
+
+ Time  	Value
+ ----  	----------
+12	limit
+now	OK
+

@@ -1,0 +1,3 @@
+scenario sv31PopsOpen mainPropulsionSystem
+assign test.sv31.microSwitch=open
+fc

@@ -1,0 +1,13 @@
+scenario carTest2 car
+assign test.clock.powerOut=off
+fc
+progress test.radio.radioCmd=on
+assign test.radio.powerOut=off
+fc
+progress test.starter.starterCmdIn=on
+assign test.engine.engineOut=on
+fc
+progress test.fuse.fuseCmdIn=replace
+assign test.radio.powerOut=on
+assign test.clock.powerOut=on
+fc

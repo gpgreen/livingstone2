@@ -1,0 +1,7 @@
+scenario pressurizeThenVent mainPropulsionSystem
+progress test.sv03.sv.valveCmdIn=open
+fc
+progress test.sv03.sv.valveCmdIn=close
+fc
+progress test.sv31.sv.valveCmdIn=open
+fc

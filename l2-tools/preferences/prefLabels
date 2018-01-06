@@ -1,0 +1,72 @@
+# the order of items in this file must be identical with prefDefaults
+# empty lines and those with # in column 1, are skipped.
+
+#
+# LIVINGSTONE PREFERENCES 
+#
+Livingstone search type (cover or cbfs)
+Livingstone max cbfs candidate classes returned (0 = unbounded)
+Livingstone max cbfs candidates returned
+Livingstone max cbfs candidates searched 
+Livingstone max cbfs candidate rank
+Livingstone max cover candidate rank 
+Livingstone history length (0 = unbounded)
+Livingstone progress style (min [opt=on] or full [opt=off])
+Livingstone max candidates tracked
+Livingstone find candidates style (prune-search, find-fresh, or extend)
+#
+# STANLEY PREFERENCES
+#
+Stanley eliminate unreferenced jmpl vars (on or off)
+Stanley test permanent balloons (on or off)
+Stanley node legend bar shown
+Stanley window x screen position
+Stanley window y screen position
+Stanley window screen width
+Stanley window screen height
+Stanley canvas background color (schematic)
+Stanley canvas background color (test)
+Stanley mouse selection color
+Stanley node connection color
+Stanley mode transition color
+Stanley menu & dialog background color
+Stanley menu & dialog foreground color
+Stanley dialog button background color
+Stanley dialog entry background color
+Stanley dialog entry foreground color
+Stanley legend background color
+Stanley legend foreground color
+Stanley title background color
+Stanley title foreground color
+Stanley rubber-band color
+Stanley balloon help background color
+Stanley balloon help foreground color
+Stanley node label foreground color
+Stanley scroll bar background color
+Stanley scroll trough background color
+Stanley attention msg background color
+Stanley attention msg foreground color
+Stanley attention warning msg background color
+Stanley attention warning msg foreground color
+Stanley node label font
+Stanley dialog entry font
+Stanley menu, & dialog title font
+Stanley terminal & balloon help pop-up font
+Stanley help text font
+Stanley module node color
+Stanley component node color
+Stanley ok mode node color
+Stanley fault mode node color
+Stanley attribute node color
+Stanley terminal node color
+Stanley no data display state color
+Stanley indeterminate display state color
+Stanley unknown L2 value display state color
+Stanley non-current mode color
+Stanley current ok mode color
+Stanley current fault mode color
+# currently not used
+# Stanley state viewer waveform color
+Stanley scenario mgr exec color
+Stanley scenario mgr edit color
+Stanley scenario mgr break point color

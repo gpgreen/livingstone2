@@ -1,0 +1,80 @@
+//This scenario shows the expected behavior of the model without any
+//faults  
+assign test.battery150v.batteryCurrent=nominal
+assign test.battery150v.batteryTemperature=nominal
+assign test.battery150v.voltageSensor.sensedVoltage=nominal
+progress test.lcu150v.powerRelay150v.cmdIn=on
+assign test.lcu150v.powerRelay150v.statusOut=on
+progress test.lcu150v.sspcLeftFlaperon.cmdIn=on
+assign test.lcu150v.sspcLeftFlaperon.statusOut=on
+progress test.lcu150v.sspcRightFlaperon.cmdIn=on
+assign test.lcu150v.sspcRightFlaperon.statusOut=on
+progress test.lcu150v.sspcSpeedBrake.cmdIn=on
+assign test.lcu150v.sspcSpeedBrake.statusOut=on
+progress test.lcu150v.sspcLeftRuddervator.cmdIn=on
+assign test.lcu150v.sspcLeftRuddervator.statusOut=on
+progress test.lcu150v.sspcBodyFlap.cmdIn=on
+assign test.lcu150v.sspcBodyFlap.statusOut=on
+progress test.lcu150v.sspcRightRuddervator.cmdIn=on
+assign test.lcu150v.sspcRightRuddervator.statusOut=on
+fc
+assign test.emaController1.tempSensor.sensedTemperature=belowThreshold
+assign test.emaController1.sspcControllerRelay1.statusOut=on
+assign test.emaController1.sspcControllerRelay2.statusOut=on
+assign test.emaController2.tempSensor.sensedTemperature=belowThreshold
+assign test.emaController2.sspcControllerRelay1.statusOut=on
+assign test.emaController2.sspcControllerRelay2.statusOut=on
+assign test.emaController3.tempSensor.sensedTemperature=belowThreshold
+assign test.emaController3.sspcControllerRelay1.statusOut=on
+assign test.emaController3.sspcControllerRelay2.statusOut=on
+fc
+progress test.emaController1.powerElectronics1.motorCmdIn=on
+assign test.leftFlaperon.tempSensor.sensedTemperature=belowThreshold
+assign test.leftFlaperon.currentSensor.sensedCurrent=belowThreshold
+assign test.leftFlaperon.rvdt.rvdtSensedPos.position=moving
+assign test.leftFlaperon.rvdt.rvdtSensedPos.error=noError
+fc
+progress test.emaController1.powerElectronics1.motorCmdIn=off
+assign test.leftFlaperon.rvdt.rvdtSensedPos.position=notMoving
+progress test.emaController1.powerElectronics2.motorCmdIn=on
+assign test.rightFlaperon.tempSensor.sensedTemperature=belowThreshold
+assign test.rightFlaperon.currentSensor.sensedCurrent=belowThreshold
+assign test.rightFlaperon.rvdt.rvdtSensedPos.position=moving
+assign test.rightFlaperon.rvdt.rvdtSensedPos.error=noError
+fc
+progress test.emaController1.powerElectronics2.motorCmdIn=off
+assign test.rightFlaperon.rvdt.rvdtSensedPos.position=notMoving
+progress test.emaController2.powerElectronics1.motorCmdIn=on
+assign test.speedBrake.tempSensor.sensedTemperature=belowThreshold
+assign test.speedBrake.currentSensor.sensedCurrent=belowThreshold
+assign test.speedBrake.rvdt.rvdtSensedPos.position=moving
+assign test.speedBrake.rvdt.rvdtSensedPos.error=noError
+fc
+progress test.emaController2.powerElectronics1.motorCmdIn=off
+assign test.speedBrake.rvdt.rvdtSensedPos.position=notMoving
+progress test.emaController2.powerElectronics2.motorCmdIn=on
+assign test.leftRuddervator.tempSensor.sensedTemperature=belowThreshold
+assign test.leftRuddervator.currentSensor.sensedCurrent=belowThreshold
+assign test.leftRuddervator.rvdt.rvdtSensedPos.position=moving
+assign test.leftRuddervator.rvdt.rvdtSensedPos.error=noError
+fc
+progress test.emaController2.powerElectronics2.motorCmdIn=off
+assign test.leftRuddervator.rvdt.rvdtSensedPos.position=notMoving
+progress test.emaController3.powerElectronics1.motorCmdIn=on
+assign test.bodyFlap.tempSensor.sensedTemperature=belowThreshold
+assign test.bodyFlap.currentSensor.sensedCurrent=belowThreshold
+assign test.bodyFlap.rvdt.rvdtSensedPos.position=moving
+assign test.bodyFlap.rvdt.rvdtSensedPos.error=noError
+fc
+progress test.emaController3.powerElectronics1.motorCmdIn=off
+assign test.bodyFlap.rvdt.rvdtSensedPos.position=notMoving
+progress test.emaController3.powerElectronics2.motorCmdIn=on
+assign test.rightRuddervator.tempSensor.sensedTemperature=belowThreshold
+assign test.rightRuddervator.currentSensor.sensedCurrent=belowThreshold
+assign test.rightRuddervator.rvdt.rvdtSensedPos.position=moving
+assign test.rightRuddervator.rvdt.rvdtSensedPos.error=noError
+fc
+progress test.emaController3.powerElectronics2.motorCmdIn=off
+assign test.rightRuddervator.rvdt.rvdtSensedPos.position=notMoving
+fc
+stats

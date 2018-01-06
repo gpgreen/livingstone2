@@ -1,0 +1,25 @@
+dnl $Id: configure.in,v 1.2 2001/07/20 00:01:19 bhudson Exp $
+AC_INIT(scripts/common.in)
+
+dnl We need perl 5
+AC_PATH_PROG(PERL, perl)
+if test "x$PERL" = "x" ; then
+    AC_MSG_ERROR("required program perl not found")
+fi
+
+dnl Check that we have perl 5 at least.
+perl >/dev/null 2>/dev/null << CEOF
+require 5;
+CEOF
+if test $? -ne 0 ; then
+    AC_MSG_ERROR("perl version predates required version 5")
+fi
+
+dnl We also need ln -s or some equivalent.
+AC_PROG_LN_S
+
+
+dnl make_links does most of the real work.
+AC_OUTPUT(scripts/common scripts/make_links,
+    sh scripts/make_links
+)

@@ -1,0 +1,51 @@
+// $Id: cb.scr,v 1.1.1.1 2000/11/17 03:46:33 bhudson Exp $
+// Taken from mba/cpp/tests/cb/cb.scr
+// I stripped off the bottom 90% of the file.
+
+/// ********** TEST RESET 1 *********************
+//  Create fresh model
+//  In this test, only one LED is supposed to be on,
+//  so we can't disambiguate which CB is tripped. We track
+//  all of them
+//
+//  Initially, our set of likely diagnoses will include 
+//  include diagnoses such as at time step 0,
+//  cb15 tripped.    Given that the only information
+//  we have is that led8 is not lit, this is a perfectly
+//  good diagnosis.
+//
+//  On step 5, we reset cb8 and led8 lights.
+//  If the history depth is 7 or greater, then
+//  we go back into the past and withdraw the
+//  idea that cb15 tripped.  We find the
+//  correct diagnosis that cb8 tripped when we
+//  turned it on.
+//
+//  If our truncation depth is low, then we will commit
+//  to cb15 being blown before the reset occurs.  When
+//  resetting cb8 causes led8 to go on, finding a 
+//  diagnosis is a stretch.
+//
+//  The system will need to say that an unknown failure
+//  has occurred.  It will say, for example, that cb14
+//  is behaving in an unknown way.  In our unknown model,
+//  we don't rule out cb14 putting out power even though
+//  cb15 is giving it power.
+//
+//  This example was set up to illustrate how L2 works when
+//  you can go back and reconsider a failure.   So when you
+//  truncate off the cb15 failure, it L2 acts as Livingstone would.
+//  That is, it's forced to find an explanation for the observations
+//  resulting from an old failure, using only recent events.
+//
+
+progress cbAndLed.cb15.cmdIn=on
+progress cbAndLed.cb14.cmdIn=on
+progress cbAndLed.cb12.cmdIn=on
+progress cbAndLed.cb8.cmdIn=on
+assign cbAndLed.led8.ledState=off
+fc
+progress cbAndLed.cb8.cmdIn=reset
+progress cbAndLed.cb8.cmdIn=on
+assign cbAndLed.led8.ledState=on
+fc

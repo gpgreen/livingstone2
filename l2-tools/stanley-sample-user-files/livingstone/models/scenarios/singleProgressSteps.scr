@@ -1,0 +1,7 @@
+scenario singleProgressSteps cbAndLeds
+progress test.cb1.cmdIn=on
+fc
+progress test.cb2.cmdIn=on
+fc
+progress test.cb3.cmdIn=on
+fc

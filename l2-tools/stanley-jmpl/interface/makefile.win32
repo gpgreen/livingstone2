@@ -1,0 +1,41 @@
+# $Id: makefile.win32,v 1.1.1.1 2006/04/18 20:17:27 taylor Exp $
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+
+## build Stanley User components
+
+
+STANLEY_ROOT = $(L2_ROOT)\l2-tools\stanley-jmpl
+RM = del
+CP = copy
+
+build:
+	cd $(STANLEY_ROOT)\interface\user-template\links\terminals 
+	$(CP) ..\..\modules\terminals\input.cfg input
+	cd $(STANLEY_ROOT)\interface\user-template\links\terminals 
+	$(CP) ..\..\modules\terminals\output.cfg output
+	cd $(STANLEY_ROOT)\interface\user-template\links\terminals 
+	$(CP) ..\..\modules\terminals\port.cfg port
+
+	cd $(STANLEY_ROOT)\interface\user-template\links\attributes 
+	$(CP) ..\..\modules\attributes\attribute.cfg attribute
+	cd $(STANLEY_ROOT)\interface\user-template\links\attributes 
+	$(CP) ..\..\modules\attributes\displayState.cfg displayState
+
+	cd $(STANLEY_ROOT)\interface\user-template\links\modes
+	$(CP) ..\..\modules\modes\okMode.cfg okMode
+	cd $(STANLEY_ROOT)\interface\user-template\links\modes
+	$(CP) ..\..\modules\modes\faultMode.cfg faultMode
+
+# touch all stanley-sample-user-files *.jmpl files so that they
+# are newer than the .xmpl files, thus forcing compilation
+#	cd $(STANLEY_ROOT)\..\stanley-sample-user-files\livingstone\models\components
+#	touch *.jmpl
+#	cd $(STANLEY_ROOT)\..\stanley-sample-user-files\livingstone\models\modules
+#	touch *.jmpl
+
+clean:
+	@echo "$(STANLEY_ROOT)\interface: nothing to clean"

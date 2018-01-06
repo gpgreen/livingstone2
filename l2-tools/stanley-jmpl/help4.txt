@@ -1,0 +1,90 @@
+# $Id: help4.txt,v 1.1.1.1 2006/04/18 20:17:27 taylor Exp $
+
+Stanley Mouse and Menu Conventions
+--------------------------------------
+This page explains the conventions used for the interface between the
+user and Stanley.  
+
+
+Mouse Conventions
+-----------------
+The "Attention: " lines of the Stanley window indicate which
+mouse actions are available when the mouse is positioned
+over a component, a module, a mode, a connection, a mode 
+transition, an attribute, or a terminal node.
+
+o Use the left mouse button (Mouse-L):
+    - to select an item from a cascading menu bar list or a dialog menu.
+
+    - Mouse-L "dragging" will move a component, module. mode, terminal,
+    or attribute node to a new location on the canvas.  Its attached
+    connections will follow automatically.  To move a node, place the 
+    cursor in the center of the icon, depress and hold Mouse-L, 
+    drag the icon to the new location (a wire frame will represent 
+    it during the motion), and release the button.
+
+    - to move a connection in either the x or y direction.  To move 
+    a connection, place the cursor on the line, depress and hold 
+    Mouse-L, drag the line to the new location (a wire frame 
+    will represent it during the motion), and release the button.
+
+    - to move a component or module "button" terminal from the bottom
+    of a node to the top of a node, or vicea-versa.
+
+    - to drag out a rectangular area by depressing and holding 
+    Mouse-L, dragging it, and releasing it. A rectangle will appear
+    on the canvas with corners where the button was depressed and
+    released. Components and modules thus selected will be
+    highlighted, and can then be deleted by choosing menu bar item
+    "Edit->Delete"
+
+    - to adjust the canvas view by moving the side and bottom
+    scrollbars.  
+
+o Use the middle mouse button (Mouse-M);
+    - to define a transition between two component modes by 
+    depressing and holding Mouse-M, dragging it, and releasing it.
+
+    - to define a connection between two component or module
+    terminals by depressing and holding Mouse-M, dragging it, and 
+    releasing it.
+
+o Use the right mouse button menu (Mouse-R):
+    Components, Modules, Modes, Terminals, Attributes:
+    - to select edit or view, as appropriate, to edit properties
+    of the node, or to view its current properties.
+
+    - to select "delete <label>" to delete the node.
+
+    Component/module/terminal/attribute buttons:
+    - to select "select <label> proposition" to cut-and-paste the
+    proposition form into an editable dialog. (schematic mode)
+
+    Terminal buttons:
+     - to select "select <label> value(s)" to choose values for
+     "instrumented" commands and monitors. (test mode)
+
+    Connections:
+    - to select "toggle num breaks" which will toggle the number of
+    breaks in the connection from 2 to 4 to 2 ...  The default
+    number of breaks when the connection is created is 2.
+
+    - to select "delete connection" to delete the connection.
+
+
+
+Menu, and Entry Conventions
+----------------------------------------
+Menus are selected using Mouse-L, pointing and clicking.  Balloon
+help is provided in the editing dialogs, usually tied to the
+name of the entry.
+
+Pop-up dialogs follow standard windowing conventions. Entry forms 
+allow the user to enter and change text. Position the mouse and enter 
+the text or use the delete (or backspace) key to delete text to the 
+left. For forms with several entry boxes you can use the tab key to 
+jump from one entry to the next.
+
+Text widgets are configured to have GNU Emacs editing key-bindings.
+Text widgets that specify Lisp forms also support parentheses matching
+and indentation.

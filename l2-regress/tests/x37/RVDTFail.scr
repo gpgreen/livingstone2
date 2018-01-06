@@ -1,0 +1,15 @@
+//An RVDT mismatch is detected
+//Set everything to be initially working
+progress test.lcu150v.powerRelay150v.cmdIn=on
+progress test.lcu150v.sspcSpeedBrake.cmdIn=on
+assign test.lcu150v.powerRelay150v.statusOut=on
+assign test.lcu150v.sspcSpeedBrake.statusOut=on
+assign test.emaController2.sspcControllerRelay1.statusOut=on
+progress test.emaController2.powerElectronics1.motorCmdIn=on
+assign test.speedBrake.tempSensor.sensedTemperature=belowThreshold
+assign test.speedBrake.currentSensor.sensedCurrent=belowThreshold
+assign test.speedBrake.rvdt.rvdtSensedPos.position=moving
+assign test.speedBrake.rvdt.rvdtSensedPos.error=noError
+fc
+assign test.speedBrake.rvdt.rvdtSensedPos.error=mismatch
+fc

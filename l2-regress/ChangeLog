@@ -1,0 +1,572 @@
+$Id: ChangeLog,v 1.62 2001/07/25 18:26:46 bhudson Exp $
+
+2001-07-25  Benoit Hudson  <bhudson@arc.nasa.gov>
+        Removed cover tests from checkin/quick testing, since they all fail
+        currently.  This should be fixed ASAP.  Also reorganized the
+        testlist so it's easy to reinstate them, and also remove others
+        later.
+        * testlist (group cb): now just includes cb-cbfs, cb-cover, and
+                    cb-stripped (except cb-cover is commented out)
+                (cb-cbfs, cb-cover): resp. cbfs and cover tests that used
+                    to comprise group cb; name removes any mention of cb or
+                    search style since they're now in the group name
+                (group cbfs): use all of cb-cbfs instead of just some of cb
+                (group cover): use all of cb-cover instead of just some of cb
+                (group quick): updated name: cb.cbfs- becomes cb-cbfs.
+                (group checkin): added quick, cbfs, cover (except cover
+                        is commented out)
+
+        This changed the names of tests, so I moved all the base files
+        over from the old names to the new according to:
+                s/^cb\(.*\)cover-/cb-cover\1/
+                s/^cb\(.*\)cbfs-/cb-cbfs\1/
+        Except for cb.truncate-visibility which just gains a '-cbfs'.
+
+	* base/cb.cbfs-5-1000-0.out base/cb.cbfs-5-1000-2.out
+	  base/cb.cbfs-min-5-1000-0.out base/cb.cbfs-min-5-1000-2.out
+	  base/cb.cover-10-0.out base/cb.cover-10-2.out
+	  base/cb.cover-min-10-0.out base/cb.cover-min-10-2.out
+	  base/cb.dt1-cover-10-2.out base/cb.dt1-min-cover-10-2.out
+	  base/cb.dt2-cover-10-2.out base/cb.truncate-visibility.out : removed
+
+        * base/cb-cbfs.5-1000-0.out base/cb-cbfs.5-1000-2.out
+	  base/cb-cbfs.min-5-1000-0.out base/cb-cbfs.min-5-1000-2.out
+	  base/cb-cbfs.truncate-visibility.out base/cb-cover.10-0.out
+	  base/cb-cover.10-2.out base/cb-cover.dt1-10-2.out
+	  base/cb-cover.dt1-min-10-2.out base/cb-cover.dt2-10-2.out
+	  base/cb-cover.min-10-0.out base/cb-cover.min-10-2.out : added
+
+
+
+2001-07-19  Benoit Hudson  <bhudson@arc.nasa.gov>
+        Further update; don't run tests twice.
+        * scripts/common.in (test definition): added 'inlist'
+                (addtest): added
+                (loop over @ARGV): use addtest
+
+2001-07-19  Benoit Hudson  <bhudson@arc.nasa.gov>
+        Updated regression tests ; this adds:
+                - no makefiles ==> no need to 'touch configure'
+                - hide 'common' ==> no confused users
+                - global settings
+                - groups can use other groups and tests
+                - the scripts can refer to single tests
+        * configure.in (AC_INIT): look for scripts/common.in
+                (AC_OUTPUT): moved common to scripts/, added
+                        scripts/make_links, run scripts/make_links
+        * configure : regenerated
+        * Makefile.in common.in : removed
+        * scripts/common.in scripts/make_links.in : added
+        * doc/BUILD : removed discussion of make and touch
+        * testlist (comments): added discussion of where settings come
+                        from, new 'global' settings, some to-dos ;
+                (global): added section
+                (all groups): removed exec and subs (they're now global)
+                (groups cbfs, cover, quick, checkin): added
+
+2001-07-17  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+	* base/cb.cover-10-0.out
+	  base/cb.cover-10-2.out
+	  base/cb.cover-min-10-0.out
+	  base/cb.cover-min-10-2.out
+	  base/cb.dt1-cover-10-2.out
+	  base/cb.dt1-min-cover-10-2.out
+          base/cb.dt2-cover-10-2.out : updated for faster cover algorithm,
+                which gives a different candidate ordering.
+
+2001-07-04  Benoit Hudson  <bhudson@arc.nasa.gov>
+        Added a new test based on Julie Adams' (JSC) bug report.
+        * testlist (misc): added group
+                (misc.AngleSensor): added test
+        * base/misc.AngleSensor.out
+          tests/misc/AngleSensor.l2
+          tests/misc/AngleSensor.scr : added
+
+2001-06-28  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-0.out
+          base/cb.cbfs-5-1000-2.out
+          base/cb.cbfs-min-5-1000-0.out
+          base/cb.cbfs-min-5-1000-2.out : updated for change to
+                order of clauses & props in the TMS
+
+2001-06-28  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.dt1-cover-10-2.out
+          base/cb.dt1-min-cover-10-2.out
+          base/cb.dt2-cover-10-2.out : updated for change to
+                LTMS::unsatisfied, which flips the order of
+                some conflicts
+
+2000-06-17 James Kurien  <jkurien@arc.nasa.gov>
+        Added simple regression test for recovery.  Use only when
+	L2 compiled with --enable-recovery.
+	* tests/cb/recover-led8-on-1-step.scr : added
+	tests/cb/recover-led178-on-1-step.scr : added
+	base/cb-recovery.led178-on-cbfs-5-1000-1.out: added
+	base/cb-recovery.led8-on-cbfs-5-1000-1.out: added
+	testlist: Added cb-recovery test group, with above.
+
+2001-06-15  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * doc/BUILD : added a word about 'touch configure'
+
+2001-06-13  Benoit Hudson  <bhudson@arc.nasa.gov>
+        * base/x37.nominal-full-3.out base/x37.nominal-min-3.out :
+                fixed for new line in the stats
+
+2001-06-08  Benoit Hudson  <bhudson@arc.nasa.gov>
+        * base/cb.cbfs-5-1000-2 base/cb.cbfs-min-5-1000-2
+          base/cb.cover-10-2    base/cb.cover-min-10-2
+          base/cb-stripped.cbfs-5-1000-2 : updated for conflict numbers ;
+                note I can't explain the real cb.cover-10-2 right now,
+                so I updated the numbers but not the rest to make sure it
+                still fails
+
+2001-06-01  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb-stripped.cbfs-5-1000-2.out base/cb.cbfs-5-1000-2.out
+          base/cb.cbfs-min-5-1000-2.out      base/cb.cover-10-2.out
+          base/cb.cover-min-10-2.out         base/cb.dt1-cover-10-2.out
+          base/cb.dt1-min-cover-10-2.out     base/cb.dt2-cover-10-2.out :
+                updated for initial-value bug fix
+
+2001-05-24  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cover-10-2.out
+          base/x37.nominal-min-3.out : updated for fix of duplicate clauses
+
+2001-05-11  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * testlist (x37.rvdtfail-min-1): new test
+        * base/x37.rvdtfail-min-1.out : added
+
+        * base/cb-stripped.cbfs-5-1000-2.out
+          base/cb.cbfs-5-1000-2.out
+          base/cb.cbfs-min-5-1000-0.out
+          base/cb.cbfs-min-5-1000-2.out
+          base/cb.cover-10-0.out
+          base/cb.cover-10-2.out
+          base/cb.cover-min-10-0.out
+          base/cb.cover-min-10-2.out
+          base/cb.dt1-cover-10-2.out
+          base/cb.dt1-min-cover-10-2.out
+          base/cb.dt2-cover-10-2.out
+          base/cb.truncate-visibility.out
+          base/x37.nominal-full-3.out
+          base/x37.nominal-min-3.out
+          base/x37.rvdtfail-full-1.out
+          base/x37.rvdtfail-min-0.out : updated for new horizon transitions.
+
+2000-05-8 James Kurien  <jkurien@arc.nasa.gov>
+	* base/cb.dt1-cover-10-2.out,
+	  base/cb.cbfs-min-5-1000-2.out,
+	  base/cb.cover-min-10-2.out:
+	  When failure is truncated, it's now correctly found at the
+	  horizon.
+
+2000-05-8 James Kurien  <jkurien@arc.nasa.gov>
+        * base/cb.dt1-cover-10-2.out: Now finds the correct candidate
+
+2001-05-08  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb-stripped.cbfs-5-1000-2.out
+          base/x37.nominal-full-3.out
+          base/x37.nominal-min-3.out
+          base/x37.rvdtfail-full-1.out
+          base/x37.rvdtfail-min-0.out : updated these too
+
+2000-05-7 James Kurien  <jkurien@arc.nasa.gov>
+	* base/cb*  : updated for new printout of params
+        * base/cb.cbfs-5-1000-0.out,
+	  base/cb.cover-10-0.out: Further reduced # of vars at 0# time step
+	* base/cb.truncate-visibility.out: Changed initial timestep back to 0
+                after fixing code
+
+2000-05-7 James Kurien  <jkurien@arc.nasa.gov>
+        * base/cb.cbfs-5-1000-0.out,
+	  base/cb.cover-10-0.out:
+	  Corrected output of number of vars to reflect removal of
+	  initial, automatic "idle" command.
+	* base/cb.truncate-visibility.out: Changed initial timestep from 0 to 1
+
+2001-04-30  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb-stripped.cbfs-5-1000-2.out
+          base/cb.cbfs-5-1000-2.out
+          base/cb.cbfs-min-5-1000-0.out : update for changes to candidate
+                sorting in CBFS (the sort is stable, wasn't before)
+
+2001-04-25  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.dt1-cover-10-2.out
+          base/cb.dt1-min-cover-10-2.out
+          base/cb.dt2-cover-10-2.out : update for changes in reading from
+                xmpl
+
+2001-04-25  Will Taylor  <taylor@ptolemy.arc.nasa.gov>
+
+	* base/cb-stripped.cbfs-5-1000-2.out
+	  base/cb.cbfs-5-1000-0.out
+	  base/cb.cbfs-5-1000-2.out
+	  base/cb.cbfs-min-5-1000-0.out
+	  base/cb.cbfs-min-5-1000-2.out
+	  base/cb.cover-10-0.out
+	  base/cb.cover-10-2.out
+	  base/cb.cover-min-10-0.out
+	  base/cb.cover-min-10-2.out
+	  base/cb.dt1-cover-10-2.out
+	  base/cb.dt1-min-cover-10-2.out
+	  base/cb.dt2-cover-10-2.out
+	  base/cb.truncate-visibility.out
+	  base/x37.nominal-full-3.out
+	  base/x37.nominal-min-3.out
+	  base/x37.rvdtfail-full-1.out
+	  base/x37.rvdtfail-min-0.out : update for new read model
+		and search params output
+
+2001-04-18  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb-stripped.cbfs-5-1000-2.out
+	  base/cb.cbfs-5-1000-0.out
+	  base/cb.cbfs-5-1000-2.out
+	  base/cb.cbfs-min-5-1000-0.out
+	  base/cb.cbfs-min-5-1000-2.out
+	  base/x37.nominal-min-3.out : permutations and some have fewer
+                clauses
+
+2001-04-10  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-min-5-1000-0.out
+          base/cb.cbfs-min-5-1000-2.out
+          base/x37.nominal-min-3.out : permutations of before
+
+2001-04-09  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * testlist (cb-stripped, x37): switched to l2test from l2run,
+                now that l2run is gone and l2test does both formats
+
+2001-04-05  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.dt1-cover-10-2.out
+          base/cb.dt1-min-cover-10-2.out
+          base/cb.dt2-cover-10-2.out : updated for new bg clause order
+
+2001-03-30  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb-stripped.cbfs-5-1000-2.out : updated for new fc output
+                and new state=si
+
+        * base/x37.nominal-full-3.out
+          base/x37.nominal-min-3.out
+          base/x37.rvdtfail-full-1.out
+          base/x37.rvdtfail-min-0.out : updated for new fc output
+
+2001-03-30  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-0.out
+	  base/cb.cbfs-5-1000-2.out
+	  base/cb.cbfs-min-5-1000-0.out
+	  base/cb.cbfs-min-5-1000-2.out
+	  base/cb.cover-10-0.out
+	  base/cb.cover-10-2.out
+	  base/cb.cover-min-10-0.out
+	  base/cb.cover-min-10-2.out
+	  base/cb.dt1-cover-10-2.out
+	  base/cb.dt1-min-cover-10-2.out
+	  base/cb.dt2-cover-10-2.out : updated for new fc output
+
+2001-03-28  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out : updated for changed order of
+                transition vars, which permutes the output
+
+2001-03-27  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-min-5-1000-0.out
+          base/cb.cbfs-min-5-1000-2.out
+          base/cb.cover-min-10-0.out
+          base/cb.cover-min-10-2.out
+          base/x37.nominal-min-3.out
+          base/x37.rvdtfail-min-0.out : removed output about leaks, since
+                that's bad output.
+
+2001-03-27  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.dt1-cover-10-2.out
+          base/cb.dt1-min-cover-10-2.out
+          base/cb.dt2-cover-10-2.out
+          base/x37.nominal-full-3.out
+          base/x37.nominal-min-3.out
+          base/x37.rvdtfail-full-1.out
+          base/x37.rvdtfail-min-0.out : fixed for yet-newer candidate output
+
+2001-03-26  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb-stripped.cbfs-5-1000-2.out
+          base/cb.cbfs-5-1000-0.out
+	  base/cb.cbfs-5-1000-2.out
+	  base/cb.cbfs-min-5-1000-0.out
+	  base/cb.cbfs-min-5-1000-2.out
+	  base/cb.cover-10-0.out
+	  base/cb.cover-10-2.out
+	  base/cb.cover-min-10-0.out
+	  base/cb.cover-min-10-2.out
+	  base/cb.dt1-cover-10-2.out
+	  base/cb.dt1-min-cover-10-2.out
+	  base/cb.dt2-cover-10-2.out
+	  base/x37.nominal-full-3.out
+	  base/x37.rvdtfail-full-1.out : updated for new state=si
+                explanation (all but x37 min tests which now crash)
+
+2001-03-21  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * tests/cb/cb.l2s (initial): fixed section name to 'i'
+
+2000-03-21 James Kurien  <jkurien@arc.nasa.gov>
+        * base/cb.cbfs-min-5-1000-0.out,
+	  base/ cb.cbfs-min-5-1000-2.out,
+	  cb.cover-min-10-0.out,
+          cb.cover-min-10-2.out:
+	  Corrected output of number of vars to reflect improved optimizer.
+
+2000-03-15  Scott Christa  <schrista@arc.nasa.gov>
+        * common.in (checkExecutable): Added the ".exe" extension if running
+                under the Microsoft Windows operating system.
+
+2001-03-13  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * testlist (cb-stripped.cbfs-5-1000-2): added
+        * tests/cb/cb.l2s
+          tests/cb/cb.l2s.scr  : added, now that stripped files work
+        * base/cb-stripped.cbfs-5-1000-2.out : added
+        * tests/x37/x37V1p6.l2 : regenerated for L211 format
+
+2001-03-13  Benoit Hudson  <bhudson@arc.nasa.gov>
+        Updated for new -p option; and I looked over what the tests test.
+        * testlist (cb.dt1-min-cover-10-2): added --progress=min
+                (cover-min-10-0, cover-min-10-2): added
+                (min-cb8-cbfs-10-0, full-cb8-cbfs-10-0,
+                 min-cb8-cbfs-5-1000-2): removed
+                (all min tests): added -pmin and -O to args, use
+                        script with 'progress' rather than 'min-progress'
+
+        * tests/cb/dt1-min.scr
+          tests/cb/min-cb8.scr
+          tests/x37/Nominal-min.scr
+          tests/x37/RVDTFail-min.scr : removed
+
+        * base/cb.cbfs-5-1000-0.out
+          base/cb.cbfs-5-1000-2.out
+          base/cb.cover-10-0.out
+          base/cb.cover-10-2.out
+          base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out
+          base/cb.truncate-visibility.out
+          base/x37.nominal-full-3.out
+          base/x37.nominal-min-3.out
+          base/x37.rvdtfail-full-1.out
+          base/x37.rvdtfail-min-0.out : updated for new printout, and/or
+                for the fact that min-progress doesn't do a full-progress
+                at the first timestep anymore (does min instead)
+
+        * base/cb.dt1-min-cover-10-2.out : updated because it used to run
+                with progress, not min-progress
+
+
+2001-03-13  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-0.out
+          base/cb.cbfs-5-1000-2.out
+          base/cb.full-cb8-cbfs-10-0.out
+          base/cb.min-cb8-cbfs-10-0.out
+          base/cb.min-cb8-cbfs-5-1000-2.out : updated for new XMPL reader
+
+2001-03-09  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * common.in (checkExecutable): added
+                (runTest): call checkExecutable
+
+2001-03-07  Benoit Hudson  <bhudson@arc.nasa.gov>
+        I couldn't quite make the newlines work out on that last change:
+        * base/cb.cbfs-5-1000-0.out
+	  base/cb.cbfs-5-1000-2.out
+	  base/cb.cover-10-0.out
+	  base/cb.cover-10-2.out
+	  base/cb.dt1-cover-10-2.out
+	  base/cb.dt1-min-cover-10-2.out
+	  base/cb.dt2-cover-10-2.out
+	  base/cb.full-cb8-cbfs-10-0.out
+	  base/cb.min-cb8-cbfs-10-0.out
+	  base/cb.min-cb8-cbfs-5-1000-2.out
+	  base/x37.nominal-full-3.out
+	  base/x37.nominal-min-3.out
+	  base/x37.rvdtfail-full-1.out
+	  base/x37.rvdtfail-min-0.out  : update (removes some newlines)
+
+2001-03-02  Benoit Hudson  <bhudson@arc.nasa.gov>
+        Added a group of tests from an X-37 model.
+        * tests/x37/* : added
+        * base/x37.* : added
+        * testlist (group cb, tests nominal-full-3, nominal-min-3,
+                rvdtfail-full-1, rvdtfail-min-0) : added
+
+2001-03-02  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * common.in (parse_endgroup): clear group_tests
+
+2001-03-01  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * tests/cb/dt1-min.scr : removed illegal /* comments
+
+2001-03-01  Benoit Hudson  <bhudson@arc.nasa.gov>
+        Added tests for min-progress with truncation.
+        * testlist (cb.min-cb8-cbfs-5-1000-2,
+                cb.dt1-min-cover-10-2): added test
+        * tests/cb/dt1-min.scr : added
+        * base/cb.min-cb8-cbfs-5-1000-2.out ,
+          base/cb.dt1-min-cover-10-2.out : created
+
+2001-02-23  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-0.out
+          base/cb.cbfs-5-1000-2.out
+          base/cb.cover-10-0.out
+          base/cb.cover-10-2.out
+          base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out
+          base/cb.full-cb8-cbfs-10-0.out
+          base/cb.min-cb8-cbfs-10-0.out : updated for new search
+                termination printout
+
+2001-02-22  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-0.out
+          base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out
+          base/cb.full-cb8-cbfs-10-0.out
+          base/cb.min-cb8-cbfs-10-0.out : updated for new ordering
+                of assumptions and assignments
+
+2001-02-21  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * testlist (*-2): history 2 tests had temporarily gone to history
+                3; just-checked-in changes let us drop to 2 again
+        * base/cb.cbfs-5-1000-2.out
+          base/cb.cover-10-2.out
+          base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out
+          base/cb.truncate-visibility.out : update for new test (mostly
+                very minor changes)
+
+2001-02-16  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out
+          base/cb.min-cb8-cbfs-10-0.out : updated for new optimization; the
+                output is qualitatively identical, but with a change in #
+                of conflicts or order of candidates.
+
+2001-02-16  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-2.out
+          base/cb.cover-10-2.out : updated for 2 bugfixes --
+                summarize-conflicts bug, and n#state s.b. an Assumption
+
+2001-02-15 James Kurien  <jkurien@arc.nasa.gov>
+        * base/cb.full-cb8-cbfs-10-0.out: added
+	  base/cb.min-cb8-cbfs-10-0.out:  added
+	  tests/cb/min-cb8.scr:  added
+	  testlist : Now contains test of min-progress
+	  on the cb model.
+
+2001-02-08  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-0.out
+          base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out : updated for new sorting algorithm
+
+2001-01-29  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * testlist (all tests): changed args for new l2test executable
+        * base/cb.cbfs-5-1000-0.out
+          base/cb.cbfs-5-1000-2.out
+          base/cb.cover-10-0.out
+          base/cb.cover-10-2.out
+          base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out
+          base/cb.truncate-visibility.out : updated for new startup output
+
+2001-01-22  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-2.out : updated for a TMS bug fix which
+                changes the diagnosis inconsequently
+
+2001-01-16  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.truncate-visibility.out : updated (one less timestep,
+                which is either an implementation or doc bug)
+
+2001-01-12  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * testlist: upped the history level by one, given new semantics of
+                history
+        * tests/cb/trunc-test.scr : added expected behaviour in a comment
+        * base/cb.cbfs-5-1000-2.out
+          base/cb.cover-10-2.out
+          base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out : updated by hand to expected output
+                (just that the history was upped, with no effect)
+
+2001-01-11  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-2.out : updated for new output, having
+                changed the tms.
+
+2000-12-21  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * ChangeLog: added ID tag
+        * base/cb.cbfs-5-1000-0.out
+          base/cb.cbfs-5-1000-2.out
+          base/cb.cover-10-2.out
+          base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out
+          base/cb.truncate-visibility.out : updated to correctly-fixed
+                truncation, which fixes cb.cover-10-2 (use to have 0
+                candidates, now has 1) and changes the Start.State variable
+                in all others to be called time#state.
+
+2000-12-21  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-2.out
+          base/cb.cover-10-2.out
+          base/cb.dt1-cover-10-2.out
+          base/cb.dt2-cover-10-2.out : updated to fixed truncation, which
+                adds a lot of candidates
+
+2000-12-19  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.cbfs-5-1000-2.out
+          base/cb.cover-10-2.out : updated to new printout
+
+2000-12-12  Scott Christa  <schrista@arc.nasa.gov>
+
+        * common.in: modified it to be compatible with Microsoft Windows.
+
+2000-12-08  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * testlist (group cb): added test truncate-visibility
+        * base/cb.truncate-visibility.out: added
+        * tests/cb/trunc-test.scr: added
+
+2000-12-01  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * base/cb.*: updated
+
+2000-11-29  Benoit Hudson  <bhudson@arc.nasa.gov>
+
+        * ChangeLog: created
+        * common.in (runTest): added check that the executable
+                doesn't even exist (never mind isn't actually executable)

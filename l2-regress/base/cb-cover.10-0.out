@@ -1,0 +1,94 @@
+Reading model file(s): cb.{xmpl,hrn,ini}
+Read `cb'
+Search settings:
+   Search type               = cover
+   Max rank                  = 10
+   History length            = unlimited
+
+   Max candidates tracked    = 5
+   Progress style            = full
+   Find Candidates style     = the tracker default fc
+---------------
+Step 5; 551 variables; 0 conflicts before; 1 after.
+Cover: search termination is unimplemented
+The 20 candidates are:
+   Candidate 0)
+        2#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 1)
+        2#cbAndLed.cb15.modeTransition=tripped :2
+
+   Candidate 2)
+        1#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 3)
+        -#cbAndLed.cb14.modeTransition=tripped :2
+
+   Candidate 4)
+        3#cbAndLed.cb12.modeTransition=tripped :2
+
+   Candidate 5)
+        1#cbAndLed.cb14.modeTransition=tripped :2
+
+   Candidate 6)
+        4#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 7)
+        2#cbAndLed.cb12.modeTransition=tripped :2
+
+   Candidate 8)
+        3#cbAndLed.cb14.modeTransition=tripped :2
+
+   Candidate 9)
+        4#cbAndLed.cb12.modeTransition=tripped :2
+
+   Candidate 10)
+        -#cbAndLed.cb12.modeTransition=tripped :2
+
+   Candidate 11)
+        -#cbAndLed.cb15.modeTransition=tripped :2
+
+   Candidate 12)
+        3#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 13)
+        3#cbAndLed.cb15.modeTransition=tripped :2
+
+   Candidate 14)
+        1#cbAndLed.cb12.modeTransition=tripped :2
+
+   Candidate 15)
+        4#cbAndLed.cb14.modeTransition=tripped :2
+
+   Candidate 16)
+        1#cbAndLed.cb15.modeTransition=tripped :2
+
+   Candidate 17)
+        -#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 18)
+        4#cbAndLed.cb15.modeTransition=tripped :2
+
+   Candidate 19)
+        2#cbAndLed.cb14.modeTransition=tripped :2
+
+
+Step 7; 771 variables; 1 conflicts before; 16 after.
+Cover: search termination is unimplemented
+The 5 candidates are:
+   Candidate 0)
+        2#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 1)
+        1#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 2)
+        4#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 3)
+        3#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 4)
+        -#cbAndLed.cb8.modeTransition=tripped :2
+
+

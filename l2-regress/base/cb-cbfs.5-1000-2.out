@@ -1,0 +1,54 @@
+Reading model file(s): cb.{xmpl,hrn,ini}
+Read `cb'
+Search settings:
+   Search type               = cbfs
+   Max candidates returned   = 5
+   Max candidates searched   = 1000
+   Max candidate classes     = 0
+   Max rank                  = 100
+   History length            = 2
+
+   Max candidates tracked    = 5
+   Progress style            = full
+   Find Candidates style     = the tracker default fc
+---------------
+Step 5; 331 variables; 0 conflicts before; 1 after.
+CBFS: search found 5 candidate(s), more possible (searched 6)
+The 5 candidates are:
+   Candidate 0)
+        4#cbAndLed.cb8.modeTransition=tripped :3
+
+   Candidate 1)
+        3#cbAndLed.cb8.modeTransition=tripped :3
+
+   Candidate 2)
+        -#cbAndLed.cb8.modeTransition=tripped :3
+
+   Candidate 3)
+        -#cbAndLed.cb12.modeTransition=tripped :3
+
+   Candidate 4)
+        3#cbAndLed.cb15.modeTransition=tripped :3
+
+
+Step 7; 331 variables; 4 conflicts before; 17 after.
+CBFS: search found 5 candidate(s), more possible (searched 19)
+The 5 candidates are:
+   Candidate 0)
+     *  4#cbAndLed.cb8.modeTransition=tripped :3
+
+   Candidate 1)
+     *  3#cbAndLed.cb8.modeTransition=tripped :3
+
+   Candidate 2)
+     *  -#cbAndLed.cb8.modeTransition=tripped :3
+
+   Candidate 3)
+     *  -#cbAndLed.cb12.modeTransition=tripped :3
+        -#cbAndLed.cb8.modeTransition=unknownCbFault :4
+
+   Candidate 4)
+     *  -#cbAndLed.cb12.modeTransition=tripped :3
+        6#cbAndLed.cb8.modeTransition=unknownCbFault :4
+
+

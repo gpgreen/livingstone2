@@ -1,0 +1,5 @@
+plan-steps 1
+assign cbAndLed.led1.ledState=on
+assign cbAndLed.led7.ledState=on
+assign cbAndLed.led8.ledState=on
+fc

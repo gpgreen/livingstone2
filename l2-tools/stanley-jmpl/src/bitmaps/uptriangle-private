@@ -1,0 +1,4 @@
+#define uptriangle-private_width 7
+#define uptriangle-private_height 5
+static char uptriangle-private_bits[] = {
+   0x1c, 0x14, 0x22, 0x41, 0x7f};

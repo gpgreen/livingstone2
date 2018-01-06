@@ -1,0 +1,4 @@
+#define downtriangle-private_width 7
+#define downtriangle-private_height 5
+static char downtriangle-private_bits[] = {
+   0x7f, 0x41, 0x22, 0x14, 0x1c};

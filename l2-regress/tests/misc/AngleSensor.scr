@@ -1,0 +1,81 @@
+// $Id: AngleSensor.scr,v 1.1 2001/07/04 23:42:44 bhudson Exp $
+
+// This model was created by Julie Adams at JSC, and exercises a bug
+// that occured when creating the idle transitions.
+// This was a problem in 2.4, fixed 2001-07-04.
+
+
+// We have the following transitions.  The numbers
+// correspond to the timestep at which we test the
+// transition.
+//         to:   OK     low     high    limit
+//      from
+//      ----
+//      OK        -      2        4       6
+//      low       3      -        8      10
+//      high      5      9        -      12
+//      limit    13      7       11       -
+
+// 0 : initial timestep
+
+// now we're in timestep 1
+
+// this puts us in timestep 2
+progress test.cmdIn = lowCmd
+fc
+times test.mode
+
+// 3
+progress test.cmdIn = OKCmd
+fc
+times test.mode
+
+// 4
+progress test.cmdIn = highCmd
+fc
+times test.mode
+
+// 5
+progress test.cmdIn = OKCmd
+fc
+times test.mode
+
+// 6
+progress test.cmdIn = limitCmd
+fc
+times test.mode
+
+// 7
+progress test.cmdIn = lowCmd
+fc
+times test.mode
+
+// 8
+progress test.cmdIn = highCmd
+fc
+times test.mode
+
+// 9
+progress test.cmdIn = lowCmd
+fc
+times test.mode
+
+// 10
+progress test.cmdIn = limitCmd
+fc
+times test.mode
+
+// 11
+progress test.cmdIn = highCmd
+fc
+times test.mode
+
+// 12
+progress test.cmdIn = limitCmd
+fc
+times test.mode
+
+// 13
+progress test.cmdIn = OKCmd
+fc
+times test.mode

@@ -1,0 +1,33 @@
+$Id: DEVELOPERS,v 1.1.1.1 2000/11/17 03:46:32 bhudson Exp $
+
+Organization
+============
+
+I decided to put all the code into one file, and have all the commands that
+you actually run be links to the one perl script.  This of course makes
+running a very cheap script rather more expensive, but it's plenty fast
+enough so I don't care.
+
+All the code is in common.in ; don't edit common as it's generated from
+common.in.  The only thing I generate is the location of the perl
+executable; it changes between linux and sun (sigh!)
+
+Because of this, remember to 'make' when hacking common.in -- otherwise,
+you'll have the frustrating result of no changes happening.
+
+
+Data Structures
+===============
+
+The scripts use plenty of complex (and confusing) data structures,
+including almost every combination you could think of nesting 3 types of
+lists and hashes.  See the description at the top of common.in
+
+I turn on the -w flag, and use strict, in order to avoid some nasty bugs
+related to these nasty data structures.  Leave those there.
+
+
+Further Questions
+=================
+
+Ask the author, <bhudson@arc.nasa.gov>

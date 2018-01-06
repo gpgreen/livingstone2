@@ -1,0 +1,16 @@
+scenario cbTestReset2 cbAndLeds
+/// ********** TEST RESET 2 *********************
+//  Create fresh model
+//  In this test, only one LED is on, so we can't
+//  disambiguate which CB is tripped. We track
+//  all of them
+progress test.cb15.cmdIn=on
+progress test.cb14.cmdIn=on
+progress test.cb12.cmdIn=on
+progress test.cb8.cmdIn=on
+assign test.led8.ledState=off
+fc
+progress test.cb8.cmdIn=reset
+progress test.cb8.cmdIn=on
+assign test.led8.ledState=on
+fc

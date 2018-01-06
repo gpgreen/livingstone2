@@ -1,0 +1,338 @@
+
+c/stanley.c,200
+int AutoSat_Schematic_Tcl_Cmds(57,1271
+int AutoSat_Schematic_Object_Cmd(90,2367
+void logEntry 151,3768
+void logExit 163,3999
+int Call_FCL(173,4160
+int Call_EMACS(229,6417
+int Call_CSH(346,9707
+
+c/tkAppInit.c,178
+Tcl_CmdProc AutoSat_Schematic_Tcl_Cmds;72,1868
+EXTERN Tcl_CmdProc AutoSat_Schematic_Tcl_Cmds;74,1914
+int *tclDummyMathPtr 80,2113
+int main(108,2763
+int Tcl_AppInit(139,3721
+
+stanley.tcl,25
+set envVarList 106,3535
+
+fileOps.tcl,0
+
+initialize.tcl,0
+
+canvasBindings.tcl,0
+
+form.tcl,41
+  entry $widgetPath.$widgetPath30,1179
+
+layout.tcl,175
+  set reportNotFoundP 76,3281
+  set winname 77,3323
+  set temp1 835,34682
+  set temp1 [lrange 835,34682
+  set pirNodeIndex 836,34722
+  set pirNodeIndex [assoc 836,34722
+
+top.tcl,780
+    set x 13,376
+  set GridOver2 1178,46237
+  set modulo1 1179,46283
+  set remainder 1180,46340
+  set modulo2 1181,46405
+  set grid 1182,46480
+  set canvasRoot 1684,65915
+      config -bg 1687,66057
+      config -bg 1689,66158
+      config -bg 1691,66253
+  set msg 1692,66315
+  set msg {}; set msg2 1692,66315
+  set canvasRoot 1702,66558
+  set canvasRoot 1721,67219
+  $acceleratorRoot.show_labels config -bg 1723,67322
+  $acceleratorRoot.show_labels.label config -bg 1724,67409
+  set msg 1725,67502
+  set msg {}; set msg2 1725,67502
+  set canvasRoot 1735,67745
+  set canvasRoot 1754,68406
+  $acceleratorRoot.hide_labels config -bg 1756,68509
+  $acceleratorRoot.hide_labels.label config -bg 1757,68596
+  set msg 1758,68689
+  set msg {}; set msg2 1758,68689
+
+cfgParse.tcl,123
+    set fid 16,458
+    set cfgstr 17,485
+    set mod_decl 21,552
+    set class_name 22,580
+    set grand_alist 23,610
+
+util.tcl,99
+  lappend __PUSHD 43,1035
+  set dialogList 66,1524
+  set retValue 67,1597
+  set field 150,3755
+
+palette.tcl,92
+  set excludeDirs 20,640
+  set schematicDir 101,3648
+  set schematicDir [lindex 101,3648
+
+version.tcl,0
+
+preferences.tcl,188
+        entry $canvasPath.$canvasPath575,24243
+      entry $canvasPath.$canvasPath583,24592
+    entry $canvasPath.$canvasPath1515,65141
+    entry $canvasPath.$canvasPath1535,65859
+
+view.tcl,80
+  set nodeClassName 19,592
+  set config $pirClass(20,649
+    set len 46,1240
+
+edit.tcl,134
+  set extNodeName 38,893
+  set extNodeName [getExternalNodeName 38,893
+  set heightBorder 650,25642
+  set state normal;1034,42819
+
+getModule.tcl,33
+  set pwd 37,1515
+  cd 38,1554
+
+redraw.tcl,327
+  set reportNotFoundP 43,2123
+  set reportNotFoundP 0; set oldvalMustExistP 43,2123
+  foreach class $pirClasses $pirClasses63,2714
+    set xxxClass($pirClasses::xxxClass64,2744
+  set g_NM_inhibitEdgeTypeMismatchP 231,10254
+  set defmoduleArgsVars 362,16440
+  set nodeClassType 364,16518
+  set redrawFailedP 370,16897
+
+help.tcl,0
+
+alist.tcl,36
+  upvar $alistname alist;388,11689
+
+dialog.tcl,72
+      -font 520,17552
+  set m 521,17614
+             -font 522,17664
+
+debug.tcl,83
+  set startLevel 78,2269
+  set profileData(123,3358
+  set cpuTimeArray(139,3740
+
+defcomponent.tcl,378
+  set structValueTypeList 306,14746
+  set pirNodeIndex 308,14881
+  set pirNodeIndex [assoc-array 308,14881
+  set nodeClassType 310,15003
+  set readOnlyP 1281,54051
+  set dialogId 1293,54583
+  set reportNotFoundP 1924,80160
+  set returnIndex 1926,80225
+  set reportNotFoundP 1963,81417
+  set reportNotFoundP 0; set returnIndexP 1963,81417
+  set returnIndex 1964,81480
+
+defmodule.tcl,172
+  set structValueTypeList 315,14787
+  set classTypeList 317,14922
+  set pirNodeIndex 319,15049
+  set pirNodeIndex [assoc-array 319,15049
+  set nodeClassType 321,15168
+
+mir-telemetry.tcl,0
+
+accessors.tcl,23
+  set sub_dirs 20,629
+
+accessors-button.tcl,116
+  set pos 29,1245
+  set returnVal 30,1281
+  set returnVal [string range $button 30,1281
+  set returnVal 31,1342
+
+accessors-class.tcl,52
+  set varDeflist 17,561
+  set defaultValue 18,605
+
+accessors-edge.tcl,100
+  set terminalFrom 24,812
+  set buttonFrom 25,870
+  set terminalTo 26,924
+  set buttonTo 27,979
+
+accessors-node.tcl,0
+
+accessors-terminal.tcl,54
+  set type_list 18,568
+  set type_list [list 18,568
+
+accessors-array.tcl,0
+
+terminals.tcl,680
+  set g_NM_edgesOfRedrawNode 889,39136
+  set g_NM_edgesOfRedrawNode [list edgesFrom 889,39136
+                                  edgesTo 890,39224
+  set inOrderChangedP 891,39306
+  set numInputs 893,39407
+  set inTypeLists 894,39465
+  set reportNotFoundP 1825,81369
+  set reportNotFoundP 0; set returnIndexP 1825,81369
+  set argValueListDot 1948,87498
+  set g_NM_instanceInputInheritedTerms 1972,88535
+  set publicPrivateInputTerminals 1978,88875
+  set publicInputTerminalNames 1979,88943
+  set privateInputTerminalNames 1980,89017
+  set publicPrivateOutputTerminals 1981,89093
+  set publicOutputTerminalNames 1982,89163
+  set privateOutputTerminalNames 1983,89239
+
+balloonhelp.tcl,196
+  set key 177,5745
+  set font 179,5790
+    foreach w 248,7920
+	unset BalloonHelp(249,7971
+  set reportNotFoundP 510,18638
+  set balloonString 511,18681
+  set terminalNameExternal 514,18829
+
+emacsEdit.tcl,27
+  set heightBorder 17,627
+
+assvEdit.tcl,216
+## define pirClass 908,35958
+  set dialogId 917,36342
+  set classDefName 919,36381
+  set classDefName 920,36459
+  set dialogId 1121,44183
+## define pirClassSymbol 1183,46373
+## define pirClassValue 1348,52008
+
+manage-canvas.tcl,235
+  set canvasRoot 39,1839
+  set canvasRoot {}; set reportNotFoundP 39,1839
+  set canvasRootId 41,1931
+  set xView 61,2844
+  set yView 62,2872
+  set nodeState 64,2986
+  set nodeClassName 66,3092
+  set parentNodeGroupList 67,3152
+
+generate-mpl.tcl,250
+  # define terminals 322,13870
+  # define extended 404,16956
+  # define terminals 764,32995
+  # define modes775,33468
+  # define extended 830,35471
+  set textHeight 1591,64898
+  set unSortedFormList 1762,72188
+  set newOrderedKeys 1763,72237
+
+convert-to-jmpl.tcl,73
+  set files 1089,39501
+  set fidIn 1101,39765
+  set fidOut 1102,39796
+
+ops-layout.tcl,414
+  set reportNotFoundP 37,1486
+  arepl stateViewerProc "nodeShowModeAndProps" pirNode(38,1534
+  set pirNodeAList $pirNode(41,1680
+  set parentNodeGroupList 69,2953
+  set maxValueString ""; set maxValueWidth 116,5127
+  foreach linePair 164,7171
+    set 166,7295
+    set 168,7400
+    set 169,7464
+    set 171,7571
+    set 172,7646
+    set 173,7721
+  $textWidget tag configure $tag -background 1414,61296
+
+test-mpl.tcl,0
+
+corba.tcl,237
+    # define local 79,2881
+    # define class 85,3083
+    # define Stanley 92,3299
+  set severity 265,10903
+  set reportNotFoundP 266,10933
+    # define local 683,26285
+    # define class 689,26487
+    # define Stanley 696,26703
+
+corba-method-bodies.tcl,36
+  lappend propAttrValList 152,5714
+
+test-scenario.tcl,204
+  set displayP 22,847
+  set g_NM_scenarioDebugEntries 44,1704
+  set g_NM_scenarioNewEditLineNum 53,2079
+  set lineCnt 75,2942
+  set textHeight 559,21247
+  set textHeight 12; set textWidth 559,21247
+
+beth-balancebind.tcl,54
+  set oleftParenCnt 21,739
+  set close_trace 22,783
+
+beth-editbind.tcl,527
+	global modified	154,4029
+	set c1 155,4063
+	set c2 156,4098
+	set w 213,5725
+	set new_w 214,5753
+	set ustart 226,6088
+	set ustart [gensym] ; set uend 226,6088
+	register_undoable_cmd $t 229,6200
+	$t delete $ustart $uend 233,6331
+	global modified	264,7053
+	global modified	270,7174
+	set prefix 277,7321
+	set m1 [gensym] ; set m2 286,7563
+	register_undoable_cmd $t 287,7598
+	set path $fsBox(path);	set name $fsBox(311,8311
+	set ustart [gensym];	set uend 316,8462
+	load_and_insert_file $t $index $f $fsBox(318,8528
+
+beth-bindings.tcl,0
+
+beth-regions.tcl,47
+	set region_begin 29,1157
+	set range 87,3083
+
+beth-browsebind.tcl,0
+
+beth-searchbind.tcl,39
+  set start 24,979
+  set end 25,1009
+
+tkbind-bindxtnd.tcl,43
+  entry $w.$w352,10059
+  case 403,11621
+
+tkbind-rectangle.tcl,0
+
+tkbind-isearch.tcl,555
+bind TextISearch <Delete> {tkTextISearchPop %W;53,1471
+  tkTextISearchAdd %W 67,1818
+  tkTextISearchAdd %W [%W get insert 67,1818
+  tkTextISearchAdd %W 71,1922
+bind TextISearch <Return> { tkTextISearchStop %W;75,1989
+bind TextISearch <ButtonPress> { tkTextISearchStop %W;76,2047
+bind TextISearch <Alt-KeyPress> { tkTextISearchStop %W;77,2113
+bind TextISearch <Meta-KeyPress> { tkTextISearchStop %W;78,2180
+bind TextISearch <Control-KeyPress> { tkTextISearchStop %W;79,2248
+  bindtags %W 82,2351
+  bindtags %W [concat TextISQ $tkBind(%W,82,2351
+
+tkbind-text.tcl,0
+
+tkbind-prompt.tcl,29
+    entry $top.$top91,2778

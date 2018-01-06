@@ -1,0 +1,4 @@
+#define uptriangle_width 7
+#define uptriangle_height 5
+static char uptriangle_bits[] = {
+   0x08, 0x1c, 0x3e, 0x7f, 0x7f};

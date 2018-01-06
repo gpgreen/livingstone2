@@ -1,0 +1,3 @@
+{nodeClassName} => bitmap; 1 = foreground; 0 = background (created by bitmap)
+{nodeClassName}-mask => bitmap; 1 = show fg/bg; 0 = transparent (created by bitmap) 
+

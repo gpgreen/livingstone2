@@ -1,0 +1,113 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+program ::- declaration* statement*
+
+declaration ::- 
+        CLASS ID { declaration* }
+      | CLASS ID EXTENDS ID* { declaration* }
+      | ID arglist { program }   /* method declaration */
+      | ENUM ID {ID (, ID)* } (ID arglist { program })*;
+      | modifier* ID ID (, ID)*    /* variable type declaration */
+      | ONEOF '('ID (, ID)*')' ID (, ID)*  
+      
+arglist ::- epsilon | (ID ID (, ID ID)*)   /* list of typed vars */
+
+modifier ::- PUBLIC | PRIVATE | PROTECTED | STATE | CONTROL
+             | DEPENDENT | OBSERVABLE
+
+statement ::- 
+          term := term;
+        | idexpr = idexpr;
+        | idexpr != idexpr;
+        | IF expression statement [ELSE statement]
+        | NEXT statement
+        | [UNLESS expression]* NEXT statement
+        | { statement, statement }           /* parallel composition */
+        | DO statement WATCHING expression
+        | WHEN expression DO statement
+        | ALWAYS statement
+        | WAIT number DO statement           /* iterated next */
+        | SUSPEND statement ON expression RESUME ON expression
+        | CHOOSE {statement WITH probability [, statement WITH probability]+}
+        | IFF expression statement
+        | LET modifier* id IN statement
+        | idexpr '(' [term (, term)*] ')';   /* method call*/
+        | SWITCH '(' ID ')' { case* }
+        
+term ::-  NEW idexpr '(' [term (, term)*] ')'
+        | idexpr
+        | '(' term ')'
+
+idexpr ::- ID | ID.idexpr  /* property access */
+
+expression ::- 
+          term == term
+        | '(' expression ')'
+        | expression | expression
+        | expression & expression
+        | ! expression
+
+case ::- CASE modetype ID: statement* [TRANSITIONS transition*]
+
+modetype ::- epsilon | NOMINAL | LIKELY FAILURE 
+           | LESSLIKELY FAILURE | UNLIKELY FAILURE
+           | RARE FAILURE | UNKNOWN FAILURE
+
+probability ::- real number | qualitative value 
+
+
+transition ::- expression : target;
+             | OTHERWISE : target;
+             | ALWAYS : target;
+
+target ::- ID | PERSIST
+
+
+The switch statement 
+
+switch (var) { 
+   case modetype val1:
+        statement1;
+        transitions {
+           expr11: val11;
+           expr12: val12;
+           ...
+        }
+   case modetype val2:
+        statement2;
+        transitions {
+           expr21: val21;
+           expr22: val22;
+           ...
+        }
+   ...
+}
+
+may be implemented as follows:
+
+always {
+    if (var = val1) statement1,
+    if (var = val2) statement2,
+    ...
+    choose {
+        { if (expr11) then next var = val11,
+          if (expr12) then next var = val12,
+          ...
+        } with p1,
+        { if (expr21) then next var = val21,
+          if (expr22) then next var = val22,
+          ...
+        } with p2,
+        ...
+    }
+
+where the probability numbers are computed from the
+modetypes : sum up the mode probabilities, and compute the
+probability of each mode.
+The expression "always: " for the transition expression is
+translated as "true", while otherwise can be translated as
+the negation of the disjunction of the other expressions.
+

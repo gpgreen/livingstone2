@@ -1,0 +1,42 @@
+// $Id: cb.l2s.scr,v 1.1 2001/03/14 04:38:58 bhudson Exp $
+// Just like cb.scr, but no strings attached -- we just have the integer
+// IDs.  Clearly, this will be obsolete if we change the cb model or the
+// file format.
+// This works with file format L211
+
+// 48 is cb8.cmdIn
+// 49 is cb8.mode
+// 52 is cb12.cmdIn
+// 53 is cb12.mode
+// 56 is cb14.cmdIn
+// 66 is cb15.cmdIn
+// 67 is cb15.mode
+
+
+// progress cbAndLed.cb15.cmdIn=on
+progress 66=1
+
+// progress cbAndLed.cb14.cmdIn=on
+progress 56=1
+
+// progress cbAndLed.cb12.cmdIn=on
+progress 52=1
+
+// progress cbAndLed.cb8.cmdIn=on
+progress 48=1
+
+// assign cbAndLed.led8.ledState=off
+assign 9=1
+
+fc
+
+// progress cbAndLed.cb8.cmdIn=reset
+progress 48=3
+
+// progress cbAndLed.cb8.cmdIn=on
+progress 48=1
+
+// assign cbAndLed.led8.ledState=on
+assign 9=0
+
+fc

@@ -1,0 +1,76 @@
+
+What: file select (Fellows)
+Where: <URL:http://www.cs.man.ac.uk/%7Efellowsd/tcl/dirbrowser3.tar.gz>
+Description: Similar in function to the Netscape file browser - a scrolling
+        list of directories in the selected directory as well as a
+        list of files.  Allows navigation by mouse clicks, key presses, etc.
+        Full docs can be found at
+        <URL:http://www.cs.man.ac.uk/%7Efellowsd/tcl/dirbrowser3.html>.
+Updated: 04/1998
+Contact: <URL:mailto:fellowsd@cs.man.ac.uk> (Donal K. Fellows)
+        (Send mail with
+        Subject: WWW-Mail: http://www.cs.man.ac.uk/%7Efellowsd/dirbrowser_tcl.tar.gz
+        to get the file by email.)
+
+
+What: Drag and Drop in Tcl (Fellows)
+Where: <URL:http://www.cs.man.ac.uk/%7Efellowsd/tcl/dragdrop3.0a4.tar.gz>
+        <URL:ftp://www.cs.man.ac.uk/%7Efellowd/tcl/dragdrop3.0a4.tar.gz>
+Description: Implementation of Drag and drop using pure Tk 4.0.
+        Full docs can be found at
+        <URL:http://www.cs.man.ac.uk/%7Efellowsd/tcl/dragdrop3_manual.ps>.
+Updated: 04/1998
+Contact: <URL:mailto:fellowsd@cs.man.ac.uk> (Donal K. Fellows)
+
+What: Drag and Drop in Tcl (Flores)
+Where: From the contact
+Description: Implementation of Drag and Drop without using BLT.
+Updated:
+Contact: <URL:mailto:flores@ebi.ac.uk> (Tom Flores)
+
+What: Drag and Drop in Tcl (Johnson)
+Where: From the contact
+Description: Attempt to build Drag and Drop similar to that available
+        in NeXTSTEP for Tk 8.x.
+Updated: 09/1997
+Contact: <URL:mailto:wave@pixar.com> (Michael B. Johnson)
+
+What: Tix widget set
+Where: <URL:http://www.xpi.com/tix/>
+        <URL:http://www.xpi.com/download/>
+        <URL:http://www.xpi.com/pub/Tix4.1.0.006.tar.gz>
+        <URL:http://www.xpi.com/pub/tix41p6.zip>
+        <URL:http://www.xpi.com/pub/win41p4bin.zip>
+        <URL:ftp://ftp.xpi.com/pub/Tix4.1.0.006.tar.gz>
+        <URL:ftp://ftp.xpi.com/pub/tix41p6.zip>
+        <URL:ftp://ftp.xpi.com/pub/misc/tixImgXpm.c>
+        <URL:ftp://ftp.xpi.com/pub/windows/nomsvcrt.zip>
+        <URL:http://rain.org/%7Eart/tixbindings.txt>
+        <URL:http://www.xraylith.wisc.edu/%7Ekhan/software/tcl>
+Description: Tix is an extension to Tk that includes more than 30 new
+        widgets, including ComboBox, Motif style FileSelectBox, MS
+        Windows style FileSelectBox, PanedWindow, NoteBook, Hierarchical
+        Listbox, Directory List/Tree View, Spin Control widget, Balloon help
+        window and many more. Tix also has built-in support for XPM
+        images. A Form geometry manager makes it easy to lay-out your
+        interface using Motif Form-like attachment rules.
+        More info available on the Tix mailing list archive
+        at <URL:http://www.xpi.com/tix/archives/archives.html>.
+        Tix 4.x is written in C, and requires building a new
+        interpreter based on Tk 4.0/Tcl 7.4 or newer.
+        It can also be used with itcl 2.0 or newer.
+        Tix 4.x now works with Embedded Tk as well.
+        Tix 4.x works on both Windows and Unix platforms.
+        Tix 4.x has license terms similar to the Tcl/Tk license terms.
+        The tixbindings file is some additional bindings for the TixHlist
+        widget, including scrolling, entry editing, and local drag and
+        drop.  Version 4.1 works with Tk 8.0.
+        Mumit Khan has, at the xraylith site, a simple patch for Tix
+        to get the demos to work under Tk 8.0 patched with Img 1.1's
+        Tcl object support.
+Updated: 09/1997
+Contact: <URL:mailto:majordomo@xpi.com> with the line
+        "subscribe tix-info your_email".
+        Send messages to the Tix mailing list at <URL:mailto:tix-info@xpi.com>.
+        <URL:mailto:tix-support@xpi.com> (Individual support)
+

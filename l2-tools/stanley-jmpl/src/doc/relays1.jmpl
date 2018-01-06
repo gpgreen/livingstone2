@@ -1,0 +1,189 @@
+//
+// * See the file "l2-tools/disclaimers-and-notices.txt" for 
+// * information on usage and redistribution of this file, 
+// * and for a DISCLAIMER OF ALL WARRANTIES.
+//
+#include "common-types.jmpl"
+
+enum twoTimes {zero, one, two} {
+ incrementNext () {
+  case(this) {
+    zero: next(this=one);
+	one: next(this=two);
+	two: next(this=two);
+  }
+ }
+ tpersist () {
+  case(this) {
+    zero: next(this=zero);
+	one: next(this=one);
+	two: next(this=two);
+  }
+ }
+};
+
+enum moodType {happy,sad,sleepy};
+
+class magicNineBox () {
+  stateVector [x,y];
+  moodType mood;
+  
+  failure coolingTrend([left,top],[center,middle],.5) {
+    mood = happy | mood = sleepy;
+  };
+
+  transition warmingTrend([left,bottom],[center,middle],2) {
+    mood = sad | mood = sleepy;
+  };
+ 
+  case (y) {
+    top:
+	  temp = high;
+	middle:
+	  temp = low;
+	bottom:
+	  temp = very low;
+  } 
+  
+  magicNineBox () {
+    mood != happy | temp = lukewarm;
+    if (x=left) mood!=sleepy;
+  }
+}
+
+class statusThrow () {
+  enum positionType {up,down,left,right} x,y;
+  positionType z;
+  enum {stNominal,stStuckOn,stStuckOff,stUnknown} stMode;
+  stateVector [stMode]; 
+  public onOffValue throwStateIn;
+  public onOffValue signalIn;
+  public onOffValue signalOut;
+
+  case (stMode) {
+    stNominal:
+	  if ( signalIn = on & throwStateIn = on) signalOut = on;
+	  if ( signalIn = off | throwStateIn = off) signalOut = off;
+    stStuckOn:
+	  signalOut = on;
+	stStuckOff:
+	  signalOut = off;
+	stUnknown:
+  }
+
+  failure failOn(*,stStuckOn,0.0025);
+  failure failOff(*,stStuckOff,0.0025);
+  failure failUnknown(*,stUnknown,0.0001);
+
+}
+
+
+class powerThrow () {
+  public control onOffCommand cmdIn;
+  public onOffValue powerIn;
+  public onOffValue powerOut; 
+  public onOffValue switchState;
+  public sensorQuality currentDrawQuality;
+
+  private twoTimes   onResetsAttempted;
+  private twoTimes   offResetsAttempted;
+
+  enum {ptOn, ptOff, recoverablyOn, recoverablyOff, stuckOn, stuckOff, ptUnknown} ptMode; 
+
+  stateVector[ptMode];
+
+
+  powerThrow () {
+
+    iff (switchState=on && powerIn=on)
+      powerOut=on;
+
+    /* when the switch is off it draws exactly zero current */
+    if (switchState=off)
+      currentDrawQuality = sensorMin;
+
+      case (ptMode) {
+
+      ptOff:
+	   switchState=off;
+	   next(onResetsAttempted=zero);
+	   next(offResetsAttempted= zero);
+
+
+      ptOn:
+	    switchState=on;
+	    next(onResetsAttempted=zero);
+	    next(offResetsAttempted= zero);
+
+
+      recoverablyOff:
+		switchState=off;
+     	/* offResetsAttempted != two; */
+	    offResetsAttempted != two;
+	    if (cmdIn = turnOn)
+	        offResetsAttempted.incrementNext();
+		else
+  		    offResetsAttempted.tpersist();
+
+      recoverablyOn:
+	     switchState=on;
+		 onResetsAttempted != two; 
+		 if (cmdIn = turnOn)
+		   onResetsAttempted.incrementNext();
+		 else
+		   onResetsAttempted.tpersist();
+
+      stuckOn:
+	    switchState=on;
+	    next(onResetsAttempted=zero);
+	    next(offResetsAttempted=zero);
+
+
+      stuckOff:
+	     switchState=off;
+	     next(onResetsAttempted=zero);
+		 next(offResetsAttempted=zero);
+
+
+      case ptUnknown:
+
+      }
+
+    transition toggle(ptOn,ptOff) {cmdIn=turnOff;}
+    transition toggle(ptOff,ptOn)  {cmdIn=turnOff;}
+
+    transition resetOff(recoverablyOn,ptOff) {cmdIn=turnOff;}
+    transition resetOn(recoverablyOff,ptOn) {cmdIn=turnOn;}
+
+    failure stickOn(*,stuckOn,0.0025);
+    failure stickOff(*,stuckOff,0.0025);
+    failure unknown(*,stUnknown,0.0001);
+  }
+}
+
+class powerRelay () {
+  private powerThrow power;
+  private statusThrow status;
+  public onOffCommand cmdIn = power.cmdIn;
+  public onOffValue powerIn = power.powerIn;
+  public onOffValue powerOut = power.powerOut;
+  public sensorQuality currentDrawQuality = power.currentDrawQuality;
+  public onOffValue statusOut = status.signalOut;
+
+  powerRelay() {
+    /* This constructs the basic relay.  Our various constructors can */
+    /* call this to make the relay, then do whatever else they need   */
+    /* to do based on their arguments */
+   powerIn=status.signalIn;
+   power.switchState=status.throwStateIn;
+  }
+
+  powerRelay (onOffValue externalPowerSource ) {
+    /* This constructor names the relay and hooks it up */
+    /* to an external power source which is passed in */
+
+    powerRelay();
+    powerIn= externalPowerSource;
+  }
+  
+}

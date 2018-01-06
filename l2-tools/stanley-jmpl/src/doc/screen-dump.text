@@ -1,0 +1,27 @@
+# $Id: screen-dump.text,v 1.1.1.1 2006/04/18 20:17:28 taylor Exp $
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+
+grab & save gif file
+--------------------
+% xv 
+# select Grab
+# click Mouse-L once in the frame to be dumped
+% select Save
+>> Save as gif image, file name <filename>.gif
+>> quit
+
+Add to Netscape
+---------------
+ One small issue is to try to name them all latest.html
+and not rev001.html and then rev002.html.  Using latest.html will ensure that
+even if you change some images the documentation will still point to the
+proper place.  I was educated as to these issues by Kanef.
+
+create image map
+----------------
+~taylor/bin/mapedit
+

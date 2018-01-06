@@ -1,0 +1,24 @@
+$Id: README,v 1.1.1.1 2000/11/17 03:46:33 bhudson Exp $
+This and cb.scr were copied from mba/cpp/tests/cb/cb.scr
+
+
+
+These were converted over from KSC's circuit breaker model.
+
+Here is the layout of the circuit breakers
+There are LED's at the leaves
+                                            ---- 1
+                                  ----  9 <
+                                /           ---- 2
+                       ---- 13 <
+                      /         \           ---- 3
+                     /            ---- 10 <
+                    /                       ---- 4
+    source ---- 15 <                                 
+                    \                       ---- 5
+                     \            ---- 11 <
+                      \         /           ---- 6
+                       ---- 14 <
+                                \           ---- 7
+                                  ---- 12 <
+                                            ---- 8

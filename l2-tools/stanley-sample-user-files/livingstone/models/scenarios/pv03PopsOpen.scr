@@ -1,0 +1,14 @@
+scenario pv03PopsOpen mainPropulsionSystem
+assign test.pv03.positionIndicator.openIndicator=open
+assign test.pv03.positionIndicator.closedIndicator=notClosed
+fc
+assign test.mpre202p.pressureReading.pr02Crack=belowThreshold
+assign test.mpre202p.pressureReading.pressurizationRate.upperBound=belowThreshold
+assign test.mpre202p.pressureReading.pressurizationRate.lowerBound=belowThreshold
+assign test.mpre202p.pressureReading.boiloffRate.upperBound=belowThreshold
+assign test.mpre202p.pressureReading.boiloffRate.lowerBound=belowThreshold
+assign test.mpre202p.pressureReading.bleedRate.upperBound=belowThreshold
+assign test.mpre202p.pressureReading.bleedRate.lowerBound=aboveThreshold
+assign test.mpre202p.pressureReading.ventingRate.upperBound=aboveThreshold
+assign test.mpre202p.pressureReading.ventingRate.lowerBound=aboveThreshold
+fc

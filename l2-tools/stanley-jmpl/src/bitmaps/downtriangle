@@ -1,0 +1,4 @@
+#define downtriangle_width 7
+#define downtriangle_height 5
+static char downtriangle_bits[] = {
+   0x7f, 0x7f, 0x3e, 0x1c, 0x08};

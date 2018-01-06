@@ -1,0 +1,288 @@
+# $Id: testlist,v 1.19 2002/05/22 18:44:07 lbrown Exp $
+###########################################################################
+## Describes the tests in the regression suite.
+
+#### TODO: reinstate cover tests in groups:
+####    cb   checkin
+
+
+# Syntax of this file:
+
+# Anything after a '#' is ignored
+
+# 'dir et al' means all the settings in a test; a test uses
+#       (1) the default
+#       (2) global
+#       (3) group in which the test was defined (not in which it's being used)
+#       (4) test settings
+# We look up this stack to find what to use.
+
+# 'global'
+#    'dir' et al        -- set defaults if group or test doesn't override them
+#    'require' run|diff -- lines of perl code to run before running
+#       line1            | a runtests (if 'run') or a reiterate (if 'diff')
+#       line2
+#    'endrequire'
+# 'endglobal'
+
+# 'group' group-name
+#    dir et al          -- optional; default if the test doesn't override
+#    test1              -- see below for syntax
+#    test2
+#    'use group' groupname-- append a previously-defined group of tests
+#    'use test' testname  -- append a single previously-defined test
+# 'endgroup'
+
+# An individual test:
+# -------------------
+# 'test' name               -- name of the test; must be unique
+#   'dir'  directory        -- directory for the test; '.' in anything
+#                               below refers to this directory
+#   'exec' executable       -- script or binary to run
+#   'args' arg1 arg2 arg3   -- arguments to the executable
+#   'in'   input            -- optional: name of a file to redirect to
+#                               exec's stdin.  For instance, a script file.
+#                               Default is /dev/null (effectively closing
+#                               the input)
+#   'out'  output           -- optional: name of the output file; default
+#                               or '-&' means use stdout and stderr,
+#                               '-' means use just stdout
+#   'subs'                  -- optional: a list of substitutions
+#       s1                      (actually just lines of perl) to perform on
+#       s2                      the output.
+#       s3                      We perform first s1, then s2, then s3.
+#   'endsubs'
+# 'endtest'
+
+
+# TODO: implement a += for args.  Since later args usually override earlier
+# args, this would allow, for instance:
+#       group foo
+#           args="x -y -z=5"
+#           test bar
+#               args+="-z=10"
+
+# TODO: at least implement an 'append-arg' which we append to args:
+#       group foo
+#           append-arg model.l2
+#           test bar
+#               args "--cbfs -y2"  # and then append the model filename
+
+
+global
+    exec ../../../mba/cpp/bin/l2test
+    subs
+        s/FC time: [0-9]+(\.[0-9]+)?/FC time: **/
+        s/L2> //g
+    endsubs
+endglobal
+
+
+###########################################################################
+# Circuit-breaker model.
+group cb-cbfs
+    dir  cb
+    in   cb.scr
+
+    #### CBFS tests of the cb8 tripped failure.
+    test 5-1000-0
+        args cb --cbfs --cbfs-candidates=5 --cbfs-search=1000 --history=0
+    endtest
+    test 5-1000-2
+        args cb --cbfs --cbfs-candidates=5 --cbfs-search=1000 --history=2
+    endtest
+
+    #### Same two tests, min-progress
+    test min-5-1000-0
+        args cb --cbfs --cbfs-candidates=5 --cbfs-search=1000 -y0 -pmin -O
+    endtest
+    test min-5-1000-2
+        args cb --cbfs --cbfs-candidates=5 --cbfs-search=1000 -y2 -pmin -O
+    endtest
+
+    # tests of truncate algorithm and visibility into it
+    test truncate-visibility
+        args cb --cbfs --cbfs-candidates=5 --cbfs-search=1000 --history=2
+        in trunc-test.scr
+    endtest
+
+endgroup  # cbfs
+
+group cb-cover
+    dir  cb
+    in   cb.scr
+
+    #### Cover tests of the cb8 tripped failure.
+    test 10-0
+        args cb --cover --cover-max-rank=10 -y0
+    endtest
+    test 10-2
+        args cb --cover --cover-max-rank=10 -y2
+    endtest
+
+    ### Same two tests, min-progress
+    test min-10-0
+        args cb --cover --cover-max-rank=10 -y0 -pmin -O
+    endtest
+    test min-10-2
+        args cb --cover --cover-max-rank=10 -y2 -pmin -O
+    endtest
+
+    # longer test, cover, max rank 10, history 2
+    test dt1-10-2
+	in dt1.scr
+        args cb --cover --cover-max-rank=10 --history=2
+    endtest
+
+    # same, with min-progress
+    test dt1-min-10-2
+	in dt1.scr
+        args cb --cover --cover-max-rank=10 --history=2 --progress=min
+    endtest
+
+    # longer test, cover, max rank 10, history 2
+    test dt2-10-2
+	in dt2.scr
+        args cb --cover --cover-max-rank=10 --history=2
+    endtest
+endgroup # cover
+
+group cb-stripped
+    dir  cb
+    in cb.l2s.scr
+    test cbfs-5-1000-2
+        args cb.l2s --cbfs --cbfs-candidates=5 --cbfs-search=1000 -y2
+    endtest
+endgroup # cb-stripped
+
+group cb
+    use group cb-cbfs
+#    use group cb-cover
+    use group cb-stripped
+endgroup # cb
+
+
+group cb-recovery
+    dir  cb
+    #### Find plan in 1 time step for turning on led8
+    #### Note that 1 time step is set in test script
+    test led8-on-cbfs-5-1000-1
+    	in recover-led8-on-1-step.scr
+        args cb --cbfs --cbfs-candidates=5 --cbfs-search=1000 --history=2 --recovery
+    endtest
+    test led178-on-cbfs-5-1000-1
+    	in recover-led178-on-1-step.scr
+        args cb --cbfs --cbfs-candidates=5 --cbfs-search=1000 --history=2 --recovery
+    endtest
+
+endgroup # cb-recovery
+
+
+###########################################################################
+
+# A set of tests not related to any other tests.
+# Mostly, these were test cases for bugs that were found and squashed in
+# the past.
+# These should be run every time.
+group misc
+    dir misc
+
+    # This tests a bug with creating the guard clauses transitions,
+    # which showed up as the idle transitions having the same proposition
+    # three times instead of the correct three different propositions.
+    # See script file for details.
+    test AngleSensor
+        in AngleSensor.scr
+        args AngleSensor.l2 -y1
+    endtest
+endgroup # misc
+
+
+###########################################################################
+# A set of tests of the X-37 model.
+# This is an old version of that model; perhaps we should upgrade to
+# a newer version?
+
+group x37
+    dir  x37
+
+    test nominal-full-3
+        in Nominal.scr
+        args x37V1p6.l2 -y3
+    endtest
+
+    test nominal-min-3
+        in Nominal.scr
+        args x37V1p6.l2 -y3 --optimize --progress=min
+    endtest
+
+    test rvdtfail-full-1
+        in RVDTFail.scr
+        args x37V1p6.l2 -y1
+    endtest
+
+    test rvdtfail-min-0
+        in RVDTFail.scr
+        args x37V1p6.l2 -y0 --optimize --progress=min
+    endtest
+
+    test rvdtfail-min-1
+        in RVDTFail.scr
+        args x37V1p6.l2 -y1 --optimize --progress=min
+    endtest
+
+endgroup # x37
+
+
+
+###########################################################################
+
+##########
+# A set of tests that test cbfs.
+group cbfs
+    use group cb-cbfs
+    use test x37.nominal-full-3
+    use test x37.nominal-min-3
+endgroup # cbfs
+
+##########
+# A set of tests that test cover.
+group cover
+    use group cb-cover
+endgroup # cover
+
+
+##########
+# A set of tests that test the recovery algorithms.
+group recovery
+    use group cb-recovery
+endgroup # recovery
+
+
+##########
+# A quick set of tests to run.  Should run in < 10s.
+# Remove tests if we exceed that.
+group quick
+    use test cb-cbfs.5-1000-0
+    use test cb-cbfs.5-1000-2
+# add a cover test here?
+    use test x37.rvdtfail-min-1
+    use test misc.AngleSensor
+endgroup # quick
+
+
+##########
+# A more complete set of tests to run.
+# Every time we checkin, run these tests.
+# Please add more!
+# These should require all features normally enabled by
+# a build for release: all search algorithms, all file formats,
+# all front-ends.
+group checkin
+    use group quick
+    use group cbfs
+#    use group cover
+    use group misc
+    use group cb
+    use group x37
+endgroup # checkin

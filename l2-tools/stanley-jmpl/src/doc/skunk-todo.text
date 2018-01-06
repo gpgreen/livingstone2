@@ -1,0 +1,227 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+01sep99 - Sandra Hayden discussion
+-------------------------------------
+o perm balloons for terminal cmd/mon values do not
+  reflect transitions which are returned by scenarios
+  and interactive stepping.
+
+  Done 09/20/99 - see skunk-released.text 
+
+o remove OPS color prefrences from Edit->Preferences
+  (Stanley wide preferences), and establish a project
+  based set of color/token preferences to be used for
+  display state coloring.
+
+  Done 09/10/99 - see skunk-released.text 
+
+o kill/restart Livingstone when changing Project scope
+
+  Done 09/17/99 - see skunk-released.text 
+
+
+03sep99 - Mark Shirley discussion
+-------------------------------------
+o connect Jim Kurien to find out how to add Stanley to
+  Ames local CVS repository.
+
+  Done 09/09/99 - see skunk-released.text 
+
+o find out how to do ORB server call back - use it to get
+  Livingstone transitions, rather than using return value
+  from do-cmd/do-monitors. pointers to Lisp code & Java
+  code from mark.
+
+  Done 09/28/99 - see skunk-released.text 
+
+
+
+19oct99 - Mark Shirley e-mail after Stanley VMPL  demo
+-------------------------------------------------------
+
+* I think you should follow some GUI conventions for mouse clicks that stem
+  from smalltalk and were picked up by windows.  I found the mouse operations
+  to be strangely layed out.  These conventions are (more or less):
+    1. Left click is a common, innocuous operation.  Usually it's "select".
+       If you distinguish between click and drag, then the unmodified left
+       button should be used for both.
+    2. Right click should pop up a menu of operations for the object.  All
+       capabilities should be in the menu somewhere.  That is, the other mouse
+       bindings should be accellerators for functionality that's in the menu.
+    3. The middle button should be another common operation.  You can put
+       operations on the clicks plus modifier keys as you like, although you
+       might want to follow the convention that control-left-click means
+       change the selection status of this thing without changing the
+       selection status of anything else.  (I don't know whether you've got
+       multi-selection in stanley.)
+
+* I'm not convinced of the need for the color menu at the bottom of the
+  stanley main window.  Is that optional?
+
+* Why are the lines on the boxes in stanley diagrams inset (shadowed)?  I
+  think it would be more pleasing visually to have them be plain lines.  Have
+  you tried that?
+
+* I think the automatic inheritence upward of unterminated ports is a strange
+  choice.  I think you should:
+    1. Make terminal hiding use a different visual vernacular - click right on
+       a terminal to get a hide/unhide choice.  When hidden, it should have a
+       small line through it or something.  Not a wire connected to a sink (or
+       whatever that is).
+    2. Everything that is visible outside the module should be connected to a
+       module-level port.
+    3. Anything else should be flagged as an error at save or compile time.
+
+* Rename the "project" menu the "testing" menu, or something like that.
+  Done 18oct99
+
+* There should be some visible indication which mode is the initial one.
+
+* Why are component inputs either command or monitor inputs?  Why isn't
+  "neither" a valid choice?
+
+* I wrote this: "feedback on mouse over".  I don't know what this meant now,
+  but I'd like to look at the balloon help again sometime.
+
+
+19oct99 - discussion with Mark about e-mail
+--------------------------------------------------
+
+o colored rectangles is not a good node differentiator;
+  use image shapes -- so that there is no need for node color legend.
+
+o pop-up color legend for ops mode display state colors; shows then all
+  in a top-level window the user can move around, dismiss, ...
+
+o accel-buttons for show all node labels; hide all node labels
+  bg not pale yellow, but canvas color
+
+o M-l drag -- move nodes; M-m drag -- create connections/transitions
+
+o terminator nodes go way; menu option on V to mark it public/private;
+  if private, change shape to small gray circle
+  ?? what if lots of V's on module/component => lots of work
+  >> else connect to terminals to make them public and/or default
+     would be private with o's
+
+ABOVE DONE IN VERSION 5.0
+
+KNOWN PROBLEMS
+--------------
+o when cursor moves off a connected V/^ on components/modules the
+  <Leave> event is not triggered and Attention lines do not change.
+  For UNconnected  V/^ on components/modules, they are!
+
+o
+
+15nov99 - discussion with Bill M -- additions for testing
+--------------------------------------------------
+o Test->Scenario --> pops up a text window with the scenario
+  source, positioned by step number
+
+  Done in 5.1
+
+o Mouse-R state viewer timeline -- add "event" column in between
+  existing "state" columns which specifies the values in the
+  do-command form. "event" column can have a different background
+  color.
+
+o For components, current mode is not shown as in pure OPS mode --
+  should it be?
+
+  Fixed.
+
+
+07jun00 Bill M e-mail
+--------------------------------------------------
+
+
+
+Major Issues:
+
+o the java layer around Livingstone doesn't handle multiple candidates,
+  it incorrectly reports that there are no candidates.  This rendered
+  the first release practically unusable (visually).
+
+  => skunkworks will now return the first multiple candidate - v 1.0.1   GNATS
+
+o the 'cannot deal with unnecessary commands' problem was a problem
+  with all of the released example scenarios in the default state.
+  (example scenarios ought to be sanctioned?)
+
+  => compiler/L2 problem - targetted for v 1.0.1
+
+o the 'cannot foward a command through a device' problem prevented
+  modeling of some devices that aren't at the top level, in addition
+  to those controller-like models that do passthrough of commands.
+
+  => compiler/L2 problem - targetted for v 1.0.1
+
+o the java layer is designed to forward a random candidate to Stanley
+  for display; skunkworks needs some way of conveying the full set of
+  candidates to the modeler, ideally in a clear way.
+
+  => skunkworks in progress
+
+o there is no good way to do distributed model development using
+  Stanley.
+
+  => simple locks may provide basic protection when sharing the same
+     working file set -- put off until later
+
+Minor Issues
+
+o the first release was announced but failed with some environment
+  variable not being properly set.  The upshot was we decided that
+  the release czar and someone else will check that the integrated
+  system works before announcing releases (ah, memories of remote
+  agent integration ...).
+
+o there are several steps required to start the system.  A one-line
+  shell command is forthcoming.
+
+  => will be available when exception handling L2/Skunk to Stanley
+     is done.
+
+o the models that are distributed with Stanley should be akin to a
+  shared library, rather than requiring that source files be copyied
+  into the user area.  Projects may want access to sample models but
+  users shouldn't have to each house copies of them in with their
+  project files.
+
+o doing Load&Go on a sample model (cbAndLeds) results in a dialogue
+  to set the initial modes of each component.  I was unable to make
+  changes after scrolling down in the dialogue, but the flakiness was
+  not reliably reproduceable.
+
+  => not reproducable
+
+o while Load&Go was processing, I switched rooms in my window manager,
+  and Stanley crashed because tcl needs to have the window be the top
+  window to draw correctly.  Will says it's an inherent tcl limitation.
+
+  => problem with CDE, ok with fvwm GNATS
+
+o the only way to reset the test module to the initial state is to do
+  another Load&Go, respecify all of the initial conditions, and wait.
+  A Reset button would be quicker and more convenient.
+
+  => targetted for v 1.0.1 GNATS
+
+o when a scenario is selected for stepping, the canvas should probably
+  be inactive to prevent the user from setting additional values that
+  conflict with the current scenario.
+
+  => targetted for v 1.0.1 GNATS
+
+o after stepping through a 3-step scenario, the step button's bubble
+  help stated that I was in step 1 of a 3-step scenario.
+
+  => targetted for v 1.0.1 GNATS
+
+
+
+

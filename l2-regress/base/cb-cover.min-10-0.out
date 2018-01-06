@@ -1,0 +1,50 @@
+Reading model file(s): cb.{xmpl,hrn,ini}
+Optimizing model ...
+Read `cb'
+Search settings:
+   Search type               = cover
+   Max rank                  = 10
+   History length            = unlimited
+
+   Max candidates tracked    = 5
+   Progress style            = min
+   Find Candidates style     = the tracker default fc
+---------------
+Step 5; 100 variables; 0 conflicts before; 1 after.
+Cover: search termination is unimplemented
+The 8 candidates are:
+   Candidate 0)
+        -#cbAndLed.cb15.modeTransition=tripped :2
+
+   Candidate 1)
+        1#cbAndLed.cb15.modeTransition=tripped :2
+
+   Candidate 2)
+        4#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 3)
+        -#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 4)
+        2#cbAndLed.cb14.modeTransition=tripped :2
+
+   Candidate 5)
+        -#cbAndLed.cb14.modeTransition=tripped :2
+
+   Candidate 6)
+        -#cbAndLed.cb12.modeTransition=tripped :2
+
+   Candidate 7)
+        3#cbAndLed.cb12.modeTransition=tripped :2
+
+
+Step 7; 106 variables; 1 conflicts before; 7 after.
+Cover: search termination is unimplemented
+The 2 candidates are:
+   Candidate 0)
+        4#cbAndLed.cb8.modeTransition=tripped :2
+
+   Candidate 1)
+        -#cbAndLed.cb8.modeTransition=tripped :2
+
+

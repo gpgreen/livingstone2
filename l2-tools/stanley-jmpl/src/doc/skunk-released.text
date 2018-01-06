@@ -1,0 +1,2860 @@
+####
+#### See the file "l2-tools/disclaimers-and-notices.txt" for 
+#### information on usage and redistribution of this file, 
+#### and for a DISCLAIMER OF ALL WARRANTIES.
+####
+====================================================
+====================================================
+
+version 3.2 - 03Sep99
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Add "permanent" balloons with default command/monitor values
+  after "Project->Instantiate" is selected.
+
+o Add optional bitmap image capability to replace component/
+  module rectangles.
+
+o Add "Project->Scenario" to pop-up dialog to select scenario
+  file from <stanley-user>/livingstone/<project-id>/models/scenarios/ 
+  directory, and compile it in the "scope's" defsystem.
+
+o Interactive single stepping is available by selecting values with the
+  mouse for the "instrumented" terminal commands and monitors, and
+  then clicking on "Step".
+
+o "Step" and "Run" accelerator buttons are now available to execute
+  the selected scenario.
+
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Changed the running of Livingstone in an Emacs Lisp buffer, with
+  communication via the Emacs server; to CORBA based Lisp server
+  with which Stanley communicates via client requests.
+
+
+
+BUG FIXES - VMPL
+----------------
+
+o Correct the handling of command/monitor status for
+  terminals to encapsulate this information within the
+  terminal data structure, and properly deal with
+  inheritance.
+
+====================================================
+====================================================
+
+version 4.0 - 17Sep99 (Solaris5.5.1/ACL4.3/Mico2.2.7/TclMico0.5b)
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Stanley added to Ames ISG local CVS repository.
+
+o Stanley interfaced with ISG version of Lisp Livingstone.
+
+o Component/Module Mode State Color and Text Preferences are
+  specified in optional file $STANLEY_USER_DIR/display-state-color-prefs
+  It can contain pairs of mode state names and associated X11 color names,
+  one pair per line, e.g.
+  low-pressure lightBlue
+  nominal-pressure lawnGreen
+  high-pressure brickRed
+  ...
+
+  The mode state names are used in display-state attribute code to provide
+  background colors representing the current Livingstone mode states.
+  The number of pairs has no practical limit, but only seven will be
+  displayed on the "Legend" bar at the bottom of Stanley GUI.
+
+o Kill/restart Livingstone when changing Project scope
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Automate the creation of user directory trees which contain
+  user's schematics, generated MPL code, and component/module
+  bitmaps.
+
+o Eliminate extraneous directories/files associated with DS1.
+
+o Supports, external to the Stanley distribution, directory
+  trees containing generated MPL Lisp code, schematics, and 
+  component/module bitmaps:
+  - RUN-STANLEY-VMPL-IVHM.csh: ~shayden/stanley
+  - RUN-STANLEY-VMPL-ISPP.csh: ~taylor/stanley-projs/ispp
+  - RUN-STANLEY-VMPL-DS1.csh: ~taylor/ds1/stanley-full/ra/mir/gui/stanley-user
+
+
+
+BUG FIXES - VMPL
+----------------
+
+o Correct null return from do-monitors
+
+o Fix ballonhelp bug on terminal dialogs in ops mode
+
+
+====================================================
+====================================================
+
+version 4.1 - 27Sep99 (Solaris5.6/ACL5.0/Mico2.3.0-1/TclMico0.5c)
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o None.
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Converted from Solaris5.5.1/ACL4.3/Mico2.2.7/TclMico0.5b to
+  Solaris5.6/ACL5.0/Mico2.3.0-1/TclMico0.5c, which supports
+  CORBA specification level 2.3.
+
+o "Permanent" balloons for terminal cmd/mon values now
+  reflect transitions which are returned by scenarios
+  and interactive stepping.
+
+o Inherited component/module input terminals are now restricted
+  to allow only one connection. Inherited component/module output
+  terminals continue to allow multiple connections.
+
+o Terminal terminators are now fully functional. Terminal 
+  declarations have been made unavailable.
+
+o Terminal nodes are now displayed as small square icons with
+  no text, rather than rectangles with instance label as text.
+  Terminators are now displayed as small circles.
+
+o Added "step x of n" balloon help to "Step" accelerator button.
+
+
+BUG FIXES - VMPL
+----------------
+
+o To prevent:
+  "uncaught MICO exception: IDL:omg.org/CORBA/MARSHAL:1.0 (0, not-completed),
+  Abort", put mico, tclmico library directories at the *beginning* of 
+  LD_LIBRARY_PATH -- rather than at the end.
+
+
+====================================================
+====================================================
+
+version 4.2 - 12Oct99 
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o Added CORBA ORB server capability for Stanley, such that
+  Livingstone can act as a client, initiating actions
+  in Stanley.  This is independent of the basic Stanley/client
+  and Livingstone/server behavior which already exists.
+
+o Upgraded Tcl/Tk from version 8.0.5 to 8.2.0
+
+o Added Livingstone "client" function 
+  TP::REPORT-TRANSITIONS-TO-STANLEY which will send proposition
+  transitions to Stanley in an ground operations environment.
+
+o Added Livingstone "client" functions TP::LOAD-STANLEY-MODULE
+  and TP::STANLEY-META-DOT is make requests from a Livingstone
+  "code inspector".
+
+o Added Livingstone "client" support functions TP::GET-STANLEY-MODULES
+  and TP::GET-STANLEY-INSTANCES.
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o None.
+
+
+BUG FIXES - VMPL
+----------------
+
+o For "view" dialogs of "Edit->Header->Name, Variables & Documentation",
+  display "Instance Name" rather than "Instance Variable", and
+  "Parameter Values" rather than "Parameter Variables".  Also
+  change menu item from "Name, Variables & Documentation" to
+  Name, Values & Documentation" for "view" dialogs.
+
+o MPL Lisp files were not being saved by "File->Save Definition",  This
+  has been corrected. (Previously the MPL Lisp files were generated
+  the next time Stanley was started -- which meant that to compile
+  changes to generated MPL code, the user would have to exit Stanley
+  and restart).
+
+
+====================================================
+====================================================
+
+version 5.0 - 22Nov99 
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o RUN-STANLEY-VMPL.csh is now the only script for starting VMPL.
+  Users will use Edit->Preferences to specify STANLEY_USER_DIR
+  and project_id, rather than having a unique RUN-STANLEY-VMPL-<...>.csh
+  script:
+  RUN-STANLEY-VMPL-ISPP.csh    ~taylor/stanley-projs/ispp ispp
+  RUN-STANLEY-VMPL-IVHM.csh    ~shayden/stanley           ivhm
+  RUN-STANLEY-VMPL-FASTRAC.csh ~anupa/stanley             fastrac
+  RUN-STANLEY-VMPL-chuck.csh   ~chucko/stanley            ivhm 
+
+o Since terminal and attribute nodes are displayed as icons, and
+  the user can define icons for components and modules, there are now
+  two new items in the accelerator bar, under the pull-down menus:
+  "Show Labels" and "Hide Labels". Selecting "Show Labels" will
+  display the node label to the right of the node with the same
+  background color as the canvas.  The previous behavior of single
+  icon labels being displayed when the mouse cursor in over a node,
+  remains.
+  
+o Since the node icons are distinguishable by their shapes, the
+  node legend bar, previously at the bottom of the VMPL GUI, is
+  by default, not shown.  It can be made to show by using "Edit->
+  Preferences" and changing "Stanley node legend bar shown" from
+  0 to 1.
+
+o "Tools->Display Mode State Legend" pops up a standalone window which
+  displays the user defined mode state background colors in file
+  $STANLEY_USER_DIR/display-state-color-prefs.
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o Pull-down menu "Project" has been renamed "Test".  All selections
+  on this menu are disabled, since Livingstone testing functionality
+  will no longer being implemented as part of Stanley, rather it
+  will be a separate CORBA client being written by Mark Shirley.
+  When that implementation is available, these menu selections will
+  be enabled and will be handled by the Skunkworks Test Runner
+  (name subject to change!).
+
+o components & modules without bitmaps in directory
+  $STANLEY_USER_DIR/bitmaps, which were displayed as rectangles, 
+  will now have a "flat", rather than "groove", edge appearance.
+
+o Attributes are now square icons enclosing an "A" and colored orange,
+  where previously they were rectangles containing their labels.
+  Component modes, as well, are no longer rectangles conataining
+  their labels.  Ok modes are green circles, and fault modes are
+  red octogons.
+
+o "Edit->Instantiate->Terminal->input-terminator" and
+  "...->output-terminator" are no longer available.  
+
+o Each terminal now has a public/private property, which defaults
+  to the current rules (standalone terminals and unconnected
+  component/module terminals are public -- and inherited; connected
+  component/module terminals are private -- and not inherited).  
+  This property may be changed using the Mouse-Right->public/private
+  toggle selection.  The small terminal icon meanings are: filled 
+  up/down triangles => public; outline up/down triangles => private.
+  Existing terminator nodes are converted to private terminals.
+
+o Mouse actions have been completly revised to be more conformant with
+  standard GUI APIs: all move operations, which were on Mouse-M, are
+  now on Mouse-L; create connection and create transition, which were
+  on Mouse-L, are now on Mouse-M; all other operations are now on a 
+  Mouse-R menu.
+
+
+BUG FIXES - VMPL
+----------------
+
+o Viewing a transitions dialog no longer causes Stanley to think
+  that the user has changed something in the dialog.
+
+o Attention lines now correctly show "<Mouse-M drag> create transition"
+  as being enabled for "ok" component modes, as well as "fault" 
+  component modes.
+
+o Extraneous extents of skeletons when moving connections have been eliminated.
+
+o Terminal inheritance is now applied when component/module classes are
+  instantiated by "Edit->Instantiate->...".  (Applying terminal inheritance
+  has always been done when loading component/module instances with
+  "File->Open Defintion->...".)
+
+
+====================================================
+====================================================
+
+version 5.1 - 02Dec99 
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o In "Test" mode, add "anchor" lines from terminal/component/module 
+  buttons to "permanent" value(s) balloons to clarify which
+  buttons are associated with which balloons.
+
+o "Test->Scenario -->" now pops up a text window of the scenario
+  source, with the current step number highlighted.
+
+
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o The node icon label balloons, individually or together using
+  "Show Labels/Hide Labels" are now associated with the current
+  canvas, and are not unmanaged top-level windows.  Thus they are
+  buried when other windows obscure the Stanley canvas.  This is
+  also true for the "Test" mode terminal values balloons.
+
+o CORBA IDL file has been separated into a Stanley file and
+  a Livingstone file, to allow for integration of Stanley with
+  other Skunkworks tools.
+
+o Add "type: <terminal-type>" to component/module/terminal/attribute
+  button balloons in "Test" mode.
+
+
+
+BUG FIXES - VMPL
+----------------
+
+o In "Test" mode, private unconnected component/module terminal buttons had
+  "permanent" value(s) balloons.  Only "public" terminal buttons 
+  should show value(s) balloons.  This has been corrrected.
+
+o In "Test" mode after user had selected command or monitor values using
+  Mouse-R, pop-up terminal button balloons did not reflect this change.
+  This has been corrrected.
+
+o Corrected "Stack Trace Error" in setTerminalButtonInterfaceType caused
+  by trying to change a node which had alreadly been deleted.
+
+o Corrected substitution problem in terminal inheritance up thru two or
+  more modules.
+
+o Corrected connection drawing bug for opposite direction terminal buttons.
+
+o Corrected problem which resulted in erroneous "flow graph must be acyclic"
+  messages when "opening" ghe-and-gh2-gas-tanks module from mps module.
+  Commentary: edges are loaded with each module, but components to which 
+  the edges connect are loaded later when that module is opened up.  But 
+  if two different modules have 2 components of the same component classes 
+  with the same instance names, then the pending edge can be seen when its canvas
+  has not been populated with its components.
+
+o Mouse-Right operation menus did not reflect renaming of attributes, terminals,
+  and modes --  this is now fixed.
+
+
+
+====================================================
+====================================================
+
+version 5.2 - 10Dec99 
+---------------------
+
+NEW FUNCTIONALITY - VMPL
+------------------------
+
+o
+
+CHANGES IN FUNCTIONALITY - VMPL
+-------------------------------
+
+o
+
+BUG FIXES - VMPL
+----------------
+
+o "CONNECTION NO LONGER VALID" messages for connections with
+  opposite direction/location (output direction on top of icon or
+  input direction on bottom of icon) have been corrected.
+
+
+
+====================================================
+====================================================
+
+version 1.0 - 06Apr00
+---------------------
+
+NEW FUNCTIONALITY - VJMPL
+------------------------
+
+o Stanley VJMPL generates Java-like syntax MPL code, rather than Lisp
+  syntax MPL code, hence VMPL becomes VJMPL (Visual Java-syntax
+  Model-based Programming Language).
+
+o Stanley can now be built and run without the CORBA interface to
+  the Livingstone Skunkworks tools.  The default mode of Stanley
+  is standalone -- without the CORBA interface.  The -skunk option to
+  RUN-STANLEY-VJMPL.csh will bring up the CORBA interface and the
+  Java-wrapped C++ version of Livingstone.
+
+
+
+CHANGES IN FUNCTIONALITY - VJMPL
+-------------------------------
+
+o Component and module parameter variables (Edit->Header->Name, Variables, and 
+  Documentation) now have required type fields.
+
+
+
+BUG FIXES - VJMPL
+----------------
+
+o None.
+
+
+USER ISSUES - VJMPL
+-------------------
+
+o All file names, class names, instance names, type values, etc 
+  have been converted from Lisp-syntax to Java-syntax.  For example:
+    aft-lox-tank.scm
+    engine-pneumatics-interface.scm
+    fwd-lox-tank.scm
+    ghe-and-gn2-gas-tanks.scm
+    ground-support-equipment-interface.scm
+  are now:
+    aftLoxTank.scm                        
+    enginePneumaticsInterface.scm        
+    fwdLoxTank.scm                      
+    gheAndGn2GasTanks.scm                
+    groundSupportEquipmentInterface.scm  
+
+o Discard any ~/stanley-jmpl user workspace directory trees.
+  cvs checkout x-34-model-jmpl
+  to get Java-like-synatax converted user workspace files.
+
+o Since VMPL & user files are inconsistent with VJMPL & its user files,
+  hand edit ~/.stanley-prefs to suffix "-jmpl" onto the
+  STANLEY_USER_DIR entry.  Do this prior to starting
+  ~taylor/released/skunkworks/stanley-jmpl/interface/RUN-STANLEY-VJMPL.csh.
+
+o Lisp-syntax to Java-syntax examples:
+
+  Note that "?name" does not appear in Java-syntax code since it is
+  handled as a implicit object in the generated Java methods.
+
+  Default display attribute facts:
+    (no-data (display-state ?name))
+  becomes a Java assignment:
+    displayState = noData;
+
+  Component model constraints for "diffuser" mode "ok":
+    (and (flow-values-equal (flow-in ?name) (flow-out ?name)) 
+      (pressure-values-equal (pressure-in ?name) (pressure-out ?name)))
+  becomes (the types are defined for you by the enclosing Java class):
+    flowIn = flowOut;
+    pressureIn = pressureOut;
+
+  Component background model (DS1 power-throw):
+    (and 
+      (iff (and (on ?switch-state) (on ?power-in))
+	 (on ?power-out)))
+  becomes:
+    iff ((switchState = on & (powerIn = on))
+      powerOut==on;
+
+  Component model for DS1 power-throw mode off:
+    (and
+     (off ?switch-state)
+     (next (zero (on-resets-attempted ?name)))
+     (next (zero (off-resets-attempted ?name))))
+  becomes 
+     switchState = off;
+     next onResetsAttempted = zero;
+     next offResetsAttempted = zero;
+    
+  Component transition for DS1 power-throw mode off to on:
+     Name: turn-on 
+     Precondition: (on (cmd-in ?name)) 
+  becomes
+     Name: turnOn
+     Precondition: cmdIn = on;
+
+  For more extensive examples see:
+    /home/copernicus/id3/kurien/mba/projects/rax/relays.lisp
+    /home/copernicus/id3/kurien/mba/projects/ds1-mpl/relays.java
+  and
+    /home/copernicus/id3/kurien/mba/projects/rax/pdu.lisp
+    /home/copernicus/id3/kurien/mba/projects/ds1-mpl/pdu.java
+
+
+====================================================
+====================================================
+
+version 1.1 - 18Apr00
+---------------------
+
+NEW FUNCTIONALITY - VJMPL
+------------------------
+
+o None.
+
+
+
+CHANGES IN FUNCTIONALITY - VJMPL
+-------------------------------
+
+o Format balloon help display for structured type values,
+  to that each sub-structure starts on a new line.
+
+
+
+BUG FIXES - VJMPL
+----------------
+
+o Prevent accumulation of past deleted "canvases" by not saving
+  a list of created canvases.  Instead use the "canvas" from
+  each node to create a "canvas", if not already existing.
+
+o Correct the generation of module ".terms" files to only
+  include terminal definitions for those terminals defined
+  at the "top" level of the current class schematic.
+
+o Correct the error during File->Save, after a module class
+  rename, by checking that all "parent-link" nodes are
+  members of the new module class name.
+
+
+====================================================
+====================================================
+
+version L2SkSt_1.0 - 05jun00
+---------------------
+
+NEW FUNCTIONALITY - VJMPL
+------------------------
+
+o The -skunk option to RUN-STANLEY-VJMPL.csh allows compilation
+  of "File->Save Definition" generated JMPL code using
+  "Test->Compile".  "Test->Load & Go" will load the compiled
+  JMPL code into C++ Livingstone via the Skunkworks Java JNI wrapper.
+  "Test->Scenario" provides the user with selection of existing
+  scenarios or interactive creation of new scenarios.
+
+o Command/monitor value balloons, which are drawn in test mode,
+  now indicate whether they are constained by the user (light
+  yellow background with black text) or determined by Livingstone
+  (maroon background with white text).
+
+o As part of the "Test->Load & Go" functionality, a "Modes &
+  Initial Conditions" dialog is presented to the user, allowing
+  the selection of non-default component modes and initial
+  condition assigments.
+
+o If the JMPL Lint syntax-checker, run as an option to "File->
+  Save Definition" encounters a error, it now provides the user a 
+  dialog of the generatied JMPL source with the offending line marked.
+
+
+CHANGES IN FUNCTIONALITY - VJMPL
+-------------------------------
+
+o Handling of missing entries in the Edit->Header->Name, Variables, 
+  and Documentation dialog for components and modules has been 
+  improved.
+
+o Edit->Instantiate dialog now shows the user the values
+  for component and module value type parameters, and checks for 
+  their validity.  The field title now shows the parameter
+  variable name and its type.
+
+o The balloon help which indicates the syntax of entered text
+  now appears when the mouse cursor is over the field where text 
+  is to be entered, rather than over the field title.
+
+
+BUG FIXES - VJMPL
+----------------
+
+o Numerous.
+
+
+
+====================================================
+====================================================
+
+version L2SkSt_1.0.1 - 19jun00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Added "Test->Reset", which is enabled by interactive or
+  defined scenario scripts being run.  It will reset the
+  test module using the component mode selections made
+  during "Test->Load & Go", allowing the user to run 
+  another scenario with the same initial conditions.
+
+o The initial release of the Skunkworks JMPL/XMPL File
+  Browser is invoked using pull-down menu "Skunk->Browser".
+
+o Added two arguments to RUN-STANLEY-VJMPL.csh:
+  -exists  # notify Stanley that Skunkworks/Livingstone exists and 
+           # has been started in $STANLEY_USER_DIR/livingstone
+  -prefs   # prior to initialization, bring up the Edit->Preferences 
+           # dialog, even if ~/.stanley-prefs exists
+
+o Added "Livingstone search method" and "Livingstone max number
+  candidates" to "Edit->Preferences".
+
+
+Changes In Functionality - Stanley
+-------------------------------
+
+o When specifying a non-existant directory for "Edit->Prefs"
+  entry STANLEY_USER_DIR, Stanley will create an empty
+  directory framework for user generated schematics,
+  JMPL files, icon bitmaps, scenarios, etc.
+
+
+Bug Fixes - Stanley
+----------------
+
+o When choosing "Test->Scenario->Select", disable
+  interactive setting of command and monitor values.
+
+o Ensure that the "Step" accelerator balloon help is discarded
+  after an incomplete scenario is run, and interactive
+  command and monitor values are set, enabling the "Step"
+  accelerator.
+
+o Correct error message `expected boolean value, but got ""',
+  when interactively setting a command or monitor whose type
+  is structured, and thus requires more than one value to be
+  selected.
+
+====================================================
+====================================================
+
+version L2SkSt_1.0.2 - 28jun00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Added menu commands "File->Open Workspace" to switch between 
+  known workspaces, and "File->New Workspace" to add a workspace
+  to the group of known workspaces.  If an new workspace does 
+  not exist, Stanley will create an empty file hierarchy for it.
+
+o The "stanley-sample-user-files" workspace is integrated into
+  the released executable, and is a "read-only" workspace.
+
+o stanley is now a soft-link to RUN-STANLEY-VJMPL.csh.
+
+o Exception handling by Skunkworks Java-Native-Interface now allows
+  Stanley to show the user the error signaled, and to block further
+  commands to Livingstone until a new command line and engine are
+  created.
+
+
+Changes In Functionality - Stanley
+-------------------------------
+
+o Delete 1 argument to RUN-STANLEY-VJMPL.csh:
+  -prefs   # prior to initialization, bring up the Edit->Preferences 
+           # dialog, even if ~/.stanley-prefs exists
+
+o The default configuration of Stanley is now to bring up L2/Skunkworks,
+  so the -skunk arg to RUN-STANLEY-VJMPL.csh has been removed.
+  A -noskunk argument to RUN-STANLEY-VJMPL.csh will configure
+  Stanley to *not* run with L2/Skunkworks.
+
+Bug Fixes - Stanley
+----------------
+
+o After "Test->Load & Go", when the mouse is over components and
+  modules, "<Control-Mouse-L click>: open {name}" is now
+  advertised in the Attention line.
+ 
+o Multiple user commands are now allowed during interactive 
+  scenario creation.
+
+
+
+====================================================
+====================================================
+
+version L2SkSt_1.1 - 15jul00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Added "Livingstone max search space size (cbfs only)" to 
+  "Edit->Preferences".
+
+o 
+
+
+Changes In Functionality - Stanley
+-------------------------------
+
+o Component faults dialog no longer pops up when Stanley processes
+  incoming propositions.  It is available via pull-down menu
+  "Tools->Component Faults".
+
+
+Bug Fixes - Stanley
+----------------
+
+o Node label balloons sometimes were showing when they should
+  be hidden, and visa-versa.  This has been corrected.
+
+o Hide/Show Permanent Test Balloons are no longer enabled when
+  test balloons are not showing.  This caused these balloons
+  to display incorrectly.
+
+
+
+
+====================================================
+====================================================
+
+version L2Skunk_1.2 - 10aug00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Add CORBA messages gotCandidates, gotInstallCandidate, 
+  gotAssignment, and gotProgress to enhance the
+  Stanley/Skunkworks interface.  This enables:
+  - the permanent test balloons for user specified progress and
+  assign directives are now displayed as the scenario executes them;
+  - the Scenario window now moves the green current line
+  indicator to show the current assign/progress/fc directive, as
+  well as the next pending scenario step;
+  - improved coordination between the Candidate Manager and Stanley.
+
+o "File->Quit"  now gives the user the option of quitting
+  just Stanley or L2/Skunkworks (includes Stanley).
+
+o Added "Livingstone max candidate rank (cover)" to "Edit->Preferences".
+
+
+Changes In Functionality - Stanley
+-------------------------------
+
+o The "DISMISS" button is removed from the Scenario window.
+
+o "Test->Scope" is now smarter about enabling either "Test->Compile"
+  or "Test->Load & Go", depending on whether compilation is
+  required or not for the selected scope.
+
+
+Bug Fixes - Stanley
+----------------
+
+o When changing Livingstone attributes in "Edit->Preferences",
+  remove the Scenario window and reset "Test" functions.
+
+o Pass "max candidate rank" to COVER engine, rather than
+  "max number of candidates".
+
+o Scenario file entries are now ordered in the sequence in which
+  the user specified them, rather than grouping all progresses
+  first, followed by all assigns.
+
+o If the Component Faults dialog has been selected by the user,
+  it will now show faults as they occur during the scenario.
+
+o Test->Reset now works properly for components.
+
+
+====================================================
+====================================================
+
+version L2Skunk_1.2.2 - 19sep00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o The Stanley "kernal and run-time environment are now 
+  built using configure. Yet to add to a total "build
+  from scratch" capability are these libraries: tclTk,
+  itcl, tkTable, combat, and mico.
+
+o When creating a new workspace with "File->New Workspace",
+  all abstraction, relation, structure, symbol, and
+  value class definitions defined in the stanley-sample-user-files
+  workspace are copied into the new workspace.  All the 
+  x-34 bitmaps are copied also.
+
+o Component "Edit->Header->Initial Conditions" commanded and
+  monitored variable settings will now be put in the ".ini" file 
+  along with the mode values.  These are displayed in the
+  "Modes & Initial Conditions" dialog brought up by
+  "Test->Load & Go".
+
+o In the File menu, the definition items are now above the workspace
+  items.
+
+o When choosing "File->Save Definition", the user is no longer asked
+  about running the Lint JMPL syntax checker. 
+
+o The "Test->Compile" error dialog now stays visible until the user 
+  dismisses it.
+
+o The background color of the canvas is different when in Test 
+  vs. Edit mode.  These colors are changeable using "Edit->Preferences".
+
+o In Test mode, terminal bubble help now shows structued type slot 
+  names paired with their values, rather than only a list of values.
+
+o The Scenario Manager can now issue a "standalone" progress command
+  to L2, if in scripted mode, or add it to the script if in interactive 
+  mode.
+
+o The Scenario Manager is now more self-contained: Test->Scenario and
+  Test->Reset are now on a Scenario Manager pull-down menu named
+  "File". The Scenario Manager is now automatically started by
+  "Test->Load & Go", allowing the user, for instance, to create a 
+  scenario with the first step being "find candidates".
+
+o When interactively creating scenarios with the Scenario Manager,
+  the "File->Save" is always enabled, rather than only being enabled
+  after a "Step" is done.
+
+o Test->Compile now puts up two windows: the error output window, as
+  before, and the standard output window, which shows compiler run time
+  diagnostics and warning messages.
+
+
+Bug Fixes - Stanley
+----------------
+
+o Java token checking by Stanley now rejects leading zeros and
+  allows underscores. GNATS #1214
+
+o Stanley jmpl code generation now properly defines inherited
+  "public" terminals which will satisfy the compiler's encapsulation
+  requirements. Previously this problem resulted in top level
+  components with public terminals and no connections to be
+  dropped by the compiler, resulting in no code being generated.
+  This change also prevents component "private" terminals from
+  being accessible by the user.
+
+o Changing workspaces now checks for the need to save current buffer,
+  so that unsaved schematics are not lost.
+
+o Edit->Instantiate menu operation is now disabled in Test mode.
+
+o Editing of instances in Test mode is no longer allowed.
+
+o Removed time-wasting operation from the Scenario Manager's
+  current line updating code, which caused the execution time
+  of assign/progress/fc commands to appear to be very slow.
+
+o Multiple scenarios may now be run without invoking "Test->Reset"
+  before selecting the next one.
+
+o 
+
+
+
+====================================================
+====================================================
+
+version L2Skunk_1.2.2-fixup - 21sep00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o The JMPL compiler output now highlights the file name 
+  where the error occurred.
+
+
+
+Bug Fixes - Stanley
+----------------
+
+o In modules of depth 3 or more, some public terminals were
+  not settable via Mouse-right selection menu -- this has 
+  been fixed. GNATS #1228
+
+o Compiling modules of depth 3 or more, results in JMPL
+  compiler error of "unexpected . in line X" this has 
+  been fixed.
+
+o Correct Stanley JMPL generation of structure class constraints.
+
+=========
+
+Skunkworks
+
+The "Introduction to JMPL Language" referenced on the main
+L2Skunk web documentation page has been updated.
+
+
+====================================================
+====================================================
+
+version L2Skunk_1.2.3 - 02oct00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o The two windows which appear displaying the results of
+  "Test->Compile" are now merged into one window.
+
+o The Stanley Scenario Manager now supports single command
+  execution via the SINGLE button, and well as commands from
+  the current "green" line to the next fc command via the
+  STEP button, and all commands from the current "green" 
+  line to the end of the script via the RUN button.
+  When single stepping, after each command except fc,
+  the propagate and refresh commands are issued.
+  GNATS CR #1212
+
+o The Stanley Scenario Manager now supports interactive
+  editing via line marking activated by clicking
+  Mouse-left (the line's background becomes yellow).
+  Insertions via "Edit->Insert Cmd" and Mouse-right
+  selections on component command/monitor terminals,
+  are inserted *before* the edit mark line.  
+  "Edit->Delete Line" will remove the edit mark line.
+  GNATS CR #1213
+
+o Component mode transition variables are now displayed
+  appropriately.
+
+o Component/module state viewer variable names now have the
+  leading instance name removed.
+
+
+Bug Fixes - Stanley
+----------------
+
+o The Modes & Initial Condtions dialog now properly
+  determines its width, so that multi-level components
+  are shown with their option menu.  GNATS PR #1229
+
+o When in Test mode, "File->Open Definition" for
+  abstraction, relation, symbol, structure, and symbol
+  class types will cause Stanley to enter Edit mode, 
+  just as it does now for component and module class
+  types.
+
+o Option menus for parameter types of components and modules
+  in "Edit->Header->Name, Variables & Documentation" now
+  include <unspecified>, so that previously entered
+  parameters may be removed.
+
+o Missing variable values are now set to "noData"
+  rather than extending the previous value.
+
+o "Permanent" test balloon values now show the last
+  value selected by the user. This was a problem if 
+  a variable's value had been set more than once.
+  GNATS PR #1234
+
+=========
+
+
+====================================================
+====================================================
+
+version L2Skunk_1.2.4 - 17oct00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o The labels displayed by "Show Labels" can now be moved
+  from their default location to a location of the user's 
+  choice by using "Mouse-left drag".  These locations are
+  saved with the schematic.
+
+
+Bug Fixes - Stanley
+----------------
+
+o Validity check user workspace paths to prevent crashes
+  due to incorrect editing of ~/.stanley/stanley-prefs
+  variable STANLEY_USER_DIR.
+
+o Scenario Manager handling of the exec line (green line)
+  has been revised to correct several problems, including
+  GNATS PR #1237.
+
+o If the user interactively adds a command or monitor setting
+  to the scenario script, a "permanent" test balloon no
+  longer pops-up to display the constraint. User constrained
+  "permanent" test balloons now only appear when the command
+  or monitor setting is excuted by either the "Single", "Step",
+  or "Run" buttons.  This change in functionality corrects
+  GNATS PR #1199.
+
+o Modes & Initial Conditions dialog now properly constrains the
+  y scrolling to the entries being displayed.
+
+o Scenario Manager single stepping causes the Candidate Manager 
+  & L2 to get out of time synch and the Candidate Manager time 
+  selection menu to go blank.  This has been fixed by adding a 
+  call to the Skunkworks command "singleStep"
+
+o The "permanent" test balloons with light yellow backgrounds
+  show user constraints specified in the scenario.  If the
+  user selects an earlier time than "current", via the Candidate
+  Manager, the light yellow balloons do not reflect the
+  selected time -- they do now.
+
+o Selecting "File->Open Definition" while in "Test" mode will
+  remove the Scenario Manager Window (GNATS PR #1241) and
+  erase any red background "Attention" messages (GNATS #1240).
+
+o The font specified in "Edit->Preferences" for "Node label font"
+  was not being used for node labels -- this has been corrected.
+
+o Scenario Manager single stepping has been corrected to check
+  1) L2 consistency using propogate, and 2) whether the user
+  has selected a candidate when the Candidate Manager offers
+  more than one.  If L2 state is inconsistent or the user has
+  not selected a candidate, no assignments are returned,
+  and "advisory" dialogs are raised to notify the user.
+
+o Abstraction class definition argument types can now be
+  values, as well as structures.
+
+o The error {invalid command name ".scenario.menu.file.m"} which
+  can occur during model loading invoked by "Test->Load & Go"
+  has been fixed. GNATS PR #1244.
+
+o The dialog for editing structure definitions has been
+  corrected to allow only one argument, if desired.
+
+Release 1.2.4 Fixup - 19oct00
+-------------------
+o Node labels are now always "raised" above other canvas items
+  when the mouse is over the node, and also when "Show Labels"
+  is selected.
+
+o Node labels are now properly located for multi-level modules.
+
+o Test permanent balloons are not turned off by "Hide Test Permanent
+  Balloons".  This has been fixed.
+
+o When in a lower level in Test mode, and the user selects a different
+  time slice in the Candidate Manager, the test permanent balloons 
+  pop-up -- this has been fixed. GNATS #1246.
+
+=======================
+====================================================
+
+version L2Skunk_1.3 - 26oct00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o 
+
+
+Bug Fixes - Stanley
+----------------
+
+o Test permanent balloons now are hidden, by default,
+  so that they do not come up when doing "Test->Load & Go"
+  or Scenario Manager "Reset".
+
+o Attention/warning messages appropriate to the Scenario
+  Manager are now displayed at the bottom of the Scenario
+  Manager, rather than at the bottom of the Stanley
+  schematic window.
+
+o Trim blank characters from user input of class definition
+  names so that namespace uniqueness checking will work
+  as advertised.
+
+
+====================================================
+
+version L2Skunk_1.3.1 - 17nov00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o The "stanley-sample-user-files" workspace has been
+  updated with the latest X-34 schematic models.
+  To prevent conflicts when multiple users are running
+  scenarios in this workspace, the internal "working"
+  files are moved from the scenario directory to 
+  $HOME/.stanley/.
+
+o Support applications (tcl/Tk, itcl, tkTable, mico, and
+  combat) are now built from source, see:
+  skunkworks/stanley-jmpl/README-STANLEY-VMPL.txt, or
+  http://ic-www.arc.nasa.gov/ic/projects/mba/projects/L2/doc/starting/stanley-build.html.
+  The support applications are checked out of CVS from
+  support/stanley-support/src.
+ 
+o Mouse-right menu option "delete" for schematic nodes in Edit mode,
+  now has a confirm dialog to prevent unintended deletion.
+
+o 
+
+
+
+Bug Fixes - Stanley
+----------------
+
+o An error which ocurred when a slot of a structured
+  value type was not received from L2, is fixed.  This
+  occurred when running scenario "pressurizeThenVent" with
+  module "mainPropulsionSystem".
+
+o The interface with Skunkworks when the Scenario Manager
+  invokes Reset has been corrected to properly handle
+  the new Skunkworks event distribution protocol.
+
+o When single-stepping, the 'inconsistent' dialog box 
+  looks like a fatal error.  It now appears in the 
+  Scenario Manager "attention" line at the bottom of the
+  dialog. GNATS PR#1265.
+
+o After "Test->Scope" puts the user into "testmode", and
+  "File->Open Definition" puts the user into "edit mode",
+  if the user saves changes and then "Test->Compile"'s
+  those changes, the user no longer is brought out of 
+  "edit mode" and into "test mode".  "Test->Load & Go"
+  is used to do that.
+
+o When in "File->Open Definition->module->moduleName", 
+  do not put moduleName in the "Edit->Instantiate->module"
+  cascade list.
+
+o "File->Open Definiton" and File->Delete Definition" are now
+  complete "cascade"  menus -- the file browser dialog is no
+  longer used.
+
+o The abstraction names in the connection dialogue now use the
+  full abstraction name.  Example: "ventLine.getPressure" and 
+  "pneumaticsLine.getPressure" rather than just "getPressure".
+
+====================================================
+
+version L2Skunk_1.4beta - 08dec00
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Stanley now only kills its Skunkworks server, rather than
+  all servers, if the user has started multiple Stanley
+  applications.
+
+o Stanley will operate in a "viewer" mode when called 
+  using "stanleyViewer" in the Skunkworks command line,
+  which is started with stanley-jmpl/interface/skunkworks.
+  Type "?" at the Skunkworks command line to get a listing
+  of the Stanley Viewer commands.
+
+o Preferences have been revised: "Edit->Preferences" now
+  cascades into "View", "Edit User", and "Edit Workspace".
+  Current values are determined from loading the Skunkworks 
+  defaults, then the user preferences, and then the workspace 
+  preferences.
+
+o The "extend" and "findfresh" L2 commands have been added to the
+  Scenario Manager's pull-down menu "Edit->Insert Cmd".
+  "findfresh" is available for both cbfs and cover search methods.
+  "extend" is only available for the cbfs search method.
+
+
+Bug Fixes - Stanley
+----------------
+
+o Restore change lost in 1.3.1 integration that detects 
+  inconsistent state in L2, and places a message in the 
+  Scenario Manager attention line. #1265
+
+o Restore release 1.2.2 change lost in release 1.3.1 integration which 
+  passes a progress command with no arguments directly 
+  to L2, rather than receiving error "Cannot parse equality".
+  #1267
+
+o Stanley no longer requires the environment variable HOST 
+  to be set in the user's environment.
+
+o The 'invalid command name "namespace"' error while building
+  {root}/support/stanley-support-src/tclTk8.3/tcl8.3.2 has been
+  fixed. #1279
+ 
+
+
+====================================================
+version L2Skunk_1.4-final - 13dec00
+
+Bug Fixes - Stanley
+----------------
+
+o Bug in generalized preferences, "stanley failed on first open: 
+  file not found in 1.2.4", fixed. #1284
+
+o Expanding and contracting the Scenario Manager window,
+  now behaves as expected.
+
+o extend and findfresh are handled like fc, as far as the
+  Scenario Manager STEP command is concerned.
+
+
+====================================================
+
+version L2Skunk_1.5-beta - 16jan01
+---------------------
+
+New Functionality - Stanley
+------------------------
+o Component/module display state attributes (File->Header->
+  ->Display Attribute" are now converted by Stanley from the
+  entered jmpl code to tcl code and executed in Stanley to 
+  determine node coloring on the Stanley canvas.  Jmpl 
+  attributes of type displayState are no longer generated 
+  in jmpl code.  To covert existing jmpl code in your
+  workspace:
+  /bin/rm <your-workspace>/livingstone/models/components/*.jmpl
+  /bin/rm <your-workspace>/livingstone/models/modules/*.jmpl
+  Restart Stanley, which will automatically regenerate the jmpl files.
+
+o JDK1.3 is now the required version of Java -- this is to
+  support Skunkworks Java tools.
+
+o The L2 CBFS cutoff weight parameter is now user settable thru
+  the Skunkworks/User/Workspace preference system.
+
+o From the Skunkworks command line, the Stanley Viewer (created via
+  the `stanleyViewer' cmd), can now be initialized with the current
+  L2 model state, using the `stanleyViewer modelState' cmd.
+
+o When generating scenario files via "Mouse-right: select value(s)",
+  structured monitor assignments are now created with a single
+  `assign' statement and multiple val=var tokens.
+
+o "Edit->Workspace Display State Color Preferences" is now available to
+  add or modify entries in the `display-state-color-prefs" file
+  of each Stanley workspace.
+
+
+Bug Fixes - Stanley
+----------------
+o *_public_* variables are no longer created by Stanley when it
+  generates jmpl code during "File->Save Definition".  Since the
+  ".hrn" file specifies which terminals are assignable and progressable,
+  the jmpl code does not need to differentiate between public
+  and private terminals.  To covert existing jmpl code in your
+  workspace:
+  /bin/rm <your-workspace>/livingstone/models/modules/*.jmpl
+  Restart Stanley, which will automatically regenerate the jmpl files.
+
+o Fixed #1286: edit user preferences doesn't override workspace.
+  Overriding of Skunkworks to User to Workspace preferences was not
+  being done correctly.  For those who are not first-time users of 
+  L2/Skunk, there is a one-time fixup script to be run:
+     % cd ~taylor/released_1.5/skunkworks/stanley-jmpl/interface
+     % ./runPrefsFixup.csh
+  It will modify ~HOME/.stanley/userPrefs and all workspacePrefs
+  files listed in ~HOME/.stanley/userPrefs.
+
+
+New Functionality - Skunkworks 
+------------------------
+o Cleaned up the command line so that "prompt> " appears
+  consistently, and entering a carriage return gets back a
+  prompt, rather than the list of commands.  Enter "?" or other
+  erroneous character to get the list of commands.
+
+o Deallocation of the existing L2 engine & debugger, when
+  a new engine/debugger is requested, is now functional. 
+
+o 'assign' commands with multiple var=val tokens are now handled, 
+  and passed on to L2.
+
+o Change Request #1270: changes to JNI to support new way of
+  naming propositions.
+
+
+o Bug Fixes - Skunkworks
+---------------------
+o Fixed #1248: History Table starting is restrictive.
+
+o Fixed #1250: Interactive widening of the History Table columns is lost.
+
+o Fixed #1251: Right-most column of History Table does not handle Mouse-right cmds.
+
+o Candidate Manager search status messages improved by proper handling of
+  fc (prune_and_search).  If consistent candidates remain after pruning,
+  there is no search, and these candidates are returned with appropriate
+  status message.
+
+o Eliminated the command line error messages
+  "variableValueAtTimeJNI: No such variable `test.---.modeTransition'"
+  which occur when using the historyTable.
+
+Updates to existing checkout of Skunkworks/Stanley
+----------------------------------------------
+cvs update skunkworks/stanley-sample-user-files  # x-34 models
+cvs update x-37/models                           # x-37 models
+cvs update skunkworks/stanley-jmpl               # Stanley
+cd skunkworks/stanley-jmpl
+make clean
+make
+cvs update skunkworks/jars                       # Skunkworks
+cvs update skunkworks/preferences                # preferences
+cvs update mba/cpp                               # L2
+cd mba/cpp
+make clean
+make install
+
+
+====================================================
+
+version L2Skunk_1.5.1
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o CR #1341:"Add inferred vs. assigned info. to 
+  mouse-over terminal pop-up box".  It also
+  supports structured types.  assign and progress
+  values specified by the user will be labeled "exogenous"
+  and values determnined by L2 will be labeled "inferred".
+
+o 
+
+Bug Fixes - Stanley 
+-------------------
+
+o PR #1338: "Modes and Initial Conditions dialog not sized correctly
+  on Windows platform running Exceed to a unix host".
+  Exceed does not handle -adobe-fixed size 14,
+  and substitutes another font, causing the problem.
+  The fix is to specify the font default to be size 13.
+
+o PR #1339: "Scenario Manager not deleting line of scenario".
+
+o Properly constrain scrolling size for the 
+  "Edit->Perferences->Skunkworks/User/Workspace" dialogs.
+
+o Creating connections for terminals with abstraction types
+  was being done incorrectly.  For example, if this type of
+  connection was created, the schematic saved and re-opened,
+  there would be an error saying that the connection was
+  no longer valid.  This has been fixed.
+
+
+
+====================================================
+
+version L2Skunk_2.0  05mar01
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Added "Livingstone progress cmd type (min or full)" to
+  Edit->Preferences, so that scenario "progress" commands
+  are expanded to either "min-progress" or "full-progress" 
+  prior to sending them to L2.  The default is "min-progress".
+
+o Component mode transitions are now allowed between fault
+  modes.  Transitions are also allowed between ok modes, and
+  from fault modes to ok modes.  They are not allowed from
+  ok modes to fault modes.
+
+o "File->New Workspace ..." has now been restricted to creating new
+  "template" workspaces.  "File->Import Workspace .." has
+  been added to import fully populated workspaces into
+  Stanley.
+
+o Full dependency tracking has been added for abstraction,
+  relation, structure, symbol, and value classes. Up to this
+  time there was dependency tracking only for component and
+  module classes.  This informatin is utilized by
+  "File->Delete Definition".
+
+  For Stanley installations other than Sol8:/home/taylor/L2skunk/released_2.0:
+  ----------------------------------------------------------------------------
+  cvs update skunkworks/stanley-sample-user-files  # sample workspace
+  cvs update X34-IVHM/stanley_models               # X-34 project workspace
+  cvs update skunkworks/stanley-jmpl               # Stanley
+  cd skunkworks/stanley-jmpl
+  make clean
+  make
+
+  cvs update skunkworks/jars                       # Skunkworks
+  cvs update skunkworks/preferences                # preferences
+  cvs checkout skunkworks/html                     # html files
+
+  cvs update mba/cpp                               # L2
+  cd mba/cpp
+  make clean
+  ./configure --prefix=`pwd` --enable-l2run --enable-l2strip --enable-xmpl2l2 
+  make install
+
+  For all workspaces:
+  -------------------
+  /bin/rm {workspace-root}/schematics/defmodules/*.inc
+
+
+o "File->Forget Workspace" has been added to remove 
+  workspaces from the "File->Open Workspace" list, when
+  they are no longer needed.
+
+o When Edit->Preference "Livingstone progress cmd type (min or full)"
+  is set to min (the default), Stanley sends the "loadModel"
+  command to L2 with the optimize flag set on.  The log of
+  changes made by the L2 optimizer is written to a file,
+  whose name is output on the Skunkworks command line.
+
+
+Bug Fixes - Stanley 
+-------------------
+
+o The requirement to set the CC & CXX environment variables
+  prior to configuring Stanley, has been removed.
+
+o PR #1368: #give 'cancel' option if opened a bad workspace"
+  is corrected by the new "File->Import Workspace .." which
+  checks the directory structure.
+
+o PR #1379: "stanley refuses to close, if xterm it was run in,
+  is exited" has been fixed.
+
+
+New Functionality - Skunkworks
+------------------------------
+
+o History Table and Justification Tree attribute names now 
+  have the "test." trimmed off, for more compact readability.
+
+o
+
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o The lower pane of the History Table Justification
+  window now contains some "help" information.
+
+o The History Table disjunctive filter now works
+  properly.  For example: "cb4 | cb6" applied to the
+  cbAndLeds model, would list only cb4 and cb6 variables.
+
+o PR #1351: "History table doesn't update properly with `step' or 
+  `run' in scenario manager" is fixed.  
+
+o "progress" with no arguments (idle progress) is now
+  handled properly: Stanley, Candidate Manager and
+  History Table now receive an incremented time from 
+  Skunkworks.
+
+o The History Table sometimes does not display the current
+  time values -- this has been corrected.
+
+o The History Table is now cleared when RESET is selected by
+  the Stanley Scenario Manaager.
+
+o The History Table Justification Tool menu item "File->Exit"
+  is now functional.
+
+o The History Table no longer installs the zeroth candidate's values, 
+  after fc returns more than one candidate, and before the Candidate Mgr
+  has make a selection.  The History Table now waits until a
+  candidate is selected by the Candidate Mgr, and then installs its
+  values.
+
+
+====================================================
+
+version L2Skunk_2.1  28mar01
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o The .jmpl files associated with the sample components and
+  modules of stanley-sample-user-files have been checked in 
+  to CVS.
+
+o The "Test Permanent Balloons" have been disabled to save
+  processihg time and since they are not particularly
+  useful, what with the terminal pop-up windows showing the
+  same information.
+
+o The Scenario Mgr now does "smart" indenting and width
+  determination, which is useful for conjunctive "assign"s.
+
+o The Scenario Manager has added "Prune & Search" to the list
+  of "Edit->Insert Cmd".
+
+o Based on the Skunworks parameter "Livingstone fc cmd type",
+  Stanley will convert scenario usage of "fc" to the specified
+  command type: prune&search, findfresh, or extend -- 
+  prune&search is the default.  
+
+o CR #1386: "File->New Empty Workspace" has been added to allow
+  the user to create a totally empty workspace.   
+  "File->New Workspace" creates a workspace with no component or
+  module class definitions, but with a basic set of abstraction,
+  relation, structure, symbol, and value class definitions.
+
+o The Scenario Manager has added "Break Point" to the list
+  of "Edit->Insert Cmd".  This inserts, before the "yellow"
+  edit line marker, the token "breakpoint", which will be
+  recognized when running the STEP and RUN buttons.
+  Stanley will then stop processing scenario statements.
+  Instances of "breakpoint" can also be added to existing
+  scenario files using your favorite editor.
+
+
+Bug Fixes - Stanley 
+----------------------
+
+o Component modes and component/module display state colors are
+  now handled properly, when their L2 state value is undefined,
+  i.e. "noData".
+
+o When the current workspace is "stanley-sample-user-files",
+  Stanley reads and writes the .xmpl, .ini, and .hrn files in
+  the user's home directory, at $HOME/.stanley/, so that different
+  settings of the file "umask" will not lock out other users,
+  while using a shared installation of Stanley.
+
+o Workspace pathnames with the same "leaf" directory are now
+  accepted by Stanley.  The current workspace pathname will
+  appear above the "pull-down" menus, and the "leaf" directories
+  which previously appeared in the "File->Open Workspace" and
+  "File->Forget Workspace" cascade menus, no longer are shown.
+
+o The determination of intferrred(i) or exogenous(e) for each 
+  command and monitor value, in the case of conjunctive assigns, 
+  was not being done properly.  This has been corrected.
+
+o The Scenario Manager was not handling the green "exec" line 
+  marker properly for "min-progress" and "full-progress"
+  commands. This has been fixed.
+
+o When a scenario command is "assign {var-name}=unknown",
+  the var-name is taken out of the Stanley constraints list
+  since the command L2 will receive is "unassign {var-name}".
+  If the previous var-name value was marked "exogenous" in the
+  terminal pop-up dialog, it is now marked "inferred".
+
+
+New Functionality - Skunkworks 
+------------------------
+
+o Version 2.0 of the JMPL to XMPL compiler now correctly
+  generates warnings messages for unreferenced variables.
+
+o The History Table will now use the maximum user configured
+  value column width, as the width for all other value columns
+  (at the next update) and for newly created value columns.
+
+o The Model Browser is now available from the skunkworks
+  command line, by invoking "modelBrowser".  It facilitates
+  browsing of model jmpl code files.
+
+o The Skunworks default for L2SearchMethod has been changed
+  from "cover" to "cbfs".
+
+o The Skunworks parameter L2FindCandidatesCmdType has been
+  added.  Its possible values are prune&search, findfresh, or
+  extend -- prune&search is the default.  This is used by 
+  Stanley to convert scenario usage of "fc" to the specified
+  command.
+
+o Skunkworks now properly handles "unassign" commands.
+
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o Preferences label for "Livingstone progress cmd type" was
+  expanded from "(min or full)" to "(min [opt=on] or full [opt=off])"
+  to more clearly indicate that this preference turns L2
+  model optimization on and off.
+
+o If an assign, single or conjunctive, has only "unknown" as its
+  value(s), L2 assign is called with no argument, resulting in
+  the error: "No = in assignment".  This has been corrected.
+
+o History Table Mouse-right selections "Print Connected Clauses"
+  and "Show Justification", when made on a cell containing
+  "<undefined>", gracefully return an error message to the
+  Skunkworks command line, rather than generating a stack trace.
+
+o If the History Table is started while the Candidate Mgr is
+  waiting for the user to select a candidate, it presents a
+  blank window, rather than a stack trace.
+
+
+====================================================
+
+version L2Skunk_2.2  05apr01
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Actually, restored functionality: the Test Permanent Balloons
+  are back, and their usage is now configurable.  
+  Edit->Preferences->Skunkworks/User/Workspace:
+  "Stanley test permanent balloons" can be set to "on" or
+  "off".  The default is "off".
+
+o The Scenario Manager now supports "Edit->Insert Comment". CR #1402
+
+
+Bug Fixes - Stanley 
+----------------------
+
+o The Scenario Manger will now gracefully quit running a STEP or
+  RUN command, if the user selects RESET.
+
+o When the Scenario Manager has a modified script, and the user
+  performs one of the following actions: "File->Open Workspace",
+  "Edit->Preferences" with a yes response to creating a new L2
+  engine, and "Scenario Mgr->File->Open Scenario", there is no
+  dialog asking if the user desires to save the modified script.
+  This has been corrected.
+
+o "Edit->Preferences->Skunkworks/user/Workspace" no longer 
+  redraws the scematic if the changes are only Livingstone 
+  preferences.
+
+o PR #1400: Asynchronous messages were being erased from the
+  Scenario Manager's attention line.  Fixed.
+
+
+New Functionality - Skunkworks 
+------------------------
+
+o The Candidate Mgr now displays "<the empty candidate>" in the
+  "Failures" column, rather than "n/a", when the single candidate
+  is in fact the zero cost candidate.  Also the "Time" will 
+  show current time, rather than "n/a/".
+
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o 
+
+
+====================================================
+
+version L2Skunk_2.3  23apr01
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o The Scenario Manager's break point processing has been
+  completely revised.  "Edit->Insert Cmd->Break Point" no
+  longer exists.  BP tokens appear in the first column of 
+  statements which can have break points set.  Clicking
+  on the token will set the break point.  Break points are
+  saved in a companion file to script-name.scr: 
+  script-name.dbg, and thus are available after RESETs and
+  in successive Stanley sessions.  Scenario files containing
+  "breakpoint" tokens will be automatically converted by
+  "File->Open Scenario".
+
+o When selecting OK after changing Livingstone preferences using
+  "Edit->Preferences->Skunkworks/User/Workspace", the user is now
+  prompted with "Create new L2 engine and reload `test'".  Thus
+  the selected test module/component will now be reloaded after the
+  new engine has been created.
+
+o The Scenario Mgr's "File->Open Scenario" now initially places the
+  yellow edit marker line immediately after the green exec marker
+  line, rather than at the "end-of-buffer" line.
+
+o "Test->Load & Go" now writes "model-class.params", as well as
+  "model-class.ini", and "model-class-hrn".  This file contains
+  all the L2 search parameters, defined and editable in
+  "Edit->Preferences->Skunkworks/User/Workspace->".  Standalone
+  L2 (mba/cpp/bin/l2test) will read this file, if co-located
+  with the .xmpl or .l2 file, and override all search default and
+  command line parameters with its values.
+
+o 
+
+Bug Fixes - Stanley 
+--------------------
+o The configure file now accepts bug-fix releases of Java 1.3.0,
+  e.g. 1.3.0_02. PR #1406
+
+o Dialogs containing editable blocks of text/code now expand
+  properly when their window margins are "dragged" to change their
+  size.
+
+o Find candidates command types now conform to L2 syntax: prune-search,
+  find-fresh, and extend.
+
+o PR #1411: When interactively creating a scenario, pressing reset 
+  on Stanley Scenario Manager results in two dialogs asking if you 
+  want to save the scenario, rather than just one.
+
+o The "progress cmd style" and "fc cmd style" preferences of
+  "Edit->Preferences->Skunkworks/User/Workspace->" are now passed
+  to L2/Skunkworks.  If these preferences are changed, the user
+  is prompted to create a new L2 engine.
+
+o Preferences edited with"Edit->Preferences->Skunkworks/User/Workspace"
+  had previously not displayed a local value, if it was the same as
+  the default.  Now, for both User and Workspace editing, values set
+  locally will be displayed in the "edit" entry slot, even if they
+  are the same as the default.  This ensures that if the default
+  changes, the user has confirmed that the local value will be
+  maintained.
+
+o In schematic mode, the error message "A connection already exists: 
+  you must first delete it", which can occur while "opening" a 
+  lower level module, after relocating a higher level module's
+  terminal, has been corrected.
+
+o Eliminated usage of "info exist array(element)" in 
+  instantiateDefmoduleFromIscm, to avoid major Tcl8.3 memory leak bug.
+
+
+New Functionality - Skunkworks 
+------------------------
+
+o mapOverCommandAttributeNamesJNI, mapOverObervableAttributeNamesJNI, 
+  and setAttributeModeJNI were added to support a related project.
+
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o The command line is now more user friendly.  Type "help" to
+  display commands.
+
+o The L2 variable "state" now appears in the History Table.
+
+o The JMPL to XMPL compiler now generates a "valid" XML
+  name-space definition, although it is still not
+  "validatable" -- there is no schema for it.
+
+o The History Table now, finally, automatically computes
+  its column widths -- no more interactive column widening.
+  This should resolve PR #1352, since interactive widening
+  of columns is no longer needed.
+
+o The History Table tool is deleted along with any Justification 
+  windows when a new model is loaded into a newly allocated L2 
+  engine, in response to Stanley Scenario Mgr RESET command.  
+  A new History Table tool is created with the same geometry.  
+  This resolves CR #1252.
+
+o JMPL compiler PR #1413: "more descriptive parse error message" 
+  and PR #1414: "Synatx error => java.lang.NoClassDefFoundError:
+  antlr/ANTLRGrammarParseBehavior", which are duplicates, have
+  been fixed.
+
+
+
+====================================================
+
+version L2Skunk_2.3.1  18may01
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o 
+
+
+
+Bug Fixes - Stanley 
+--------------------
+o Scenario Mgr "Edit->Insert Cmd->extend, find-fresh, & prune-search"
+  are not handled properly, resulting in the "green execute line" not 
+  being advanced properly, and "STEP"ing not stopping appropriately.
+  Corrected.
+
+o When the Candidate Manager has more than one candidate, the
+  attention message for the user to choose one of them, does not 
+  appear on the Scenario Mgr.
+  Corrected.
+
+o When processing L2 search parameter changes using
+  "Edit->Preferences->Skunkworks/User/Workspace", write the L2 
+  {model}.params file, in case the user does a Scenario Mgr RESET
+  rather than a "Test->Load & Go".  This ensures that the L2 Engine
+  is created with the latest user specified parameters.
+
+o Properly check for Stanley preferences being changed while doing
+  "Edit->Preferences->Skunkworks/User/Workspace", so that unnecessary
+  applying of preferences to the Stanley canvas are not done.
+
+
+New Functionality - Skunkworks 
+------------------------
+
+o Standardize L2 search parameter display names to those used by L2.
+
+o Default value for CBFS max candidates searched changed from 3500 to
+  1000.
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o The error "java.lang.NumberFormatException: -" which occurs when bringing
+  up a Justification window in the History Table, has been fixed.
+
+o 
+
+
+
+====================================================
+
+version L2Skunk_2.4  15jun01
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Added "skunkworks/stanley-jmpl/interface/stanley-gpu" which
+  runs Stanley in operational mode handling "newState" CORBA
+  messages from the Ground Processing Unit (GPU) containing 
+  variable/value pairs, which are displayed on the specified 
+  schematic.  For example:
+
+  % ./stanley-gpu -gpudir /home/wtaylor/stanley-projs/RxU/stanley_models 
+      -gpufile mainPropulsionSystem
+
+
+Bug Fixes - Stanley 
+--------------------
+o 
+
+
+New Functionality - Skunkworks 
+------------------------
+
+o The compiled Java code in skunkworks/jars/skunkworksTools.jar 
+  and browser.jar is now compiled with the JDK 1.3.1 javac compiler, 
+  rather than the IBM Jikes compiler.
+
+o Add command line command "restore {chkpt-name}", which calls L2 to restore
+  its state from the named checkpoint, and then invokes the Skunkworks
+  command "refresh" to send the restored L2 state to all tools,
+  including Stanley.
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o PR #1418 "C-d in skunkworks causes an NPE (null ptr exception)".
+  Typing C-d no longer results in a NPE.  It is ignored.
+  
+o "Print Connection Clauses", a selection from the Mouse-right
+  menu of a History Table value cell has been corrected to
+  prevent the error "An unexpected exception has been detected in 
+  native code outside the VM." for occurring.
+
+
+
+====================================================
+
+version L2Skunk_2.5 -- 27July01
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o 
+
+Bug Fixes - Stanley 
+--------------------
+o PR #1436 "ungraceful exit on permissions problem" caused
+  by the user checking out .jmpl and .scm files from CVS
+  as read-only, has been corrected.
+
+o During dialog editing, commanded terminal type enumerations 
+  are now checked for the presence of "noCommand", which is 
+  required by L2.
+
+o 
+
+New Functionality - Skunkworks 
+------------------------
+o Added to JNI (Java Native Interface) API for checkpointing:
+
+  // create checkpoint 'name', throw exception if not created
+  void createCheckpointJNI(String name)
+  // restore checkpoint 'name', throw exception if non-existent
+  void restoreCheckpointJNI(String name)
+  // delete checkpoint 'name', throw exception if non-existent
+  void deleteCheckpointJNI(String name)
+
+o Removed setAttributeModeJNI from JNI API
+
+o The value of skunkworks preference `L2MaxCBFSSearchSpace' 
+  has been changed from 1000 to 3000, so that scenario
+  `cbDiagnosticTest1' of workspace `cbAndLeds' will find
+  candidates on step three.
+
+skunkworks/preferences/prefDefaults
+
+o
+
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o PR #1418 "C-d in skunkworks causes an NPE (null ptr exception)".
+  Typing C-d now exits.
+  
+
+
+====================================================
+
+version L2Skunk_2.6 -- 04Oct01
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o The Scenario Manager now has a new execution mode: warp.
+  Warp mode will execute commands from green line to the next 
+  breakpoint or end-of-buffer with no Stanley/Candidate 
+  Manager/History Table updates from L2.  This facilitates 
+  faster running of long scripts to get to "breakpoints" where
+  more intensive test monitoring is required.
+
+o The Scenario Manager now has a new a new menu command:
+  "File->New Scenario", which will discard an existing
+  loaded scenario and present the user with an empty dialog.
+
+o 
+
+Bug Fixes - Stanley 
+-------------------
+
+o Scenario Manager: Edit->Insert Cmd->Truncate now asks
+  the user to choose a truncate "horizon", previous to
+  which all time history will be discarded.  The
+  Candidate Manager and the History Table will reflect
+  the truncated history.
+
+o A Scenario Mgr RESET done when the current time is 1,
+  did not update Stanley with the initialization values
+  for all attributes, i.e. all values were "noData".
+  This has been corrected.
+
+o Component/module dependencies on abstraction, relation, 
+  structure, symbol, and value classes did not work properly 
+  when changing the type of an input or output terminal --
+  the old type was not removed from the dependency list, if
+  it was the last reference.  This has been corrected.
+
+o The tkTable Tcl extension shared library was linked as
+  an absolute path.  This prevented the straight forward
+  execution of the Stanley binary executable on another
+  unix/linux host.  It is now linked as a relative path
+  so that LD_LIBRARY_PATH can resolve it at run time.
+
+o The Stanley binary executable will now be executable
+  without having to edit stanley.csh to change the
+  path prefixes and the value for JAVA_HOME.
+
+o Stanley now checks that all components have an "unknown"
+  fault mode, which is defined as fault mode with an
+  empty model.  The name of the fault mode can be any
+  legitimate name.  This is to satisfy Livingstone which
+  needs an "unknown" mode in which to put the component
+  when no other modes are consistent with the current
+  commands and observations.
+
+New Functionality - Skunkworks 
+------------------------
+o Restored setAttributeModeJNI functionality from
+  release 2.4
+
+o 
+
+Bug Fixes - Skunkworks 
+--------------------
+
+o 
+
+Bug Fixes - L2
+--------------------
+
+o Restore missing files in mba directory:
+  mba.dsw, mba.wsp, README.C++, and Copyright.txt
+
+o Reading a .params file with L2ProgressCmdType = min
+  does not cause L2 to optimize the model.  This has
+  been corrected.
+
+o 
+
+
+====================================================
+
+version L2Skunk_2.7 -- 19nov01
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Stanley ported to Windows.  Tested on Win98 edition 2,
+  Windows 2000, and WinNT edition 4. A Windows version of
+  the support files was created for tclTk 8.3.3 & itcl 3.2.
+  See skunkworks/stanley-jmpl/README-WINDOWS.txt.
+
+o Added the "car" model to the default stanley-sample-user-files
+  workspace.  Added "Commentary On Developing The Car Schematic"
+  section to the top-level documentation web page link
+  "Using Stanley", and to the Stanley pull-down menu
+  "HELP->help->Building Schematics with Stanley VJMPL".
+
+o 
+ 
+Bug Fixes - Stanley 
+-------------------
+
+o Edit->Header->Display Attribute form if statements
+  with { on next line by itself, no longer cause an
+  error.  Example:
+  if (a = b)
+  {
+   displayState = ok;
+  } else {
+   displayState = bad;
+  }
+
+o The components in the default workspace (stanley-sample-user-files)
+  now have the required "unknown" fault mode, which was required
+  starting in release 2.6
+
+o 
+
+New Functionality - Skunkworks 
+------------------------
+
+o JMPL compiler will now accept one argument, which is a file
+  containing the normal arguments, one per line.  This is to
+  support the porting of Stanley to Windows.
+
+o The Candidate Manager was changed to handle candidate ranks
+  as integers, rather than floats.
+
+o The History Table value cell values will now be appended with (e),
+  meaning "exogenous" -- assigned externally by the user; or (i),
+  inferred by L2 from the model theory.
+
+
+Bug Fixes - Skunkworks 
+--------------------
+
+o 
+
+New Functionality - L2
+------------------------
+
+o Added link to "Livingstone in IVHM" Power Point Tutorial on
+  top-level documentation web page.
+
+
+o Updated L2 Glossary, added L2 API, and L2 Configuration
+  Parameters to top level doc page.
+
+o
+
+Bug Fixes - L2
+--------------------
+
+o 
+
+Limitations - L2
+----------------
+o The car model in "stanley-sample-user-files" workspace will
+  function properly only with full progress style.  The L2
+  model optimization done when progress style is min, does 
+  not handle commands in clauses.  See PR #1483.
+
+
+support/xerces-unix-src/src/Makefile.incl
+removed compiler flag -instances=static to allow
+gcc 3.0 compilation.  This change is compatible with
+gcc 2.95.2.
+
+
+
+====================================================
+
+version L2Skunk_2.7.1 -- 13Feb02
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Add "unknownFaultRank" to the list of predefined symbols:
+  likely, lessLikely, unlikely, & rare, to match its
+  definition in L2.  It is intended to only be used for
+  the fault transition probability of "unknown" fault modes.
+
+  NOTE: This is added to the skunkworks/stanley-sample-user/files
+      workspace, and will be included in new workspaces created
+      by Stanley. All component "unknown" fault probilities have
+      been changed from "rare" to "unknownFaultRank".
+
+      1) Users should add "unknownFaultRank" to their existing
+        workspaces, using "File->New Definition->Symbol":
+        Name - unknownFaultRank, Symbol Expansion - 1.0e-10.
+      2) Then all component "unknown" fault probilities should be
+        changed from "rare" or whatever, to "unknownFaultRank".
+
+o When generating component JMPL files, Stanley now converts
+  symbolic fault probabilities to their numerical values.
+  This allows users to define symbolic probabilities other
+  than likely, lessLikely, unlikely, rare, & unknownFaultRank,
+  since those are the only symbolic probabilities that L2 can
+  handle. This is a partial solution for CR# 1485 "Map failure 
+  mode probabilities from tokens to numbers", since it only 
+  deals with models built with Stanley.  Models built outside 
+  of Stanley, and using symbolic probabilities, will fail when 
+  loaded into L2, if the values are not one of the five listed 
+  above.
+
+  NOTE: Since prior to this release, L2 did the conversion 
+      from symbol name to rank, the actual symbol expansion
+      values were irrelevant.  Now that Stanley will convert
+      the symbols to numbers when generating the JMPL code,
+      it has been found that two of the four symbols have
+      incorrect probability values:
+     
+  Symbol        Probability   Old Rank   New Prob  New Rank
+  ------        -----------   --------   --------  --------
+  likely            0.01        2            0.05      1
+  lessLikely        0.005       2               -      -
+  unlikely          0.0025      3               -      -
+  rare              1.0e-5      5          1.0e-4      4
+  unknownFaultRank  -           -         1.0e-10     10
+
+  Rank is computed using this algorithm from L2:
+  (truncate (- 0.5 (log10 prob))) 
+
+      1) Users should update their existing workspaces, using 
+         "File->Open Definition->Symbol":
+        Name - likely  Symbol Expansion - 0.05
+        Name - rare    Symbol Expansion - 1.0e-4
+
+o Display state color names `noData', `indeterminate', and
+  `unknownL2Value' are now reserved such that they are set by 
+  "Edit->Preferences->Skunkworks/User/Workspace"
+  (StanleyNodataStateBgColor, StanleyIndeterminateStateBgColor, &
+  StanleyUnknownL2ValueStateBgColor), but cannot be changed by 
+  "Edit->Preferences->Workspace Display State Colors".
+  The latter pull-down menu option manages all other display
+  state colors, which are saved in the workspace file:
+  display-state-color-prefs.  These display states are defined
+  thusly:
+
+  noData - Stanley has received no value from L2
+  indeterminate - Stanley cannot determine the display state color
+  unknownL2Value - Stanley has received the value "unknown" from L2
+                   (could not determine which of the variable's
+                    propositions was true)
+
+  The default display state code, which used to be hard-coded to
+  "noData", is now hard-coded to "indeterminate".  User defined
+  display state code does not need to set any of the reserved
+  states, as they are handled by Stanley.
+
+o The "apply" and "save" operations of pull-down menu
+  "Edit->Preferences->Workspace Display State Colors" now
+  redisplay the schematic, reflecting any color changes.
+
+o Stanley will now automatically create the required "unknownFault"
+  mode when the user selects "File->New Definition Component".
+  It will have "unknownFaultRank" as its probability, which
+  is predefined in L2.
+
+o Stanley will now prevent the user from naming either ok or 
+  fault modes "unknown".  This is because having a component 
+  mode named "unknown" conflicts with the allowable L2 value 
+  of "unknown", which means that it could not determine which 
+  mode proposition was true.  To disambiguate this situation, 
+  user should rename any component modes named "unknown", to 
+  something like "unknownFault".
+
+o Added sections "Schematic Objects" and "Display State Coloring"
+  to <A HREF="../starting/stanley-schematic.html">Using Stanley</A>.
+
+o During "test" mode, commanded terminal pop-up status balloons
+  previously always indicated that the current value was
+  "noCommand" and that it was "exogenous".  Now, commands 
+  generally will have the value "noCommand", and be marked 
+  "inferred", except when the progress command that sets the 
+  value was in the last time step, then the command value will
+  be appended, and it will be marked exogenous.  For example:
+  value: noCommand (on)
+  commanded => exogenous
+
+o The input/output terminal dialog will no longer let the user
+  select the "Cmd/Mon Default Value".  It is set by Stanley,
+  depending on the value of "Commanded or Monitored" to either
+  "noCommand" or "unknown".  This will then reflect actual 
+  functionality.
+
+o Mode transition names are now checked for namespace uniqueness.
+  All class instance names are unique in a single namespace --
+  that includes component, module, terminal, and mode classes,
+  as well as transitions.  JMPL generated fault mode transitions from
+  any other mode are now named "to<mode-name>".
+
+o Improved instance name uniqueness checking for terminals,
+  components, modules, modes, and transitions.
+
+o The Scenario Manager now allows the user to set break points
+  which are located prior to the current execution line.  This
+  will enable the newly set break point to be executed on future
+  runs of this scenario, if it is saved.
+
+o For components, "Edit->Header->Initial Conditions" can now 
+  be used to initialize the values of monitored (observed)
+  variables.
+
+o 
+ 
+ 
+Bug Fixes - Stanley 
+-------------------
+
+o Parenthesis and bracket balancing indicators have been 
+  enabled in appropriate dialogs.
+
+o When changing the name of a component mode, any transitions to
+  that mode are now updated with the new name.
+
+o Livingstone error dialog now correctly handles error messages
+  sent by Livingstone to Stanley (was broken in release 2.7).
+
+o Component instances, in a module, which use parameters in their 
+  "background model" and "initial conditions" JMPL code, are now 
+  displayed ("Edit->Header->Background Model" or 
+  "Edit->Header->Initial Conditions") with properly instantiated 
+  parameter values.  This is also true for "facts" JMPL code,
+  in the case of module instances.
+
+o All constaint-less fault modes in the stanley-sample-user-files
+  work space, which were named "unknown" have been renamed 
+  "unknownFault" to avoid confusion with the "unknown"
+  attribute value.  The "unknown" attribute value means that L2
+  was unable to determine which of the attribute's constituent 
+  propostions is true.
+
+o During "test" mode, commanded terminal pop-up status balloons
+  will now correctly reflect their "exogenous/inferred" status
+  after a Scenario Manager reset command. This was broken in
+  release 2.6.
+
+o Fixed intermintent build crash in TclTk support software:
+  itcl3.1.0.  Created new support-src-unix.tar.gz.
+
+o To prevent the Java Virtual Machine "java.lang.OutOfMemoryError"
+  crash when the JVM runs out of memory, the Stanley applied
+  defaults for "initial GC space" and "max GC space" are now
+  32mb, and 192mb, rather than 2mb, and 64mb, respectively.
+  The user can alter these values by using the parameters
+  -gcinit <nn>, and -gcmax <nn> when invoking the execution
+  scripts "stanley" and "skunkworks".  The JVM parameter
+  "-verbose:gc" is always specified to show the user what GC is
+  doing.
+o The description of the Skunkworks/Stanley preference for 
+  "Livingstone History Length" has been changed from
+  "(0 = none)" to "(0 = unbounded)" -- PR 1408.
+
+o 
+
+New Functionality - Skunkworks
+------------------------
+
+o Remove unused methods from LivingstoneEngine.java,
+  & LivingstoneEngine.h:
+  conflictJNI, cpropsJNI, printPropositionsJNI, 
+  getCandidateAssignmentCountJNI, getCandidateWeightJNI, 
+  transitionsJNI, conflictJNI, explainJNI, & explainvJNI.
+
+o Added addAssumptionJNI and assignJNI for use by
+  Livingstone Pathfinder.
+
+o JMPL/XMPL introductions and compiler usage documentation
+  have been updated (skunkworks/java/docs/*.rtf and
+  mba/cpp/doc/jmpl/*.html)
+  ALREADY COPIED INTO ~MBA      
+
+o Brief Skunkworks usage documentation has been added.
+  mba/cpp/doc/starting/skunkworks.html
+  ALREADY COPIED INTO ~MBA      
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o History Table Justification pop-up dialogs and printing
+  of connected clauses were broken by adding the "(e)" or
+  "(i)" to displayed values.  This has been corrected.
+
+o Checkpoint "restore" no longer assumes that the command is
+  successful by default.  It properly handles the cases of
+  no existing checkpoints or invalid checkpoint names.
+
+o 
+
+New Functionality - L2
+------------------------
+
+o The online documentation link "Starting the L2 Engine Standalone"
+  has been updated.
+  ALREADY COPIED INTO ~MBA      
+
+o The online documentation link "Livingstone Unknown Fault Modes"
+  has been updated.
+      
+o Appended "(searched nnn)" to the CBFS search termination messages
+  which are output, to indicate the number of potential
+  candidates that were searched in finding the consistent ones
+  which were returned.
+
+
+  
+Limitations - L2
+----------------
+Command line command "checkpoint" now refuses to create
+a checkpoint if either (1) progress style is min, (2) the
+history is not saturated (current time less than or eqaul to history
+length), or 3) the history length is unlimited (0). PR #1506, 1507.
+
+
+
+====================================================
+
+version L2Skunk_2.7.2 -- 22May02
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o Parameterized terminal types are now supported:
+  See the subsection " Parameterized terminal types:"
+  in section "SCHEMATIC OBJECTS" of "HELP->Help->Building 
+  Schematics with Stanley VMPL", or "../starting/stanley-schematic.html"
+
+
+Bug Fixes - Stanley 
+----------------------
+
+o In "Test" mode, "mouse-right=>view <component/module>" 
+  no longer displays "test" for the instantiated name, but
+  now displays "test.<component/module>"
+
+o "ADVISORY" dialogs now respond to 
+  "Tools->Raise All Non-Canvas Windows"
+
+o "Test->Load & Go" of module "mainPropulsionSystem" in 
+  workspace "stanley-sample-user-files" will not load in 
+  version 2.7.1 (l2test: Error in writing: v276 is neither mode nor 
+  observation yet has an initial value).  This has been fixed.
+
+o Corrected problems encountered when changing an old parameter 
+  name to a new parameter name in "Edit->Header->Name, Variables, 
+  and Documentation" dialog.
+
+o Display state attributes not named "displayState", will no
+  longer be generated in component & module .jmpl files.
+
+o Move the Scenario Mgr's green "execution marker" for 
+  "propagate" commands, inserted into scenarios generated by
+  Livingstone Path Finder.  (There is no CORBA return message
+  for this command.)
+
+
+New Functionality - Skunkworks
+------------------------
+
+o None.
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o None.
+
+
+====================================================
+
+version L2Skunk_2.7.3 -- 23Sep02
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o 
+
+
+Bug Fixes - Stanley 
+----------------------
+
+o Structure classes now properly handle inheritance of fields from
+  parent classes, by disabling their editing, and by
+  replacing identical local fields with the parent instances.
+
+o Stanley now signals errors in its conversion of JMPL
+  code to TCL code, while doing display state attribute processing.
+
+o When converting JMPL code to TCL code for display state
+  attribute processing, the following code segment is now 
+  handled properly:
+  ....
+  }
+  else
+  {
+  .....
+
+o Stanley now checks for .scm files copied to another name
+  by the user, flags them as corrupt, and ignores them.
+
+o Removed $(STANLEY_ROOT)/interface/user-template/links/attributes/
+  displayState.cfg, and its soft link, which were not needed,
+  and correct the problem of "displayState" being rejected as
+  a "reserved" name for "Edit->Header->Display Attribute".
+
+o If the Edit-Preference "Stanley test permanent balloons" is 
+  set to "on", when Test->Load&Go is invoked, this error will
+  occur: "Error: can't read g_NM_componentToNode(test):  no such element".
+  This has been corrected.
+
+o Added kludge to get around this problem which occurs while
+  trying to run Stanley under Windows XP:
+  > ./stanley -win32 -exists
+  Unmatched ".
+  Updated RUN-STANLEY-VJMPL.csh to insert `echo "windoz"'
+  prior to first `foreach arg ($*)' statement.
+
+
+New Functionality - Skunkworks
+------------------------
+
+o The "Step" command from Stanley now, if the Livingstone state
+  is consistent, will refresh the History Table.
+
+o The "historyTable" command line command will refresh the 
+  History Table, if invoked more than once.
+
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o Entering "fc" into Skunkworks/Livingstone window results
+  in fc-variant "extend" being executed, rather than that
+  specified by "fc_style".  Now fixed. PR#1606 (L2)
+
+  skunkworks/java/src/gov/nasa/arc/skunkworks/tools/
+  LivingstoneEngine2.java:
+    modify findCandidates handling of fc/find-candidates,
+    to use getFcStyleJNI to determine which fc-variant
+    to call
+  CommandLine.java:
+    only print Skunkworks.command, if not fc/find-candidates
+
+o PR 1605: jmpl compiler returns an error in an abstraction.
+  Now fixed.
+
+o PR 1612: jmpl compiler created frame axioms at multiple levels
+  of the inheritance heirarchy.  The compiler has been fixed to 
+  only generate the frame axioms from the lowest level.
+
+o The error message, "component must be showing on the screen
+  to determine its location", which forces the user to exit and
+  restart Stanley has been corrected. This occurred when the user
+  exited from the History Table and then invoked "Test->Load & Go".
+
+o After "Load&Go", if the user invokes Mouse-right over a
+  "public" terminal which is a structured type, and
+  selects only one of four values -- then if the
+  operation is retried, all four pop-up dialogs never
+  come up again, and the only recourse is to restart
+  Stanley.  This has been fixed.
+
+o Corrected a bug which occured when terminals, whose first
+  letters are captials, are being connected by
+  "<Mouse-M drag>: create connection".
+
+o Using parameter variables in "Edit->Header->Display Attribute",
+  for example ?active, now works.
+
+
+====================================================
+
+version L2Skunk_2.7.4 -- 03Dec02
+---------------------
+
+New Functionality - Stanley
+------------------------
+
+o A new Livingstone CBFS search parameter is now configurable.
+  Its name is L2MaxCBFSCandidateClasses, and its default value
+  is 0, meaning that it will not affect the search.  If its
+  value is > 0, then it will be added to the other CBFS
+  search criteria: L2MaxCBFSCandidates, L2MaxCBFSSearchSpace,
+  and L2MaxCBFSCutoffWeight.
+
+o 
+
+Bug Fixes - Stanley 
+----------------------
+
+o When generating JMPL code for a module, handle the case of
+  unconnected component/modules, so that JMPL Compiler will 
+  include them in its emitted XMPL code.
+
+o PR# 1652: Scenario Manager Run command does not stop at
+  "break points" after Step or Single commands are used.
+
+o 
+
+New Functionality - Skunkworks
+------------------------
+
+o Start a History Table automatically when Skunkworks is started.
+
+o Add label to History Table to remind users of Mouse-R
+  capabilities.
+
+o Multiple History tables can now be started from the Skunkworks
+  command line.
+
+o The Candidate Manager now has a new tab "Classes", which will be
+  the default tab showing after a find-candidates call to Livingstone.
+  It will list the candidate equivalence classes, unique in their
+  mode components, but not unique in their time permutations.  The
+  second pane, "Candidates", will list the time permutations of all
+  candidates.  The user will select a candidate class on the
+  "Classes" tab, which will cause the "Candidates" tab to be
+  presented with the time permutations of the selected class
+  highlighted in yellow.  The user then selects one of the time
+  permutations, and that candidate is installed by Livingstone.
+  If the candidate class has only one instance of time permutation,
+  the Candidate Manager will automatically select the one
+  candidate instance for installation.  Also, if there is only
+  one candidate class (which may be <the-empty-candidate>) it 
+  will be automatically be installed, as was done previously.
+
+o 
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o The History Table nows displays the proper number of rows when
+  a new model is loaded.
+
+o 
+
+
+====================================================
+
+version L2Skunk_2.7.5 -- 24jan03
+---------------------
+
+Documentation - Stanley
+-----------------------
+
+o The SKUNKWORKS/USER/WORKSPACE PREFERENCES section of
+  README-STANLEY-VJMPL.txt has been augmented to discuss
+  the changing of preferences in the default workspace
+  (stanley-sample-user-files).
+
+ 
+New Functionality - Stanley
+------------------------
+
+o 
+
+Bug Fixes - Stanley 
+----------------------
+
+o 
+
+New Functionality - Skunkworks
+------------------------
+
+o
+
+o 
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o The default Livingstone search preference L2ProgressCmdType 
+  has been changed from min (minimum-progress) to full
+  (full-progress) so that the car model in the default
+  workspace (stanley-sample-user-files) will run as
+  advertised with the given scenarios.
+
+
+  
+====================================================
+
+version L2Skunk_2.7.6 -- 12may03
+---------------------
+
+Documentation - Stanley
+-----------------------
+
+o 
+
+ 
+New Functionality - Stanley
+------------------------
+
+o Changes made to support JDK1.4.  JDK1.3 no longer supported.
+
+o 
+
+Bug Fixes - Stanley 
+----------------------
+
+o To support JDK1.4, the CORBA interface must call
+  getRunningCommandLine, prior to calling getCommandLine with 9 args,
+  to prevent:
+  #  An unexpected exception has been detected in native code outside the VM.
+  #  Unexpected Signal : 11 occurred at PC=0x403c4d9f
+  #  Function name=(N/A)
+  #  Library=/lib/libc.so.6
+
+o 
+
+New Functionality - Skunkworks
+------------------------
+
+o JDK1.4 is now required to run Skunkworks/Stanley.  Several class
+  domains have changed, as a consequence.
+
+o The "discrepancy" command has previously been available through the
+  Livingstone command-line interface to query Livingstone for
+  observations responsible for conflicts.  In prior releases (Skunkworks
+  2.7.5 and earlier), the modeler needed to run the command after the 
+  fault had been injected, but before a "find-candidates"  was requested 
+  (via the command line).  Once a "find-candidates" occurs,  Livingstone 
+  returns to a consistent state.  In this release, this process has been 
+  automated for the convenience of the user.  Therefore, the "discrepancy"
+  command is executed automatically before any "find-candidates" request.
+  The discrepant commands and observations are displayed by the Candidate 
+  Manager  in an additional panel labeled "Discrepant Commands and 
+  Observations".  See "Using Skunkworks" <../starting/skunkworks.html>.
+
+
+o The Justification Tool for Stanley/Skunkworks has been rewritten and updated.
+  The core ideas of the original version have been broadened.
+  Previously, this tool contained extraneous interface layers between
+  it and the Livingstone Engine. The current Justification tool interacts 
+  directly with L2.  Caching has been added to reduce the dependencies
+  on L2's current state. Basically, when a user asked Livingstone to
+  "justify" an attribute, all queries were sent to Livingstone. Once 
+  Livingstone moved on (i.e. continued with a scenario script), the proof 
+  tree was invalidated since it could not query the engine for same time step.
+
+  In the modified tool, one proof tree is resident in memory for each
+  requested time step.  Subsequent queries for the same attribute at that 
+  particular time-step are directed to the cached tree. Therefore, Livingstone 
+  is only queried once for the proof tree.  The graphical interface supports 
+  both an outline and a lattice view. The original outline view has been 
+  improved with inference path highlighting, and automatic proof tree
+  expansion. The graph view has been integrated to support a layered 
+  tree layout. That is, the antecedents fall immediately below the inferred 
+  attribute.  An attribute assignment list summarizes all unique nodes in the 
+  inference tree. Therefore, by selecting an attribute from the list, all 
+  occurrences are marked in the tree/graph.
+
+  This small project is a "work-in-progress".  Additional features that could 
+  be added include a printing function, Graph-to-XML conversion (storage format),
+  logging, and improved inference filtering algorithms.
+
+  All Justification Tool files follow:
+
+  AttributeAssignmentJustification.java- main Justification Tool class
+
+  SkinTreeUI.java       - modifies the PLAF (Pluggable Look and Feel) of the 
+                          displayed trees.
+
+  openjgraph.jar        - contains the class files that implement the graph view 
+                          option. Open source graph program called "openjgraph".
+                          Note: this is program is not the same as open source "jgraph"
+
+  openjgraph.zip        - source code for openjgraph.jar.  The source has been
+                          modified with additional classes to support the 
+                          Justification tool.  In addition I have removed the 
+                          additional functionality  that was originally provided by
+                          the original  openjgraph source. This includes the 
+                          debugging/logging functions, the printing functions,
+                          and the XML conversion facility for visual graphs.
+                          Non-essential components were removed in order to reduce 
+                          future maintenance and debugging expense.
+                                       
+  icons/".gif" files    - iconic images.
+
+o CR #1680: "Need jmpl compiler flag to toggle optimization of unused variables"
+  has been implemented.  Until this release the default behavior of the JMPL
+  compiler, when invoked by Stanley, has been to eliminated unreferenced
+  variables in the input model.  This causes aborts and read errors in 
+  Livingstone, for example, a Stanley module containing one component with 
+  "public" terminals, will cause Livingstone to abort.  The default behavior has 
+  been changed to include unreferenced variables in the output XMPL file.  If the 
+  user wishes to have the unreferenced variables eliminated, in order to reduce 
+  the size of the XMPL model, use the Stanley "Edit->Preferences" to turn on item 
+  "Stanley eliminate unreferenced jmpl vars".
+
+  Note that the "Edit->Preferences" item "Livingstone progress style (min [opt=on])"
+  causes the JMPL compiler to perform "variable collapsing", which means that
+  multiple variables with the same value, will be renamed to one name, so that the
+  redundant ones will be discarded.
+
+
+Bug Fixes - Skunkworks 
+----------------------
+
+o PR #1477: "empty statement in if test not handled correctly" has been fixed.  The
+  JMPL compiler has been changed so that:
+  if ( ... ) 
+    ;
+  else if ( ... )
+  produces that same result as:
+  if ( ... ) {
+    ;
+  } else if ( ... )
+
+
+
+====================================================
+
+version L2Skunk_2.7.7 -- 19sep03
+---------------------
+
+No new functionality and no bug fixes
+
+
+
+====================================================
+
+version L2Skunk_2.7.7.1 -- 03feb04
+---------------------
+
+Documentation - Stanley
+-----------------------
+
+o 
+
+ 
+New Functionality - Stanley
+------------------------
+
+o None.
+
+
+Bug Fixes - Stanley 
+----------------------
+
+o The Scenario Manager "Warp" command now scrolls the scenario to
+  the end of buffer, when appropriate. (test-scenario.tcl)
+
+o Load different Livingstone/Corba IDL files for unix/linux, which uses
+  MICO 2.3.11/Combat 0.7.2; and  windows, which uses MICO 2.3.2/Combat 0.6.
+  This corrects the problem of Stanley not running under version 2.7.7.
+  (stanley-jmpl/src/corba.tcl;
+   stanley-jmpl/interface/livingstone/corba/LivingstoneCorba-win32.tcl;
+   stanley-jmpl/interface/livingstone/corba/LivingstoneCorba-win32_impl.tcl)
+
+
+New Functionality - Skunkworks
+------------------------
+
+o The Stanley Scenario Manager "Warp" command now updates Stanley and the 
+  History Table when it completes, if the L2 state is consistent.
+  (StanleyAdapter.java)
+
+o Skunkworks command line command "refresh", in addition to updating Stanley,
+  now updates the History Table when it completes, if the L2 state is consistent.
+  (StanleyAdapter.java)
+
+
+Bug Fixes - Skunkworks
+----------------------
+
+o None.
+
+
+====================================================
+Updated combat.dll, the prebuilt MICO/Combat library from MICO 2.3.1 to
+MICO 2.3.6.  Will be part of post 2.7.7.1 non NASA-OSA releases.
+====================================================
+
+
+====================================================
+
+version L2Skunk_2.7.8-OSA -- 17feb04 -- NASA-OSA Release
+---------------------
+
+Documentation - Stanley
+-----------------------
+
+o Added notes for installing MICO and Combat, which are not part
+  of the Open Source release (README.install-MicoCombat).  Updated
+  both skunkworks/stanley-jmpl/README-STANLEY-VJMPL.txt and
+  skunkworks/stanley-jmpl/README-WINDOWS.txt.
+ 
+New Functionality - Stanley
+------------------------
+
+o None.
+
+
+Bug Fixes - Stanley 
+----------------------
+
+o 
+
+
+New Functionality - Skunkworks
+------------------------
+
+o 
+
+
+Bug Fixes - Skunkworks
+----------------------
+
+o None.
+
