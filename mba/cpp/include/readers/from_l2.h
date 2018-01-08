@@ -47,7 +47,7 @@ class from_l2 : public L2_file_reader {
   size_t line_number;
 
   /// Character index in parsing, with respect to the current line.
-  unsigned index;
+  size_t index;
 
   // Flags to make sure we don't parse the same thing twice.
 

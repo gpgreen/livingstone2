@@ -25,6 +25,7 @@ class T_system_listener;
 class Candidate;
 class Trajectory;
 class Transitioned;
+class Tracker;
 
 /**
  * The transition system is a specialization of the deductive conflict

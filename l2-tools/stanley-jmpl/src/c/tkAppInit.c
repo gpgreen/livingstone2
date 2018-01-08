@@ -182,7 +182,7 @@ int Tcl_AppInit( Tcl_Interp *interp)
     return TCL_ERROR;
   }
 
-#if !defined(_WINDOWS)
+#if !defined(_WINDOWS) && COMBAT_VER != COMBAT_VER_0_8_1
   /* Combat ORB - formerly TclMico */
   if (Combat_Init (interp) == TCL_ERROR) {
     fprintf( stderr, "TCL_ERROR in Tcl_AppInit from Combat_Init\n");
@@ -191,7 +191,8 @@ int Tcl_AppInit( Tcl_Interp *interp)
 
   Tcl_StaticPackage (interp, "Combat", Combat_Init,
                      (Tcl_PackageInitProc *) NULL);
-#endif /* _WINDOWS */
+#endif /* _WINDOWS && STANLEY_COMBAT_VERSION */
+
 #endif /* STANLEY_CORBA_P */
 
   /* Tk */

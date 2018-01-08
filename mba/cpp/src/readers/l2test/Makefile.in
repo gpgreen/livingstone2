@@ -6,7 +6,7 @@ TARGET=l2test
 BINTARGET=$(TARGET)
 
 OFILES=$(TARGET:%=%.o)
-DEPS=${loc_libdir}/$(L2LIB_FILE) $(loc_libXERCES_SO)
+DEPS=${loc_libdir}/$(L2LIB_FILE)
 
 $(TARGET): $(OFILES) $(DEPS)
 	$(LINKEXEC) -o $@ $(OFILES) -l$(L2LIB) $(lXERCES)

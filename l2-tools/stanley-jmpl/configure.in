@@ -42,8 +42,10 @@ if test x"${with_java}" != x ; then
   match_test_4=`expr match $version_2 '.*1\.4\.*'`
   match_test_5=`expr match $version_2 '.*1\.5\.*'`
   match_test_6=`expr match $version_2 '.*1\.6\.*'`
-  if test $match_test_4 -eq 0 -a $match_test_5 -eq 0 -a $match_test_6 -eq 0 ; then
-    AC_MSG_ERROR( $with_java not jdk1.4.* jdk1.5.* or jdk1.6.*)
+  match_test_7=`expr match $version_2 '.*1\.7\.*'`
+  match_test_8=`expr match $version_2 '.*1\.8\.*'`
+  if test $match_test_4 -eq 0 -a $match_test_5 -eq 0 -a $match_test_6 -eq 0 -a $match_test_7 -eq 0 -a $match_test_8 -eq 0 ; then
+    AC_MSG_ERROR( $with_java not jdk1.4.* jdk1.5.* jdk1.6.* jdk1.7.* or jdk1.8.*)
   fi
 
   AC_MSG_RESULT($with_java)
@@ -299,6 +301,10 @@ if test $version_1 -eq 4 &&  test $version_2 -ge 0 && test $version_3 -ge 1 ; th
   GCC_VERSION=3.2.2
   version_ok=yes
 fi
+if test $version_1 -eq 5 &&  test $version_2 -ge 0 && test $version_3 -ge 0 ; then
+  GCC_VERSION=3.2.2
+  version_ok=yes
+fi
 if test "$version_ok" = "yes" ; then
    AC_MSG_RESULT($gcc_version)
 else 
@@ -310,7 +316,7 @@ dnl Checks for programs.
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_MSG_CHECKING([for libm.so])
-FP_FIND_FILE(libm.so, /lib /usr/lib /usr/local/lib $more_libs, lib)
+FP_FIND_FILE(libm.so, /lib /usr/lib /usr/lib64 /usr/lib/x86_64-linux-gnu /usr/local/lib $more_libs, lib)
    if test "x$libm_so_dir" = "x" ; then
       AC_MSG_RESULT(not found)
       AC_MSG_ERROR(use --with-libs to locate libm.so)
@@ -333,11 +339,11 @@ SUPPORT_ROOT=`dirname $u1`/support
 # set Tcl/Tk variables
 #
 STANLEY_TCL_TK_VERSION=8.3
-STANLEY_TCL_VERSION=8.3.2
-STANLEY_TK_VERSION=8.3.2
-STANLEY_ITCL_VERSION=3.1.0
-STANLEY_ITCL_LIB_VERSION=3.1
-STANLEY_TKTABLE_VERSION=2.6
+STANLEY_TCL_VERSION=8.3.3
+STANLEY_TK_VERSION=8.3.3
+STANLEY_ITCL_VERSION=3.2
+STANLEY_ITCL_LIB_VERSION=3.2
+STANLEY_TKTABLE_VERSION=2.10
 STANLEY_TCL_L=tcl${STANLEY_TCL_TK_VERSION}
 STANLEY_TK_L=tk${STANLEY_TCL_TK_VERSION}
 STANLEY_ITCL_L=itcl${STANLEY_ITCL_LIB_VERSION}
@@ -356,9 +362,9 @@ if test \( "$GCC_VERSION" = "2.95.2" \) -o \( "$GCC_VERSION" = "2.95.3" \) ; the
   STANLEY_COMBAT_VERSION=0.6
   MICO_LIB_LIR=mico${STANLEY_MICO_LIB_VERSION}
 elif  test "$GCC_VERSION" = "3.2.2" ; then
-  STANLEY_MICO_VERSION=2.3.12
-  STANLEY_MICO_LIB_VERSION=2.3.12
-  STANLEY_COMBAT_VERSION=0.7.3
+  STANLEY_MICO_VERSION=2.3.13
+  STANLEY_MICO_LIB_VERSION=2.3.13
+  STANLEY_COMBAT_VERSION=0.8.1
   MICO_LIB_LIR=micoir${STANLEY_MICO_LIB_VERSION}
 fi
 STANLEY_CORBA_P=STANLEY_CORBA_P
@@ -552,7 +558,7 @@ echo " "
 # mico 2.3.12 -- the above changes to its Makefile were *not* done
 # since combat 0.7.3 IIRC is not thread safe, specify --disable-threads 
 cd $SUPPORT_ROOT/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico
-./configure --prefix=$STANLEY_ROOT/support/mico/${STANLEY_MICO_VERSION}/mico --disable-mini-stl --enable-final --with-tcl=$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION} --disable-static --disable-coss --disable-threads 
+./configure --prefix=$STANLEY_ROOT/support/mico/${STANLEY_MICO_VERSION}/mico --disable-mini-stl --with-tcl=$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION} --disable-static --disable-coss --disable-threads --without-ssl --disable-csiv2 --disable-sl3
 
 
 # COMBAT

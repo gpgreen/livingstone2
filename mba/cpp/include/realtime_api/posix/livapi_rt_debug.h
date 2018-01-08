@@ -13,7 +13,11 @@
 
 #include <realtime_api/posix/livapi_rt.h>
 #include <realtime_api/userfcns.h>
+#ifndef HAVE_FSTREAM
 #include <fstream.h>
+#else
+#include <fstream>
+#endif
 #include <sys/types.h>
 
 /** The L2_rtapi_debug class provides a debug wrapper for the L2_rtapi. 
@@ -36,7 +40,7 @@ public:
    time_t start_time;
    time_t current_time;
 protected:
-   ofstream dribblefile;
+   std::ofstream dribblefile;
 };
 
 #endif

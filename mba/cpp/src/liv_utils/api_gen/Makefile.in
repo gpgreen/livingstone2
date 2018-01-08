@@ -10,7 +10,7 @@ CLEANFILES+=api_gen
 
 # dependencies
 DEPS_L=-l$(L2LIB) $(lXERCES)
-DEPS=$(loc_libXERCES) $(loc_libdir)/$(L2LIB_FILE)
+DEPS=$(loc_libdir)/$(L2LIB_FILE)
 
 
 # build a command-line executable

@@ -14,10 +14,12 @@
 #include <readers/from_xmpl.h>
 #include <readers/transition.h>
 
-#include <sax/HandlerBase.hpp>
-#include <sax/AttributeList.hpp>
-#include <parsers/SAXParser.hpp>
-#include <util/PlatformUtils.hpp>
+#include <xercesc/sax/HandlerBase.hpp>
+#include <xercesc/sax/AttributeList.hpp>
+#include <xercesc/parsers/SAXParser.hpp>
+#include <xercesc/util/PlatformUtils.hpp>
+
+using namespace xercesc;
 
 // The do-while(0) is the only portable way to block.
 #ifdef ENABLE_L2_VERBOSE
@@ -152,16 +154,16 @@ class from_xmpl::HandlerBase_subclass : public HandlerBase {
         virtual void error(const SAXParseException& e) {
             L2_throw( L2_reader_error,
                     ("Error at " + filename
-                     + " line " + MBA_string(e.getLineNumber())
-                     + " position " + MBA_string(e.getColumnNumber())
+                     + " line " + MBA_string(static_cast<unsigned int>(e.getLineNumber()))
+                     + " position " + MBA_string(static_cast<unsigned int>(e.getColumnNumber()))
                      + ": " + xcode(e.getMessage())));
         }
 
         virtual void fatalError(const SAXParseException& e) {
             L2_throw( L2_reader_error,
                     ("Fatal Error at " + filename
-                     + " line " + MBA_string(e.getLineNumber())
-                     + " position " + MBA_string(e.getColumnNumber())
+                     + " line " + MBA_string(static_cast<unsigned int>(e.getLineNumber()))
+                     + " position " + MBA_string(static_cast<unsigned int>(e.getColumnNumber()))
                      + ": " + xcode(e.getMessage())));
         }
 };

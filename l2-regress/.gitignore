@@ -1,0 +1,14 @@
+diff
+out
+Makefile
+common
+config.status
+config.cache
+config.log
+create_basis
+fix_basis
+list_no_basis
+listgroups
+listtests
+reiterate
+runtests

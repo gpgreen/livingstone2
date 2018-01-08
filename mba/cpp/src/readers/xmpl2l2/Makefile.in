@@ -6,7 +6,7 @@ TARGET=xmpl2l2
 BINTARGET=$(TARGET)
 
 OFILES=xmpl2l2.o
-DEPS=${loc_libdir}/${L2LIB_FILE} $(loc_libXERCES)
+DEPS=${loc_libdir}/${L2LIB_FILE}
 
 $(TARGET): $(OFILES) $(DEPS)
 	$(LINKEXEC) -o $@ $(OFILES) -l${L2LIB} $(lXERCES)

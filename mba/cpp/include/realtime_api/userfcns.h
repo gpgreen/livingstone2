@@ -20,7 +20,11 @@
 
 #include <livingstone/l2conf.h>
 
+#ifndef HAVE_FSTREAM
 #include <fstream.h>
+#else
+#include <fstream>
+#endif
 #include <debuggers/tracker_debug.h>
 #include <realtime_api/reporter.h>
 
@@ -40,7 +44,7 @@ public:
 
 	ReporterInterface & operator() (); 
 
-	ofstream  logstream ;
+        std::ofstream  logstream ;
 	Tracker_debug * thesystem;
 
 	void open();

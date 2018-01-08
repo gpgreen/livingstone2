@@ -66,7 +66,7 @@ LINKLIB =LD_LIBRARY_PATH=$(loc_libdir):$${LD_LIBRARY_PATH} \
 
 # flags for programs.
 CFLAGS = @CFLAGS@
-CXXFLAGS = @CXXFLAGS@
+CXXFLAGS = @CXXFLAGS@ -fpermissive
 CPPFLAGS = @CPPFLAGS@ -I${loc_incldir}
 LDFLAGS = @LDFLAGS@
 DEFS = @DEFS@
@@ -75,9 +75,10 @@ DEFS = @DEFS@
 VERSION=@VERSION@
 
 # a dependency on xerces, either installed or just compiled
-lXERCES=@lXERCES@			# how to link with xerces
+lXERCES=@xerces_LIBS@			# how to link with xerces
 loc_libXERCES=@loc_libXERCES@		# local to the build directory
 libXERCES=@libXERCES@			# installed
+CXXFLAGS += @xerces_CFLAGS@
 
 # use -l$(L2LIB) to link, depend on the file ${loc_libdir}/$(L2LIB_FILE)
 L2LIB=@L2LIB@

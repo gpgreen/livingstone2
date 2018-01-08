@@ -19,6 +19,8 @@
 class Ptheory_listener;
 #endif
 
+class Clause;
+
 /**
  * A propositional theory, containing Propositions and Clauses.
  * An LTMS is one kind of propositional theory.

@@ -14,8 +14,11 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
+#ifndef HAVE_IOSTREAM
 #include <iostream.h>
-
+#else
+#include <iostream>
+#endif
 
 
 class ThreadObject

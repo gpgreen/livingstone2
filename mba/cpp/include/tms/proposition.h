@@ -20,6 +20,8 @@
 template <class Type> class Slist;
 #endif
 
+class Clause;
+
 /**
  * This class represents a proposition in a propositional theory. A Clause is
  * a disjunction of Proposition literals.

@@ -11,7 +11,9 @@ AC_INIT(src/cover/cover.cpp)
 
 AC_CONFIG_HEADER(include/livingstone/gnu_conf.h)
 
+AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
 
 dnl os_type is the host_os, without version number
 dnl Used i.e. to pick which JDK includes to use.
@@ -88,6 +90,8 @@ AC_PATH_PROG(PERL, perl, perl)
 dnl Check that #include <new> works
 AC_LANG_CPLUSPLUS
 AC_CHECK_HEADERS(new)
+dnl Check that #include <iostream> works
+AC_CHECK_HEADERS([iostream] [fstream])
 
 dnl Test if we have bool, true, and false.  If not, we define each
 dnl to their int equivalent.
@@ -543,6 +547,9 @@ dnl **********************************************************************
 dnl **********************************************************************
 dnl Additional features:
 
+dnl Check for xerces-c
+
+PKG_CHECK_MODULES([xerces], [xerces-c >= 1.2.0])
 
 dnl ******************************
 dnl verbosity
@@ -879,123 +886,6 @@ if test $enable_prohibitive_memory_tests = yes ; then
     AC_DEFINE(ENABLE_MEMORY_CHECKS_3)
 fi
 
-
-dnl **********************************************************************
-dnl **********************************************************************
-dnl Set the flags for Xerces support, or for not having it.
-dnl These are empty unless set in the 'then' clause.
-AC_SUBST(lXERCES)
-AC_SUBST(loc_libXERCES)
-AC_SUBST(libXERCES)
-
-if test $require_from_xmpl = yes || $require_checkpoint_serialize = yes ; then
-    dnl ******************************
-    dnl Where xerces is.  By default, ../../support/xerces-unix-src ;
-    dnl but it can be elsewhere too.  By default, the library is xerces-c1_2
-    dnl (so use libxerces-c1_2.so and -lxerces-c1_2)
-    AC_SUBST(XERCESCROOT)
-    LIV_ARG_WITH(xerces,
-    [  --with-xerces=[PATH]    specify path to xerces],
-    ../../support/xerces-unix-src)
-    if test -d "$with_xerces" ; then
-	XERCESCROOT=`cd "$with_xerces" && pwd`
-    else
-	AC_MSG_ERROR(xerces directory '$with_xerces' doesn't exist)
-    fi
-
-    LIV_ARG_WITH(xerces-lib,
-    [  --with-xerces-lib=[name]  specify library name (default xerces-c1_2)],
-    xerces-c1_2)
-    XERCES="$with_xerces_lib"
-    lXERCES="-l$XERCES"
-    loc_libXERCES="\$(loc_libdir)/lib${XERCES}.so"
-    libXERCES="\$(libdir)/lib${XERCES}.so"
-
-    dnl **********************************************************************
-    dnl Remember to configure the xml directory.  We can't use the
-    dnl AC_CONFIG_SUBDIRS because the xml stuff is not autoconf, unlike
-    dnl what they would have you believe.
-
-    dnl Required for our makefiles
-    AC_SUBST(XERCESENV)
-    XERCESENV="XERCESCROOT=${XERCESCROOT}"
-
-    # Xerces assumes g++ is GNU, and otherwise isn't.  I hates it.
-    # The fix, if we're using GNU but not g++:
-    #  (1) find the full path to $CXX
-    #  (2) link ./g++ to $CXX ; actually, make it a script that sets
-    #      the run-path (since we know g++ needs this; it's in LDFLAGS).
-    #  (3) add the current directory to the path when running xerces
-    #  (4) use g++ for xerces
-    if test "x$GXX" = xyes && test "x$CXX" != xg++ ; then
-	rm -f g++
-	echo "#! /bin/sh" >> g++
-	echo "$CXX_FULL_PATH" `eval "echo $LDFLAGS"` '"$@"' >> g++
-	chmod a+x g++
-	XERCESCXX=g++
-	XERCESENV="PATH=`pwd`:\${PATH} $XERCESENV"
-	xerces_hack_path=yes
-    fi
-
-    # Similarly for gcc
-    if test "x$GCC" = xyes && test "x$GCC" != xgcc ; then
-	rm -f gcc
-	$LN_S $CC_FULL_PATH gcc
-	XERCESCC=gcc
-	if test "x$xerces_hack_path" != xyes ; then
-	    XERCESENV="PATH=`pwd`:\${PATH} $XERCESENV"
-	    xerces_hack_path=yes
-	fi
-    fi
-
-    case $host in
-	*solaris*)
-	    XERCES_PLATFORM="solaris";;
-	*linux*)
-	    XERCES_PLATFORM="linux";;
-	*irix*)
-	    XERCES_PLATFORM="irix"
-	    AC_DEFINE(IRIX);;
-	*)
-	    echo "Unknown system type $host."
-	    if test -f ${XERCESCROOT}/config.cache ; then
-		echo "config.cache found; trusting xerces has been configured."
-	    else
-		echo "Configure XML manually and try again."
-		exit 1
-	    fi
-    esac
-
-    dnl Configure XML unless we don't know how to do it automatically.
-    dnl Also don't recur if we got a --no-recursion (which sets
-    dnl no_recursion=yes)
-    if test "x$no_recursion" != xyes && test "x$XERCES_PLATFORM" != x ; then
-	HERE=`pwd`
-	OLDCXX=$CXX
-	OLDCC=$CC
-
-	cd ${XERCESCROOT}/src
-	# if we're hacking with CXX to make it become g++, do this
-	if test ${XERCESCXX-unset} != unset ; then
-	    CXX=$XERCESCXX
-	fi
-	if test ${XERCESCC-unset} != unset ; then
-	    CC=$XERCESCC
-	fi
-
-	# these, remarkably, are not the default in the distribution!
-	chmod a+x config.guess config.sub configure install-sh runConfigure
-
-	# specify the C and C++ compilers and the platform.  Never mind about
-	# prefix as we don't let Xerces install itself, just compile.
-	eval $XERCESENV ./runConfigure -x${CXX} -c${CC} -p${XERCES_PLATFORM}
-	cd ${HERE}
-	CXX=$OLDCXX
-	CC=$OLDCC
-    fi
-fi
-
-
 dnl **********************************************************************
 dnl All hacking with substitutions is done; strip leading, trailing, and
 dnl multiple spaces.
@@ -1025,13 +915,7 @@ LIV_STRIPWS(SRCDIRS SUBDIRS SRCDIR_OBJECTS)
 dnl **********************************************************************
 dnl Set the list of makefiles that we create
 
-dnl If we need XML support, use the xerces makefile; else
-dnl use the no-xerces one.
-if test $require_from_xmpl = yes ; then
-    OUTPUT_ARG="Makefile:top.mk:xerces.mk:Makefile.in"
-else
-    OUTPUT_ARG="Makefile:top.mk:noxerces.mk:Makefile.in"
-fi
+OUTPUT_ARG="Makefile:top.mk:noxerces.mk:Makefile.in"
 
 for x in $FEATURE_DIRS $NOLIB_FEATURE_DIRS ; do
     OUTPUT_ARG="${OUTPUT_ARG} ${x}/Makefile:top.mk:${x}/Makefile.in:bot.mk"

@@ -106,6 +106,7 @@ _STD_ ostream&
 operator<<(_STD_ ostream& os, Slist_item<Type>& slist_item)
 {
   os << slist_item->item;
+  return os;
 }
 
 #endif // SLIST_ITEM_H

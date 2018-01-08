@@ -8,13 +8,11 @@
 # just the libraries that we actually need to build.
 # loc or libXERCES may be empty, if we use noxerces.mk
 LIB_TARGETS = \
-    $(loc_libXERCES) \
     ${loc_libdir}/${L2LIB_FILE}
 CLEANFILES += objects
 CLEANFILES += $(LIB_TARGETS)
 
 LIB_INSTALL = \
-    $(libXERCES) \
     ${libdir}/${L2LIB_FILE}
 
 # directories for the code in livdll

@@ -86,3 +86,9 @@
 
 /* Define if you have the <new> header file.  */
 #undef HAVE_NEW
+
+/* Define if <iostream> is available */
+#undef HAVE_IOSTREAM
+
+/* Define if <fstream> is available */
+#undef HAVE_FSTREAM

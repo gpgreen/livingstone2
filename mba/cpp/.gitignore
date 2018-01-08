@@ -1,0 +1,17 @@
+# .gitignore
+config.cache
+config.log
+config.status
+Makefile
+stamp-h.in
+gnu_conf.h
+objects
+g++
+gcc
+bin
+lib
+share
+man
+info
+scenario.rt
+

@@ -1,0 +1,11 @@
+# .gitignore
+bin
+support
+confdefs.h
+config.jv
+stanley.csh
+help1ops.txt
+help1vmpl.txt
+help2.txt
+help3.txt
+Makefile

@@ -26,6 +26,7 @@ STANLEY_TKTABLE_L = @STANLEY_TKTABLE_L@
 X11_LIB_DIR = @X11_LIB_DIR@
 X11_INC_DIR = @X11_INC_DIR@
 STANLEY_CORBA_P = @STANLEY_CORBA_P@
+STANLEY_COMBAT_VERSION = @STANLEY_COMBAT_VERSION@
 TCL_MICO_LIB = @TCL_MICO_LIB@
 TCL_MICO_LIB_L = @TCL_MICO_LIB_L@
 MICO_LIB = @MICO_LIB@
@@ -36,6 +37,9 @@ OTHER_MICO_LIBS = @OTHER_MICO_LIBS@
 GENERIC_LIBS = @GENERIC_LIBS@
 
 RM = rm -f
+
+# do some processing on Combat version
+COMBAT_VER = COMBAT_VER_$(patsubst .,_,${STANLEY_COMBAT_VERSION})
 
 # In tcl8.3.3/unix/Makefile, uncomment
 # SECURITY_FLAGS = -DTK_NO_SECURITY
@@ -76,11 +80,11 @@ cEXTERNLIBS += -L$(X11_LIB_DIR) -lX11
 ##       INCDIRS += -I$(TCL_LIBRARY)/../tcl-dp/generic
 
 ## from ../tk8.2/unix/Makefile
-AC_FLAGS = -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_SYS_SELECT_H=1 -DHAVE_SYS_TIME_H=1 -DNO_XIDPROC -DI18N_IMPROVE -D${STANLEY_CORBA_P}
+AC_FLAGS = -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_SYS_SELECT_H=1 -DHAVE_SYS_TIME_H=1 -DNO_XIDPROC -DI18N_IMPROVE -D${STANLEY_CORBA_P} -D${COMBAT_VER}
 # STANLEY_CORBA_P is used by tkAppinit.c
 
 
-X11_INC = -I$(STANLEY_ROOT)/src/include -I$(X11_INC_DIR)
+X11_INC = -I $(STANLEY_ROOT)/src/include -I $(X11_INC_DIR)
 #		<X11/Xlib.h>	gui/stanley-jmpl/include/X11/Xlib.h to prevent compiler warnings, e.g.
 #     /opt/X11R5/include/X11/Xlib.h:135: warning: function declaration isn't a prototype
 
@@ -89,9 +93,9 @@ X11_INC = -I$(STANLEY_ROOT)/src/include -I$(X11_INC_DIR)
 #	-DUSE_TCL_DP inits Tcl-DP
 
 # Combat (tclMico) ORB -- Combat_Init called in tkAppInit.c 
-TCLMICO_LIBS      = -L$(TCL_MICO_LIB) -l$(TCL_MICO_LIB_L) -L$(MICO_LIB) -l$(MICO_LIB_L) -l$(MICO_LIB_LIR) -L$(CPP_LIB) -lstdc++ -L$(GENERIC_LIBS) -ldl $(OTHER_MICO_LIBS) -lnsl 
+TCLMICO_LIBS      = -L$(MICO_LIB) -l$(MICO_LIB_L) -l$(MICO_LIB_LIR) -L$(CPP_LIB) -lstdc++ -L$(GENERIC_LIBS) -ldl $(OTHER_MICO_LIBS) -lnsl 
 ### TCLMICO_LIBS      = -L$(TCL_MICO_LIB) -ltclmico -L$(MICO_LIB) -lmico -L$(CPP_LIB) -lg++ -lstdc++ -L/usr/local/gnu/gcc-2.8.1/lib/gcc-lib/sparc-sun-solaris2.6/2.8.1 -lgcc -ldl -lelf -lsocket -lnsl
-CFLAGS += $(AC_FLAGS) $(X11_INC) $(INCDIRS) -pedantic -O -fno-fast-math -g
+CFLAGS += $(AC_FLAGS) $(INCDIRS) $(X11_INC) -pedantic -O -fno-fast-math -g
 
 OBJS = $(cSOURCES:.c=.o)
 

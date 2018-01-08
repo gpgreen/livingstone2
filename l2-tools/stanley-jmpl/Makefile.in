@@ -39,7 +39,7 @@ build: support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so \
 	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so \
-	support/combat-${STANLEY_COMBAT_VERSION}/lib/libcombat.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/orb \
 	bin/stanley-bin
 
 # Tcl
@@ -128,7 +128,7 @@ support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}
 
 
 # Combat
-support/combat-${STANLEY_COMBAT_VERSION}/lib/libcombat.so: \
+support/tclTk${STANLEY_TCL_TK_VERSION}/lib/orb: \
 	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so
 # combat needs itcl installed prior to running configure
 # so do here rather than in stanley-jmpl/configure.in
@@ -136,12 +136,12 @@ support/combat-${STANLEY_COMBAT_VERSION}/lib/libcombat.so: \
 	@echo "Configure ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}"
 	@echo " "
 # since combat configure is not done in stanley-jmpl/configure,
-	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; ./configure --prefix=${STANLEY_ROOT}/support/combat-${STANLEY_COMBAT_VERSION} --with-tcl=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-mico=${SUPPORT_ROOT}/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico/admin --with-itcl=${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib --enable-shared)
+#	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; ./configure --prefix=${STANLEY_ROOT}/support/combat-${STANLEY_COMBAT_VERSION} --with-tcl=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-mico=${SUPPORT_ROOT}/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico/admin --with-itcl=${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib --enable-shared)
 	@echo " "
 	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}"
 	@echo " "
-	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; make; make install)
-
+#	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; make; make install)
+#	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; cp -r orb support/tclTk${STANLEY_TCL_TK_VERSION}/lib)
 
 # Stanley
 bin/stanley-bin: \
@@ -150,12 +150,12 @@ bin/stanley-bin: \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so \
 	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so \
-	support/combat-${STANLEY_COMBAT_VERSION}/lib/libcombat.so
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/orb
 	@echo " "
-	@echo "Build ${STANLEY_ROOT}/bin/stanley-bin"
-	@echo " "
+#	@echo "Build ${STANLEY_ROOT}/bin/stanley-bin"
+#	@echo " "
 ## build XEmacs tag table
-	(cd ${STANLEY_ROOT}/src; chmod a+x load-stanley; ./load-stanley -tags)
+#	(cd ${STANLEY_ROOT}/src; chmod a+x load-stanley; ./load-stanley -tags)
 
 ## create links, since CVS does not handle links
 	@echo "Building help1vmpl.txt soft link to README-STANLEY-VJMPL.txt"

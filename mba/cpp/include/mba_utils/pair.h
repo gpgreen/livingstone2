@@ -86,6 +86,7 @@ template <class T1, class T2>
 _STD_ ostream&
 operator<<(_STD_ ostream& os, const MBApair<T1,T2>& p) {
   os << "(" << p.first << " . " << p.second << ")";
+  return os;
 }
 
 #endif // PAIR_H

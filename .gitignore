@@ -1,0 +1,6 @@
+# .gitignore
+*.o
+*~
+*.log
+*.status
+autom4te.cache
