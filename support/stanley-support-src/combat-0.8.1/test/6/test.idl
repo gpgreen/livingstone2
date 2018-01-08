@@ -1,0 +1,7 @@
+
+interface Async {
+  unsigned short sleep (in unsigned short seconds);
+  unsigned long strcpy (out string dest, in string src);
+  oneway void nop ();
+};
+

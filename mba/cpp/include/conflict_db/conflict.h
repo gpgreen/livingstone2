@@ -39,12 +39,12 @@ public:
   ~Conflict() { }
 
   /// Compares the size of two Conflicts by Assignment count
-  bool Conflict::operator>(const Conflict &other) const {
+  bool operator>(const Conflict &other) const {
     return this->assignments.size() > other.assignments.size();
   }
 
   /// Compares the size of two Conflicts by Assignment count
-  bool Conflict::operator<(const Conflict &other) const {
+  bool operator<(const Conflict &other) const {
     return this->assignments.size() < other.assignments.size();
   }
 

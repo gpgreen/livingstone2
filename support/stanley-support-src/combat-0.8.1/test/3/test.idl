@@ -1,0 +1,62 @@
+
+typedef enum E_ {
+  A, B, C, D
+} E;
+
+union Union1 switch (short) {
+case  0: short a;
+case -1:
+case  1: string b;
+case -2:
+case  2: E c;
+};
+
+union Union2 switch (E) {
+case A: short av;
+case B: string bv;
+case C: unsigned long cv;
+case D: E dv;
+};
+
+union Union3 switch (boolean) {
+case TRUE: unsigned short a;
+case FALSE: long b;
+};
+
+union Union4 switch (boolean) {
+case TRUE: unsigned short a;
+default: long b;
+};
+
+union Union5 switch (short) {
+case 1: unsigned short a;
+case 2:
+case 3: string b;
+default: E c;
+};
+
+union Union6 switch (boolean) {
+case TRUE: sequence<Union6> s;
+case FALSE: long l;
+};
+
+union Union7 switch (short) {
+case 1:
+  union subu switch (boolean) {
+  case TRUE: long l;
+  } u;
+default:
+  struct subs {
+    string l;
+  } d;
+};
+
+interface unions {
+  attribute Union1 u1;
+  attribute Union2 u2;
+  attribute Union3 u3;
+  attribute Union4 u4;
+  attribute Union5 u5;
+  attribute Union6 u6;
+  attribute Union7 u7;
+};

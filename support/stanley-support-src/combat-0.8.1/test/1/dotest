@@ -1,0 +1,277 @@
+#! /bin/sh
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+lappend auto_path ../../orb ../../tclkill
+package require tcltest
+package require combat
+package require kill
+
+namespace import tcltest::test
+tcltest::configure -verbose {body error pass}
+
+if {[string first noexec $argv] == -1} {
+    catch {file delete server.ior}
+    set server [eval exec [info nameofexecutable] ./server.tcl $argv &]
+}
+
+catch {
+    set argv [eval corba::init $argv]
+    eval tcltest::configure $argv
+    source test.tcl
+
+    #
+    # might need to wait for the server to start up
+    #
+
+    for {set i 0} {$i < 10} {incr i} {
+	if {[file exists server.ior]} {
+	    after 500
+	    break
+	}
+	after 500
+    }
+
+    if {![file exists server.ior]} {
+	catch {kill $server}
+	puts "oops, server did not start up"
+	exit 1
+    }
+
+    set reffile [open server.ior]
+    set ior [read -nonewline $reffile]
+    set obj [corba::string_to_object $ior]
+    close $reffile
+
+    #
+    # beginning of tests
+    #
+
+    test ptypes-1.1 {short attribute} {
+	$obj s 0
+	$obj s
+    } {0}
+    test ptypes-1.2 {short limits} {
+	$obj s -32768
+	set res [$obj s]
+	$obj s 32767
+	lappend res [$obj s]
+    } {-32768 32767}
+    test ptypes-1.3 {short rangecheck} {knownBug} {
+	$obj s 0
+	set res     [catch {$obj s -32769}]
+	lappend res [catch {$obj s 32768}]
+	lappend res [$obj s]
+    } {1 1 0}
+
+    test ptypes-2.1 {unsigned short attribute} {
+	$obj us 0
+	$obj us
+    } {0}
+    test ptypes-2.2 {unsigned short limits} {
+	$obj us 65535
+	$obj us
+    } {65535}
+    test ptypes-2.3 {unsigned short rangecheck} {knownBug} {
+	$obj us 0
+	set res     [catch {$obj us -1}]
+	lappend res [catch {$obj us 65536}]
+	lappend res [$obj us]
+    } {1 1 0}
+
+    test ptypes-3.1 {long attribute} {
+	$obj l 0
+	$obj l
+    } {0}
+    test ptypes-3.2 {long limits} {
+	$obj l -2147483648
+	set res [$obj l]
+	$obj l 2147483647
+	lappend res [$obj l]
+    } {-2147483648 2147483647}
+    test ptypes-3.3 {long rangecheck} {knownBug} {
+	$obj l 0
+	set res     [catch {$obj l -2147483649}]
+	lappend res [catch {$obj l 2147483648}]
+	lappend res [$obj l]
+    } {1 1 0}
+
+    test ptypes-4.1 {unsigned long attribute} {
+	$obj ul 0
+	$obj ul
+    } {0}
+    test ptypes-4.2 {unsigned long limits} {
+	$obj ul 4294967295
+	$obj ul
+    } {4294967295}
+    test ptypes-4.3 {unsigned long rangecheck} {knownBug} {
+	$obj ul 0
+	set res     [catch {$obj ul -1}]
+	lappend res [catch {$obj ul 4294967296}]
+	lappend res [$obj ul]
+    } {1 1 0}
+
+    test ptypes-5.1 {char attribute} {
+	$obj c Q
+	$obj c
+    } {Q}
+    test ptypes-5.2 {ascii alphabet} {
+	set string "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	set ostr   ""
+	for {set i 0} {$i < [string length $string]} {incr i} {
+	    $obj c [string index $string $i]
+	    append ostr [$obj c]
+	}
+	set ostr
+	string compare $string $ostr
+    } {0}
+    test ptypes-5.3 {standard graphic characters} {
+	set string "!\"\#$%&'()*+,-./:;<=>?@\[\\\]^_`\{|\}~"
+	set ostr   ""
+	for {set i 0} {$i < [string length $string]} {incr i} {
+	    $obj c [string index $string $i]
+	    append ostr [$obj c]
+	}
+	set ostr
+	string compare $string $ostr
+    } {0}
+
+    test ptypes-6.1 {octet attribute} {
+	$obj o Q
+	$obj o
+    } {Q}
+    test ptypes-6.2 {all octets} {
+	for {set i -128} {$i < 128} {incr i} {
+	    $obj o [binary format c $i]
+	    binary scan [$obj o] c res
+	    if {$res != $i} {
+		break
+	    }
+	}
+	set i
+    } {128}
+
+    test ptypes-7.1 {boolean attribute} {
+	$obj b 0
+	$obj b
+    } {0}
+    test ptypes-7.2 {boolean true} {
+	set res ""
+	foreach true {1 2 42 yes true on -1.18} {
+	    $obj b $true
+	    lappend res [$obj b]
+	}
+	set res
+    } {1 1 1 1 1 1 1}
+    test ptypes-7.3 {boolean false} {
+	set res ""
+	foreach false {0 no false off 0.0} {
+	    $obj b $false
+	    lappend res [$obj b]
+	}
+	set res
+    } {0 0 0 0 0}
+
+    test ptypes-8.1 {float attribute} {
+	$obj f 0
+	$obj f
+    } {0.0}
+    test ptypes-8.2 {some floats} {
+	set ok 0
+	foreach float {-0.1 42 1e3 1e31 1e-23} {
+	    $obj f $float
+	    set res [$obj f]
+	    if {abs(($res-$float)/$float) > 1e-6} {
+		set ok $res
+		break
+	    }
+	}
+	set ok
+    } {0}
+
+    test ptypes-9.1 {double attribute} {
+	$obj d 0
+	$obj d
+    } {0.0}
+    test ptypes-9.2 {some doubles} {
+	set ok 0
+	foreach double {-0.1 42 1e3 1e222 1e-123} {
+	    $obj d $double
+	    set res [$obj d]
+	    if {abs(($res-$double)/$double) > 1e-12} {
+		set ok $res
+		break
+	    }
+	}
+	set ok
+    } {0}
+    
+    test ptypes-10.1 {string attribute} {
+	$obj q {}
+	$obj q
+    } {}
+    test ptypes-10.2 {strings} {
+	$obj q "Hello World"
+	$obj q
+    } {Hello World}
+    test ptypes-10.3 {uninterpreted strings} {
+	$obj q "\}\[blubb\]\\"
+	$obj q
+    } "\}\[blubb\]\\"
+
+    test ptypes-11.1 {set readonly value} {
+	catch {$obj ro 0}
+    } {1}
+    test ptypes-11.2 {read readonly value} {
+	$obj ro
+    } {4242}
+
+    test ptypes-12.1 {integer constant} {
+	corba::const IDL:cl:1.0
+    } {long 42}
+    test ptypes-12.2 {string constant} {
+	corba::const cs
+    } {string {Hello World}}
+
+    if {[info tclversion] != 8.0} {
+	test ptypes-13.1 {wchar attribute} {
+	    $obj wc Q
+	    $obj wc
+	} {Q}
+	test ptypes-13.2 {some wide characters} {
+	    set string "abc\u4e4e\u25a\xff\u543äöüß"
+	    set ostr ""
+	    for {set i 0} {$i < [string length $string]} {incr i} {
+		$obj wc [string index $string $i]
+		append ostr [$obj wc]
+	    }
+	    string compare $string $ostr
+	} {0}
+
+	test ptypes-14.1 {wide string attribute} {
+	    $obj ws "Hello World"
+	    $obj ws
+	} {Hello World}
+	test ptypes-14.2 {wide string value} {
+	    set string "abc\u4e4e\u25a\xff\u543äöüß"
+	    $obj ws $string
+	    set ostr [$obj ws]
+	    string compare $string $ostr
+	} {0}
+    }
+
+} out
+
+if {[string first noexec $argv] == -1} {
+    kill $server
+}
+
+if {$out != ""} {
+    puts $out
+}

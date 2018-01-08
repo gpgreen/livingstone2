@@ -1,0 +1,53 @@
+
+enum E { ODD, EVEN };
+
+struct S {
+  long member;
+};
+
+typedef sequence<S> Q;
+
+exception Oops {
+  string what;
+};
+
+interface diamonda {
+  string opa ();
+};
+
+interface diamondb : diamonda {
+  string opb ();
+};
+
+interface diamondc : diamonda {
+  string opc ();
+};
+
+interface diamondd : diamondb, diamondc {
+  string opd ();
+};
+
+struct diamond {
+  diamonda a;
+  diamondb b;
+  diamondc c;
+  diamondd d;
+  sequence<Object> abcd;
+};
+
+interface operations {
+  attribute short s;
+  readonly attribute string ra;
+
+  unsigned long  square  (in short x);
+  long           copy    (in string sin, out string sout);
+  unsigned short length  (in Q queue, out E oe);
+  Q              squares (in unsigned short howmany);
+  void           reverse (inout string str);
+  oneway void    nop     ();
+  operations     dup     ();
+  void           dup2    (in Object o1, out Object o2);
+  boolean        isme    (in Object obj);
+  diamond     getdiamond ();
+  void        DontCallMe () raises (Oops);
+};

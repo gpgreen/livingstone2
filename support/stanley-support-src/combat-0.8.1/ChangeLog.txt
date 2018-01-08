@@ -1,0 +1,72 @@
+Changes in Combat 0.8.1 (August 1, 2011)
+-----------------------
+
+- Fixed updated name for TAO naming service.
+- Fixed "WString" typo.
+- Fixed "valuetype" typo.
+- Fixed a bug where a connection was not reestablished after just
+  closing it.
+- tclkill: Fixed an issue in pkgIndex.tcl that caused an "Error:
+  Failed to find the required "kill" package." if the package was
+  in a path that contained space characters.
+
+
+Changes in Combat 0.8 (November 29, 2008)
+---------------------
+
+- idl2tcl: Instead of setting a "_ir_${name}" variable, directly
+  generate a call to combat::ir.
+- Don't import itcl::* into the global namespace.
+- Support for request timeouts.
+- Accept scoped names instead of Repository Id where applicable, e.g.,
+  when throwing and catching exceptions, in a servant's "_Interface"
+  method, and with the built-in "_is_a" operation.
+- Add -ORBConnectionIdleTimeout.
+- Bugfix: recursive type marshalling was non-compliant.
+- Bugfix: don't get stuck in an infinite loop when failing to connect
+  to a forwarded address.
+- When waiting for a request to complete, go to sleep waiting for a
+  request-specific variable rather than a global condition variable.
+- Update terminology: Use "object reference" instead of handle, and
+  "stringified object reference" for what was previously called "object
+  reference."  Also rename "pseudo object" to "local object."
+- Retired Combat/C++.
+
+
+Changes in Combat 0.7.5 (December 13, 2004)
+-----------------------
+
+- Some support for wide strings when using GIOP 1.1.
+- Implemented IOP::CodecFactory.
+- Implemented CORBA Reflection.
+
+
+Changes in Combat 0.7.4 (July 06, 2003)
+-----------------------
+
+- Support for long long, unsigned long long and long double.
+- Bugfix: properly handle tk_null typecodes.
+- Support for ISO 8859-15 code set.
+- Add -ORBHostName.
+- Bugfix: GIOP 1.2 was broken.
+
+
+Changes in Combat 0.7.3 (March 26, 2002)
+-----------------------
+
+- But a lot of {}'s around expressions so that they get compiled.
+- Add corba::dii.
+
+
+Changes in Combat 0.7.2 (December 6, 2001)
+-----------------------
+
+- Bugfixes.
+
+
+Changes in Combat 0.7.1 (October 25, 2001)
+-----------------------
+
+- Add support for IBM-1252 code set.
+- Add corba::duplicate.
+- Bugfixes.

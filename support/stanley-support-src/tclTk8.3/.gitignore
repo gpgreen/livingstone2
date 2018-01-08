@@ -1,0 +1,10 @@
+# .gitignore
+Makefile
+*.so
+*.a
+tclConfig.sh
+tclsh
+tkConfig.sh
+wish
+tkTable.tcl.h
+config.cache

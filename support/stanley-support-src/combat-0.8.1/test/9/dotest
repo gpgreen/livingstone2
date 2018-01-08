@@ -1,0 +1,144 @@
+#! /bin/sh
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+lappend auto_path ../../orb ../../tclkill
+package require tcltest
+package require combat
+package require kill
+
+namespace import tcltest::test
+tcltest::configure -verbose {body error pass}
+
+if {[string first noexec $argv] == -1} {
+    catch {file delete server.ior}
+    set server [eval exec [info nameofexecutable] ./server.tcl $argv &]
+}
+
+catch {
+    set argv [eval corba::init $argv]
+    eval tcltest::configure $argv
+    source test.tcl
+    source CosNaming.tcl
+
+    #
+    # might need to wait for the server to start up
+    #
+
+    for {set i 0} {$i < 10} {incr i} {
+	if {[file exists server.ior]} {
+	    after 500
+	    break
+	}
+	after 500
+    }
+
+    if {![file exists server.ior]} {
+	catch {kill $server}
+	puts "oops, server did not start up"
+	exit 1
+    }
+
+    eval corba::init $argv
+    set nso [corba::resolve_initial_references NameService]
+    $nso _is_a IDL:omg.org/CosNaming/NamingContextExt:1.0
+
+    set reffile [open server.ior]
+    set ior [read -nonewline $reffile]
+    set obj [corba::string_to_object $ior]
+    close $reffile
+
+    #
+    # beginning of tests
+    #
+
+    test naming-1.1 {register with root nc} {
+	$nso bind {{id foo kind bar}} $obj
+    } {}
+    test naming-1.2 {resolve from root nc} {
+	set res [$nso resolve {{id foo kind bar}}]
+	$obj _is_equivalent $res
+    } {1}
+
+    test naming-2.1 {create context nodes} {
+	set nc1 [$nso bind_new_context {{id c1 kind {}}}]
+	set nc2 [$nc1 bind_new_context {{id {} kind c2}}]
+	set nc3 [$nso new_context]
+	$nc2 rebind_context {{id c3 kind c3}} $nc3
+    } {}
+    test naming-2.2 {register with context nodes} {
+	$nso bind {{id c1 kind {}} {id obj kind {}}} $obj
+	$nso bind {{id c1 kind {}} {id {} kind c2} {id foo kind bar}} 0
+    } {}
+    test naming-2.3 {resolve from context nodes} {
+	unset res
+	set o2 [$nso resolve {{id c1 kind {}} {id obj kind {}}}]
+	lappend res [$obj _is_equivalent $o2]
+	lappend res [$nso resolve {{id c1 kind {}} {id {} kind c2} {id foo kind bar}}]
+	set res
+    } {1 0}
+
+    test naming-3.1 {populate naming context} {
+	for {set i 0} {$i < 42} {incr i} {
+	    $nso bind [list [list id obj-$i kind {}]] $obj
+	}
+    } {}
+    test naming-3.2 {use binding iterator} {
+	$nso list 0 bl bi
+	set objects 0
+	set contexts 0
+	while {[$bi next_n 10 bl]} {
+	    foreach binding $bl {
+		array set tb $binding
+		if {$tb(binding_type) == "nobject"} {
+		    incr objects
+		    set to [$nso resolve $tb(binding_name)]
+		    $to hello
+		} elseif {$tb(binding_type) == "ncontext"} {
+		    incr contexts
+		}
+	    }
+	}
+	$bi destroy
+	list $objects $contexts
+    } {43 1}
+    
+    test naming-4.1 {bind existing node} {
+	set res [catch {$nso bind {{id foo kind bar}} 0} ex]
+	list $res $ex
+    } {1 {IDL:omg.org/CosNaming/NamingContext/AlreadyBound:1.0 {}}}
+    test naming-4.2 {resolve nonexisting node} {
+	set res [catch {$nso resolve {{id bar kind foo}}} ex]
+	list $res $ex
+    } {1 {IDL:omg.org/CosNaming/NamingContext/NotFound:1.0 {why missing_node rest_of_name {{id bar kind foo}}}}}
+    
+    if {[$nso _is_a IDL:omg.org/CosNaming/NamingContextExt:1.0]} {
+	test naming-5.1 {test URL locator} {
+	    $nso to_string {{id c1 kind {}} {id obj kind {}}}
+	} {c1/obj}
+	test naming-5.2 {test URL locator} {
+	    $nso to_string {{id c1 kind {}} {id {} kind c2} {id foo kind bar}}
+	} {c1/.c2/foo.bar}
+	test naming-5.3 {using resolve_str} {
+	    unset res
+	    set o2 [$nso resolve_str c1/obj]
+	    lappend res [$obj _is_equivalent $o2]
+	    lappend res [$nso resolve_str c1/.c2/foo.bar]
+	} {1 0}
+    }
+} out
+
+if {[string first noexec $argv] == -1} {
+    kill $server
+}
+
+if {$out != ""} {
+    puts $out
+}
+

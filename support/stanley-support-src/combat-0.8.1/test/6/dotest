@@ -1,0 +1,201 @@
+#! /bin/sh
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+lappend auto_path ../../orb ../../tclkill
+package require tcltest
+package require combat
+package require kill
+
+namespace import tcltest::test
+tcltest::configure -verbose {body error pass}
+
+if {[string first noexec $argv] == -1} {
+    catch {file delete server_1.ior}
+    catch {file delete server_2.ior}
+    catch {file delete server_3.ior}
+    set server1 [eval exec [info nameofexecutable] ./server.tcl 1 $argv &]
+    set server2 [eval exec [info nameofexecutable] ./server.tcl 2 $argv &]
+    set server3 [eval exec [info nameofexecutable] ./server.tcl 3 $argv &]
+}
+
+catch {
+    set argv [eval corba::init $argv]
+    eval tcltest::configure $argv
+    source test.tcl
+
+    #
+    # might need to wait for the servers to start up
+    #
+
+    for {set i 0} {$i < 10} {incr i} {
+	if {[file exists server_1.ior] && \
+		[file exists server_2.ior] && \
+		[file exists server_3.ior]} {
+	    after 500
+	    break
+	}
+	after 500
+    }
+
+    if {![file exists server_1.ior] || \
+	    ![file exists server_2.ior] || \
+	    ![file exists server_3.ior]} {
+	puts "oops, servers did not start up"
+	catch {kill $server1}
+	catch {kill $server2}
+	catch {kill $server3}
+	exit 1
+    }
+
+    set reffile [open server_1.ior]
+    set ior [read -nonewline $reffile]
+    set o1 [corba::string_to_object $ior]
+    close $reffile
+
+    set reffile [open server_2.ior]
+    set ior [read -nonewline $reffile]
+    set o2 [corba::string_to_object $ior]
+    close $reffile
+
+    set reffile [open server_3.ior]
+    set ior [read -nonewline $reffile]
+    set o3 [corba::string_to_object $ior]
+    close $reffile
+
+    #
+    # beginning of tests
+    #
+
+    test async-1.1 {async sleep} {
+	set handle [$o1 -async sleep 1]
+	corba::request get $handle
+    } {1}
+    test async-1.2 {parallel sleep} {
+	set h1 [$o1 -async sleep 2]
+	set h2 [$o2 -async sleep 1]
+	set h3 [$o3 -async sleep 0]
+	set res ""
+	set ready 0
+	while {$ready < 3} {
+	    set finished [corba::request wait]
+	    lappend res [corba::request get $finished]
+	    incr ready
+	}
+	set res [lsort $res]
+	lappend res [corba::request wait]
+    } {0 1 2 {}}
+    test async-1.3 {out of order request retrieval} {
+	set h1 [$o1 -async sleep 1]
+	set h2 [$o2 -async sleep 0]
+	set h3 [$o3 -async sleep 1]
+	set     res [corba::request get $h3]
+	lappend res [corba::request get $h2]
+	lappend res [corba::request get $h1]
+    } {1 0 1}
+
+    test async-2.1 {async invocation with out parameter} {
+	set h1 [$o1 -async strcpy out1 {Hello World}]
+	set h2 [$o2 -async strcpy out2 {}]
+	set h3 [$o3 -async strcpy out3 42]
+	catch {unset res}
+	lappend res [corba::request get $h1]
+	lappend res [corba::request get $h2]
+	lappend res [corba::request get $h3]
+	lappend res $out1
+	lappend res $out2
+	lappend res $out3
+    } {11 0 2 {Hello World} {} 42}
+
+    test async-3.1 {transparence of async oneway ops} {
+	corba::try {
+	set h1 [$o1 -async nop]
+	set h2 [$o2 -async nop]
+	set h3 [$o3 -async nop]
+	catch {unset res}
+	lappend res [corba::request get $h1]
+	lappend res [corba::request get $h2]
+	lappend res [corba::request get $h3]
+	} catch {...} {
+	    puts $::errorInfo
+	}
+    } {{} {} {}}
+
+    test async-4.1 {callback handler} {
+	global result
+	proc callback {handle} {
+	    global result
+	    set result [corba::request get $handle]
+	}
+	set handle [$o1 -callback callback sleep 1]
+	vwait result
+	set result
+    } {1}
+    test async-4.2 {multiple callbacks} {
+	global result count
+	proc callback {handle} {
+	    global result count
+	    incr count
+	    lappend result [corba::request get $handle]
+	}
+	$o1 -callback callback sleep 1
+	$o2 -callback callback sleep 0
+	$o3 -callback callback sleep 1
+	set result ""
+	set count 0
+	while {$count < 3} {
+	    vwait count
+	}
+	lsort $result
+    } {0 1 1}
+    test async-4.3 {callback for oneway op} {
+	global result count
+	proc callback {handle} {
+	    global result count
+	    incr count
+	    lappend result [corba::request get $handle]
+	}
+	$o1 -callback callback nop
+	$o2 -callback callback nop
+	$o3 -callback callback nop
+	set result ""
+	set count 0
+	while {$count < 3} {
+	    vwait count
+	}
+	lsort $result
+    } {{} {} {}}
+    test async-4.4 {callback with parameters} {
+	global r1 r2 r3 count
+	proc callback {handle} {
+	    global r1 r2 r3 count
+	    incr count
+	    corba::request get $handle
+	}
+	$o1 -callback callback strcpy r1 {Hello World}
+	$o2 -callback callback strcpy r2 {}
+	$o3 -callback callback strcpy r3 42
+	set count 0
+	while {$count < 3} {
+	    vwait count
+	}
+	list $r1 $r2 $r3
+    } {{Hello World} {} 42}
+
+} out
+
+if {[string first noexec $argv] == -1} {
+    kill $server3
+    kill $server2
+    kill $server1
+}
+
+if {$out != ""} {
+    puts $out
+}

@@ -1,0 +1,32 @@
+
+valuetype EmptyValue {};
+
+valuetype Date {
+  public unsigned short day;
+  public unsigned short month;
+  public unsigned short year;
+};
+
+valuetype BaseType {
+  public string name;
+};
+
+valuetype DerivedType : BaseType {
+  public unsigned long value;
+  public string anothername;
+};
+
+valuetype TreeNode {
+  public BaseType nv;
+  public TreeNode left, right;
+};
+
+interface ValueTest {
+  attribute EmptyValue ev;
+  attribute Date d;
+  attribute BaseType bt;
+  attribute DerivedType dt;
+  attribute TreeNode tn;
+  attribute ValueBase vb;
+};
+

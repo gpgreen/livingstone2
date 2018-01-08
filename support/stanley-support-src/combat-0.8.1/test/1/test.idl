@@ -1,0 +1,18 @@
+interface ptypes {
+  attribute short s;
+  attribute unsigned short us;
+  attribute long l;
+  attribute unsigned long ul;
+  attribute char c;
+  attribute octet o;
+  attribute boolean b;
+  attribute float f;
+  attribute double d;
+  attribute string q;
+  attribute wchar wc;
+  attribute wstring ws;
+  readonly attribute unsigned long ro;
+};
+
+const long cl = 42;
+const string cs = "Hello World";

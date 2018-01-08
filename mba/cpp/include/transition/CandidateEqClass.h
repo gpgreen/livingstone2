@@ -80,8 +80,8 @@ class CandidateEqClass : public Pooled {
    * \return whether the Candidate should be added to the equivalence class
    */
 
-  bool CandidateEqClass::belongs(const Candidate& candidate,
-				 const T_system& t_system) const;
+  bool belongs(const Candidate& candidate,
+               const T_system& t_system) const;
 
   /**
    * Assure that the equivalence class contains the Candidate.

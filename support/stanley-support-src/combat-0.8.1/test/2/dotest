@@ -1,0 +1,218 @@
+#! /bin/sh
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+lappend auto_path ../../orb ../../tclkill
+package require tcltest
+package require combat
+package require kill
+
+namespace import tcltest::test
+tcltest::configure -verbose {body error pass}
+
+if {[string first noexec $argv] == -1} {
+    catch {file delete server.ior}
+    set server [eval exec [info nameofexecutable] ./server.tcl $argv &]
+}
+
+catch {
+    set argv [eval corba::init $argv]
+    eval tcltest::configure $argv
+    source test.tcl
+
+    #
+    # might need to wait for the server to start up
+    #
+
+    for {set i 0} {$i < 10} {incr i} {
+	if {[file exists server.ior]} {
+	    after 500
+	    break
+	}
+	after 500
+    }
+
+    if {![file exists server.ior]} {
+	catch {kill $server}
+	puts "oops, server did not start up"
+	exit 1
+    }
+
+    set reffile [open server.ior]
+    set ior [read -nonewline $reffile]
+    set obj [corba::string_to_object $ior]
+    close $reffile
+
+    #
+    # beginning of tests
+    #
+
+    test composed-1.1 {enum attribute} {
+	set res {}
+	$obj e1 A
+	lappend res [$obj e1]
+	$obj e2 Z
+	lappend res [$obj e2]
+    } {A Z}
+    test composed-1.2 {enum values} {
+	set res {}
+	foreach val {A B C D E} {
+	    $obj e1 $val
+	    lappend res [$obj e1]
+	}
+	foreach val {Z Y X W V} {
+	    $obj e2 $val
+	    lappend res [$obj e2]
+	}
+	set res
+    } {A B C D E Z Y X W V}
+    test composed-1.3 {illegal enum values} {
+	set res [catch {$obj e1 ARGH}]
+	lappend res [catch {$obj e1 Z}]
+	lappend res [catch {$obj e1 ""}]
+	lappend res [catch {$obj e2 ZYX}]
+	lappend res [catch {$obj e2 A}]
+	lappend res [catch {$obj e2 ""}]
+    } {1 1 1 1 1 1}
+
+    test composed-2.1 {typedef'd value} {
+	$obj d 42
+	$obj d
+    } {42}
+
+    test composed-3.1 {flat struct} {
+	$obj s1 {s 42 e1 A q {Hello World}}
+	$obj s1
+    } {s 42 e1 A q {Hello World}}
+    test composed-3.2 {more complex struct} {
+	$obj s2 {b true s1 {s -32768 e1 E q blubber} e2 X ul 123456}
+	$obj s2
+    } {b 1 s1 {s -32768 e1 E q blubber} e2 X ul 123456}
+    test composed-3.3 {deep struct} {
+	$obj s3 {s1 {s -1 e1 B q argh} s2 {b false s1 {s 31598 e1 C q quark} e2 Y ul 654321}}
+	$obj s3
+    } {s1 {s -1 e1 B q argh} s2 {b 0 s1 {s 31598 e1 C q quark} e2 Y ul 654321}}
+    test composed-3.4 {ordering of struct members} {
+	$obj s1 {q {Hello World} e1 A s 42}
+	$obj s1
+    } {s 42 e1 A q {Hello World}}
+    test composed-3.5 {struct with recursive sequence} {
+	$obj s4 {name root left {{name left-node left {} right {}}} right {{name right-node left {} right {}}}}
+	$obj s4
+    } {name root left {{name left-node left {} right {}}} right {{name right-node left {} right {}}}}
+
+    test composed-4.1 {sequence} {
+	$obj q1 {{s 43 e1 B q {Hello World}}}
+	$obj q1
+    } {{s 43 e1 B q {Hello World}}}
+    test composed-4.2 {empty sequence} {
+	$obj q1 {}
+	$obj q1
+    } {}
+    test composed-4.3 {really long sequence} {
+        catch {unset data}
+	for {set i 0} {$i < 1025} {incr i} {
+	    lappend data [list s $i e1 D q $i]
+	}
+	$obj q1 $data
+	set res [$obj q1]
+	set ok 0
+	if {[llength $res] == 1025 && $data == $res} {
+	    set ok 1
+	}
+	set ok
+    } {1}
+    test composed-4.4 {bounded sequence} {
+	$obj q2 {{b true s1 {s 0 e1 A q quark} e2 Z ul 1} {b false s1 {s -1 e1 B q blubb} e2 Y ul 2}}
+	$obj q2
+    } {{b 1 s1 {s 0 e1 A q quark} e2 Z ul 1} {b 0 s1 {s -1 e1 B q blubb} e2 Y ul 2}}
+    test composed-4.5 {empty bounded sequence} {
+	$obj q2 {}
+	$obj q2
+    } {}
+    test composed-4.6 {overflow bounded sequence} {
+	set val {b true s1 {s 0 e1 A q quark} e2 Z ul 1}
+	$obj q2 [list $val]
+	set res [catch {$obj q2 [list $val $val $val]}]
+	lappend res [$obj q2]
+    } {1 {{b 1 s1 {s 0 e1 A q quark} e2 Z ul 1}}}
+    test composed-4.7 {char sequence} {
+	$obj q3 {Hello World}
+	$obj q3
+    } {Hello World}
+    test composed-4.8 {max char sequence} {
+	$obj q3 1234567890123456
+	$obj q3
+    } {1234567890123456}
+    test composed-4.9 {overflow char sequence} {
+	catch {$obj q3 12345678901234567}
+    } {1}
+    test composed-4.10 {octet sequence} {
+	$obj q4 Blubber
+	$obj q4
+    } {Blubber}
+    test composed-4.11 {binary octet sequence} {
+	$obj q4 [binary format c* {3 2 1 0 -128 -127 -126 127}]
+	set res [$obj q4]
+        if {[binary scan $res c* data] != 1} {
+	    error "oops -- cannot binary scan value"
+	}
+	set data
+    } {3 2 1 0 -128 -127 -126 127}
+    test composed-4.12 {unbounded octet sequence} {
+	$obj os "Hello World. This is a long octet sequence to test efficient marshalling of long octet sequences."
+	$obj os
+    } {Hello World. This is a long octet sequence to test efficient marshalling of long octet sequences.}
+
+    test composed-5.1 {one-dimensional array} {
+	$obj a1 {A B C}
+	$obj a1
+    } {A B C}
+    test composed-5.2 {illegal number of array elements} {
+	set res     [catch {$obj a1 {}}]
+	lappend res [catch {$obj a1 {A}}]
+	lappend res [catch {$obj a1 {A B}}]
+	lappend res [catch {$obj a1 {A B C}}]
+	lappend res [catch {$obj a1 {A B C D}}]
+	lappend res [catch {$obj a1 {A B C D E}}]
+    } {1 1 1 0 1 1}
+    test composed-5.3 {two-dimensional array} {
+	$obj a2 {{Z Y X} {W V Z}}
+	$obj a2
+    } {{Z Y X} {W V Z}}
+    test composed-5.4 {character array} {
+	$obj a3 1234567890123456
+	$obj a3
+    } {1234567890123456}
+    test composed-5.5 {illegal number of array elements} {
+	set res     [catch {$obj a3 {}}]
+	lappend res [catch {$obj a3 123456789012345}]
+	lappend res [catch {$obj a3 12345678901234567}]
+    } {1 1 1}
+    test composed-5.6 {octet array} {
+	$obj a4 12345678
+	$obj a4
+    } {12345678}
+    test composed-5.7 {binary octet array} {
+	$obj a4 [binary format c* {3 2 1 0 -128 -127 -126 127}]
+	set res [$obj a4]
+        if {[binary scan $res c* data] != 1} {
+	    error "oops -- cannot binary scan value"
+	}
+	set data
+    } {3 2 1 0 -128 -127 -126 127}
+} out
+
+if {[string first noexec $argv] == -1} {
+    kill $server
+}
+
+if {$out != ""} {
+    puts $out
+}

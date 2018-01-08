@@ -404,7 +404,7 @@ class Conflict_db : public Pooled {
   * \param clause the Clause
   * \return whether the Clause represents an Assignment to an Assumption
   */
- static bool Conflict_db::is_assumption(const Clause& clause);
+ static bool is_assumption(const Clause& clause);
 
   /**
    * Return a reference to the list of Conflicts.
@@ -418,14 +418,14 @@ class Conflict_db : public Pooled {
   * \param clause a Clause
   * \param whether the Clause represents an Assignment to a Command
   */
- static bool Conflict_db::is_command(const Clause& clause);
+ static bool is_command(const Clause& clause);
 
  /**
   * Is the Clause a unit Clause for an Observable Assignment?
   * \param clause a Clause
   * \param whether the Clause represents an Assignment to an Observable
   */
- static bool Conflict_db::is_observable(const Clause& clause);
+ static bool is_observable(const Clause& clause);
 
  /**
   * The abstract base class for a callback object whose sole method is a

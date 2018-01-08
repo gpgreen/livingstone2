@@ -88,8 +88,7 @@ bool from_memory::read_version() {
 
 bool from_memory::read_checksum() {
   // checksum ; 4 bytes ; TODO: check it
-  unsigned checksum;
-  checksum = get(4);
+  unsigned checksum = get(4);
   return true;
 }
 

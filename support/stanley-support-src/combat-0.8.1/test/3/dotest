@@ -1,0 +1,202 @@
+#! /bin/sh
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+lappend auto_path ../../orb ../../tclkill
+package require tcltest
+package require combat
+package require kill
+
+namespace import tcltest::test
+tcltest::configure -verbose {body error pass}
+
+if {[string first noexec $argv] == -1} {
+    catch {file delete server.ior}
+    set server [eval exec [info nameofexecutable] ./server.tcl $argv &]
+}
+
+catch {
+    set argv [eval corba::init $argv]
+    eval tcltest::configure $argv
+    source test.tcl
+
+    #
+    # might need to wait for the server to start up
+    #
+
+    for {set i 0} {$i < 10} {incr i} {
+	if {[file exists server.ior]} {
+	    after 500
+	    break
+	}
+	after 500
+    }
+
+    if {![file exists server.ior]} {
+	catch {kill $server}
+	puts "oops, server did not start up"
+	exit 1
+    }
+
+    set reffile [open server.ior]
+    set ior [read -nonewline $reffile]
+    set obj [corba::string_to_object $ior]
+    close $reffile
+
+    #
+    # beginning of tests
+    #
+
+    test unions-1.1 {union} {
+	$obj u1 {0 42}
+	$obj u1
+    } {0 42}
+    test unions-1.2 {union short discriminators} {
+	set res {}
+	$obj u1 {-1 {Blubb}}
+	lappend res [$obj u1]
+	$obj u1 {1 {Hello World}}
+	lappend res [$obj u1]
+	$obj u1 {-2 A}
+	lappend res [$obj u1]
+	$obj u1 {2 D}
+	lappend res [$obj u1]
+    } {{-1 Blubb} {1 {Hello World}} {-2 A} {2 D}}
+    test unions-1.3 {empty union} {
+	set res {}
+	$obj u1 {3 {}}
+	lappend res [$obj u1]
+	$obj u1 {-3 {}}
+	lappend res [$obj u1]
+	$obj u1 {-32768 {}}
+	lappend res [$obj u1]
+	$obj u1 {32767 {}}
+	lappend res [$obj u1]
+	set out {}
+	foreach val $res {
+	    set disc [lindex $val 0]
+	    if {$disc == 0 || $disc == -1 || $disc == 1 || \
+		    $disc == -2 || $disc == 2 || [lindex $val 1] != ""} {
+		lappend out 1
+	    } else {
+		lappend out 0
+	    }
+	}
+	set out
+    } {0 0 0 0}
+    test unions-1.4 {illegal union values} {knownBug} {
+	set res {}
+	lappend res [catch {$obj u1 {-32769 blubb}}]
+	lappend res [catch {$obj u1 {0 blubb}}]
+	lappend res [catch {$obj u1 {-2 E}}]
+	lappend res [catch {$obj u1 {42}}]
+    } {1 1 1 1}
+
+    test unions-2.1 {enum-discriminated union} {
+	$obj u2 {A 42}
+	$obj u2
+    } {A 42}
+    test unions-2.2 {enum-discriminated union values} {
+	set res {}
+	$obj u2 {B {Hello World}}
+	lappend res [$obj u2]
+	$obj u2 {C 32768}
+	lappend res [$obj u2]
+	$obj u2 {D D}
+	lappend res [$obj u2]
+    } {{B {Hello World}} {C 32768} {D D}}
+
+    test unions-3.1 {boolean-discriminated union} {
+	set res {}
+	$obj u3 {true 42}
+	lappend res [$obj u3]
+	$obj u3 {false -42}
+	lappend res [$obj u3]
+	$obj u3 {1 65535}
+	lappend res [$obj u3]
+	$obj u3 {0 65536}
+	lappend res [$obj u3]
+    } {{1 42} {0 -42} {1 65535} {0 65536}}
+
+    test unions-4.1 {union with default} {
+	set res {}
+	$obj u4 {true 42}
+	lappend res [$obj u4]
+	$obj u4 {false -1}
+	lappend res [$obj u4]
+	$obj u4 {(default) -2}
+	lappend res [$obj u4]
+    } {{1 42} {0 -1} {0 -2}}
+
+    test unions-5.1 {union with explicit default, members} {
+	set res {}
+	$obj u5 {1 42}
+	lappend res [$obj u5]
+	$obj u5 {2 {Hello World}}
+	lappend res [$obj u5]
+	$obj u5 {3 Blubber}
+	lappend res [$obj u5]
+    } {{1 42} {2 {Hello World}} {3 Blubber}}
+    test unions-5.2 {union with explicit default, defaults} {
+	set res {}
+	$obj u5 {0 A}
+	set val [$obj u5]
+	if {[lindex $val 0] == 1 || [lindex $val 0] == 2 || \
+		[lindex $val 0] == 3 || [lindex $val 1] != "A"} {
+	    lappend res 0
+	} else {
+	    lappend res 1
+	}
+	$obj u5 {4 B}
+	set val [$obj u5]
+	if {[lindex $val 0] == 1 || [lindex $val 0] == 2 || \
+		[lindex $val 0] == 3 || [lindex $val 1] != "B"} {
+	    lappend res 0
+	} else {
+	    lappend res 1
+	}
+	$obj u5 {-32768 C}
+	set val [$obj u5]
+	if {[lindex $val 0] == 1 || [lindex $val 0] == 2 || \
+		[lindex $val 0] == 3 || [lindex $val 1] != "C"} {
+	    lappend res 0
+	} else {
+	    lappend res 1
+	}
+	$obj u5 {(default) D}
+	set val [$obj u5]
+	if {[lindex $val 0] == 1 || [lindex $val 0] == 2 || \
+		[lindex $val 0] == 3 || [lindex $val 1] != "D"} {
+	    lappend res 0
+	} else {
+	    lappend res 1
+	}
+    } {1 1 1 1}
+
+    test unions-6.1 {union with recursive sequence} {
+	$obj u6 {true {{false 1} {true {{false 2}}}}}
+	set res [$obj u6]
+    } {1 {{0 1} {1 {{0 2}}}}}
+
+    test unions-7.1 {union with nested types} {
+	set res {}
+	$obj u7 {1 {true 0}}
+	lappend res [$obj u7]
+	$obj u7 {0 {l 42}}
+	lappend res [$obj u7]
+    } {{1 {1 0}} {0 {l 42}}}
+} out
+
+if {[string first noexec $argv] == -1} {
+    kill $server
+}
+
+if {$out != ""} {
+    puts $out
+}

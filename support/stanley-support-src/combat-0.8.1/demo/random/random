@@ -1,0 +1,41 @@
+#! /bin/sh
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+#
+# Initialize ORB and feed the local Interface Repository.
+#
+
+lappend auto_path ../../orb
+package require combat
+
+eval corba::init $argv
+source Random.tcl
+
+#
+# Get the server's object reference from random.org's Web server.
+#
+
+set obj [corba::string_to_object http://www.random.org/Random.ior]
+
+#
+# Show some random numbers.
+#
+
+puts "Some random numbers:"
+
+for {set i 0} {$i < 10} {incr i} {
+    puts [$obj lrand48]
+}
+
+#
+# Release object reference.
+#
+
+corba::release $obj

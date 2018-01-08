@@ -1,0 +1,2242 @@
+#! /bin/sh
+# $Id: idl2tcl,v 1.2 2011-08-01 18:00:08 fp Exp $ \
+# \
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+#
+# ----------------------------------------------------------------------
+# Initialize.
+# ----------------------------------------------------------------------
+#
+
+set myDir [file normalize [file dirname [info script]]]
+set parentDir [file dirname $myDir]
+set orbDir [file join $parentDir orb]
+set killDir [file join $parentDir tclkill]
+
+if {[file exists $orbDir] && [file isdirectory $orbDir]} {
+    lappend auto_path $orbDir
+}
+
+if {[file exists $killDir] && [file isdirectory $killDir]} {
+    lappend auto_path $killDir
+}
+
+if {[catch {package require combat} oops]} {
+    puts stderr "Error: Failed to find the required \"combat\" package."
+    exit 1
+}
+
+if {[catch {package require kill} oops]} {
+    puts stderr "Error: Failed to find the required \"kill\" package."
+    exit 1
+}
+
+if {[catch {set argv [eval corba::init $argv]} res]} {
+    puts stderr "Error: corba::init failed: $res"
+    exit 1
+}
+
+#
+# ----------------------------------------------------------------------
+# Command-line processing.
+# ----------------------------------------------------------------------
+#
+
+proc usage {} {
+    puts stderr "usage: $::argv0 \[options\] <idl-files>"
+    puts stderr "  Options:"
+    puts stderr "    -v           Verbose operation. Use more than once for more verbosity."
+    puts stderr "    --name <n>   Name of the output file, else use the first IDL file's."
+    puts stderr "    --impl       Generate an implementation skeleton file."
+    puts stderr "    -I<path>     Passed to the IDL compiler."
+    puts stderr "    -D<t\[=v\]>    Passed to the IDL compiler."
+    puts stderr "    --ir <ior>   Process this Interface Repository rather than IDL files."
+    puts stderr "    --ifr <cmd>  Command line to start the Interface Repository."
+    puts stderr "    --idl <cmd>  Command line to feed IDL files to the Interface Repository."
+    exit 1
+}
+
+set infiles ""
+set outbase ""
+set implflag "no"
+set verbose 0
+set irior ""
+set ifr [list]
+set idl [list]
+set idlopts [list]
+
+for {set i 0} {$i < [llength $argv]} {incr i} {
+    switch -glob -- [lindex $argv $i] {
+	--name {
+	    set outbase [lindex $argv [incr i]]
+	}
+	--impl {
+	    set implflag "yes"
+	}
+	-I -
+	-D {
+	    lappend idlopts [lindex $argv $i]
+	    lappend idlopts [lindex $argv [incr i]]
+	}
+	-I* -
+	-D* {
+	    lappend idlopts [lindex $argv $i]
+	}
+	--ir {
+	    set irior [lindex $argv [incr i]]
+	}
+	--ifr {
+	    lappend ifr [lindex $argv [incr i]]
+	}
+	--idl {
+	    lappend idl [lindex $argv [incr i]]
+	}
+	-v {
+	    incr verbose
+	}
+	--* {
+	    usage
+	}
+	default {
+	    set file [lindex $argv $i]
+	    if {![file readable $file]} {
+		puts stderr "Error: input file $file does not exist or is not readable"
+		exit 1
+	    }
+	    lappend infiles $file
+	}
+    }
+}
+
+if {[llength $infiles] == 0} {
+    if {$irior == ""} {
+	usage
+    }
+
+    if {$outbase == ""} {
+	puts stderr "Error: must supply --name with --ir"
+	exit 1
+    }
+} elseif {$outbase == ""} {
+    set outbase [file rootname [file tail [lindex $infiles end]]]
+}
+
+#
+# ----------------------------------------------------------------------
+# Figure out which Interface Repository to use.
+# ----------------------------------------------------------------------
+#
+
+#
+# Look for the following in the $PATH:
+#
+# - The Interface Repository service:
+#     - ird for MICO
+#     - irserv for ORBacus
+#     - tao_ifr_service for TAO
+# - The program to feed IDL files to the Interface Repository:
+#     - idl --feed-ir --no-codegen-c++ --feed-included-defs for MICO
+#     - irfeed for ORBacus
+#     - tao_ifr for TAO
+#
+# This can be overridden with the following command-line options:
+#
+# - Use --ifr <IOR>
+#   If this command-line option is provided, we contact the Interface
+#   Repository at the given IOR and dump all of its contents.
+#
+# - Use --ifrserver <ifrserver> AND --ifrfeed <ifrfeed>
+#   - <ifrserver> must be the command line to start the Interface Repository
+#     server.  The server must write the Interface Repository IOR to the file
+#     "ir.ior" in the current directory (the command line should include
+#     appropriate options).  <ifrserver> is spawned as a new process and
+#     later killed.
+#   - <irfeed> must be the command line to feed one or more IDL files
+#     to the Interface Repository.  The "-ORBInitRef" option is added
+#     to this command line to set the "InterfaceRepository" initial
+#     reference.  It is expected that this command preprocesses the IDL
+#     file, accepting the usual "-I" and "-D" command-line options, and
+#     that the names of one or more IDL files are passed at the end of
+#     the command line.
+#
+
+proc findFileInPath {name} {
+    #
+    # Look for a file in $PATH.
+    #
+
+    if {$::tcl_platform(platform) == "windows"} {
+	#
+	# On Windows, look for both $name and ${name}.exe.
+	#
+
+	foreach path [split $::env(PATH) ";"] {
+	    if {[file exists [file join $path $name]]} {
+		return [file join $path $name]
+	    }
+	    if {[file exists [file join $path ${name}.exe]]} {
+		return [file join $path ${name}.exe]
+	    }
+	}
+
+	set path [file dirname $::argv0]
+
+	if {[file exists [file join $path $name]]} {
+	    return [file join $path $name]
+	}
+
+	if {[file exists [file join $path ${name}.exe]]} {
+	    return [file join $path ${name}.exe]
+	}
+    } else {
+	foreach path [split $::env(PATH) ":"] {
+	    if {[file exists [file join $path $name]]} {
+		return [file join $path $name]
+	    }
+	}
+
+	set path [file dirname $::argv0]
+
+	if {[file exists [file join $path $name]]} {
+	    return [file join $path $name]
+	}
+    }
+
+    error "$name not found in PATH"
+}
+
+if {$irior == ""} {
+    #
+    # We know about MICO, TAO and ORBacus (though I haven't tried the latter
+    # for a VERY long time).
+    #
+
+    if {![llength $ifr]} {
+	if {$::tcl_platform(platform) == "windows"} {
+	    append ::env(PATH) ";[pwd]"
+	} else {
+	    append ::env(PATH) ":[pwd]"
+	    append ::env(LD_LIBRARY_PATH) ":[pwd]"
+	}
+
+	if {![catch {set ifr [list [findFileInPath "ird"]]}]} {
+	    set ORB "MICO"
+	    set idl [list [findFileInPath "idl"]]
+	    lappend idl "--feed-ir" "--feed-included-defs" "--no-codegen-c++"
+	    lappend ifr "-ORBNoResolve"
+	} elseif {![catch {set ifr [findFileInPath "tao_ifr_service"]}]} {
+	    set ORB "TAO"
+	    set idl [list [findFileInPath "tao_ifr"]]
+	    lappend ifr "-ORBDottedDecimalAddresses" "1"
+	} elseif {![catch {set ifr [list [findFileInPath "irserv"]]}]} {
+	    set ORB "ORBacus"
+	    set idl [list [findFileInPath "irfeed"]]
+	} else {
+	    puts stderr "Error: Did not find Interface Repository executable.  Please make sure that"
+	    puts stderr "       the following executables are in your \$PATH:"
+	    puts stderr "       - When using Mico, \"ird\" and \"idl\""
+	    puts stderr "       - When using TAO, \"tao_ifr_service\" and \"tao_ifr\""
+	    puts stderr "       - When using ORBacus, \"irserv\" and \"irfeed\""
+	    puts stderr "       Alternatively, use either --ir or --ifr and --idl."
+	    exit 1
+	}
+    }
+}
+
+#
+# ----------------------------------------------------------------------
+# Traverse the Interface Repository.  Generate a list of dependencies,
+# and then produce a post-order that ensures that definitions appear
+# before they are referenced by a later definition.
+# ----------------------------------------------------------------------
+#
+
+namespace eval Deps {
+    #
+    #  1: n1 contains n2
+    # -1: n2 contains n1
+    #  0: neither
+    #
+    
+    proc Contains {n1 n2} {
+	set l1 [string length $n1]
+	set l2 [string length $n2]
+
+	if {$l1 < $l2 && [string first $n1 $n2] == 0 && \
+		[string index $n2 $l1] == ":"} {
+	    return 1
+	} elseif {$l1 > $l2 && [string first $n2 $n1] == 0 && \
+		[string index $n1 $l2] == ":"} {
+	    return -1
+	}
+	return 0
+    }
+    
+    #
+    #  1: n1 directly contains n2
+    # -1: n2 directly contains n1
+    #  0: neither
+    #
+    
+    proc DirectlyContains {n1 n2} {
+	set l1 [string length $n1]
+	set l2 [string length $n2]
+
+	if {$l1 < $l2 && [string first $n1 $n2] == 0 && \
+		[string index $n2 $l1] == ":" && \
+		[string first :: [string range $n2 [expr $l1+2] end]] == -1} {
+	    return 1
+	} elseif {$l1 > $l2 && [string first $n2 $n1] == 0 && \
+		[string index $n1 $l2] == ":" && \
+		[string first :: [string range $n1 [expr $l2+2] end]] == -1} {
+	    return -1
+	}
+	return 0
+    }
+
+    proc MakeDep {dependee_name dependenton_name {forward 0}} {
+	variable deps
+	global verbose
+
+	if {$forward} {
+	    set dependenton_name "_fwd_$dependenton_name"
+	}
+
+	if {$verbose >= 4} {
+	    if {$forward} {
+		puts "Adding dependency from $dependee_name to $dependenton_name (forward)"
+	    } else {
+		puts "Adding dependency from $dependee_name to $dependenton_name"
+	    }
+	}
+	
+	if {![info exists deps($dependee_name)]} {
+	    set deps($dependee_name) [list $dependenton_name]
+	} elseif {[lsearch -exact $deps($dependee_name) $dependenton_name] == -1} {
+	    lappend deps($dependee_name) $dependenton_name
+	}
+    }
+    
+    proc AddDep {dependee dependent_on} {
+	variable deps
+
+	if {![$dependee _is_a IDL:omg.org/CORBA/Contained:1.0]} {
+	    return
+	}
+
+	if {![$dependent_on _is_a IDL:omg.org/CORBA/Contained:1.0]} {
+	    #
+	    # dereference template types
+	    #
+	    
+	    switch [$dependent_on def_kind] {
+		dk_Sequence -
+		dk_Array {
+		    AddDep $dependee [$dependent_on element_type_def]
+		}
+	    }
+	
+	    return
+	}
+
+	set n1 [$dependee absolute_name]
+	set n2 [$dependent_on absolute_name]
+
+	#
+	# ignore if dependent_on is contained in dependee
+	#
+
+	if {[Contains $n1 $n2] == 1} {
+	    return
+	}
+
+	#
+	# If something within an interface (valuetype) depends on
+	# something outside of that interface, make a dependency from
+	# the interface (valuetype) instead.
+	#
+
+	set c $dependee
+	while {[$c _is_a IDL:omg.org/CORBA/Contained:1.0] && \
+		!([$c _is_a IDL:omg.org/CORBA/InterfaceDef:1.0] || \
+		[$c _is_a IDL:omg.org/CORBA/ValueDef:1.0])} {
+	    set c [$c defined_in]
+	}
+
+	if {[$c _is_a IDL:omg.org/CORBA/InterfaceDef:1.0] || \
+		[$c _is_a IDL:omg.org/CORBA/ValueDef:1.0]} {
+	    set if [$c absolute_name]
+	    if {$if != $n2 && [Contains $if $n2] != 1} {
+		set n1 $if
+		set dependee $c
+	    }
+	}
+
+	#
+	# If dependent_on is an interface (or valuetype) and dependee
+	# something outside that interface (or valuetype), mark
+	# dependent_on as a candidate for a forward declaration
+	#
+
+	if {[$dependent_on _is_a IDL:omg.org/CORBA/InterfaceDef:1.0] || \
+		[$dependent_on _is_a IDL:omg.org/CORBA/ValueDef:1.0]} {
+	    if {[Contains $n2 $n1] != 1} {
+		MakeDep $n1 $n2 1
+		return
+	    }
+	}
+
+	#
+	# If dependent_on is a struct (or union), and dependee something
+	# outside that struct (or union), we may have to forward-declare
+	# the struct (or union). However, if the struct (or union) is
+	# defined within an interface (or valuetype, struct or union),
+	# and dependee is outside that type, then make dependee depend
+	# on that outer type.
+	#
+
+	if {[$dependent_on _is_a IDL:omg.org/CORBA/StructDef:1.0] || \
+		[$dependent_on _is_a IDL:omg.org/CORBA/UnionDef:1.0]} {
+	    set c [$dependent_on defined_in]
+	    if {[$c _is_a IDL:omg.org/CORBA/InterfaceDef:1.0] || \
+		    [$c _is_a IDL:omg.org/CORBA/ValueDef:1.0] || \
+		    [$c _is_a IDL:omg.org/CORBA/StructDef:1.0] || \
+		    [$c _is_a IDL:omg.org/CORBA/UnionDef:1.0]} {
+		set cn [$c absolute_name]
+		if {![Contains $cn $n1]} {
+		    AddDep $dependee $c
+		    return
+		}
+	    }
+	    if {[Contains $n2 $n1] != 1} {
+		MakeDep $n1 $n2 1
+		return
+	    }
+	}
+
+	MakeDep $n1 $n2
+    }
+    
+    proc ConstantDef {obj} {
+	set type [$obj type_def]
+	AddDep $obj $type
+    }
+    
+    proc StructDef {obj} {
+	set members [$obj members]
+	foreach member $members {
+	    array set elements $member
+	    AddDep $obj $elements(type_def)
+	}
+	catch {array unset elements}
+    }
+    
+    proc UnionDef {obj} {
+	AddDep $obj [$obj discriminator_type_def]
+	StructDef $obj
+    }
+    
+    proc AliasDef {obj} {
+	AddDep $obj [$obj original_type_def]
+    }
+    
+    proc ExceptionDef {obj} {
+	StructDef $obj
+    }
+    
+    proc AttributeDef {obj} {
+	AddDep $obj [$obj type_def]
+    }
+
+    proc OperationDef {obj} {
+	set params [$obj params]
+	foreach param $params {
+	    array set pd $param
+	    AddDep $obj $pd(type_def)
+	}
+	catch {array unset pd}
+	set exceptions [$obj exceptions]
+	foreach exception $exceptions {
+	    AddDep $obj $exception
+	}
+	catch {array unset ex}
+	AddDep $obj [$obj result_def]
+    }
+
+    proc InterfaceDef {obj} {
+	set bases [$obj base_interfaces]
+	foreach base $bases {
+	    AddDep $obj $base
+	}
+    }
+
+    proc ValueDef {obj} {
+	set base [$obj base_value]
+	if {$base != "0"} {
+	    AddDep $obj $base
+	}
+	set absbases [$obj abstract_base_values]
+	foreach absbase $absbases {
+	    AddDep $obj $absbase
+	}
+	set supporteds [$obj supported_interfaces]
+	foreach supported $supporteds {
+	    AddDep $obj $supported
+	}
+    }
+    
+    proc ValueBoxDef {obj} {
+	AddDep $obj [$obj original_type_def]
+    }
+
+    proc ValueMemberDef {obj} {
+	AddDep $obj [$obj type_def]
+    }
+    
+    proc Traverse {container} {
+	variable elements
+	global verbose
+
+	set contents [$container contents dk_all true]
+	
+	foreach contained $contents {
+	    if {$verbose >= 4} {
+		$contained _is_a IDL:omg.org/CORBA/Contained:1.0
+		puts "Visiting [$contained absolute_name]"
+	    }
+
+	    if {[$container def_kind] != "dk_Module"} {
+		AddDep $contained $container
+	    }
+
+	    set kind [$contained def_kind]
+	    switch $kind {
+		dk_Constant          { ConstantDef $contained }
+		dk_Struct            { StructDef $contained }
+		dk_Union             { UnionDef $contained }
+		dk_Alias             { AliasDef $contained }
+		dk_Exception         { ExceptionDef $contained }
+		dk_Attribute         { AttributeDef $contained }
+		dk_Operation         { OperationDef $contained }
+		dk_Interface -
+		dk_LocalInterface -
+		dk_AbstractInterface { InterfaceDef $contained }
+		dk_Value             { ValueDef $contained }
+		dk_ValueBox          { ValueBoxDef $contained }
+		dk_ValueMember       { ValueMemberDef $contained }
+		dk_Module            {}
+		dk_Enum              {}
+		dk_Native            {}
+		dk_Typedef -
+		dk_Primitive -
+		dk_String -
+		dk_Wstring -
+		dk_Fixed -
+		dk_Sequence -
+		dk_Array -
+		dk_Repository -
+		default {
+		    error "oops: illegal contained item: $kind"
+		}
+	    }
+	    if {[$contained _is_a IDL:omg.org/CORBA/Container:1.0]} {
+		Traverse $contained
+	    }
+
+	    if {$kind != "dk_Module"} {
+		lappend elements [$contained absolute_name]
+	    }
+	}
+    }
+
+    proc DepthFirstTraversal {node} {
+	variable deps
+	variable visited
+	variable postorder
+
+	if {[info exists visited($node)]} {
+	    return
+	}
+
+	set visited($node) 1
+
+	if {[info exists deps($node)]} {
+	    foreach child $deps($node) {
+		DepthFirstTraversal $child
+	    }
+	}
+
+	lappend postorder $node
+    }
+
+    #
+    # "main" function
+    #
+
+    proc BuildDeps {container} {
+	variable elements [list]
+	variable postorder [list]
+	variable visited
+	global verbose
+
+	if {![info exists verbose]} {
+	    set verbose 0
+	}
+
+	#
+	# Build dependencies
+	#
+
+	Traverse $container
+
+	#
+	# make depth-first traversal
+	#
+
+	catch {unset visited}
+
+	foreach element $elements {
+	    DepthFirstTraversal $element
+	}
+
+	return $postorder
+    }
+}
+
+#
+# ----------------------------------------------------------------------
+# Produce an output string representing the Interface Repository's
+# contents.
+# ----------------------------------------------------------------------
+#
+
+namespace eval CodeGen {
+    proc emitRepoId {obj} {
+	return [list [$obj id] [$obj name] [$obj version]]
+    }
+
+    proc emitIDLTypeName {obj} {
+	#
+	# Emit type name for a primitive, named or anonymous type
+	#
+	if {[$obj _is_a IDL:omg.org/CORBA/PrimitiveDef:1.0]} {
+	    switch [$obj kind] {
+		pk_void     { set res void }
+		pk_short    { set res short }
+		pk_long     { set res long }
+		pk_ushort   { set res "unsigned short" }
+		pk_ulong    { set res "unsigned long" }
+		pk_float    { set res float }
+		pk_double   { set res double }
+		pk_boolean  { set res boolean }
+		pk_char     { set res char }
+		pk_octet    { set res octet }
+		pk_any      { set res any }
+		pk_TypeCode { set res TypeCode }
+		pk_string   { set res string }
+		pk_objref   { set res Object }
+		pk_longlong { set res "long long" }
+		pk_ulonglong { set res "unsigned long long" }
+		pk_longdouble { set res "long double" }
+		pk_wchar    { set res wchar }
+		pk_wstring  { set res wstring }
+		pk_value_base { set res "value base" }
+		default     {
+		    error "oops: unknown primitive type [$obj kind]"
+		}
+	    }
+	} elseif {[$obj _is_a IDL:omg.org/CORBA/TypedefDef:1.0]} {
+	    set res [$obj id]
+	} else {
+	    switch [$obj def_kind] {
+		dk_String   { set res [list string [$obj bound]] }
+		dk_Wstring  { set res [list wstring [$obj bound]] }
+		dk_Fixed    { set res [list fixed [$obj digits] [$obj scale]] }
+		dk_Sequence {
+		    set res [list sequence \
+			    [emitIDLTypeName [$obj element_type_def]]]
+		    if {[$obj bound] > 0} {
+			lappend res [$obj bound]
+		    }
+		}
+		dk_Array {
+		    set res [list array \
+			    [emitIDLTypeName [$obj element_type_def]] \
+			    [$obj length]]
+		}
+		dk_Interface -
+		dk_LocalInterface -
+		dk_AbstractInterface -
+		dk_Value {
+		    set res [$obj id]
+		}
+	    }
+	}
+	return $res
+    }
+
+    proc emitConstant {obj} {
+	return [list const \
+		[emitRepoId $obj] \
+		[emitIDLTypeName [$obj type_def]] \
+		[lindex [$obj value] 1]]
+    }
+
+    proc emitStruct {obj} {
+	set members [$obj members]
+	set elements [list]
+	foreach member $members {
+	    array set md $member
+	    lappend elements [list $md(name) \
+		    [emitIDLTypeName $md(type_def)]]
+	}
+	catch {array unset md}
+	return [list struct [emitRepoId $obj] $elements [emitContainer $obj]]
+    }
+
+    proc emitUnion {obj} {
+	set members [$obj members]
+	set elements [list]
+	foreach member $members {
+	    array set md $member
+	    if {[lindex $md(label) 0] == "octet"} {
+		binary scan [lindex $md(label) 1] c foo
+		if {$foo == 0} {
+		    set label "(default)"
+		} else {
+		    set label [lindex $md(label) 1]
+		}
+	    } else {
+		set label [lindex $md(label) 1]
+	    }
+	    lappend elements [list $label $md(name) \
+		    [emitIDLTypeName $md(type_def)]]
+	}
+	catch {array unset md}
+	return [list union [emitRepoId $obj] \
+		[emitIDLTypeName [$obj discriminator_type_def]] \
+		$elements [emitContainer $obj]]
+    }
+
+    proc emitAlias {obj} {
+	return [list typedef [emitRepoId $obj] \
+		[emitIDLTypeName [$obj original_type_def]]]
+    }
+
+    proc emitException {obj} {
+	set members [$obj members]
+	set elements [list]
+	foreach member $members {
+	    array set md $member
+	    lappend elements [list $md(name) \
+		    [emitIDLTypeName $md(type_def)]]
+	}
+	catch {array unset md}
+	return [list exception [emitRepoId $obj] \
+		$elements [emitContainer $obj]]
+    }
+
+    proc emitEnum {obj} {
+	return [list enum [emitRepoId $obj] [$obj members]]
+    }
+
+    proc emitAttribute {obj} {
+	set res [list attribute \
+		[emitRepoId $obj] \
+		[emitIDLTypeName [$obj type_def]]]
+	if {[$obj mode] == "ATTR_READONLY"} {
+	    lappend res readonly
+	}
+	return $res
+    }
+
+    proc emitOperation {obj} {
+	set params [$obj params]
+	set pd [list]
+	foreach param $params {
+	    array set md $param
+	    switch $md(mode) {
+		PARAM_IN { set mode in }
+		PARAM_OUT { set mode out }
+		PARAM_INOUT { set mode inout }
+	    }
+	    lappend pd [list $mode $md(name) \
+		    [emitIDLTypeName $md(type_def)]]
+	}
+	catch {array unset md}
+
+	set exceptions [$obj exceptions]
+	set ed [list]
+	foreach exception $exceptions {
+	    lappend ed [$exception id]
+	}
+
+	set res [list operation [emitRepoId $obj] \
+		[emitIDLTypeName [$obj result_def]] \
+		$pd $ed]
+	if {[$obj mode] == "OP_ONEWAY"} {
+	    lappend res oneway
+	}
+
+	return $res
+    }
+
+    proc emitInterface {obj} {
+	set bases [$obj base_interfaces]
+	set bd [list]
+	foreach base $bases {
+	    lappend bd [$base id]
+	}
+	
+	switch [$obj def_kind] {
+	    dk_Interface { set name "interface" }
+	    dk_LocalInterface { set name "localinterface" }
+	    dk_AbstractInterface { set name "abstractinterface" }
+	    default { error "oops" }
+	}
+
+	return [list $name [emitRepoId $obj] $bd \
+		[emitContainer $obj]]
+
+    }
+
+    proc emitValue {obj} {
+	set base [$obj base_value]
+	set bases [$obj abstract_base_values]
+	set supps [$obj supported_interfaces]
+	set inits [$obj initializers]
+
+	if {$base != "0"} {
+	    set base_id [$base id]
+	} else {
+	    set base_id "0"
+	}
+
+	set bases_id [list]
+	foreach abase $bases {
+	    lappend bases_id [$abase id]
+	}
+
+	set supp_id [list]
+	foreach supp $supps {
+	    lappend supp_id [$supp id]
+	}
+
+	set ninits [list]
+	foreach init $inits {
+	    array set ie $init
+	    set nmembers [list]
+	    foreach member $ie(members) {
+		array set im $member
+		lappend nmembers [list $im(name) \
+			[emitIDLTypeName $im(type_def)]]
+	    }
+	    catch {array unset im}
+	    lappend ninits [list $ie(name) $nmembers]
+	}
+	catch {array unset ie}
+
+	set mods [list]
+	if {[$obj is_abstract]} {
+	    lappend mods "abstract"
+	}
+
+	if {[$obj is_custom]} {
+	    lappend mods "custom"
+	}
+
+	if {[$obj is_truncatable]} {
+	    lappend mods "truncatable"
+	}
+
+	return [list valuetype \
+		[emitRepoId $obj] \
+		$base_id \
+		$bases_id \
+		$supp_id \
+		$ninits \
+		$mods \
+		[emitContainer $obj]]
+    }
+
+    proc emitValueBox {obj} {
+	return [list valuebox [emitRepoId $obj] \
+		[emitIDLTypeName [$obj original_type_def]]]
+    }
+
+    proc emitValueMember {obj} {
+	if {[$obj access] == 0} {
+	    set visi "private"
+	} else {
+	    set visi "public"
+	}
+	return [list valuemember \
+		[emitRepoId $obj] \
+		[emitIDLTypeName [$obj type_def]]\
+		$visi]
+    }
+
+    proc emitNative {obj} {
+	return [list native [emitRepoId $obj]]
+    }
+
+    proc emit {contained} {
+	variable container
+	variable visited
+
+	set name [$contained absolute_name]
+	set kind [$contained def_kind]
+
+	# puts "emit $name"
+
+	set visited($name) 1
+
+	switch $kind {
+	    dk_Constant          { set res [emitConstant $contained] }
+	    dk_Struct            { set res [emitStruct $contained] }
+	    dk_Union             { set res [emitUnion $contained] }
+	    dk_Alias             { set res [emitAlias $contained] }
+	    dk_Exception         { set res [emitException $contained] }
+	    dk_Enum              { set res [emitEnum $contained] }
+	    dk_Attribute         { set res [emitAttribute $contained] }
+	    dk_Operation         { set res [emitOperation $contained] }
+	    dk_Interface  -
+	    dk_LocalInterface -
+	    dk_AbstractInterface { set res [emitInterface $contained] }
+	    dk_Value             { set res [emitValue $contained] }
+	    dk_ValueBox          { set res [emitValueBox $contained] }
+	    dk_ValueMember       { set res [emitValueMember $contained] }
+	    dk_Module            { set res {} }
+	    dk_Native            { set res [emitNative $contained] }
+	    dk_Typedef -
+	    dk_Primitive -
+	    dk_String -
+	    dk_Wstring -
+	    dk_Fixed -
+	    dk_Sequence -
+	    dk_Array -
+	    dk_Repository -
+	    default {
+		error "oops: illegal contained item: $kind"
+	    }
+	}
+	return $res
+    }
+
+    proc emitForwardDecl {element} {
+	variable container
+	variable moduledata
+	variable module
+	variable data
+
+	set if [$container lookup $element]
+	ChangeModule [$if defined_in]
+
+	switch [$if def_kind] {
+	    dk_Struct { set type "struct" }
+	    dk_Union { set type "union" }
+	    dk_Interface { set type "interface" }
+	    dk_LocalInterface { set type "localinterface" }
+	    dk_AbstractInterface { set type "abstractinterface" }
+	    dk_Value { set type "valuetype" }
+	}
+
+	return [list $type [emitRepoId $if]]
+    }
+
+    proc emitContainer {obj} {
+	variable postorder
+	variable visited
+	variable container
+
+	set container_name [$obj absolute_name]
+	set to_visit [list]
+	set new_po [list]
+	set res [list]
+
+	foreach element $postorder {
+	    if {[string range $element 0 4] == "_fwd_"} {
+		set elname [string range $element 5 end]
+	    } else {
+		set elname $element
+	    }
+	    if {[Deps::DirectlyContains $container_name $elname] == 1} {
+		lappend to_visit $element
+	    } else {
+		lappend new_po $element
+	    }
+	}
+
+	set postorder $new_po
+	unset new_po
+
+	foreach element $to_visit {
+	    if {[string range $element 0 4] == "_fwd_"} {
+		set realname [string range $element 5 end]
+		if {![info exists visited($element)] && \
+			![info exists visited($realname)]} {
+		    lappend res [emitForwardDecl $realname]
+		}
+	    } elseif {![info exists visited($element)] && \
+		    [Deps::DirectlyContains $container_name $element] == 1} {
+		lappend res [emit [$container lookup $element]]
+	    }
+	}
+
+	return $res
+    }
+
+    proc ChangeModule {c} {
+	variable data
+	variable moduledata
+	variable module
+	variable container
+
+	while {![$c _is_a IDL:omg.org/CORBA/ModuleDef:1.0] && \
+		[$c _is_a IDL:omg.org/CORBA/Contained:1.0]} {
+	    set c [$c defined_in]
+	}
+
+	if {[$c _is_a IDL:omg.org/CORBA/ModuleDef:1.0]} {
+	    set newmod [$c absolute_name]
+	} elseif {[$c _is_a IDL:omg.org/CORBA/Repository:1.0]} {
+	    set newmod ::
+	} else {
+	    return
+	}
+
+	if {$newmod != $module} {
+	    if {$module != "::"} {
+		set oldmod [$container lookup $module]
+		while {[$oldmod _is_a IDL:omg.org/CORBA/ModuleDef:1.0]} {
+		    set moduledata [list [list module \
+			    [emitRepoId $oldmod] \
+			    $moduledata]]
+		    set oldmod [$oldmod defined_in]
+		}
+		lappend data [lindex $moduledata 0]
+		unset moduledata
+	    }
+	    set module $newmod
+	}
+    }
+
+    proc AddData {d} {
+	variable moduledata
+	variable module
+	variable data
+
+	if {$module == "::"} {
+	    lappend data $d
+	} else {
+	    lappend moduledata $d
+	}
+    }
+
+    proc CodeGen { _container _postorder } {
+	variable container $_container
+	variable postorder $_postorder
+	variable visited
+
+	catch {unset visited}
+
+	variable data [list]
+	variable module ::
+	variable moduledata [list]
+
+	foreach element $postorder {
+	    if {[string range $element 0 4] == "_fwd_"} {
+		set realname [string range $element 5 end]
+		if {![info exists visited($element)] && \
+			![info exists visited($realname)]} {
+		    set contained [$container lookup $realname]
+		    ChangeModule [$contained defined_in]
+		    AddData [emitForwardDecl $realname]
+		}
+	    } else {
+		if {![info exists visited($element)]} {
+		    set contained [$container lookup $element]
+		    ChangeModule [$contained defined_in]
+		    AddData [emit $contained]
+		}
+	    }
+	}
+
+	ChangeModule $container
+	return $data
+    }
+}
+
+#
+# ----------------------------------------------------------------------
+# Produce (print) an implementation skeleton for interfaces.
+# ----------------------------------------------------------------------
+#
+
+namespace eval ImplGen {
+    proc emitLine {{data {}}} {
+	variable indent
+	variable out
+
+	if {$data != {}} {
+	    for {set i 0} {$i < $indent} {incr i} {
+		puts -nonewline $out "    "
+	    }
+	}
+
+	puts $out $data
+    }
+
+    proc Indent {{increment 1}} {
+	variable indent
+	incr indent $increment
+    }
+
+    proc TypeOf {idltype} {
+	set kind [$idltype def_kind]
+
+	switch $kind {
+	    dk_Struct    { set res "struct [$idltype name]" }
+	    dk_Union     { set res "union [$idltype name]" }
+	    dk_Alias     { set res [TypeOf [$idltype original_type_def]] }
+	    dk_Enum      { set res "enum [$idltype name]" }
+	    dk_Primitive {
+		set ptype [$idltype kind]
+		set res [string range $ptype 3 end]
+	    }
+	    dk_String    { set res "string<[$idltype bound]>" }
+	    dk_Wstring   { set res "wstring<[$idltype bound]>" }
+	    dk_Sequence  {
+		if {[$idltype bound] == 0} {
+		    set res "sequence<[TypeOf [$idltype element_type_def]]>"
+		} else {
+		    set res "sequence<[TypeOf [$idltype element_type_def]], [$idltype bound]"
+		}
+	    }
+	    dk_Array {
+		set res "[TypeOf [$idltype element_type_def]]\[[$idltype length]\]"
+	    }
+	    dk_Interface { set res "[$idltype id] object reference" }
+	    dk_Value     { set res "valuetype [$idltype name]" }
+	    default {
+		error "oops, unknown type"
+	    }
+	}
+	return $res
+    }
+
+    proc emitAttributeDcl {attr} {
+	emitLine "# type of [$attr name] is [TypeOf [$attr type_def]]"
+	emitLine "public variable [$attr name]"
+	emitLine
+    }
+
+    proc emitOperationDcl {op} {
+	set params [$op params]
+	set allpars [list]
+	foreach param [$op params] {
+	    array set pardata $param
+	    lappend allpars $pardata(name)
+	}
+	emitLine "public method [$op name] \{[join $allpars]\}"
+    }
+
+    proc emitInterfaceDcl {iface} {
+	emitLine "#"
+	emitLine "# declaration for Interface [$iface absolute_name]"
+	emitLine "#"
+	emitLine
+
+	emitLine "class [$iface absolute_name] \{"
+	Indent
+
+	#
+	# class inheritance
+	#
+
+	set bases [$iface base_interfaces]
+
+	if {[llength $bases] == 0} {
+	    emitLine "inherit ::PortableServer::ServantBase"
+	} elseif {[llength $bases] == 1} {
+	    set base [lindex $bases 0]
+	    emitLine "inherit [$base absolute_name]"
+	} else {
+	    puts stderr "warning: [$iface absolute_name] uses multiple inheritance"
+	    emitLine "#"
+	    emitLine "# This causes \"diamond inheritance\" and is not supported"
+	    emitLine "# by \[incr Tcl\] yet. You'll have to use delegation here."
+	    emitLine "#"
+
+	    set inheritances [list]
+	    foreach base $bases {
+		lappend inheritances [$base absolute_name]
+	    }
+	    emitLine "inherit [join $inheritances]"
+	}
+	emitLine
+
+	#
+	# method _Interface
+	#
+
+	emitLine "public method _Interface \{\} \{"
+	Indent
+	emitLine "return \"[$iface id]\""
+	Indent -1
+	emitLine "\}"
+	emitLine
+
+	#
+	# Handle Attributes
+	#
+
+	set attrs [$iface contents dk_Attribute true]
+	foreach attr $attrs {
+	    emitAttributeDcl $attr
+	}
+
+	#
+	# Handle Operations
+	#
+
+	set ops [$iface contents dk_Operation true]
+	foreach op $ops {
+	    emitOperationDcl $op
+	}
+
+	#
+	# done
+	#
+
+	Indent -1
+	emitLine "\}"
+	emitLine
+    }
+
+    proc emitOperationBody {op} {
+	emitLine "#"
+	emitLine "# operation [$op name]"
+	emitLine "#"
+	set params [$op params]
+	set allpars [list]
+	if {[llength $params] > 0} {
+	    emitLine "#   parameters:"
+	    foreach param [$op params] {
+		array set pardata $param
+		switch $pardata(mode) {
+		    PARAM_IN    { set dir in }
+		    PARAM_OUT   { set dir out }
+		    PARAM_INOUT { set dir inout }
+		}
+		emitLine "#     $pardata(name): $dir [TypeOf $pardata(type_def)]"
+		lappend allpars $pardata(name)
+	    }
+	    emitLine "#"
+	}
+	emitLine "#   returns:"
+	emitLine "#     [TypeOf [$op result_def]]"
+	emitLine "#"
+	set exs [$op exceptions]
+	if {[llength $exs] > 0} {
+	    emitLine "#   raises:"
+	    foreach ex $exs {
+		emitLine "#     [$ex id]"
+	    }
+	    emitLine "#"
+	}
+	emitLine
+	emitLine "body [$op absolute_name] \{[join $allpars]\} \{"
+	Indent
+	emitLine "#"
+	emitLine "# Add implementation here"
+	emitLine "#"
+	emitLine
+	emitLine "error \"Unimplemented method [$op absolute_name]\""
+	Indent -1
+	emitLine "\}"
+	emitLine
+    }
+
+    proc emitInterfaceBody {iface} {
+	emitLine "#"
+	emitLine "# ----------------------------------------------------------------------"
+	emitLine "#"
+	emitLine "# code for Interface [$iface absolute_name]"
+	emitLine "#"
+	emitLine "# ----------------------------------------------------------------------"
+	emitLine "#"
+	emitLine
+
+	#
+	# Handle Operations
+	#
+
+	set ops [$iface contents dk_Operation true]
+	foreach op $ops {
+	    emitOperationBody $op
+	}
+    }
+
+    proc ImplGen {_container postorder {_out stdout}} {
+	variable container $_container
+	variable out $_out
+	variable module ::
+	variable indent 0
+
+	emitLine "#"
+	emitLine "# ----------------------------------------------------------------------"
+	emitLine "#"
+	emitLine "# Declarations"
+	emitLine "#"
+	emitLine "# ----------------------------------------------------------------------"
+	emitLine "#"
+	emitLine
+
+	#
+	# First pass: emit declarations
+	#
+
+	foreach element $postorder {
+	    set contained [$container lookup $element]
+	    if {$contained != 0 && [$contained def_kind] == "dk_Interface"} {
+		emitInterfaceDcl $contained
+	    }
+	}
+
+	#
+	# Second pass: emit empty method bodies
+	#
+
+	foreach element $postorder {
+	    set contained [$container lookup $element]
+	    if {$contained != 0 && [$contained def_kind] == "dk_Interface"} {
+		emitInterfaceBody $contained
+	    }
+	}
+    }
+}
+
+#
+# ----------------------------------------------------------------------
+# Type information for the Interface Repository, so that we can talk to
+# it.
+# ----------------------------------------------------------------------
+#
+
+#
+# This file was automatically generated from ir.idl
+# by idl2tcl. Do not edit.
+#
+
+set _ir_ir \
+{{module {IDL:omg.org/CORBA:1.0 CORBA 1.0} {{typedef\
+{IDL:omg.org/CORBA/Identifier:1.0 Identifier 1.0} string} {typedef\
+{IDL:omg.org/CORBA/VersionSpec:1.0 VersionSpec 1.0} string} {typedef\
+{IDL:omg.org/CORBA/RepositoryId:1.0 RepositoryId 1.0} string} {enum\
+{IDL:omg.org/CORBA/DefinitionKind:1.0 DefinitionKind 1.0} {dk_none dk_all\
+dk_Attribute dk_Constant dk_Exception dk_Interface dk_Module dk_Operation\
+dk_Typedef dk_Alias dk_Struct dk_Union dk_Enum dk_Primitive dk_String\
+dk_Sequence dk_Array dk_Repository dk_Wstring dk_Fixed dk_Value dk_ValueBox\
+dk_ValueMember dk_Native dk_AbstractInterface dk_LocalInterface dk_Component\
+dk_Home dk_Factory dk_Finder dk_PrimaryKey dk_Emits dk_Publishes dk_Consumes\
+dk_Provides dk_Uses dk_Event}} {interface {IDL:omg.org/CORBA/IRObject:1.0\
+IRObject 1.0} {} {{attribute {IDL:omg.org/CORBA/IRObject/def_kind:1.0\
+def_kind 1.0} IDL:omg.org/CORBA/DefinitionKind:1.0 readonly} {operation\
+{IDL:omg.org/CORBA/IRObject/destroy:1.0 destroy 1.0} void {} {}}}} {interface\
+{IDL:omg.org/CORBA/IDLType:1.0 IDLType 1.0} IDL:omg.org/CORBA/IRObject:1.0\
+{{attribute {IDL:omg.org/CORBA/IDLType/type:1.0 type 1.0} TypeCode\
+readonly}}} {struct {IDL:omg.org/CORBA/StructMember:1.0 StructMember 1.0}\
+{{name IDL:omg.org/CORBA/Identifier:1.0} {type TypeCode} {type_def\
+IDL:omg.org/CORBA/IDLType:1.0}} {}} {typedef\
+{IDL:omg.org/CORBA/StructMemberSeq:1.0 StructMemberSeq 1.0} {sequence\
+IDL:omg.org/CORBA/StructMember:1.0}} {struct\
+{IDL:omg.org/CORBA/UnionMember:1.0 UnionMember 1.0} {{name\
+IDL:omg.org/CORBA/Identifier:1.0} {label any} {type TypeCode} {type_def\
+IDL:omg.org/CORBA/IDLType:1.0}} {}} {typedef\
+{IDL:omg.org/CORBA/UnionMemberSeq:1.0 UnionMemberSeq 1.0} {sequence\
+IDL:omg.org/CORBA/UnionMember:1.0}} {typedef\
+{IDL:omg.org/CORBA/EnumMemberSeq:1.0 EnumMemberSeq 1.0} {sequence\
+IDL:omg.org/CORBA/Identifier:1.0}} {typedef {IDL:omg.org/CORBA/Visibility:1.0\
+Visibility 1.0} short} {const {IDL:omg.org/CORBA/PRIVATE_MEMBER:1.0\
+PRIVATE_MEMBER 1.0} IDL:omg.org/CORBA/Visibility:1.0 0} {const\
+{IDL:omg.org/CORBA/PUBLIC_MEMBER:1.0 PUBLIC_MEMBER 1.0}\
+IDL:omg.org/CORBA/Visibility:1.0 1} {typedef\
+{IDL:omg.org/CORBA/ValueModifier:1.0 ValueModifier 1.0} short} {const\
+{IDL:omg.org/CORBA/VM_NONE:1.0 VM_NONE 1.0}\
+IDL:omg.org/CORBA/ValueModifier:1.0 0} {const\
+{IDL:omg.org/CORBA/VM_CUSTOM:1.0 VM_CUSTOM 1.0}\
+IDL:omg.org/CORBA/ValueModifier:1.0 1} {const\
+{IDL:omg.org/CORBA/VM_ABSTRACT:1.0 VM_ABSTRACT 1.0}\
+IDL:omg.org/CORBA/ValueModifier:1.0 2} {const\
+{IDL:omg.org/CORBA/VM_TRUNCATABLE:1.0 VM_TRUNCATABLE 1.0}\
+IDL:omg.org/CORBA/ValueModifier:1.0 3} {struct\
+{IDL:omg.org/CORBA/ValueMember:1.0 ValueMember 1.0} {{name\
+IDL:omg.org/CORBA/Identifier:1.0} {id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{defined_in IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {type TypeCode} {type_def\
+IDL:omg.org/CORBA/IDLType:1.0} {access IDL:omg.org/CORBA/Visibility:1.0}} {}}\
+{typedef {IDL:omg.org/CORBA/ValueMemberSeq:1.0 ValueMemberSeq 1.0} {sequence\
+IDL:omg.org/CORBA/ValueMember:1.0}} {typedef\
+{IDL:omg.org/CORBA/ScopedName:1.0 ScopedName 1.0} string} {interface\
+{IDL:omg.org/CORBA/Container:1.0 Container 1.0}} {interface\
+{IDL:omg.org/CORBA/Repository:1.0 Repository 1.0}} {interface\
+{IDL:omg.org/CORBA/Contained:1.0 Contained 1.0}\
+IDL:omg.org/CORBA/IRObject:1.0 {{attribute\
+{IDL:omg.org/CORBA/Contained/id:1.0 id 1.0}\
+IDL:omg.org/CORBA/RepositoryId:1.0} {attribute\
+{IDL:omg.org/CORBA/Contained/name:1.0 name 1.0}\
+IDL:omg.org/CORBA/Identifier:1.0} {attribute\
+{IDL:omg.org/CORBA/Contained/version:1.0 version 1.0}\
+IDL:omg.org/CORBA/VersionSpec:1.0} {attribute\
+{IDL:omg.org/CORBA/Contained/defined_in:1.0 defined_in 1.0}\
+IDL:omg.org/CORBA/Container:1.0 readonly} {attribute\
+{IDL:omg.org/CORBA/Contained/absolute_name:1.0 absolute_name 1.0}\
+IDL:omg.org/CORBA/ScopedName:1.0 readonly} {attribute\
+{IDL:omg.org/CORBA/Contained/containing_repository:1.0 containing_repository\
+1.0} IDL:omg.org/CORBA/Repository:1.0 readonly} {struct\
+{IDL:omg.org/CORBA/Contained/Description:1.0 Description 1.0} {{kind\
+IDL:omg.org/CORBA/DefinitionKind:1.0} {value any}} {}} {operation\
+{IDL:omg.org/CORBA/Contained/describe:1.0 describe 1.0}\
+IDL:omg.org/CORBA/Contained/Description:1.0 {} {}} {operation\
+{IDL:omg.org/CORBA/Contained/move:1.0 move 1.0} void {{in new_container\
+IDL:omg.org/CORBA/Container:1.0} {in new_name\
+IDL:omg.org/CORBA/Identifier:1.0} {in new_version\
+IDL:omg.org/CORBA/VersionSpec:1.0}} {}}}} {typedef\
+{IDL:omg.org/CORBA/ContainedSeq:1.0 ContainedSeq 1.0} {sequence\
+IDL:omg.org/CORBA/Contained:1.0}} {interface {IDL:omg.org/CORBA/ModuleDef:1.0\
+ModuleDef 1.0}} {interface {IDL:omg.org/CORBA/ConstantDef:1.0 ConstantDef\
+1.0}} {interface {IDL:omg.org/CORBA/StructDef:1.0 StructDef 1.0}} {interface\
+{IDL:omg.org/CORBA/ExceptionDef:1.0 ExceptionDef 1.0}} {interface\
+{IDL:omg.org/CORBA/UnionDef:1.0 UnionDef 1.0}} {interface\
+{IDL:omg.org/CORBA/EnumDef:1.0 EnumDef 1.0}} {interface\
+{IDL:omg.org/CORBA/AliasDef:1.0 AliasDef 1.0}} {interface\
+{IDL:omg.org/CORBA/InterfaceDef:1.0 InterfaceDef 1.0}} {typedef\
+{IDL:omg.org/CORBA/InterfaceDefSeq:1.0 InterfaceDefSeq 1.0} {sequence\
+IDL:omg.org/CORBA/InterfaceDef:1.0}} {interface\
+{IDL:omg.org/CORBA/AbstractInterfaceDef:1.0 AbstractInterfaceDef 1.0}}\
+{typedef {IDL:omg.org/CORBA/AbstractInterfaceDefSeq:1.0\
+AbstractInterfaceDefSeq 1.0} {sequence\
+IDL:omg.org/CORBA/AbstractInterfaceDef:1.0}} {interface\
+{IDL:omg.org/CORBA/LocalInterfaceDef:1.0 LocalInterfaceDef 1.0}} {interface\
+{IDL:omg.org/CORBA/ValueDef:1.0 ValueDef 1.0}} {typedef\
+{IDL:omg.org/CORBA/ValueDefSeq:1.0 ValueDefSeq 1.0} {sequence\
+IDL:omg.org/CORBA/ValueDef:1.0}} {struct {IDL:omg.org/CORBA/Initializer:1.0\
+Initializer 1.0} {{members IDL:omg.org/CORBA/StructMemberSeq:1.0} {name\
+IDL:omg.org/CORBA/Identifier:1.0}} {}} {typedef\
+{IDL:omg.org/CORBA/InitializerSeq:1.0 InitializerSeq 1.0} {sequence\
+IDL:omg.org/CORBA/Initializer:1.0}} {typedef\
+{IDL:omg.org/CORBA/ExceptionDefSeq:1.0 ExceptionDefSeq 1.0} {sequence\
+IDL:omg.org/CORBA/ExceptionDef:1.0}} {struct\
+{IDL:omg.org/CORBA/ExceptionDescription:1.0 ExceptionDescription 1.0} {{name\
+IDL:omg.org/CORBA/Identifier:1.0} {id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{defined_in IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {type TypeCode}} {}} {typedef\
+{IDL:omg.org/CORBA/ExcDescriptionSeq:1.0 ExcDescriptionSeq 1.0} {sequence\
+IDL:omg.org/CORBA/ExceptionDescription:1.0}} {struct\
+{IDL:omg.org/CORBA/ExtInitializer:1.0 ExtInitializer 1.0} {{members\
+IDL:omg.org/CORBA/StructMemberSeq:1.0} {exceptions_def\
+IDL:omg.org/CORBA/ExceptionDefSeq:1.0} {exceptions\
+IDL:omg.org/CORBA/ExcDescriptionSeq:1.0} {name\
+IDL:omg.org/CORBA/Identifier:1.0}} {}} {typedef\
+{IDL:omg.org/CORBA/ExtInitializerSeq:1.0 ExtInitializerSeq 1.0} {sequence\
+IDL:omg.org/CORBA/ExtInitializer:1.0}} {interface\
+{IDL:omg.org/CORBA/ExtValueDef:1.0 ExtValueDef 1.0}} {interface\
+{IDL:omg.org/CORBA/ValueBoxDef:1.0 ValueBoxDef 1.0}} {interface\
+{IDL:omg.org/CORBA/NativeDef:1.0 NativeDef 1.0}} {interface\
+{IDL:omg.org/CORBA/Container:1.0 Container 1.0}\
+IDL:omg.org/CORBA/IRObject:1.0 {{operation\
+{IDL:omg.org/CORBA/Container/lookup:1.0 lookup 1.0}\
+IDL:omg.org/CORBA/Contained:1.0 {{in search_name\
+IDL:omg.org/CORBA/ScopedName:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/contents:1.0 contents 1.0}\
+IDL:omg.org/CORBA/ContainedSeq:1.0 {{in limit_type\
+IDL:omg.org/CORBA/DefinitionKind:1.0} {in exclude_inherited boolean}} {}}\
+{operation {IDL:omg.org/CORBA/Container/lookup_name:1.0 lookup_name 1.0}\
+IDL:omg.org/CORBA/ContainedSeq:1.0 {{in search_name\
+IDL:omg.org/CORBA/Identifier:1.0} {in levels_to_search long} {in limit_type\
+IDL:omg.org/CORBA/DefinitionKind:1.0} {in exclude_inherited boolean}} {}}\
+{struct {IDL:omg.org/CORBA/Container/Description:1.0 Description 1.0}\
+{{contained_object IDL:omg.org/CORBA/Contained:1.0} {kind\
+IDL:omg.org/CORBA/DefinitionKind:1.0} {value any}} {}} {typedef\
+{IDL:omg.org/CORBA/Container/DescriptionSeq:1.0 DescriptionSeq 1.0} {sequence\
+IDL:omg.org/CORBA/Container/Description:1.0}} {operation\
+{IDL:omg.org/CORBA/Container/describe_contents:1.0 describe_contents 1.0}\
+IDL:omg.org/CORBA/Container/DescriptionSeq:1.0 {{in limit_type\
+IDL:omg.org/CORBA/DefinitionKind:1.0} {in exclude_inherited boolean} {in\
+max_returned_objs long}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_module:1.0 create_module 1.0}\
+IDL:omg.org/CORBA/ModuleDef:1.0 {{in id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{in name IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_constant:1.0 create_constant 1.0}\
+IDL:omg.org/CORBA/ConstantDef:1.0 {{in id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{in name IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in type IDL:omg.org/CORBA/IDLType:1.0}\
+{in value any}} {}} {operation {IDL:omg.org/CORBA/Container/create_struct:1.0\
+create_struct 1.0} IDL:omg.org/CORBA/StructDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in members\
+IDL:omg.org/CORBA/StructMemberSeq:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_exception:1.0 create_exception 1.0}\
+IDL:omg.org/CORBA/ExceptionDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in members\
+IDL:omg.org/CORBA/StructMemberSeq:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_union:1.0 create_union 1.0}\
+IDL:omg.org/CORBA/UnionDef:1.0 {{in id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{in name IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in discriminator_type\
+IDL:omg.org/CORBA/IDLType:1.0} {in members\
+IDL:omg.org/CORBA/UnionMemberSeq:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_enum:1.0 create_enum 1.0}\
+IDL:omg.org/CORBA/EnumDef:1.0 {{in id IDL:omg.org/CORBA/RepositoryId:1.0} {in\
+name IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in members\
+IDL:omg.org/CORBA/EnumMemberSeq:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_alias:1.0 create_alias 1.0}\
+IDL:omg.org/CORBA/AliasDef:1.0 {{in id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{in name IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in original_type\
+IDL:omg.org/CORBA/IDLType:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_interface:1.0 create_interface 1.0}\
+IDL:omg.org/CORBA/InterfaceDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in base_interfaces\
+IDL:omg.org/CORBA/InterfaceDefSeq:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_abstract_interface:1.0\
+create_abstract_interface 1.0} IDL:omg.org/CORBA/AbstractInterfaceDef:1.0\
+{{in id IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in base_interfaces\
+IDL:omg.org/CORBA/AbstractInterfaceDefSeq:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_local_interface:1.0\
+create_local_interface 1.0} IDL:omg.org/CORBA/LocalInterfaceDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in base_interfaces\
+IDL:omg.org/CORBA/InterfaceDefSeq:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_value:1.0 create_value 1.0}\
+IDL:omg.org/CORBA/ValueDef:1.0 {{in id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{in name IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in is_custom boolean} {in is_abstract\
+boolean} {in base_value IDL:omg.org/CORBA/ValueDef:1.0} {in is_truncatable\
+boolean} {in abstract_base_values IDL:omg.org/CORBA/ValueDefSeq:1.0} {in\
+supported_interfaces IDL:omg.org/CORBA/InterfaceDefSeq:1.0} {in initializers\
+IDL:omg.org/CORBA/InitializerSeq:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_ext_value:1.0 create_ext_value 1.0}\
+IDL:omg.org/CORBA/ExtValueDef:1.0 {{in id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{in name IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in is_custom boolean} {in is_abstract\
+boolean} {in base_value IDL:omg.org/CORBA/ValueDef:1.0} {in is_truncatable\
+boolean} {in abstract_base_values IDL:omg.org/CORBA/ValueDefSeq:1.0} {in\
+supported_interfaces IDL:omg.org/CORBA/InterfaceDefSeq:1.0} {in initializers\
+IDL:omg.org/CORBA/ExtInitializerSeq:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_value_box:1.0 create_value_box 1.0}\
+IDL:omg.org/CORBA/ValueBoxDef:1.0 {{in id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{in name IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in original_type_def\
+IDL:omg.org/CORBA/IDLType:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Container/create_native:1.0 create_native 1.0}\
+IDL:omg.org/CORBA/NativeDef:1.0 {{in id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{in name IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0}} {}}}} {enum\
+{IDL:omg.org/CORBA/PrimitiveKind:1.0 PrimitiveKind 1.0} {pk_null pk_void\
+pk_short pk_long pk_ushort pk_ulong pk_float pk_double pk_boolean pk_char\
+pk_octet pk_any pk_TypeCode pk_Principal pk_string pk_objref pk_longlong\
+pk_ulonglong pk_longdouble pk_wchar pk_wstring pk_value_base}} {interface\
+{IDL:omg.org/CORBA/PrimitiveDef:1.0 PrimitiveDef 1.0}} {interface\
+{IDL:omg.org/CORBA/StringDef:1.0 StringDef 1.0}} {interface\
+{IDL:omg.org/CORBA/WstringDef:1.0 WstringDef 1.0}} {interface\
+{IDL:omg.org/CORBA/SequenceDef:1.0 SequenceDef 1.0}} {interface\
+{IDL:omg.org/CORBA/ArrayDef:1.0 ArrayDef 1.0}} {interface\
+{IDL:omg.org/CORBA/FixedDef:1.0 FixedDef 1.0}} {interface\
+{IDL:omg.org/CORBA/Repository:1.0 Repository 1.0}\
+IDL:omg.org/CORBA/Container:1.0 {{operation\
+{IDL:omg.org/CORBA/Repository/lookup_id:1.0 lookup_id 1.0}\
+IDL:omg.org/CORBA/Contained:1.0 {{in search_id\
+IDL:omg.org/CORBA/RepositoryId:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Repository/get_primitive:1.0 get_primitive 1.0}\
+IDL:omg.org/CORBA/PrimitiveDef:1.0 {{in kind\
+IDL:omg.org/CORBA/PrimitiveKind:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Repository/create_string:1.0 create_string 1.0}\
+IDL:omg.org/CORBA/StringDef:1.0 {{in bound {unsigned long}}} {}} {operation\
+{IDL:omg.org/CORBA/Repository/create_wstring:1.0 create_wstring 1.0}\
+IDL:omg.org/CORBA/WstringDef:1.0 {{in bound {unsigned long}}} {}} {operation\
+{IDL:omg.org/CORBA/Repository/create_sequence:1.0 create_sequence 1.0}\
+IDL:omg.org/CORBA/SequenceDef:1.0 {{in bound {unsigned long}} {in\
+element_type IDL:omg.org/CORBA/IDLType:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Repository/create_array:1.0 create_array 1.0}\
+IDL:omg.org/CORBA/ArrayDef:1.0 {{in length {unsigned long}} {in element_type\
+IDL:omg.org/CORBA/IDLType:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/Repository/create_fixed:1.0 create_fixed 1.0}\
+IDL:omg.org/CORBA/FixedDef:1.0 {{in digits {unsigned short}} {in scale\
+short}} {}}}} {interface {IDL:omg.org/CORBA/PrimitiveDef:1.0 PrimitiveDef\
+1.0} IDL:omg.org/CORBA/IDLType:1.0 {{attribute\
+{IDL:omg.org/CORBA/PrimitiveDef/kind:1.0 kind 1.0}\
+IDL:omg.org/CORBA/PrimitiveKind:1.0 readonly}}} {interface\
+{IDL:omg.org/CORBA/StringDef:1.0 StringDef 1.0} IDL:omg.org/CORBA/IDLType:1.0\
+{{attribute {IDL:omg.org/CORBA/StringDef/bound:1.0 bound 1.0} {unsigned\
+long}}}} {interface {IDL:omg.org/CORBA/WstringDef:1.0 WstringDef 1.0}\
+IDL:omg.org/CORBA/IDLType:1.0 {{attribute\
+{IDL:omg.org/CORBA/WstringDef/bound:1.0 bound 1.0} {unsigned long}}}}\
+{interface {IDL:omg.org/CORBA/SequenceDef:1.0 SequenceDef 1.0}\
+IDL:omg.org/CORBA/IDLType:1.0 {{attribute\
+{IDL:omg.org/CORBA/SequenceDef/bound:1.0 bound 1.0} {unsigned long}}\
+{attribute {IDL:omg.org/CORBA/SequenceDef/element_type:1.0 element_type 1.0}\
+TypeCode readonly} {attribute\
+{IDL:omg.org/CORBA/SequenceDef/element_type_def:1.0 element_type_def 1.0}\
+IDL:omg.org/CORBA/IDLType:1.0}}} {interface {IDL:omg.org/CORBA/ArrayDef:1.0\
+ArrayDef 1.0} IDL:omg.org/CORBA/IDLType:1.0 {{attribute\
+{IDL:omg.org/CORBA/ArrayDef/length:1.0 length 1.0} {unsigned long}}\
+{attribute {IDL:omg.org/CORBA/ArrayDef/element_type:1.0 element_type 1.0}\
+TypeCode readonly} {attribute\
+{IDL:omg.org/CORBA/ArrayDef/element_type_def:1.0 element_type_def 1.0}\
+IDL:omg.org/CORBA/IDLType:1.0}}} {interface {IDL:omg.org/CORBA/FixedDef:1.0\
+FixedDef 1.0} IDL:omg.org/CORBA/IDLType:1.0 {{attribute\
+{IDL:omg.org/CORBA/FixedDef/digits:1.0 digits 1.0} {unsigned short}}\
+{attribute {IDL:omg.org/CORBA/FixedDef/scale:1.0 scale 1.0} short}}}\
+{interface {IDL:omg.org/CORBA/ModuleDef:1.0 ModuleDef 1.0}\
+{IDL:omg.org/CORBA/Container:1.0 IDL:omg.org/CORBA/Contained:1.0} {}}\
+{interface {IDL:omg.org/CORBA/ConstantDef:1.0 ConstantDef 1.0}\
+IDL:omg.org/CORBA/Contained:1.0 {{attribute\
+{IDL:omg.org/CORBA/ConstantDef/type:1.0 type 1.0} TypeCode readonly}\
+{attribute {IDL:omg.org/CORBA/ConstantDef/type_def:1.0 type_def 1.0}\
+IDL:omg.org/CORBA/IDLType:1.0} {attribute\
+{IDL:omg.org/CORBA/ConstantDef/value:1.0 value 1.0} any}}} {interface\
+{IDL:omg.org/CORBA/TypedefDef:1.0 TypedefDef 1.0}\
+{IDL:omg.org/CORBA/Contained:1.0 IDL:omg.org/CORBA/IDLType:1.0} {}}\
+{interface {IDL:omg.org/CORBA/StructDef:1.0 StructDef 1.0}\
+{IDL:omg.org/CORBA/TypedefDef:1.0 IDL:omg.org/CORBA/Container:1.0}\
+{{attribute {IDL:omg.org/CORBA/StructDef/members:1.0 members 1.0}\
+IDL:omg.org/CORBA/StructMemberSeq:1.0}}} {interface\
+{IDL:omg.org/CORBA/ExceptionDef:1.0 ExceptionDef 1.0}\
+{IDL:omg.org/CORBA/Contained:1.0 IDL:omg.org/CORBA/Container:1.0} {{attribute\
+{IDL:omg.org/CORBA/ExceptionDef/type:1.0 type 1.0} TypeCode readonly}\
+{attribute {IDL:omg.org/CORBA/ExceptionDef/members:1.0 members 1.0}\
+IDL:omg.org/CORBA/StructMemberSeq:1.0}}} {interface\
+{IDL:omg.org/CORBA/UnionDef:1.0 UnionDef 1.0}\
+{IDL:omg.org/CORBA/TypedefDef:1.0 IDL:omg.org/CORBA/Container:1.0}\
+{{attribute {IDL:omg.org/CORBA/UnionDef/discriminator_type:1.0\
+discriminator_type 1.0} TypeCode readonly} {attribute\
+{IDL:omg.org/CORBA/UnionDef/discriminator_type_def:1.0 discriminator_type_def\
+1.0} IDL:omg.org/CORBA/IDLType:1.0} {attribute\
+{IDL:omg.org/CORBA/UnionDef/members:1.0 members 1.0}\
+IDL:omg.org/CORBA/UnionMemberSeq:1.0}}} {interface\
+{IDL:omg.org/CORBA/EnumDef:1.0 EnumDef 1.0} IDL:omg.org/CORBA/TypedefDef:1.0\
+{{attribute {IDL:omg.org/CORBA/EnumDef/members:1.0 members 1.0}\
+IDL:omg.org/CORBA/EnumMemberSeq:1.0}}} {interface\
+{IDL:omg.org/CORBA/AliasDef:1.0 AliasDef 1.0}\
+IDL:omg.org/CORBA/TypedefDef:1.0 {{attribute\
+{IDL:omg.org/CORBA/AliasDef/original_type_def:1.0 original_type_def 1.0}\
+IDL:omg.org/CORBA/IDLType:1.0}}} {enum {IDL:omg.org/CORBA/OperationMode:1.0\
+OperationMode 1.0} {OP_NORMAL OP_ONEWAY}} {typedef\
+{IDL:omg.org/CORBA/ContextIdentifier:1.0 ContextIdentifier 1.0}\
+IDL:omg.org/CORBA/Identifier:1.0} {typedef\
+{IDL:omg.org/CORBA/ContextIdSeq:1.0 ContextIdSeq 1.0} {sequence\
+IDL:omg.org/CORBA/ContextIdentifier:1.0}} {enum\
+{IDL:omg.org/CORBA/ParameterMode:1.0 ParameterMode 1.0} {PARAM_IN PARAM_OUT\
+PARAM_INOUT}} {struct {IDL:omg.org/CORBA/ParameterDescription:1.0\
+ParameterDescription 1.0} {{name IDL:omg.org/CORBA/Identifier:1.0} {type\
+TypeCode} {type_def IDL:omg.org/CORBA/IDLType:1.0} {mode\
+IDL:omg.org/CORBA/ParameterMode:1.0}} {}} {typedef\
+{IDL:omg.org/CORBA/ParDescriptionSeq:1.0 ParDescriptionSeq 1.0} {sequence\
+IDL:omg.org/CORBA/ParameterDescription:1.0}} {struct\
+{IDL:omg.org/CORBA/OperationDescription:1.0 OperationDescription 1.0} {{name\
+IDL:omg.org/CORBA/Identifier:1.0} {id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{defined_in IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {result TypeCode} {mode\
+IDL:omg.org/CORBA/OperationMode:1.0} {contexts\
+IDL:omg.org/CORBA/ContextIdSeq:1.0} {parameters\
+IDL:omg.org/CORBA/ParDescriptionSeq:1.0} {exceptions\
+IDL:omg.org/CORBA/ExcDescriptionSeq:1.0}} {}} {typedef\
+{IDL:omg.org/CORBA/OpDescriptionSeq:1.0 OpDescriptionSeq 1.0} {sequence\
+IDL:omg.org/CORBA/OperationDescription:1.0}} {enum\
+{IDL:omg.org/CORBA/AttributeMode:1.0 AttributeMode 1.0} {ATTR_NORMAL\
+ATTR_READONLY}} {struct {IDL:omg.org/CORBA/AttributeDescription:1.0\
+AttributeDescription 1.0} {{name IDL:omg.org/CORBA/Identifier:1.0} {id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {defined_in\
+IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {type TypeCode} {mode\
+IDL:omg.org/CORBA/AttributeMode:1.0}} {}} {typedef\
+{IDL:omg.org/CORBA/AttrDescriptionSeq:1.0 AttrDescriptionSeq 1.0} {sequence\
+IDL:omg.org/CORBA/AttributeDescription:1.0}} {typedef\
+{IDL:omg.org/CORBA/RepositoryIdSeq:1.0 RepositoryIdSeq 1.0} {sequence\
+IDL:omg.org/CORBA/RepositoryId:1.0}} {interface\
+{IDL:omg.org/CORBA/AttributeDef:1.0 AttributeDef 1.0}} {interface\
+{IDL:omg.org/CORBA/OperationDef:1.0 OperationDef 1.0}} {interface\
+{IDL:omg.org/CORBA/InterfaceDef:1.0 InterfaceDef 1.0}\
+{IDL:omg.org/CORBA/Container:1.0 IDL:omg.org/CORBA/Contained:1.0\
+IDL:omg.org/CORBA/IDLType:1.0} {{attribute\
+{IDL:omg.org/CORBA/InterfaceDef/base_interfaces:1.0 base_interfaces 1.0}\
+IDL:omg.org/CORBA/InterfaceDefSeq:1.0} {operation\
+{IDL:omg.org/CORBA/InterfaceDef/is_a:1.0 is_a 1.0} boolean {{in interface_id\
+IDL:omg.org/CORBA/RepositoryId:1.0}} {}} {struct\
+{IDL:omg.org/CORBA/InterfaceDef/FullInterfaceDescription:1.0\
+FullInterfaceDescription 1.0} {{name IDL:omg.org/CORBA/Identifier:1.0} {id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {defined_in\
+IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {operations\
+IDL:omg.org/CORBA/OpDescriptionSeq:1.0} {attributes\
+IDL:omg.org/CORBA/AttrDescriptionSeq:1.0} {base_interfaces\
+IDL:omg.org/CORBA/RepositoryIdSeq:1.0} {type TypeCode}} {}} {operation\
+{IDL:omg.org/CORBA/InterfaceDef/describe_interface:1.0 describe_interface\
+1.0} IDL:omg.org/CORBA/InterfaceDef/FullInterfaceDescription:1.0 {} {}}\
+{operation {IDL:omg.org/CORBA/InterfaceDef/create_attribute:1.0\
+create_attribute 1.0} IDL:omg.org/CORBA/AttributeDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in type IDL:omg.org/CORBA/IDLType:1.0}\
+{in mode IDL:omg.org/CORBA/AttributeMode:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/InterfaceDef/create_operation:1.0 create_operation 1.0}\
+IDL:omg.org/CORBA/OperationDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in result IDL:omg.org/CORBA/IDLType:1.0}\
+{in mode IDL:omg.org/CORBA/OperationMode:1.0} {in params\
+IDL:omg.org/CORBA/ParDescriptionSeq:1.0} {in exceptions\
+IDL:omg.org/CORBA/ExceptionDefSeq:1.0} {in contexts\
+IDL:omg.org/CORBA/ContextIdSeq:1.0}} {}}}} {interface\
+{IDL:omg.org/CORBA/AbstractInterfaceDef:1.0 AbstractInterfaceDef 1.0}\
+IDL:omg.org/CORBA/InterfaceDef:1.0 {}} {interface\
+{IDL:omg.org/CORBA/LocalInterfaceDef:1.0 LocalInterfaceDef 1.0}\
+IDL:omg.org/CORBA/InterfaceDef:1.0 {}} {interface\
+{IDL:omg.org/CORBA/ValueMemberDef:1.0 ValueMemberDef 1.0}} {interface\
+{IDL:omg.org/CORBA/ValueDef:1.0 ValueDef 1.0}\
+{IDL:omg.org/CORBA/Container:1.0 IDL:omg.org/CORBA/Contained:1.0\
+IDL:omg.org/CORBA/IDLType:1.0} {{attribute\
+{IDL:omg.org/CORBA/ValueDef/supported_interfaces:1.0 supported_interfaces\
+1.0} IDL:omg.org/CORBA/InterfaceDefSeq:1.0} {attribute\
+{IDL:omg.org/CORBA/ValueDef/initializers:1.0 initializers 1.0}\
+IDL:omg.org/CORBA/InitializerSeq:1.0} {attribute\
+{IDL:omg.org/CORBA/ValueDef/base_value:1.0 base_value 1.0}\
+IDL:omg.org/CORBA/ValueDef:1.0} {attribute\
+{IDL:omg.org/CORBA/ValueDef/abstract_base_values:1.0 abstract_base_values\
+1.0} IDL:omg.org/CORBA/ValueDefSeq:1.0} {attribute\
+{IDL:omg.org/CORBA/ValueDef/is_abstract:1.0 is_abstract 1.0} boolean}\
+{attribute {IDL:omg.org/CORBA/ValueDef/is_custom:1.0 is_custom 1.0} boolean}\
+{attribute {IDL:omg.org/CORBA/ValueDef/is_truncatable:1.0 is_truncatable 1.0}\
+boolean} {operation {IDL:omg.org/CORBA/ValueDef/is_a:1.0 is_a 1.0} boolean\
+{{in value_id IDL:omg.org/CORBA/RepositoryId:1.0}} {}} {struct\
+{IDL:omg.org/CORBA/ValueDef/FullValueDescription:1.0 FullValueDescription\
+1.0} {{name IDL:omg.org/CORBA/Identifier:1.0} {id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {is_abstract boolean} {is_custom boolean}\
+{defined_in IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {operations\
+IDL:omg.org/CORBA/OpDescriptionSeq:1.0} {attributes\
+IDL:omg.org/CORBA/AttrDescriptionSeq:1.0} {members\
+IDL:omg.org/CORBA/ValueMemberSeq:1.0} {initializers\
+IDL:omg.org/CORBA/InitializerSeq:1.0} {supported_interfaces\
+IDL:omg.org/CORBA/RepositoryIdSeq:1.0} {abstract_base_values\
+IDL:omg.org/CORBA/RepositoryIdSeq:1.0} {is_truncatable boolean} {base_value\
+IDL:omg.org/CORBA/RepositoryId:1.0} {type TypeCode}} {}} {operation\
+{IDL:omg.org/CORBA/ValueDef/describe_value:1.0 describe_value 1.0}\
+IDL:omg.org/CORBA/ValueDef/FullValueDescription:1.0 {} {}} {operation\
+{IDL:omg.org/CORBA/ValueDef/create_value_member:1.0 create_value_member 1.0}\
+IDL:omg.org/CORBA/ValueMemberDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in type IDL:omg.org/CORBA/IDLType:1.0}\
+{in access IDL:omg.org/CORBA/Visibility:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/ValueDef/create_attribute:1.0 create_attribute 1.0}\
+IDL:omg.org/CORBA/AttributeDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in type IDL:omg.org/CORBA/IDLType:1.0}\
+{in mode IDL:omg.org/CORBA/AttributeMode:1.0}} {}} {operation\
+{IDL:omg.org/CORBA/ValueDef/create_operation:1.0 create_operation 1.0}\
+IDL:omg.org/CORBA/OperationDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in result IDL:omg.org/CORBA/IDLType:1.0}\
+{in mode IDL:omg.org/CORBA/OperationMode:1.0} {in params\
+IDL:omg.org/CORBA/ParDescriptionSeq:1.0} {in exceptions\
+IDL:omg.org/CORBA/ExceptionDefSeq:1.0} {in contexts\
+IDL:omg.org/CORBA/ContextIdSeq:1.0}} {}}}} {struct\
+{IDL:omg.org/CORBA/ExtAttributeDescription:1.0 ExtAttributeDescription 1.0}\
+{{name IDL:omg.org/CORBA/Identifier:1.0} {id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {defined_in\
+IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {type TypeCode} {mode\
+IDL:omg.org/CORBA/AttributeMode:1.0} {get_exceptions\
+IDL:omg.org/CORBA/ExcDescriptionSeq:1.0} {set_exceptions\
+IDL:omg.org/CORBA/ExcDescriptionSeq:1.0}} {}} {typedef\
+{IDL:omg.org/CORBA/ExtAttrDescriptionSeq:1.0 ExtAttrDescriptionSeq 1.0}\
+{sequence IDL:omg.org/CORBA/ExtAttributeDescription:1.0}} {interface\
+{IDL:omg.org/CORBA/ExtAttributeDef:1.0 ExtAttributeDef 1.0}} {interface\
+{IDL:omg.org/CORBA/ExtValueDef:1.0 ExtValueDef 1.0}\
+IDL:omg.org/CORBA/ValueDef:1.0 {{attribute\
+{IDL:omg.org/CORBA/ExtValueDef/ext_initializers:1.0 ext_initializers 1.0}\
+IDL:omg.org/CORBA/ExtInitializerSeq:1.0} {struct\
+{IDL:omg.org/CORBA/ExtValueDef/ExtFullValueDescription:1.0\
+ExtFullValueDescription 1.0} {{name IDL:omg.org/CORBA/Identifier:1.0} {id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {is_abstract boolean} {is_custom boolean}\
+{defined_in IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {operations\
+IDL:omg.org/CORBA/OpDescriptionSeq:1.0} {attributes\
+IDL:omg.org/CORBA/ExtAttrDescriptionSeq:1.0} {members\
+IDL:omg.org/CORBA/ValueMemberSeq:1.0} {initializers\
+IDL:omg.org/CORBA/ExtInitializerSeq:1.0} {supported_interfaces\
+IDL:omg.org/CORBA/RepositoryIdSeq:1.0} {abstract_base_values\
+IDL:omg.org/CORBA/RepositoryIdSeq:1.0} {is_truncatable boolean} {base_value\
+IDL:omg.org/CORBA/RepositoryId:1.0} {type TypeCode}} {}} {operation\
+{IDL:omg.org/CORBA/ExtValueDef/describe_ext_value:1.0 describe_ext_value 1.0}\
+IDL:omg.org/CORBA/ExtValueDef/ExtFullValueDescription:1.0 {} {}} {operation\
+{IDL:omg.org/CORBA/ExtValueDef/create_ext_attribute:1.0 create_ext_attribute\
+1.0} IDL:omg.org/CORBA/ExtAttributeDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in type IDL:omg.org/CORBA/IDLType:1.0}\
+{in mode IDL:omg.org/CORBA/AttributeMode:1.0} {in get_exceptions\
+IDL:omg.org/CORBA/ExceptionDefSeq:1.0} {in set_exceptions\
+IDL:omg.org/CORBA/ExceptionDefSeq:1.0}} {}}}} {interface\
+{IDL:omg.org/CORBA/ValueBoxDef:1.0 ValueBoxDef 1.0}\
+IDL:omg.org/CORBA/TypedefDef:1.0 {{attribute\
+{IDL:omg.org/CORBA/ValueBoxDef/original_type_def:1.0 original_type_def 1.0}\
+IDL:omg.org/CORBA/IDLType:1.0}}} {interface {IDL:omg.org/CORBA/NativeDef:1.0\
+NativeDef 1.0} IDL:omg.org/CORBA/TypedefDef:1.0 {}} {interface\
+{IDL:omg.org/CORBA/AttributeDef:1.0 AttributeDef 1.0}\
+IDL:omg.org/CORBA/Contained:1.0 {{attribute\
+{IDL:omg.org/CORBA/AttributeDef/type:1.0 type 1.0} TypeCode readonly}\
+{attribute {IDL:omg.org/CORBA/AttributeDef/type_def:1.0 type_def 1.0}\
+IDL:omg.org/CORBA/IDLType:1.0} {attribute\
+{IDL:omg.org/CORBA/AttributeDef/mode:1.0 mode 1.0}\
+IDL:omg.org/CORBA/AttributeMode:1.0}}} {interface\
+{IDL:omg.org/CORBA/OperationDef:1.0 OperationDef 1.0}\
+IDL:omg.org/CORBA/Contained:1.0 {{attribute\
+{IDL:omg.org/CORBA/OperationDef/result:1.0 result 1.0} TypeCode readonly}\
+{attribute {IDL:omg.org/CORBA/OperationDef/result_def:1.0 result_def 1.0}\
+IDL:omg.org/CORBA/IDLType:1.0} {attribute\
+{IDL:omg.org/CORBA/OperationDef/params:1.0 params 1.0}\
+IDL:omg.org/CORBA/ParDescriptionSeq:1.0} {attribute\
+{IDL:omg.org/CORBA/OperationDef/mode:1.0 mode 1.0}\
+IDL:omg.org/CORBA/OperationMode:1.0} {attribute\
+{IDL:omg.org/CORBA/OperationDef/contexts:1.0 contexts 1.0}\
+IDL:omg.org/CORBA/ContextIdSeq:1.0} {attribute\
+{IDL:omg.org/CORBA/OperationDef/exceptions:1.0 exceptions 1.0}\
+IDL:omg.org/CORBA/ExceptionDefSeq:1.0}}} {interface\
+{IDL:omg.org/CORBA/ValueMemberDef:1.0 ValueMemberDef 1.0}\
+IDL:omg.org/CORBA/Contained:1.0 {{attribute\
+{IDL:omg.org/CORBA/ValueMemberDef/type:1.0 type 1.0} TypeCode readonly}\
+{attribute {IDL:omg.org/CORBA/ValueMemberDef/type_def:1.0 type_def 1.0}\
+IDL:omg.org/CORBA/IDLType:1.0} {attribute\
+{IDL:omg.org/CORBA/ValueMemberDef/access:1.0 access 1.0}\
+IDL:omg.org/CORBA/Visibility:1.0}}} {interface\
+{IDL:omg.org/CORBA/ExtAttributeDef:1.0 ExtAttributeDef 1.0}\
+IDL:omg.org/CORBA/AttributeDef:1.0 {{attribute\
+{IDL:omg.org/CORBA/ExtAttributeDef/get_exceptions:1.0 get_exceptions 1.0}\
+IDL:omg.org/CORBA/ExceptionDefSeq:1.0} {attribute\
+{IDL:omg.org/CORBA/ExtAttributeDef/set_exceptions:1.0 set_exceptions 1.0}\
+IDL:omg.org/CORBA/ExceptionDefSeq:1.0} {operation\
+{IDL:omg.org/CORBA/ExtAttributeDef/describe_attribute:1.0 describe_attribute\
+1.0} IDL:omg.org/CORBA/ExtAttributeDescription:1.0 {} {}}}} {typedef\
+{IDL:omg.org/CORBA/LocalInterfaceDefSeq:1.0 LocalInterfaceDefSeq 1.0}\
+{sequence IDL:omg.org/CORBA/LocalInterfaceDef:1.0}} {struct\
+{IDL:omg.org/CORBA/ModuleDescription:1.0 ModuleDescription 1.0} {{name\
+IDL:omg.org/CORBA/Identifier:1.0} {id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{defined_in IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0}} {}} {struct\
+{IDL:omg.org/CORBA/ConstantDescription:1.0 ConstantDescription 1.0} {{name\
+IDL:omg.org/CORBA/Identifier:1.0} {id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{defined_in IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {type TypeCode} {value any}} {}} {struct\
+{IDL:omg.org/CORBA/TypeDescription:1.0 TypeDescription 1.0} {{name\
+IDL:omg.org/CORBA/Identifier:1.0} {id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{defined_in IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {type TypeCode}} {}} {struct\
+{IDL:omg.org/CORBA/InterfaceDescription:1.0 InterfaceDescription 1.0} {{name\
+IDL:omg.org/CORBA/Identifier:1.0} {id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{defined_in IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {base_interfaces\
+IDL:omg.org/CORBA/RepositoryIdSeq:1.0}} {}} {interface\
+{IDL:omg.org/CORBA/InterfaceAttrExtension:1.0 InterfaceAttrExtension 1.0} {}\
+{{struct\
+{IDL:omg.org/CORBA/InterfaceAttrExtension/ExtFullInterfaceDescription:1.0\
+ExtFullInterfaceDescription 1.0} {{name IDL:omg.org/CORBA/Identifier:1.0} {id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {defined_in\
+IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {operations\
+IDL:omg.org/CORBA/OpDescriptionSeq:1.0} {attributes\
+IDL:omg.org/CORBA/ExtAttrDescriptionSeq:1.0} {base_interfaces\
+IDL:omg.org/CORBA/RepositoryIdSeq:1.0} {type TypeCode}} {}} {operation\
+{IDL:omg.org/CORBA/InterfaceAttrExtension/describe_ext_interface:1.0\
+describe_ext_interface 1.0}\
+IDL:omg.org/CORBA/InterfaceAttrExtension/ExtFullInterfaceDescription:1.0 {}\
+{}} {operation\
+{IDL:omg.org/CORBA/InterfaceAttrExtension/create_ext_attribute:1.0\
+create_ext_attribute 1.0} IDL:omg.org/CORBA/ExtAttributeDef:1.0 {{in id\
+IDL:omg.org/CORBA/RepositoryId:1.0} {in name\
+IDL:omg.org/CORBA/Identifier:1.0} {in version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {in type IDL:omg.org/CORBA/IDLType:1.0}\
+{in mode IDL:omg.org/CORBA/AttributeMode:1.0} {in get_exceptions\
+IDL:omg.org/CORBA/ExceptionDefSeq:1.0} {in set_exceptions\
+IDL:omg.org/CORBA/ExceptionDefSeq:1.0}} {}}}} {interface\
+{IDL:omg.org/CORBA/ExtInterfaceDef:1.0 ExtInterfaceDef 1.0}\
+{IDL:omg.org/CORBA/InterfaceDef:1.0\
+IDL:omg.org/CORBA/InterfaceAttrExtension:1.0} {}} {interface\
+{IDL:omg.org/CORBA/ExtAbstractInterfaceDef:1.0 ExtAbstractInterfaceDef 1.0}\
+{IDL:omg.org/CORBA/ExtInterfaceDef:1.0\
+IDL:omg.org/CORBA/AbstractInterfaceDef:1.0\
+IDL:omg.org/CORBA/InterfaceAttrExtension:1.0} {}} {interface\
+{IDL:omg.org/CORBA/ExtLocalInterfaceDef:1.0 ExtLocalInterfaceDef 1.0}\
+{IDL:omg.org/CORBA/ExtInterfaceDef:1.0\
+IDL:omg.org/CORBA/LocalInterfaceDef:1.0\
+IDL:omg.org/CORBA/InterfaceAttrExtension:1.0} {}} {struct\
+{IDL:omg.org/CORBA/ValueDescription:1.0 ValueDescription 1.0} {{name\
+IDL:omg.org/CORBA/Identifier:1.0} {id IDL:omg.org/CORBA/RepositoryId:1.0}\
+{is_abstract boolean} {is_custom boolean} {defined_in\
+IDL:omg.org/CORBA/RepositoryId:1.0} {version\
+IDL:omg.org/CORBA/VersionSpec:1.0} {supported_interfaces\
+IDL:omg.org/CORBA/RepositoryIdSeq:1.0} {abstract_base_values\
+IDL:omg.org/CORBA/RepositoryIdSeq:1.0} {is_truncatable boolean} {base_value\
+IDL:omg.org/CORBA/RepositoryId:1.0}} {}}}}}
+
+#
+# ----------------------------------------------------------------------
+# Helper functions.
+# ----------------------------------------------------------------------
+#
+
+#
+# Print a huge (tcl-code) string, not more than 80 chars per line.
+#
+
+proc DumpIt {file data} {
+    set where 0
+    set data [string trimleft $data]
+    while {$data != ""} {
+	set idx [string first " " $data]
+	if {$idx == -1} {
+	    set idx [string length $data]
+	}
+	if {$idx + $where > 76 && $where != 0} {
+	    puts -nonewline $file "\\\n"
+	    set where 0
+	} elseif {$where != 0} {
+	    puts -nonewline $file " "
+	    incr where
+	}
+	puts -nonewline $file [string range $data 0 [expr $idx - 1]]
+	set data [string trimleft [string range $data [expr $idx + 1] end]]
+	set where [expr $where + $idx]
+    }
+    if {$where != 0} {
+	puts -nonewline $file "\n"
+    }
+}
+
+#
+# Wait for a file to appear.
+#
+
+proc WaitForFile { file } {
+    global verbose
+
+    if {$verbose} {
+	puts -nonewline "Waiting for $file to appear "
+	flush stdout
+    }
+
+    for {set i 0} {$i < 50} {incr i} {
+	if {[file readable $file]} {
+	    set f [open $file]
+	    set d [gets $f]
+	    close $f
+	    if {$d != "" } {
+		if {$verbose} {
+		    puts " ok."
+		}
+		return 1
+	    }
+	}
+	if {$verbose} {
+	    puts -nonewline "."
+	    flush stdout
+	}
+	after 500
+    }
+
+    if {$verbose} {
+	puts " failed."
+    }
+
+    puts "pwd [pwd], could not read $file"
+    return 0
+}
+
+#
+# ----------------------------------------------------------------------
+# "main"
+# ----------------------------------------------------------------------
+#
+
+#
+# Load Interface Repository type information.
+#
+
+if {$verbose} {
+    puts -nonewline "Feeding local IFR with IFR info ... "
+    flush stdout
+}
+
+if {[catch {
+    combat::ir add $_ir_ir
+} err]} {
+    puts stderr "init error: $err"
+    exit 1
+}
+
+if {$verbose} {
+    puts " done."
+}
+
+#
+# If the --ifr command-line option was not used, start the interface
+# repository and feed it the IDL files.
+#
+
+if {$irior == ""} {
+    #
+    # Start Interface Repository.
+    #
+
+    catch {file delete ir.ior}
+
+    if {[catch {
+	if {$verbose} {
+	    puts -nonewline "Starting up IFR ... "
+	    flush stdout
+	}
+
+	set cmd $ifr
+
+	switch $ORB {
+	    MICO {
+		lappend cmd "--ior" "ir.ior"
+	    }
+	    ORBacus {
+		lappend cmd "--ior" ">" "ir.ior"
+	    }
+	    TAO {
+		lappend cmd "-o" "ir.ior"
+	    }
+	    default {
+		#
+		# Assume that the user has provided the correct options.
+		#
+	    }
+	}
+
+	lappend cmd "&"
+
+	if {$verbose >= 2} {
+	    puts "$cmd"
+	}
+
+	set pid [eval exec $cmd]
+
+	if {$verbose} {
+	    puts " running, pid $pid."
+	}
+
+	if {![WaitForFile ir.ior]} {
+	    error "oops, IFR did not start up."
+	}
+
+	#
+	# We could pass a file:// IOR to $ifrfeed, but reading the file and
+	# passing an IOR: string instead avoids any problems with (a) drive
+	# names on Windows and (b) whitespace in the path name.
+	#
+
+	set file [open "ir.ior"]
+	set irior [string trim [read $file]]
+	close $file
+
+	#
+	# Feed IDL files to Interface Repository.
+	#
+
+	foreach file $infiles {
+	    if {$verbose} {
+		puts -nonewline "Feeding $file to IFR ... "
+		flush stdout
+	    }
+
+	    set cmd $idl
+
+	    lappend cmd "-ORBInitRef" "InterfaceRepository=$irior"
+
+	    foreach opt $idlopts {
+		lappend cmd $idlopts
+	    }
+
+	    lappend cmd $file
+
+	    switch $ORB {
+		TAO {
+		    #
+		    # tao_ifr prints "processing <file>" to standard error.  That
+		    # makes "exec" think that the process has failed.  Redirect to
+		    # standard out.
+		    #
+
+		    lappend cmd "2>@" "stdout"
+		}
+	    }
+
+	    if {$verbose >= 2} {
+		puts "$cmd"
+	    }
+
+	    eval exec $cmd
+
+	    if {$verbose} {
+		puts " done."
+	    }
+	}
+    } err]} {
+	puts stderr "$err"
+	catch {kill $pid}
+	exit 1
+    }
+} else {
+    set pid 0
+}
+
+#
+# Connect to the Interface Repsoitory and dump its contents.
+#
+
+if {[catch {
+    if {$verbose} {
+	puts -nonewline "Building dependency tree ... "
+	flush stdout
+    }
+
+    set ir [corba::string_to_object $irior]
+
+    if {![$ir _is_a IDL:omg.org/CORBA/Repository:1.0]} {
+	error "oops, IOR does not smell like an Interface Repository"
+    }
+
+    set objs [Deps::BuildDeps $ir]
+
+    if {$verbose} {
+	puts " done."
+    }
+
+    if {$verbose >= 3} {
+	puts "--- Postorder"
+	puts "$objs"
+	puts "---"
+    }
+    
+    if {$verbose} {
+	puts -nonewline "Generating Tcl code ... "
+	flush stdout
+    }
+
+    set data [CodeGen::CodeGen $ir $objs]
+
+    if {$verbose} {
+	puts " done."
+    }
+
+    if {$verbose >= 3} {
+	puts "--- Data"
+	puts "$data"
+	puts "---"
+    }
+
+    #
+    # Generate Tcl file to feed local Interface Repository from
+    #
+
+    if {$verbose} {
+	puts -nonewline "Writing output file \"${outbase}.tcl\" ... "
+	flush stdout
+    }
+
+    set out [open "${outbase}.tcl" w]
+    puts $out "#"
+    puts $out "# This file was automatically generated from $infiles"
+    puts $out "# by idl2tcl. Do not edit."
+    puts $out "#"
+    puts $out ""
+    puts $out "package require combat"
+    puts $out ""
+    puts $out "combat::ir add \\"
+    DumpIt $out [list $data]
+    puts $out ""
+    close $out
+
+    if {$verbose} {
+	puts " done."
+    }
+
+    #
+    # Generate implementation template
+    #
+
+    if {$implflag == "yes"} {
+	if {[file exists ${outbase}_impl.tcl]} {
+	    puts stderr "warning: Output file ${outbase}_impl.tcl exists."
+	} else {
+	    if {$verbose} {
+		puts -nonewline "Writing skeleton template file \"${outbase}_impl.tcl\" ... "
+		flush stdout
+	    }
+	    set out [open "${outbase}_impl.tcl" w]
+	    ImplGen::ImplGen $ir $objs $out
+	    close $out
+	    if {$verbose} {
+		puts " done."
+	    }
+	}
+    }
+} res]} {
+    puts ""
+    puts stderr "Oops, Error:"
+    puts stderr $errorInfo
+    if {$pid} {
+	if {$verbose} {
+	    puts -nonewline "Killing IFR daemon ... "
+	    flush stdout
+	}
+
+	catch {kill $pid}
+	catch {file delete ir.ior}
+
+	if {$verbose} {
+	    puts " done."
+	}
+    }
+    catch {file delete "${outbase}.tcl"}
+    exit 1
+}
+
+if {$pid} {
+    if {$verbose} {
+	puts -nonewline "Killing IFR daemon ... "
+	flush stdout
+    }
+
+    catch {kill $pid}
+    catch {file delete ir.ior}
+
+    if {$verbose} {
+	puts " done."
+    }
+}

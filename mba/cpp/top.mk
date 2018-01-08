@@ -24,6 +24,8 @@ default: all
 
 @SET_MAKE@
 
+datarootdir = @datarootdir@
+
 # where to install stuff
 prefix      = @prefix@
 exec_prefix = @exec_prefix@

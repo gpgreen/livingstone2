@@ -1,0 +1,152 @@
+#! /bin/sh
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+lappend auto_path ../../orb ../../tclkill
+package require tcltest
+package require combat
+package require kill
+
+namespace import tcltest::test
+tcltest::configure -verbose {body error pass}
+
+if {[string first noexec $argv] == -1} {
+    catch {file delete server.ior}
+    set server [eval exec [info nameofexecutable] ./server.tcl $argv &]
+}
+
+catch {
+    set argv [eval corba::init $argv]
+    eval tcltest::configure $argv
+    source test.tcl
+
+    #
+    # might need to wait for the server to start up
+    #
+
+    for {set i 0} {$i < 10} {incr i} {
+	if {[file exists server.ior]} {
+	    after 500
+	    break
+	}
+	after 500
+    }
+
+    if {![file exists server.ior]} {
+	catch {kill $server}
+	puts "oops, server did not start up"
+	exit 1
+    }
+
+    set reffile [open server.ior]
+    set ior [read -nonewline $reffile]
+    set obj [corba::string_to_object $ior]
+    close $reffile
+
+    #
+    # beginning of tests
+    #
+
+    test valuetype-1.1 {EmptyValue typecode} {
+	set _tc_EmptyValue [corba::type of IDL:EmptyValue:1.0]
+    } {valuetype IDL:EmptyValue:1.0 {} 0 {}}
+    test valuetype-1.2 {Date typecode} {
+	set _tc_Date [corba::type of IDL:Date:1.0]
+    } {valuetype IDL:Date:1.0 {public day {unsigned short} public month {unsigned short} public year {unsigned short}} 0 {}}
+    test valuetype-1.3 {BaseType typecode} {
+	set _tc_BaseType [corba::type of IDL:BaseType:1.0]
+    } {valuetype IDL:BaseType:1.0 {public name string} 0 {}}
+    test valuetype-1.4 {DerivedType typecode} {
+	set _tc_DerivedType [corba::type of IDL:DerivedType:1.0]
+    } {valuetype IDL:DerivedType:1.0 {public value {unsigned long} public anothername string} {valuetype IDL:BaseType:1.0 {public name string} 0 {}} {}}
+    test valuetype-1.5 {TreeNode typecode} {
+	set _tc_TreeNode [corba::type of IDL:TreeNode:1.0]
+    } {valuetype IDL:TreeNode:1.0 {public nv {valuetype IDL:BaseType:1.0 {public name string} 0 {}} public left {recursive IDL:TreeNode:1.0} public right {recursive IDL:TreeNode:1.0}} 0 {}}
+    test valuetype-1.6 {hypothetical MoreDerived typecode} {
+	set _tc_MoreDerived [list valuetype IDL:EvenMoreDerived:1.0 [list public more string] $_tc_DerivedType truncatable]
+	expr 1 ;# nothing to test here, really
+    } {1}
+
+    test valuetype-2.1 {empty value} {
+	$obj ev {}
+	$obj ev
+    } [list _tc_ $_tc_EmptyValue]
+    test valuetype-2.2 {null empty value} {
+	$obj ev 0
+	$obj ev
+    } {0}
+
+    test valuetype-3.1 {simple date value} {
+	$obj d {day 5 month 10 year 2001}
+	$obj d
+    } [list day 5 month 10 year 2001 _tc_ $_tc_Date]
+    test valuetype-3.2 {ordering of simple date value} {
+	$obj d {year 1974 month 2 day 6}
+	$obj d
+    } [list day 6 month 2 year 1974 _tc_ $_tc_Date]
+
+    test valuetype-4.1 {base type with string member} {
+	$obj bt {name {Hello World}}
+	$obj bt
+    } [list name {Hello World} _tc_ $_tc_BaseType]
+
+    test valuetype-5.1 {derived type} {
+	$obj dt {name {Hello World} value 42 anothername Frank}
+	$obj dt
+    } [list name {Hello World} value 42 anothername Frank _tc_ $_tc_DerivedType]
+    test valuetype-5.2 {ordering of derived type} {
+	$obj dt {value 18 anothername Knarf name FooBar}
+	$obj dt
+    } [list name FooBar value 18 anothername Knarf _tc_ $_tc_DerivedType]
+
+    test valuetype-6.1 {sending derived type as base w/o type info} {
+	$obj bt {value 17 name ValueWillGetLost anothername Foo}
+	$obj bt
+    } [list name ValueWillGetLost _tc_ $_tc_BaseType]
+    test valuetype-6.2 {sending derived type as base with type info} {
+	$obj bt [list value 19 name ShouldBeOK anothername KeepMe _tc_ $_tc_DerivedType]
+	$obj bt
+    } [list name ShouldBeOK value 19 anothername KeepMe _tc_ $_tc_DerivedType]
+    test valuetype-6.3 {testing truncation} {
+	$obj bt [list value 20 name MoreGetsTruncated anothername AnotherIsKept more TruncateMe _tc_ $_tc_MoreDerived]
+	$obj bt
+    } [list name MoreGetsTruncated value 20 anothername AnotherIsKept _tc_ $_tc_DerivedType]
+
+    test valuetype-7.1 {sending tree node with base value only} {
+	$obj tn {nv {name Rob} left 0 right 0}
+	$obj tn
+    } [list nv [list name Rob _tc_ $_tc_BaseType] left 0 right 0 _tc_ $_tc_TreeNode]
+    test valuetype-7.2 {sending complex tree with some derived values} {
+	$obj tn [list nv [list _tc_ $_tc_DerivedType name Reiner value 25 anothername Astrid] left [list nv [list name Marc] left 0 right [list nv [list name Phil value 18 anothername Douglas _tc_ $_tc_DerivedType] left 0 right 0]] right 0]
+	$obj tn
+    } [list nv [list name Reiner value 25 anothername Astrid _tc_ $_tc_DerivedType] left [list nv [list name Marc _tc_ $_tc_BaseType] left 0 right [list nv [list name Phil value 18 anothername Douglas _tc_ $_tc_DerivedType] left 0 right 0 _tc_ $_tc_TreeNode] _tc_ $_tc_TreeNode] right 0 _tc_ $_tc_TreeNode]
+    test valuetype-7.3 {complex tree with truncation} {
+	$obj tn [list nv [list _tc_ $_tc_MoreDerived name Reiner value 24 anothername Astrid more ThereIsMore] left [list nv [list name Marc] left 0 right [list nv [list name Phil value 18 anothername Douglas _tc_ $_tc_DerivedType] left 0 right 0]] right 0]
+	$obj tn
+    } [list nv [list name Reiner value 24 anothername Astrid _tc_ $_tc_DerivedType] left [list nv [list name Marc _tc_ $_tc_BaseType] left 0 right [list nv [list name Phil value 18 anothername Douglas _tc_ $_tc_DerivedType] left 0 right 0 _tc_ $_tc_TreeNode] _tc_ $_tc_TreeNode] right 0 _tc_ $_tc_TreeNode]
+
+
+    test valuetype-8.1 {empty value as value base} {
+	$obj vb [list _tc_ $_tc_EmptyValue]
+	$obj vb
+    } [list _tc_ $_tc_EmptyValue]
+    test valuetype-8.2 {date value as value base} {
+	$obj vb [list _tc_ $_tc_Date month 9 day 11 year 2001]
+	$obj vb
+    } [list day 11 month 9 year 2001 _tc_ $_tc_Date]
+
+} out
+
+if {[string first noexec $argv] == -1} {
+    kill $server
+}
+
+if {$out != ""} {
+    puts $out
+}

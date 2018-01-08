@@ -1282,7 +1282,7 @@ JNIEXPORT void JNICALL Java_livdll_LivingstoneEngineJNI_mapOverCommandAttributeN
       // _STD_ cerr << "mapOverCommandAttributeNamesJNI: name " << name << _STD_ endl;
 
       // discard all variables with # in the name
-      char* delimiter_addr = strchr( name, '#');
+      const char* delimiter_addr = strchr( name, '#');
       if (delimiter_addr == NULL) {
         env->CallVoidMethod(callback, mid, NULL, env->NewStringUTF(name));
 
@@ -1338,7 +1338,7 @@ JNIEXPORT void JNICALL Java_livdll_LivingstoneEngineJNI_mapOverObservableAttribu
       // _STD_ cerr << "mapOverObservableAttributeNamesJNI: name " << name << _STD_ endl;
 
       // discard all variables with # in the name
-      char* delimiter_addr = strchr( name, '#');
+      const char* delimiter_addr = strchr( name, '#');
       if (delimiter_addr == NULL) {
         env->CallVoidMethod(callback, mid, NULL, env->NewStringUTF(name));
 

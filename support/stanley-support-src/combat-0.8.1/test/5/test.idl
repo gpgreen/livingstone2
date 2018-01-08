@@ -1,0 +1,30 @@
+
+enum MyEnum {A, B, C, D};
+
+struct MyStruct {
+  short s;
+  MyEnum e;
+  string q;
+};
+
+typedef sequence<MyStruct> MySequence;
+typedef MyEnum MyArray[3];
+
+union NoDefault switch (boolean) {
+case TRUE: MyEnum e;
+case FALSE: MyStruct s;
+};
+
+union ExplicitDefault switch (unsigned short) {
+case 0:
+case 1: MyEnum e;
+default: string q;
+};
+
+union WithoutDefault switch (boolean) {
+case TRUE: MyEnum e;
+};
+
+interface AnyTest {
+  attribute any value;
+};

@@ -1,0 +1,6868 @@
+#LyX 1.6.0rc5 created this file. For more info see http://www.lyx.org/
+\lyxformat 344
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage[bookmarks, bookmarksnumbered=true]{hyperref}
+\newcommand{\ddash}{-\/-}
+\end_preamble
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_amsmath 0
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 2.54cm
+\rightmargin 2.54cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset Graphics
+	filename combat.gif
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+CORBA Scripting with Tcl
+\begin_inset Newline newline
+\end_inset
+
+Version 0.8
+\end_layout
+
+\begin_layout Author
+Frank Pilhofer
+\end_layout
+
+\begin_layout Abstract
+Combat is a CORBA Object Request Broker that allows the implementation of
+ CORBA clients and servers in the Tcl programming language.
+\end_layout
+
+\begin_layout Abstract
+On the client side, Combat is not only useful to easily test-drive existing
+ CORBA servers, including the ability for rapid prototyping or to interactively
+ interface with servers from a console, but makes Tcl an exciting language
+ for distributed programming.
+ Also, Tk allows to quickly develop attractive user interfaces accessing
+ CORBA services.
+ Server-side scripting using [incr Tcl] classes also offers a wide range
+ of possibilities.
+ Applications can be trivially packaged as Starkit or Starpack for easy
+ cross-platform deployment.
+\end_layout
+
+\begin_layout Abstract
+Combat is compatible with the CORBA 3.0 specification including the IIOP
+ protocol, and has been tested to interoperate with a wide range of open-source
+ and commercial ORBs, including 
+\noun on
+Mico
+\noun default
+, TAO and ORBexpress.
+\end_layout
+
+\begin_layout Abstract
+Combat is written in pure Tcl, allowing it to run on all platforms supported
+ by Tcl, which is a much wider range than supported by any other ORB.
+\end_layout
+
+\begin_layout Abstract
+Please visit the Combat homepage, 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.fpx.de/Combat/
+\end_layout
+
+\end_inset
+
+ for the latest information about Combat.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+ 
+\begin_inset VSpace vfill
+\end_inset
+
+ 
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\begin_inset VSpace vfill
+\end_inset
+
+ 
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Subsection
+About This Document
+\end_layout
+
+\begin_layout Standard
+This document is part user manual, part reference manual.
+ As a result, some sections are more verbose than others.
+ It is arranged so that it could be read from top to bottom without too
+ many forward references.
+ The reader may want to make a first quick pass, skipping over the 
+\begin_inset Quotes eld
+\end_inset
+
+reference
+\begin_inset Quotes erd
+\end_inset
+
+ sections, returning to them as necessary.
+\end_layout
+
+\begin_layout Standard
+This document is neither a CORBA nor Tcl tutorial.
+ The reader is assumed to be familiar with the Tcl programming language
+ and should have a basic understanding of CORBA concepts.
+ Prior exposure to CORBA software development is recommended.
+\end_layout
+
+\begin_layout Subsection
+Quick Start
+\end_layout
+
+\begin_layout Standard
+Let's begin with an example of a common Combat use case, accessing an existing
+ CORBA-based server.
+ This assumes the following:
+\end_layout
+
+\begin_layout Itemize
+The server is running.
+\end_layout
+
+\begin_layout Itemize
+You have the server's stringified object reference, i.e., the 
+\begin_inset Quotes eld
+\end_inset
+
+IOR:
+\begin_inset Quotes erd
+\end_inset
+
+ string.
+\end_layout
+
+\begin_layout Itemize
+You have the IDL file that defines the interface that the server implements.
+\end_layout
+
+\begin_layout Standard
+For example, consider the following IDL file, in which the server implements
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+Bank
+\begin_inset Quotes erd
+\end_inset
+
+ interface.
+ The Bank supports the 
+\family typewriter
+create
+\family default
+ operation to open a new account.
+ An account, in turn, is an object that supports the 
+\family typewriter
+deposit
+\family default
+, 
+\family typewriter
+withdraw
+\family default
+ and 
+\family typewriter
+balance
+\family default
+ operations.
+\end_layout
+
+\begin_layout LyX-Code
+interface Account {
+\begin_inset Newline newline
+\end_inset
+
+  void deposit (in unsigned long amount);
+\begin_inset Newline newline
+\end_inset
+
+  void withdraw (in unsigned long amount);
+\begin_inset Newline newline
+\end_inset
+
+  long balance ();
+\begin_inset Newline newline
+\end_inset
+
+};
+\end_layout
+
+\begin_layout LyX-Code
+interface Bank {
+\begin_inset Newline newline
+\end_inset
+
+  Account create (in string name, in string passwd);
+\begin_inset Newline newline
+\end_inset
+
+};
+\end_layout
+
+\begin_layout Standard
+Without getting into all the details, the first step is to process the IDL
+ file into type information that Combat can use.
+ This is done using the 
+\begin_inset Quotes eld
+\end_inset
+
+idl2tcl
+\begin_inset Quotes erd
+\end_inset
+
+ application.
+ (For more details about the idl2tcl application, see section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:The-idl2tcl-Application"
+
+\end_inset
+
+.) Given the file 
+\begin_inset Quotes eld
+\end_inset
+
+account.idl
+\begin_inset Quotes erd
+\end_inset
+
+, you would run the following command in a console to produce the file 
+\begin_inset Quotes eld
+\end_inset
+
+account.tcl:
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+idl2tcl account.idl
+\end_layout
+
+\begin_layout Standard
+With this preparation, you can launch a Tcl shell, load the Combat ORB,
+ and load the type information for the above IDL file that we just generated:
+\end_layout
+
+\begin_layout LyX-Code
+package require combat
+\end_layout
+
+\begin_layout LyX-Code
+source account.tcl
+\end_layout
+
+\begin_layout Standard
+At this point, we are ready to connect to the server.
+ This is done by passing the server's stringified object reference to the
+ 
+\family typewriter
+corba::\SpecialChar \-
+string_\SpecialChar \-
+to_\SpecialChar \-
+object
+\family default
+ method, just like in any other programming language.
+ (For more details about this command, see section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cmd:corba::string_to_object"
+
+\end_inset
+
+.) You can copy&paste the 
+\begin_inset Quotes eld
+\end_inset
+
+IOR:
+\begin_inset Quotes erd
+\end_inset
+
+ string, or you could read it from a file with a few extra lines of code.
+\end_layout
+
+\begin_layout LyX-Code
+set Bank [corba::string_to_object 
+\emph on
+IOR:\SpecialChar \ldots{}
+
+\emph default
+]
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+Bank
+\begin_inset Quotes erd
+\end_inset
+
+ varaible now holds an 
+\emph on
+object reference
+\emph default
+ that we can use to exercise the server using its IDL interface.
+ Calling the bank's 
+\begin_inset Quotes eld
+\end_inset
+
+create
+\begin_inset Quotes erd
+\end_inset
+
+ operation returns an object reference for an 
+\begin_inset Quotes eld
+\end_inset
+
+Account
+\begin_inset Quotes erd
+\end_inset
+
+ object, which supports the 
+\begin_inset Quotes eld
+\end_inset
+
+deposit,
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+withdraw,
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+balance
+\begin_inset Quotes erd
+\end_inset
+
+ operations.
+\end_layout
+
+\begin_layout LyX-Code
+set Account [$Bank create MyName MyPassword]
+\begin_inset Newline newline
+\end_inset
+
+$Account deposit 700
+\begin_inset Newline newline
+\end_inset
+
+$Account withdraw 450
+\begin_inset Newline newline
+\end_inset
+
+puts "Current balance is [$Account balance]."
+\end_layout
+
+\begin_layout Standard
+This simple but complete example glanced over some of the details but should
+ give you a good idea of how easy it is to develop code using Combat.
+ Feel encouraged to follow the above steps to interact with some of your
+ existing CORBA servers.
+ You will find that the ability to 
+\begin_inset Quotes eld
+\end_inset
+
+chat
+\begin_inset Quotes erd
+\end_inset
+
+ with a live server from a Tcl console is a powerful prototyping and debugging
+ tool.
+\end_layout
+
+\begin_layout Standard
+A slightly more elaborate version of the above example can be found in the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+demo/account
+\begin_inset Quotes erd
+\end_inset
+
+ subdirectory.
+ For a more well-documented example, see section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Complete-Example"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Features
+\end_layout
+
+\begin_layout Standard
+Combat has the following features:
+\end_layout
+
+\begin_layout Itemize
+IIOP/GIOP 1.0, 1.1 and 1.2 (unidirectional).
+\end_layout
+
+\begin_layout Itemize
+Straightforward IDL to Tcl mapping that supports all data types, including
+ TypeCode, Any, Objects by Value and recursive data types.
+\end_layout
+
+\begin_layout Itemize
+Asynchronous invocations, callbacks and timeouts.
+\end_layout
+
+\begin_layout Itemize
+Support for the IOR:, corbaloc:, corbaname:, file: and http: stringified
+ object reference formats.
+\end_layout
+
+\begin_layout Itemize
+Server-side scripting with full Portable Object Adapter (POA) support.
+\end_layout
+
+\begin_layout Itemize
+Codeset negotiation (when using GIOP 1.2).
+ Thanks to Tcl's encoding system, a wide range of character sets is supported.
+\end_layout
+
+\begin_layout Itemize
+Download of type information at runtime, using an Interface Repository or
+ from a server that supports the CORBA Reflection specification.
+\end_layout
+
+\begin_layout Itemize
+Fully event based, the event loop is kept running while waiting for a server
+ response.
+\end_layout
+
+\begin_layout Subsection
+Glossary
+\end_layout
+
+\begin_layout Standard
+These terms are essential for Combat development.
+\end_layout
+
+\begin_layout Description
+Object
+\begin_inset space ~
+\end_inset
+
+Reference A Tcl command with the same interface as the server object as
+ defined in the IDL description.
+ Operations (or the getting/setting of attributes) on the object requence
+ transparently cause a server invocation to happen, i.e., a request is sent
+ to the remote server, and the response from the server is processed and
+ returned.
+ Object references come into existing using the 
+\family typewriter
+corba::string_\SpecialChar \-
+to_\SpecialChar \-
+reference
+\family default
+ command or as a result from a method invocation.
+ Object references are usually stored in variables.
+ Object references are the equivalent to interface 
+\begin_inset Quotes eld
+\end_inset
+
+_ptr
+\begin_inset Quotes erd
+\end_inset
+
+ types when programming CORBA in C++.
+ Object references can be duplicated using 
+\family typewriter
+corba::duplicate
+\family default
+ and must eventually be released using 
+\family typewriter
+corba::release
+\family default
+.
+\end_layout
+
+\begin_layout Description
+Stringified
+\begin_inset space ~
+\end_inset
+
+Object
+\begin_inset space ~
+\end_inset
+
+Reference Also known as IOR (for Interoperable Object Reference), a stringified
+ object reference is a 
+\emph on
+string
+\emph default
+ that uniquely identifies a server object (servant).
+ No operations can be performed upon an IOR directly; it must first be incarnate
+d into an 
+\emph on
+object reference
+\emph default
+ using 
+\family typewriter
+corba::string_\SpecialChar \-
+to_\SpecialChar \-
+reference
+\family default
+.
+ Stringified object references usually begin with the letters 
+\begin_inset Quotes eld
+\end_inset
+
+IOR:
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+corbaloc:
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+corbaname:
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+Local
+\begin_inset space ~
+\end_inset
+
+Object Like an object reference, a local object is a Tcl command with the
+ same interface as the object it represents.
+ Invocations on a local object do not cause requests to be sent to a remote
+ servant, but are processed locally.
+ The POA, POAManager and POACurrent are used via local objects.
+ A local object is not associated with a stringified object reference.
+\end_layout
+
+\begin_layout Description
+Servant A servant implements the state and behavior that is associated with
+ a CORBA object.
+ They are the target of CORBA remote method invocations.
+ In Combat, a servant is an instance of an [incr Tcl] class that inherits
+ directly or indirectly from 
+\family typewriter
+PortableServer::\SpecialChar \-
+ServantBase
+\family default
+.
+ Servants are 
+\emph on
+activated
+\emph default
+ with the Portable Object Adapter (POA), which creates object references
+ that clients can use to interact with the servant.
+\end_layout
+
+\begin_layout Subsection
+Interface Repository
+\end_layout
+
+\begin_layout Standard
+Because it posesses no 
+\begin_inset Quotes eld
+\end_inset
+
+compile-time
+\begin_inset Quotes erd
+\end_inset
+
+ knowledge of object interfaces, the Interface Repository is vital for the
+ operation of Combat.
+ This is different from other language mappings, where such knowledge is
+ generated by the IDL 
+\begin_inset Quotes eld
+\end_inset
+
+compiler
+\begin_inset Quotes erd
+\end_inset
+
+ and eventually linked into the application.
+ Combat instead pulls type information from Interface Repositories, at runtime.
+ Before an interface can be used (either as a client or a server), its type
+ information must be loaded into the Interface Repository.
+ Before accessing a service, Combat must learn its type.
+\end_layout
+
+\begin_layout Standard
+Most commonly,
+\end_layout
+
+\begin_layout Itemize
+Combat knows the service's type (its 
+\begin_inset Quotes eld
+\end_inset
+
+Repository Id
+\begin_inset Quotes erd
+\end_inset
+
+) because it is contained in an object's address, and
+\end_layout
+
+\begin_layout Itemize
+Combat knows the type's interface information because it was generated from
+ the service's IDL file using the 
+\begin_inset Quotes eld
+\end_inset
+
+idl2tcl
+\begin_inset Quotes erd
+\end_inset
+
+ application (which generates a 
+\begin_inset Quotes eld
+\end_inset
+
+.tcl
+\begin_inset Quotes erd
+\end_inset
+
+ file) and loaded into Combat's local Interface Repository using Tcl's 
+\begin_inset Quotes eld
+\end_inset
+
+source
+\begin_inset Quotes erd
+\end_inset
+
+ command.
+\end_layout
+
+\begin_layout Standard
+Alternatively, Combat can also download interface information from local
+ or remote CORBA Interface Repositories, or even from the service itself,
+ if its ORB supports the CORBA Reflection specification.
+\end_layout
+
+\begin_layout Standard
+The most frequent caveat is that a stringified object reference does not
+ necessarily contain the service's Repository Id that Combat depends on.
+ This typically applies to stringified object references of type 
+\begin_inset Quotes eld
+\end_inset
+
+corbaloc.
+\begin_inset Quotes erd
+\end_inset
+
+ In this case, you might need to apply workarounds described in section
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Issues-And-Workarounds"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+See section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:The-idl2tcl-Application"
+
+\end_inset
+
+ for more information about the 
+\begin_inset Quotes eld
+\end_inset
+
+idl2tcl
+\begin_inset Quotes erd
+\end_inset
+
+ application.
+\end_layout
+
+\begin_layout Section
+ORB Operations
+\end_layout
+
+\begin_layout Subsection
+Initialization & Features
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::init"
+
+\end_inset
+
+corba::init
+\end_layout
+
+\begin_layout Standard
+Before any of the other commands can be used, the ORB should be initialized.
+ This is performed using the 
+\family typewriter
+corba::init
+\family default
+ command.
+\end_layout
+
+\begin_layout LyX-Code
+corba::init ?
+\emph on
+parameters
+\emph default
+?
+\end_layout
+
+\begin_layout Standard
+All ORB-specific parameters (see below) are consumed, the remaining parameters
+ are returned.
+ It is common practice to pass an application's command-line arguments to
+ 
+\family typewriter
+corba::init
+\family default
+, i.e.,
+\end_layout
+
+\begin_layout LyX-Code
+set argv [eval corba::init $argv]
+\end_layout
+
+\begin_layout Standard
+Afterwards, 
+\family typewriter
+argv
+\family default
+ contains the remaining options.
+ This allows users of the application to pass ORB parameters (such as initial
+ references) on the application's command line.
+\end_layout
+
+\begin_layout Standard
+Use of this command is optional.
+ If 
+\family typewriter
+corba::init
+\family default
+ is not called explicitly, it is implicitly called with an empty parameter
+ list when the ORB is first used.
+\end_layout
+
+\begin_layout Standard
+Combat accepts the following ORB-specific parameters:
+\end_layout
+
+\begin_layout Description
+-ORBInitRef
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+name
+\emph default
+=
+\emph on
+value
+\emph default
+ Sets the initial reference 
+\emph on
+name
+\emph default
+ (see 
+\family typewriter
+corba::\SpecialChar \-
+resolve_\SpecialChar \-
+initial_\SpecialChar \-
+references
+\family default
+) to 
+\emph on
+value
+\emph default
+.
+ The 
+\emph on
+value
+\emph default
+ must be a stringified object reference.
+\end_layout
+
+\begin_layout Description
+-ORBDefaultInitRef
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+value
+\emph default
+ Sets the default initial reference.
+ See 
+\family typewriter
+corba::\SpecialChar \-
+resolve_\SpecialChar \-
+initial_\SpecialChar \-
+references
+\family default
+ for more information.
+\end_layout
+
+\begin_layout Description
+-ORBGIOPMaxSize
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+value
+\emph default
+ Limits the maximum acceptable size of incoming GIOP messages.
+ By default, GIOP messages are accepted regardless of their size.
+ This allows a denial of service attack on a server by sending a huge message,
+ eventually exceeding available memory.
+ If set, GIOP messages whose size (in octets) exceed 
+\emph on
+value
+\emph default
+ cause the connection to be dropped.
+ Each connection will also accept up to 
+\emph on
+value
+\emph default
+ octets of GIOP fragments.
+ The size of outgoing messages is not limited by this option.
+ The 
+\emph on
+value
+\emph default
+ must be a number; it may be followed by the "k", "m" or "g" character to
+ indicate kilobytes, megabytes or gigabytes, respectively.
+ 
+\end_layout
+
+\begin_layout Description
+-ORBConnectionIdleTimeout
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+value
+\emph default
+ If a connection to a remote ORB remains idle for this period, it is closed
+ to conserve system resources.
+ The connection will be transparently reestablished upon the next request.
+ Connections are never closed if there are outstanding requests (e.g., if
+ a server takes a long time to process a request).
+ The 
+\emph on
+value
+\emph default
+ is specified in milliseconds.
+ The default is 3600000 (one hour).
+\end_layout
+
+\begin_layout Description
+-ORBSendCancelRequestMessage
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+value
+\emph default
+ Controls whether a GIOP CancelRequest message is sent to the server when
+ a request is cancelled (using 
+\family typewriter
+corba::request
+\family default
+ 
+\family typewriter
+cancel
+\family default
+ or because it timed out).
+ The CORBA compliant default is to send a CancelRequest message in this
+ case, but some ORBs do not support this message and may close the connection.
+ To avoid issues when interoperating with such ORBs, set this option to
+ false.
+\end_layout
+
+\begin_layout Description
+-ORBServerPort
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+port
+\emph default
+ Initializes a TCP socket to listen on port 
+\emph on
+port
+\emph default
+ for incoming connections.
+ This option can be repeated multiple times to listen on several ports.
+ If this option is not present, a port will be selected automatically once
+ the RootPOA is accessed for the first time.
+\end_layout
+
+\begin_layout Description
+-ORBHostName
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+name
+\emph default
+ The host name that will be used in object references to refer to the local
+ host.
+ If omitted, the local host's default name (i.e., the name returned from [info
+ hostname]).
+ In environments where DNS is not available, it may be necessary to use
+ this option with the local host's IP address.
+\end_layout
+
+\begin_layout Description
+-ORBServerId
+\emph on
+
+\begin_inset space ~
+\end_inset
+
+value
+\emph default
+ The name that a persistent POA encodes in IORs to distinguish this server
+ from others.
+ Also, if a persistent POA is created with the same name, and if an object
+ is activated in this POA with the same object id, then its entire object
+ key will be 
+\emph on
+value
+\emph default
+.
+ The object will thus be accessible using the URI corbaloc::
+\emph on
+host
+\emph default
+:
+\emph on
+port
+\emph default
+/
+\emph on
+value
+\emph default
+, where 
+\emph on
+host
+\emph default
+ is the local host name (or the string passed to -ORBHostName) and 
+\emph on
+port
+\emph default
+ is the automatically chosen server port number (or the number passed to
+ -ORBServerPort).
+\end_layout
+
+\begin_layout Description
+-ORBNativeCodeSet
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+value
+\emph default
+ Sets the native codeset to be used and advertised as SNCS-C ("server native
+ codeset for char"; see the CORBA specification for more details).
+ If omitted, the native codeset is determined using [encoding system].
+ 
+\emph on
+value
+\emph default
+ can be an OSF registry value or Tcl encoding name.
+\end_layout
+
+\begin_layout Description
+-ORBDebug
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+level
+\emph default
+ Enables debugging output (which is sent to stderr).
+ Valid values for 
+\emph on
+level
+\emph default
+ are 
+\emph on
+giop
+\emph default
+ (GIOP message exchange), 
+\emph on
+iiop
+\emph default
+ (IIOP connection handling), 
+\emph on
+transport
+\emph default
+ (raw GIOP data), 
+\emph on
+poa
+\emph default
+ (Portable Object Adapter operations) and 
+\emph on
+all
+\emph default
+ (for all of them).
+ This debug output may be useful in debugging interoperability issues.
+\end_layout
+
+\begin_layout Standard
+Any other options that start with the 
+\emph on
+-ORB
+\emph default
+ prefix cause an error.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::feature"
+
+\end_inset
+
+corba::feature
+\end_layout
+
+\begin_layout Standard
+Syntax: 
+\end_layout
+
+\begin_layout LyX-Code
+corba::feature names
+\begin_inset Newline newline
+\end_inset
+
+corba::feature require ?-exact? 
+\emph on
+feature
+\emph default
+ ?
+\emph on
+version
+\emph default
+?
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+names
+\family default
+ subcommand returns a list of feature tokens supported by this implementation.
+ For Combat, this list is 
+\emph on
+core
+\emph default
+, 
+\emph on
+async
+\emph default
+, 
+\emph on
+callback
+\emph default
+, 
+\emph on
+type
+\emph default
+, 
+\emph on
+poa
+\emph default
+, 
+\emph on
+register
+\emph default
+, 
+\emph on
+dii 
+\emph default
+and
+\emph on
+ combat::ir
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+require
+\family default
+ subcommand has three possible usages.
+ If called with only a feature token, it succeeds if that feature is implemented.
+ If that feature is not available at all, an error is returned.
+ If a version number is mentioned, the command only succeeds if the implementati
+on provides that feature with the same major number and at least the same
+ minor number.
+ With the 
+\family typewriter
+-exact
+\family default
+ option, the given version number must match the implemented version exactly.
+\end_layout
+
+\begin_layout Standard
+It is expected that a feature is upwards compatible within the same major
+ version number, i.e., version 1.3 supports all operations that version 1.1
+ did, but version 2.1 is probably incompatible.
+ Major version 0 is an exception in that it does not assume backwards compatibil
+ity.
+\end_layout
+
+\begin_layout Standard
+As long as the Tcl language mapping is not official, Combat reports the
+ version number of the supported features to be the same as the Combat version
+ (i.e., less than 1.0).
+\end_layout
+
+\begin_layout Subsection
+Initial References
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::resolve_initial_references"
+
+\end_inset
+
+corba::resolve_initial_references
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::resolve_initial_references 
+\emph on
+id
+\end_layout
+
+\begin_layout Standard
+Obtains an initial reference.
+ Depending on 
+\emph on
+id
+\emph default
+, returns an object reference or a local object.
+ Valid ids include 
+\begin_inset Quotes eld
+\end_inset
+
+RootPOA
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+POACurrent
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+CodecFactory
+\begin_inset Quotes erd
+\end_inset
+
+ (all implemented as local objects), all ids registered using the -ORBInitRef
+ parameter to the 
+\family typewriter
+corba::init
+\family default
+ command, and all ids registered using the 
+\family typewriter
+corba::register_\SpecialChar \-
+initial_\SpecialChar \-
+reference
+\family default
+ command.
+\end_layout
+
+\begin_layout Standard
+If a default initial reference was set using the -ORBDefaultInitRef parameter
+ to the 
+\family typewriter
+corba::init
+\family default
+ command, and id is not a registered initial reference, then the default
+ initial reference is concatenated with 
+\emph on
+id
+\emph default
+; the resulting string is passed to 
+\family typewriter
+corba::string_\SpecialChar \-
+to_\SpecialChar \-
+object
+\family default
+.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::list_initial_services"
+
+\end_inset
+
+corba::list_initial_services
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::list_initial_services
+\end_layout
+
+\begin_layout Standard
+Returns a list of ids that can be used with 
+\family typewriter
+corba::resolve_\SpecialChar \-
+initial_\SpecialChar \-
+references
+\family default
+.
+ Note that the 
+\begin_inset Quotes eld
+\end_inset
+
+RootPOA
+\begin_inset Quotes erd
+\end_inset
+
+ id is not listed until the Root POA is first used.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::register_initial_reference"
+
+\end_inset
+
+corba::register_initial_reference
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::register_initial_reference 
+\emph on
+name
+\emph default
+ 
+\emph on
+obj
+\end_layout
+
+\begin_layout Standard
+Registers the object reference 
+\emph on
+obj
+\emph default
+ as an initial reference.
+ 
+\emph on
+name
+\emph default
+ will appear in the result of 
+\family typewriter
+corba::list_\SpecialChar \-
+initial_\SpecialChar \-
+services
+\family default
+ and can be used with 
+\family typewriter
+corba::resolve_initial_references
+\family default
+ to retrieve the object reference.
+\end_layout
+
+\begin_layout Subsection
+Object Reference Operations
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::string_to_object"
+
+\end_inset
+
+corba::string_to_object
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::string_to_object 
+\emph on
+string
+\end_layout
+
+\begin_layout Standard
+Interprets the 
+\emph on
+string
+\emph default
+ as a stringified object reference, and converts it to an object reference.
+ The 
+\emph on
+string
+\emph default
+ may have any of the following formats:
+\end_layout
+
+\begin_layout Description
+IOR: This is the classic CORBA format for stringified object references,
+ a very long string with the 
+\begin_inset Quotes eld
+\end_inset
+
+IOR:
+\begin_inset Quotes erd
+\end_inset
+
+ prefix and the remainder in hexadecimal data.
+\end_layout
+
+\begin_layout Description
+corbaloc::
+\emph on
+host
+\emph default
+[:
+\emph on
+port
+\emph default
+]/
+\emph on
+ObjectKey
+\emph default
+ This format contains the server's IP address, its port number, and the
+ object key of the target object.
+ If 
+\emph on
+port
+\emph default
+ is omitted, the 2089 is used as default.
+\end_layout
+
+\begin_layout Description
+corbaname::
+\emph on
+host
+\emph default
+[:
+\emph on
+port
+\emph default
+][/
+\emph on
+ObjectKey
+\emph default
+][#
+\emph on
+name
+\emph default
+] This format references an entry in the Naming Service.
+ The 
+\emph on
+host
+\emph default
+, 
+\emph on
+port
+\emph default
+ and 
+\emph on
+ObjectKey
+\emph default
+ identify a Naming Context.
+ If 
+\emph on
+port
+\emph default
+ is omitted, 2089 is used as default.
+ If 
+\emph on
+ObjectKey
+\emph default
+ is omitted, 
+\begin_inset Quotes eld
+\end_inset
+
+NameService
+\begin_inset Quotes erd
+\end_inset
+
+ is used.
+ 
+\emph on
+Name
+\emph default
+ identifies an entry in the Naming Service.
+ This entry is read and returned.
+ If 
+\emph on
+name
+\emph default
+ is omitted, the reference of the Naming Context itself is returned.
+\end_layout
+
+\begin_layout Description
+file://[
+\emph on
+host
+\emph default
+]
+\emph on
+path
+\emph default
+ Reads a stringified object reference from the given file.
+ 
+\emph on
+host
+\emph default
+ should be the empty string or be an alias of the local host.
+ 
+\emph on
+path
+\emph default
+ is an absolute path name.
+ The contents of this file are read and then passed to 
+\family typewriter
+corba::string_to_object
+\family default
+.
+ As a special case, on Windows, if 
+\emph on
+host
+\emph default
+ is the empty string, then 
+\emph on
+path
+\emph default
+ may start with a drive name followed by a colon.
+\end_layout
+
+\begin_layout Description
+http:// The referenced URL is downloaded (requires the http package).
+ Its contents are then passed to 
+\family typewriter
+corba::string_to_object
+\family default
+.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::object_to_string"
+
+\end_inset
+
+corba::object_to_string
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::object_to_string 
+\emph on
+ref
+\end_layout
+
+\begin_layout Standard
+Converts the object reference 
+\emph on
+ref
+\emph default
+ into a stringified object reference, using the 
+\begin_inset Quotes eld
+\end_inset
+
+IOR:
+\begin_inset Quotes erd
+\end_inset
+
+ format.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::release"
+
+\end_inset
+
+corba::release
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::release 
+\emph on
+ref
+\end_layout
+
+\begin_layout LyX-Code
+corba::release 
+\emph on
+typecode
+\emph default
+ 
+\emph on
+value
+\end_layout
+
+\begin_layout Standard
+Releases the memory associated with object references.
+ All object references must eventually be released using this function to
+ avoid memory leaks.
+\end_layout
+
+\begin_layout Standard
+When called with a single parameter, releases the object reference 
+\emph on
+ref
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+When called with two parameters, the first parameter is a typecode, and
+ the second parameter is a value that maches the typecode.
+ This version can be used with complex data structures to release all object
+ references that are members of the data structure.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::duplicate"
+
+\end_inset
+
+corba::duplicate
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::duplicate 
+\emph on
+ref
+\end_layout
+
+\begin_layout LyX-Code
+corba::duplicate 
+\emph on
+typecode
+\emph default
+ 
+\emph on
+value
+\end_layout
+
+\begin_layout Standard
+Duplicates an object reference.
+ This is usually done before passing object references to a function that
+ eventually releases its object references, so that the duplicate can be
+ used independently.
+\end_layout
+
+\begin_layout Standard
+When called with a single parameter, returns a new object reference that
+ is a duplicate of 
+\emph on
+ref
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+When called with two parameters, the first parameter is a typecode, and
+ the second parameter is a value that matches the typecode.
+ This version can be used with complex data structures.
+ A copy of value is returned, with all object referencesthat are members
+ of the data structure duplicated.
+\end_layout
+
+\begin_layout Subsection
+Interface Repository Operations
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::const"
+
+\end_inset
+
+corba::const
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::const 
+\emph on
+id
+\end_layout
+
+\begin_layout Standard
+Looks up 
+\emph on
+id
+\emph default
+ in the Interface Repository.
+ 
+\emph on
+id
+\emph default
+ must be the Repository Id or absolute name of a constant definition.
+ The value of that constant is then returned using type any (i.e., a list
+ of the constant's typecode and value).
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::type"
+
+\end_inset
+
+corba::type
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::type 
+\emph on
+cmd
+\emph default
+ ?
+\emph on
+args
+\emph default
+?
+\end_layout
+
+\begin_layout Standard
+Handles type definitions.
+ Can be used to ensure type safety.
+ Its usage depends on the subcommand:
+\end_layout
+
+\begin_layout Description
+corba::type
+\begin_inset space ~
+\end_inset
+
+of
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+id
+\emph default
+ Looks up 
+\emph on
+id
+\emph default
+ in the Interface Repository.
+ 
+\emph on
+id
+\emph default
+ must be the Repository Id or absolute name of a type definition.
+ The typecode of that type is returned.
+\end_layout
+
+\begin_layout Description
+corba::type
+\begin_inset space ~
+\end_inset
+
+match
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+typecode
+\emph default
+
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+value
+\emph default
+ Checks whether 
+\emph on
+value
+\emph default
+ matches 
+\emph on
+typecode
+\emph default
+, and returns the result as either 1 (matches) or 0 (does not match).
+\end_layout
+
+\begin_layout Description
+corba::type
+\begin_inset space ~
+\end_inset
+
+equivalent
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+tc1
+\emph default
+
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+tc2
+\emph default
+ Checks whether the two typecodes 
+\emph on
+tc1
+\emph default
+ and 
+\emph on
+tc2
+\emph default
+ are equivalent, and returns the result as either 1 (equivalent) or 0 (not
+ equivalent).
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:combat::ir"
+
+\end_inset
+
+combat::ir
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+combat::ir add 
+\emph on
+args
+\end_layout
+
+\begin_layout Standard
+This command is used to load interface information into the local Interface
+ Repository.
+ 
+\emph on
+args
+\emph default
+ must be a string which is the result of processing an IDL file with the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+idl2tcl
+\begin_inset Quotes erd
+\end_inset
+
+ application.
+\end_layout
+
+\begin_layout Standard
+There is normally no need to call this function manually, it is implicitly
+ called when loading a file generated by 
+\begin_inset Quotes eld
+\end_inset
+
+idl2tcl
+\begin_inset Quotes erd
+\end_inset
+
+ using the 
+\begin_inset Quotes eld
+\end_inset
+
+source
+\begin_inset Quotes erd
+\end_inset
+
+ command.
+\end_layout
+
+\begin_layout Section
+Client Side Scripting
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Invocations"
+
+\end_inset
+
+Invocations
+\end_layout
+
+\begin_layout Subsubsection
+Calling Operations and Attributes
+\end_layout
+
+\begin_layout Standard
+As already noted, an object reference is a Tcl command same interface as
+ the server object as defined in the IDL description.
+ Using the object reference results in a remote method invocation.
+ The generic format for method invocations and attribute access is:
+\end_layout
+
+\begin_layout LyX-Code
+
+\emph on
+ref
+\emph default
+ ?
+\emph on
+options
+\emph default
+? 
+\emph on
+operation
+\emph default
+ ?
+\emph on
+args
+\emph default
+?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+ref
+\emph default
+ must be a valid object reference.
+ The 
+\emph on
+operation
+\emph default
+ must be a valid operation or attribute according to the service's interface.
+\end_layout
+
+\begin_layout Standard
+For operations, 
+\emph on
+args
+\emph default
+ has the same number of parameters as in the IDL interface description.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+in
+\begin_inset Quotes erd
+\end_inset
+
+ parameters are passed 
+\emph on
+by value
+\emph default
+, as expected, while 
+\begin_inset Quotes eld
+\end_inset
+
+out
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+inout
+\begin_inset Quotes erd
+\end_inset
+
+ parameters are passed 
+\emph on
+by reference
+\emph default
+, i.e., by passing the name of a variable that contains a value (in the case
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+inout
+\begin_inset Quotes erd
+\end_inset
+
+ parameters) and/or will receive the output parameter (in the case of 
+\begin_inset Quotes eld
+\end_inset
+
+inout
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+out
+\begin_inset Quotes erd
+\end_inset
+
+ parameters).
+ The operation's result is returned.
+\end_layout
+
+\begin_layout Standard
+For attributes, 
+\emph on
+args
+\emph default
+ can be empty to read the attribute.
+ In this case, the value of the attribute is returned.
+ To set the attribute, pass the new value as 
+\emph on
+args
+\emph default
+.
+ This returns an empty value.
+\end_layout
+
+\begin_layout Standard
+Valid 
+\emph on
+options
+\emph default
+ are 
+\begin_inset Quotes eld
+\end_inset
+
+-async
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+-callback
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+-timeout
+\begin_inset Quotes erd
+\end_inset
+
+.
+ When used without the 
+\begin_inset Quotes eld
+\end_inset
+
+-async
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+-callback
+\begin_inset Quotes erd
+\end_inset
+
+ options, two-way invocations are synchronous and will wait for the server
+ reply before returning.
+ One-way operations are always asynhronous.
+ See section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Asynchronous-Invocations"
+
+\end_inset
+
+ for more information about asynchronous invocations.
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+-timeout
+\begin_inset Quotes erd
+\end_inset
+
+ option takes a single parameter, which is the timeout in milliseconds.
+ If a reply is not received within this period, then the request fails with
+ the IDL:omg.org/CORBA/TIMEOUT:1.0 exception.
+\end_layout
+
+\begin_layout Standard
+Note that the ORB releases any object references that are passed to 
+\begin_inset Quotes eld
+\end_inset
+
+inout
+\begin_inset Quotes erd
+\end_inset
+
+ parameters.
+\end_layout
+
+\begin_layout Standard
+See section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:The-IDL-to-Tcl-Mapping"
+
+\end_inset
+
+ below for details about how CORBA data types are mapped to Tcl.
+\end_layout
+
+\begin_layout Subsubsection
+Brief Example
+\end_layout
+
+\begin_layout Standard
+For example, consider the following IDL:
+\end_layout
+
+\begin_layout LyX-Code
+interface A {
+\begin_inset Newline newline
+\end_inset
+
+  short foo (in long val, inout short flags, out string name);
+\begin_inset Newline newline
+\end_inset
+
+  attribute string bar;
+\begin_inset Newline newline
+\end_inset
+
+};
+\end_layout
+
+\begin_layout Standard
+Now, assuming that the variable 
+\begin_inset Quotes eld
+\end_inset
+
+aref
+\begin_inset Quotes erd
+\end_inset
+
+ contains an object reference of type A, the following Tcl code could be
+ used to invoke the 
+\begin_inset Quotes eld
+\end_inset
+
+foo
+\begin_inset Quotes erd
+\end_inset
+
+ operation and to access the 
+\begin_inset Quotes eld
+\end_inset
+
+bar
+\begin_inset Quotes erd
+\end_inset
+
+ attribute:
+\end_layout
+
+\begin_layout LyX-Code
+set flags 42
+\begin_inset Newline newline
+\end_inset
+
+set res [$aref foo -1 flags name]
+\begin_inset Newline newline
+\end_inset
+
+puts "Bar = [$aref bar]"
+\begin_inset Newline newline
+\end_inset
+
+$aref bar "Hello World"
+\end_layout
+
+\begin_layout Standard
+The second line passes -1 as the 
+\begin_inset Quotes eld
+\end_inset
+
+val
+\begin_inset Quotes erd
+\end_inset
+
+ parameter and 42 as the 
+\begin_inset Quotes eld
+\end_inset
+
+flags
+\begin_inset Quotes erd
+\end_inset
+
+ parameter.
+ After returning from the 
+\begin_inset Quotes eld
+\end_inset
+
+foo
+\begin_inset Quotes erd
+\end_inset
+
+ operation, 
+\begin_inset Quotes eld
+\end_inset
+
+flags
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+name
+\begin_inset Quotes erd
+\end_inset
+
+ will be updated to contain the values returned from 
+\begin_inset Quotes eld
+\end_inset
+
+foo.
+\begin_inset Quotes erd
+\end_inset
+
+ The third line returns the current value of the 
+\begin_inset Quotes eld
+\end_inset
+
+bar
+\begin_inset Quotes erd
+\end_inset
+
+ attribute, while the fourth line sets the attribute to a new value.
+\end_layout
+
+\begin_layout Subsubsection
+Built-In Operations
+\end_layout
+
+\begin_layout Standard
+An object reference also supports the following 
+\begin_inset Quotes eld
+\end_inset
+
+built-in
+\begin_inset Quotes erd
+\end_inset
+
+ operations which have the same semantics as defined in the CORBA specification.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+_get_interface
+\family default
+ Queries the servant for its interface.
+ Returns an object reference of type 
+\family typewriter
+CORBA::InterfaceDef
+\family default
+.
+ This requires that the remote service is connected to a properly set-up
+ Interface Repository.
+ Note that use of the returned object reference requires that the IDL for
+ the Interface Repository has been loaded into the Interface Repository.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+_is_a
+\begin_inset space ~
+\end_inset
+
+
+\family default
+\emph on
+type
+\emph default
+ Takes a type, which may be specified as a Repository Id or an absolute
+ scoped name as parameter and returns true (1) if the object implements
+ the given interface.
+ If Combat did not have type information for this object reference, if type
+ information for 
+\emph on
+repoid
+\emph default
+ is available in the Interface Repository, and if this operation returns
+ true, then Combat will remember 
+\emph on
+repoid
+\emph default
+ as this object reference's type.
+ This feature can be used as a workaround if an object reference, e.g., one
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+corbaloc:
+\begin_inset Quotes erd
+\end_inset
+
+ style, does not contain type information.
+ Scoped names can only be used for types for which information is available
+ in the Interface Repository.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+_non_existent
+\family default
+ Returns true (1) if the server providing the implementation for this object
+ has ceased to exist.
+ A false return value (0) does not guarantee that any following invocations
+ will succeed.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+_is_equivalent
+\family default
+\emph on
+
+\begin_inset space ~
+\end_inset
+
+ref
+\emph default
+ Takes another object reference as parameter and returns true (1) if the
+ objects referenced by both object references are equivalent, or false (0)
+ if not.
+ This operation is implemented locally.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+_duplicate
+\family default
+ Returns a duplicate of the object reference.
+ This is equivalent to 
+\emph on
+corba::duplicate
+\emph default
+.
+ This operation is implemented locally.
+\end_layout
+
+\begin_layout Standard
+Note that there is no need for an 
+\begin_inset Quotes eld
+\end_inset
+
+is_nil
+\begin_inset Quotes erd
+\end_inset
+
+ operation, because nil addresses are mapped to the value 0 rather than
+ object references.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Asynchronous-Invocations"
+
+\end_inset
+
+Asynchronous Invocations
+\end_layout
+
+\begin_layout Subsubsection
+Calling Operations and Attributes Asynchronously
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+-async
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+-callback
+\begin_inset Quotes erd
+\end_inset
+
+ options can be used to make an invocation asynchronous.
+\end_layout
+
+\begin_layout LyX-Code
+
+\emph on
+ref
+\emph default
+ -async 
+\emph on
+operation
+\emph default
+ ?args?
+\begin_inset Newline newline
+\end_inset
+
+
+\emph on
+ref
+\emph default
+ -callback 
+\emph on
+cb
+\emph default
+ 
+\emph on
+operation
+\emph default
+ ?args?
+\end_layout
+
+\begin_layout Standard
+In either case, the call returns immediately.
+ Instead of the operation's result, an 
+\emph on
+async-id
+\emph default
+ is returned.
+
+\family typewriter
+ The -callback
+\family default
+ option arranges for the given callback procedure 
+\emph on
+cb
+\emph default
+ to be called when the reply is received from the server.
+ The procedure 
+\emph on
+cb
+\emph default
+ is called at global level with the async-id as single parameter.
+ It is guaranteed that the callback is not executed before the above call
+ returns.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::request"
+
+\end_inset
+
+corba::request
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+corba::request
+\family default
+ command exists to monitor the status of asynchronous invocations in progress.
+\end_layout
+
+\begin_layout Standard
+Syntax: 
+\end_layout
+
+\begin_layout LyX-Code
+corba::request get 
+\emph on
+async-id
+\emph default
+
+\begin_inset Newline newline
+\end_inset
+
+corba::request poll ?
+\emph on
+async-id
+\emph default
+ \SpecialChar \ldots{}
+?
+\begin_inset Newline newline
+\end_inset
+
+corba::request wait ?
+\emph on
+async-id
+\emph default
+ \SpecialChar \ldots{}
+?
+\begin_inset Newline newline
+\end_inset
+
+corba::request cancel 
+\emph on
+async-id
+\emph default
+ \SpecialChar \ldots{}
+
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+get
+\family default
+ Waits until the asynchronous request with the given 
+\emph on
+async-id
+\emph default
+ has completed, and returns the result of the operation, or throws an exception
+ in case of a failure.
+ This also extracts any 
+\begin_inset Quotes eld
+\end_inset
+
+out
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+inout
+\begin_inset Quotes erd
+\end_inset
+
+ parameters 
+\emph on
+within the context of the
+\emph default
+ 
+\family typewriter
+get
+\family default
+ 
+\emph on
+call
+\emph default
+ (see below).
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+poll
+\family default
+ If called without a parameter, it checks if any of the outstanding asynchronous
+ invocations have completed.
+ If 
+\family typewriter
+poll
+\family default
+ is called with one or more 
+\emph on
+async-
+\emph default
+id, it checks if any of these asynchonous invocations have finished.
+ If yes, a single async-id is returned.
+ 
+\family typewriter
+corba::request get
+\family default
+ should then be called for that async-id to retrieve the result.
+ If none of the (given) requests have completed, 
+\family typewriter
+poll
+\family default
+ returns immediately with an empty result.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+wait
+\family default
+ Similar to 
+\family typewriter
+poll
+\family default
+, but waits (enters the event loop) until one request has finished and then
+ returns its async-id.
+ If called without arguments, it considers all outstanding requests.
+ If there are no outstanding requests, it immediately returns with an empty
+ result.
+\end_layout
+
+\begin_layout Description
+cancel Cancels the asynchronous requests with the given 
+\emph on
+async-ids
+\emph default
+.
+ All information about the requests is discarded.
+ 
+\family typewriter
+corba::request get
+\family default
+ shall not be called.
+ If a callback was configured for this request, it is 
+\emph on
+not
+\emph default
+ called.
+\end_layout
+
+\begin_layout Subsubsection
+Callback Procedures
+\end_layout
+
+\begin_layout Standard
+A callback procedure receives an async-id as single parameter and is expected
+ to (directly or indirectly) perform a 
+\family typewriter
+corba::request get
+\family default
+ for that async-id.
+ Here's a simple example for a callback:
+\end_layout
+
+\begin_layout LyX-Code
+proc cb {id} {
+\begin_inset Newline newline
+\end_inset
+
+  set res [corba::request get $id]
+\begin_inset Newline newline
+\end_inset
+
+  puts "Result is: $res"
+\begin_inset Newline newline
+\end_inset
+
+}
+\end_layout
+
+\begin_layout Standard
+Note the behaviour with respect to an operation's 
+\family typewriter
+out
+\family default
+ or 
+\family typewriter
+inout
+\family default
+ parameters.
+ When sending a request, only the 
+\emph on
+names
+\emph default
+ of the variables that were given for the 
+\begin_inset Quotes eld
+\end_inset
+
+out
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+inout
+\begin_inset Quotes erd
+\end_inset
+
+ parameter are stored, and these variable names are written to in the context
+ in which the corresponding 
+\family typewriter
+corba::request get
+\family default
+ is executed.
+ So unless global variable names are used (i.e., variable names starting with
+ 
+\begin_inset Quotes eld
+\end_inset
+
+::
+\begin_inset Quotes erd
+\end_inset
+
+ or those declared 
+\begin_inset Quotes eld
+\end_inset
+
+global
+\begin_inset Quotes erd
+\end_inset
+
+), they will be visible in the context of the callback only.
+\end_layout
+
+\begin_layout Subsubsection
+Notes
+\end_layout
+
+\begin_layout Itemize
+The 
+\family typewriter
+-async
+\family default
+ and 
+\family typewriter
+-callback
+\family default
+ flags can be used likewise on operations and attributes.
+ 
+\end_layout
+
+\begin_layout Itemize
+Ordering is not guaranteed for asynchronous invocations, not even on the
+ same object.
+ 
+\end_layout
+
+\begin_layout Itemize
+Asynchronous invocations are only processed in Tcl's event loop.
+\end_layout
+
+\begin_layout Itemize
+If a timeout was specified for an asynchronous invocation, then upon expiration
+ of the timeout, the associated async-id becomes ready, the callback is
+ called if specified, and corba::\SpecialChar \-
+request get will raise the IDL:omg.org/CORBA/TIM
+EOUT:1.0 exception.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Dynamic-Invocations"
+
+\end_inset
+
+Dynamic Invocations
+\end_layout
+
+\begin_layout Standard
+Calling operations and accessing attributes as described above requires
+ that type information is available in the Interface Repository.
+ If type information is not available, a 
+\emph on
+dynamic invocation
+\emph default
+ can be used to call operations and access attributes.
+ For a dynamic invocation, type information must be provided 
+\begin_inset Quotes eld
+\end_inset
+
+manually.
+\begin_inset Quotes erd
+\end_inset
+
+ This can be useful for generic programming, if type information becomes
+ available at run-time only.
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::dii ?
+\emph on
+options
+\emph default
+?
+\emph on
+ ref
+\emph default
+ 
+\emph on
+spec
+\emph default
+ ?
+\emph on
+args
+\emph default
+?
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+ref
+\emph default
+ and 
+\emph on
+args
+\emph default
+ parameters are the same as above.
+ 
+\emph on
+spec 
+\emph default
+must be a list composed of three or four elements.
+ The first element is the typecode of the return value.
+ The second element is the name of the operation to be invoked.
+ The third element describes the parameters.
+ The parameter description is a list that contains one element per parameter.
+ Each parameter is described by a list of two elements.
+ The first element is the parameter direction, i.e., either 
+\begin_inset Quotes eld
+\end_inset
+
+in
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+out
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+inout,
+\begin_inset Quotes erd
+\end_inset
+
+ and the second element is the parameter's typecode.
+ The fourth element of spec is a list of exception typecodes that this operation
+ may throw.
+\end_layout
+
+\begin_layout Standard
+Valid options are 
+\begin_inset Quotes eld
+\end_inset
+
+-async
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+-callback
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+-timeout
+\begin_inset Quotes erd
+\end_inset
+
+, as above.
+\end_layout
+
+\begin_layout Section
+Server Side Scripting
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Implementing-Servants"
+
+\end_inset
+
+Implementing Servants
+\end_layout
+
+\begin_layout Standard
+Like other ORBs, Combat supports the Portable Object Adapter (POA) and its
+ associated APIs.
+ Implementing servants is therefore very similar as in other programming
+ languages.
+\end_layout
+
+\begin_layout Standard
+Servants are realized using [incr Tcl] classes that inherit, directly or
+ indirectly, from the base class PortableServer::\SpecialChar \-
+ServantBase.
+ The implementation must provide public variables for IDL attributes and
+ public methods for IDL operations.
+ Methods follow the same mapping rules as for client-side scripting, including
+ the by-reference rules for 
+\begin_inset Quotes eld
+\end_inset
+
+inout
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+out
+\begin_inset Quotes erd
+\end_inset
+
+ parameters.
+\end_layout
+
+\begin_layout Standard
+Note that the ORB releases all object references that are passed into and
+ out of an operation.
+ Use corba::\SpecialChar \-
+duplicate to preserve object references beyond the method invocation.
+\end_layout
+
+\begin_layout Standard
+Because Combat does not have compile-time type information, run-time type
+ information must be supplied.
+ This is done by implementing the public method 
+\begin_inset Quotes eld
+\end_inset
+
+_Interface
+\begin_inset Quotes erd
+\end_inset
+
+ (with a leading underscore and a capital I).
+ This method must not take any parameters and must return the type of the
+ most-derived IDL interface that the servant supports, either as a Repository
+ Id or as an absolute scoped name.
+ Type information for this interface must be available in the local Interface
+ Repository.
+ Like with client-side scripting, this is achieved by processing the IDL
+ file with the 
+\begin_inset Quotes eld
+\end_inset
+
+idl2tcl
+\begin_inset Quotes erd
+\end_inset
+
+ application and loading the resulting 
+\begin_inset Quotes eld
+\end_inset
+
+.tcl
+\begin_inset Quotes erd
+\end_inset
+
+ file using the 
+\begin_inset Quotes eld
+\end_inset
+
+source
+\begin_inset Quotes erd
+\end_inset
+
+ command.
+\end_layout
+
+\begin_layout Standard
+It is the application's responsibility to create and delete servant instances
+ using the normal [itcl Tcl] semantics.
+ The application must not delete any active servants.
+\end_layout
+
+\begin_layout Standard
+Servants are not immediately accessible from the outside after their creation.
+ They must first be 
+\emph on
+activated
+\emph default
+ using the Portable Object Adapter.
+\end_layout
+
+\begin_layout Standard
+Servants inherits the 
+\begin_inset Quotes eld
+\end_inset
+
+_this
+\begin_inset Quotes erd
+\end_inset
+
+ methods, which works the same as in the C++ mapping:
+\end_layout
+
+\begin_layout Enumerate
+Within the context of a request invocation, 
+\begin_inset Quotes eld
+\end_inset
+
+_this
+\begin_inset Quotes erd
+\end_inset
+
+ returns a new object reference for the servant.
+\end_layout
+
+\begin_layout Enumerate
+Outside the context of a request invocation, if the servant has not yet
+ been activated, and if its POA has the IMPLICIT_ACTIVATION policy, the
+ servant is activated, and an object reference for the newly-activated servant
+ is returned.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Outside the context of a request invocation, if the servant has already
+ been activated, and if its POA has the UNIQUE_ID policy, an object reference
+ for the already-active servant is returned.
+ 
+\end_layout
+
+\begin_layout Subsection
+Implementation Example
+\end_layout
+
+\begin_layout Standard
+Considering the following IDL file:
+\end_layout
+
+\begin_layout LyX-Code
+interface HelloWorld {
+\begin_inset Newline newline
+\end_inset
+
+  attribute long messageCounter;
+\begin_inset Newline newline
+\end_inset
+
+  void hello (in string message);
+\begin_inset Newline newline
+\end_inset
+
+};
+\end_layout
+
+\begin_layout Standard
+Its implementation could look like:
+\end_layout
+
+\begin_layout LyX-Code
+itcl::class HelloWorld_impl {
+\begin_inset Newline newline
+\end_inset
+
+  inherit PortableServer::ServantBase
+\end_layout
+
+\begin_layout LyX-Code
+  public method _Interface {} {
+\begin_inset Newline newline
+\end_inset
+
+    return "::HelloWorld"
+\begin_inset Newline newline
+\end_inset
+
+  }
+\end_layout
+
+\begin_layout LyX-Code
+  public variable messageCounter 0
+\begin_inset Newline newline
+\end_inset
+
+  public method hello {message} {
+\begin_inset Newline newline
+\end_inset
+
+    puts "The client says: $message"
+\begin_inset Newline newline
+\end_inset
+
+    incr messageCounter
+\begin_inset Newline newline
+\end_inset
+
+  }
+\begin_inset Newline newline
+\end_inset
+
+}
+\end_layout
+
+\begin_layout Standard
+Here is a second example to demonstrate usage of 
+\begin_inset Quotes eld
+\end_inset
+
+out
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+inout
+\begin_inset Quotes erd
+\end_inset
+
+ parameters.
+ As with method invocations, 
+\begin_inset Quotes eld
+\end_inset
+
+in
+\begin_inset Quotes erd
+\end_inset
+
+ parameters are passed by value, while 
+\begin_inset Quotes eld
+\end_inset
+
+out
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+inout
+\begin_inset Quotes erd
+\end_inset
+
+ parameters are passed by reference.
+ Considering the following IDL file:
+\end_layout
+
+\begin_layout LyX-Code
+interface A {
+\begin_inset Newline newline
+\end_inset
+
+  short op (in long val, inout short flags, out string name);
+\begin_inset Newline newline
+\end_inset
+
+}; 
+\end_layout
+
+\begin_layout Standard
+The implementation of the 
+\begin_inset Quotes eld
+\end_inset
+
+op
+\begin_inset Quotes erd
+\end_inset
+
+ method receives variable names for the 
+\begin_inset Quotes eld
+\end_inset
+
+flags
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+name
+\begin_inset Quotes erd
+\end_inset
+
+ parameters.
+ The implementation can then 
+\begin_inset Quotes eld
+\end_inset
+
+import
+\begin_inset Quotes erd
+\end_inset
+
+ these variables using Tcl's 
+\begin_inset Quotes eld
+\end_inset
+
+upvar
+\begin_inset Quotes erd
+\end_inset
+
+ command.
+ Therefore, an implementation for the above interface could look like:
+\end_layout
+
+\begin_layout LyX-Code
+itcl::class A {
+\begin_inset Newline newline
+\end_inset
+
+  inherit PortableServer::ServantBase
+\begin_inset Newline newline
+\end_inset
+
+  public method _Interface {
+\begin_inset Newline newline
+\end_inset
+
+    return "::A"
+\begin_inset Newline newline
+\end_inset
+
+  }
+\end_layout
+
+\begin_layout LyX-Code
+  public method op { val flags_name name_name } {
+\begin_inset Newline newline
+\end_inset
+
+    # The next line imports 
+\begin_inset Quotes eld
+\end_inset
+
+flags
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+name
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+    upvar $flags_name flags $name_name name
+\begin_inset Newline newline
+\end_inset
+
+    puts "val is $val"
+\begin_inset Newline newline
+\end_inset
+
+    puts "flags is $flags"
+\begin_inset Newline newline
+\end_inset
+
+    set flags -1
+\begin_inset Newline newline
+\end_inset
+
+    set name "Hello World"
+\begin_inset Newline newline
+\end_inset
+
+    return 42
+\begin_inset Newline newline
+\end_inset
+
+  }
+\begin_inset Newline newline
+\end_inset
+
+}
+\end_layout
+
+\begin_layout Subsection
+The POA Local Object
+\end_layout
+
+\begin_layout Standard
+A local object for the Root POA is obtained using corba::resolve_\SpecialChar \-
+initial_\SpecialChar \-
+referen
+ces:
+\end_layout
+
+\begin_layout LyX-Code
+set rootPOA [corba::resolve_initial_references RootPOA]
+\end_layout
+
+\begin_layout Standard
+POA local objects support all operations as defined in the CORBA specification.
+ The usual type mapping rules apply, with a single exception.
+ The second parameter to the 
+\family typewriter
+create_POA
+\family default
+ method is a list of policy 
+\emph on
+values
+\emph default
+ rather than a list of policy 
+\emph on
+objects
+\emph default
+.
+ (Note: This obsoletes corresponding factory operations like 
+\family typewriter
+create_\SpecialChar \-
+lifespan_\SpecialChar \-
+policy
+\family default
+.)
+\end_layout
+
+\begin_layout Standard
+For example:
+\end_layout
+
+\begin_layout LyX-Code
+set myPOA [$rootPOA create_POA 0 {USE_SERVANT_MANAGER PERSISTENT}] 
+\end_layout
+
+\begin_layout Standard
+This creates a new POA as a child of the Root POA.
+ A new POA Manager is created, because a nil value rather than a local object
+ for an existing POA Manager is passed as the first parameter.
+ The new POA will support persistent objects and use a servant manager.
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+native
+\begin_inset Quotes erd
+\end_inset
+
+ data types from the POA specification are represented in the following
+ way:
+\end_layout
+
+\begin_layout Description
+PortableServer::Servant Servants are instances of an [incr Tcl] class that
+ derives from PortableServant::\SpecialChar \-
+ServantBase, as described above.
+ 
+\end_layout
+
+\begin_layout Description
+PortableServer::ObjectId ObjectIds are mapped to Tcl strings.
+ 
+\end_layout
+
+\begin_layout Description
+PortableServer::ServantLocator::Cookie Cookies are mapped to Tcl strings.
+ 
+\end_layout
+
+\begin_layout Subsection
+The POA Current Local Object
+\end_layout
+
+\begin_layout Standard
+A POA Current local object can be obtained using corba::\SpecialChar \-
+resolve_\SpecialChar \-
+initial_\SpecialChar \-
+re\SpecialChar \-
+feren\SpecialChar \-
+c
+es.
+ A POA Current local object implements all operations as defined in the
+ CORBA specification:
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+get_POA
+\family default
+ In the context of a method invocation on a servant, returns the POA in
+ whose context it is called.
+ 
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+get_object_id
+\family default
+ In the context of a method invocation, returns the Object Id identifying
+ the object in whose context it is called.
+ 
+\end_layout
+
+\begin_layout Subsection
+The POA Manager Local Object
+\end_layout
+
+\begin_layout Standard
+A POA Manager local object is obtained using the 
+\begin_inset Quotes eld
+\end_inset
+
+the_POAManager
+\begin_inset Quotes erd
+\end_inset
+
+ method on a POA local object.
+ It implements the following methods as defined in the CORBA specification:
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+activate
+\family default
+ Switches all associated POAs to the 
+\begin_inset Quotes eld
+\end_inset
+
+active
+\begin_inset Quotes erd
+\end_inset
+
+ state so that they begin serving requests.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+hold_requests
+\begin_inset space ~
+\end_inset
+
+
+\family default
+\emph on
+wait_for_completion
+\emph default
+ Switches all associated POAs to the 
+\begin_inset Quotes eld
+\end_inset
+
+holding
+\begin_inset Quotes erd
+\end_inset
+
+ state, so that incoming method invocations are queued.
+ Queued requests are delayed until the POA again enters the active state.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+discard_requests
+\begin_inset space ~
+\end_inset
+
+
+\family default
+\emph on
+wait_for_completion
+\emph default
+ Switches all associated POAs to the 
+\begin_inset Quotes eld
+\end_inset
+
+discarding
+\begin_inset Quotes erd
+\end_inset
+
+ state, so that incoming method invocations are discarded rather than processed.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+deactivate
+\begin_inset space ~
+\end_inset
+
+
+\family default
+\emph on
+etherealize
+\begin_inset space ~
+\end_inset
+
+wait_for_completion
+\emph default
+ Switches all associated POAs to the 
+\begin_inset Quotes eld
+\end_inset
+
+inactive
+\begin_inset Quotes erd
+\end_inset
+
+ state.
+ If 
+\emph on
+etherealize
+\emph default
+ is true, a servant manager, if available, is asked to 
+\begin_inset Quotes eld
+\end_inset
+
+etherealize
+\begin_inset Quotes erd
+\end_inset
+
+ active objects.
+\end_layout
+
+\begin_layout Subsection
+Limitations
+\end_layout
+
+\begin_layout Standard
+Because [incr Tcl] does not support virtual inheritance, Combat does not
+ support multiple inheritance.
+ Single implementation inheritance works, so the implementation for a derived
+ class can inherit from the implementation of the base class (and will thus
+ indirectly inherit PortableServer::\SpecialChar \-
+ServantBase).
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:The-IDL-to-Tcl-Mapping"
+
+\end_inset
+
+The IDL to Tcl Mapping
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Mapping-of-Data-Types"
+
+\end_inset
+
+Mapping of Data Types
+\end_layout
+
+\begin_layout Standard
+This section describes in detail how IDL data types are mapped to Tcl types.
+\end_layout
+
+\begin_layout Description
+Primitive
+\begin_inset space ~
+\end_inset
+
+Types Values of type 
+\family typewriter
+short
+\family default
+, 
+\family typewriter
+long
+\family default
+, 
+\family typewriter
+unsigned short
+\family default
+, 
+\family typewriter
+unsigned long
+\family default
+, 
+\family typewriter
+long long
+\family default
+ and 
+\family typewriter
+unsigned long long
+\family default
+ are mapped to Tcl's integer type.
+ Errors may occur if a value exceeds the numerical range of Tcl's integer
+ type.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Values of type 
+\family typewriter
+float
+\family default
+, 
+\family typewriter
+double
+\family default
+, 
+\family typewriter
+long double
+\family default
+ are mapped to Tcl's floating point type.
+\end_layout
+
+\begin_layout Standard
+Values of type 
+\family typewriter
+string
+\family default
+ and 
+\family typewriter
+wstring
+\family default
+ are mapped to Tcl strings.
+\end_layout
+
+\begin_layout Standard
+Values of type 
+\family typewriter
+boolean
+\family default
+ may take any of the forms for which 
+\begin_inset Quotes eld
+\end_inset
+
+string is boolean
+\begin_inset Quotes erd
+\end_inset
+
+ returns true.
+ In a result, they are always rendered as 0 (false) and 1 (true).
+\end_layout
+
+\begin_layout Standard
+Values of type 
+\family typewriter
+octet
+\family default
+, 
+\family typewriter
+char
+\family default
+ and 
+\family typewriter
+wchar
+\family default
+ values are mapped to strings of length 1.
+\end_layout
+
+\begin_layout Standard
+Values of type 
+\family typewriter
+fixed
+\family default
+ values are mapped to a floating-point value in exponential representation.
+ Depending on their scale and value, it may or may not be possbile to use
+ the value in a Tcl expression.
+\end_layout
+
+\end_deeper
+\begin_layout Description
+Struct
+\begin_inset space ~
+\end_inset
+
+Types Values of type 
+\family typewriter
+struct
+\family default
+ are mapped to a list.
+ For each element in the structure, there are two elements in the list --
+ the first is the element name, the second is the element's value.
+ This allows to easily assign structures from and to associative arrays,
+ using 
+\family typewriter
+array get
+\family default
+ and 
+\family typewriter
+array set
+\family default
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Example: the IDL type
+\end_layout
+
+\begin_layout LyX-Code
+struct A {
+\begin_inset Newline newline
+\end_inset
+
+  unsigned long B;
+\begin_inset Newline newline
+\end_inset
+
+  string C;
+\begin_inset Newline newline
+\end_inset
+
+};
+\end_layout
+
+\begin_layout Standard
+can be matched by the Tcl list 
+\begin_inset Quotes eld
+\end_inset
+
+{B 42 C {Hello World}}
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Description
+Sequences Values of a 
+\family typewriter
+sequence
+\family default
+ type are mapped to a list.
+ As an exception, sequences of 
+\family typewriter
+char
+\family default
+, 
+\family typewriter
+octet
+\family default
+ and 
+\family typewriter
+wchar
+\family default
+ are mapped to strings.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Example: the IDL type
+\end_layout
+
+\begin_layout LyX-Code
+typedef sequence<A, 2> D;
+\end_layout
+
+\begin_layout Standard
+(following the above example for a structure) can be matched by the Tcl
+ list 
+\begin_inset Quotes eld
+\end_inset
+
+{{B 42 C {Hello World}}}
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Note the extra level of nesting compared to the struct above.
+\end_layout
+
+\end_deeper
+\begin_layout Description
+Arrays Values of 
+\family typewriter
+array
+\family default
+ type are mapped to a list.
+ As an exception, sequences of 
+\family typewriter
+char
+\family default
+, 
+\family typewriter
+octet
+\family default
+ and 
+\family typewriter
+wchar
+\family default
+ are mapped to strings.
+\end_layout
+
+\begin_layout Description
+Enumerations Values of 
+\family typewriter
+enum
+\family default
+ type are mapped to the enumeration identifiers (without any namespace qualifier
+s).
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Example: the IDL type
+\end_layout
+
+\begin_layout LyX-Code
+enum E {F, G, H};
+\end_layout
+
+\begin_layout Standard
+can be matched by the Tcl string 
+\begin_inset Quotes eld
+\end_inset
+
+G
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Description
+Unions Values of a 
+\family typewriter
+union
+\family default
+ type are mapped to a list of length 2.
+ The first element is the discriminator, or 
+\begin_inset Quotes eld
+\end_inset
+
+(default)
+\begin_inset Quotes erd
+\end_inset
+
+ for the default member.
+ The second element is the appropriate union member.
+ Note that the default case can also be represented by a concrete value
+ distinct from all other case labels.
+\end_layout
+
+\begin_layout Description
+Object
+\begin_inset space ~
+\end_inset
+
+References Non-nil object references are mapped to Tcl commands.
+ Nil object references are mapped to the integer value 0 (zero).
+\end_layout
+
+\begin_layout Description
+Exceptions Values of an 
+\family typewriter
+exception
+\family default
+ type are mapped to a list of length one or two.
+ The first element is the Repository Id for the exception.
+ If present, the second element is the exception's contents, equivalent
+ to the structure mapping.
+ The second element may be omitted if the exception has no members.
+\end_layout
+
+\begin_layout Description
+Value
+\begin_inset space ~
+\end_inset
+
+Types Values of a 
+\family typewriter
+valuetype
+\family default
+ type are mapped to a list, like 
+\family typewriter
+structs
+\family default
+.
+ For each element in the inheritance hierarchy of a 
+\family typewriter
+valuetype
+\family default
+, there are two elements in the list -- the first is the element name, and
+ the second is the element's value.
+ An additional member with the name 
+\begin_inset Quotes eld
+\end_inset
+
+_tc_
+\begin_inset Quotes erd
+\end_inset
+
+ may be present.
+ If present, its value must be a typecode.
+ In an invocation, this member determines the type to be sent.
+ This mechanism allows to send a derived valuetype where a base valuetype
+ is expected.
+ If no 
+\begin_inset Quotes eld
+\end_inset
+
+_tc_
+\begin_inset Quotes erd
+\end_inset
+
+ member is present, the valuetype must be of the same type as requested
+ by the parameter.
+ When receiving a valuetype, the 
+\begin_inset Quotes eld
+\end_inset
+
+_tc_
+\begin_inset Quotes erd
+\end_inset
+
+ member is always added.
+ The value 0 (zero) can be used for a null value.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Note that this language mapping disallows valuetypes that contain themselves
+ (such as graphs with circles).
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+custom
+\family default
+ valuetypes are not supported.
+\end_layout
+
+\end_deeper
+\begin_layout Description
+Value
+\begin_inset space ~
+\end_inset
+
+Boxes Boxed 
+\family typewriter
+valuetype
+\family default
+ values are mapped to either the boxed type or to the integer 0 (zero) for
+ a null value.
+ In the case of boxed integers, the value 0 will always be read as a null
+ value rather than a non-null value containing the boxed integer zero.
+ Shoot yourself in the foot if you run into this problem.
+\end_layout
+
+\begin_layout Description
+TypeCodes Values of type 
+\family typewriter
+TypeCode
+\family default
+ are mapped to a string containing a description of the typecode: 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Typecodes for the primitive types 
+\family typewriter
+void
+\family default
+, 
+\family typewriter
+boolean
+\family default
+, 
+\family typewriter
+short
+\family default
+, 
+\family typewriter
+long
+\family default
+, 
+\family typewriter
+unsigned short
+\family default
+,
+\family typewriter
+unsigned long
+\family default
+, 
+\family typewriter
+long long
+\family default
+, 
+\family typewriter
+unsigned long long
+\family default
+, 
+\family typewriter
+float
+\family default
+, 
+\family typewriter
+double
+\family default
+, 
+\family typewriter
+long double
+\family default
+, 
+\family typewriter
+char
+\family default
+, 
+\family typewriter
+octet
+\family default
+, 
+\family typewriter
+string
+\family default
+, 
+\family typewriter
+any
+\family default
+, 
+\family typewriter
+TypeCode
+\family default
+ are mapped to their name.
+ 
+\end_layout
+
+\begin_layout Itemize
+Bounded string typecodes are mapped to a list of length two.
+ The first element of the list is the identifier 
+\family typewriter
+string
+\family default
+, the second element is the bound.
+ 
+\end_layout
+
+\begin_layout Itemize
+Bounded wstring typecodes are mapped to a list of length two.
+ The first element of the list is the identifier 
+\family typewriter
+wstring
+\family default
+, the second element is the bound.
+ 
+\end_layout
+
+\begin_layout Itemize
+Typecodes for a 
+\family typewriter
+struct
+\family default
+ type are mapped to a list of length three.
+ The first element is the identifier 
+\family typewriter
+struct
+\family default
+.
+ The second element is the Repository Id, if available (else, the field
+ may be empty).
+ The third element is a list with an even number of elements.
+ The zeroth and other even-numbered elements are member names, followed
+ by the member's typecode.
+ 
+\end_layout
+
+\begin_layout Itemize
+Typecodes for a 
+\family typewriter
+union
+\family default
+ type are mapped to a list of length four.
+ The first element is the identifier 
+\family typewriter
+union
+\family default
+.
+ The second element is the Repository Id, if available (else, the field
+ may be empty).
+ The third element is the typecode of the discriminator.
+ The fourth element is a list with an even number of elements.
+ The zeroth and other even-numbered elements are labels or the identifier
+ 
+\family typewriter
+default
+\family default
+ for the default label, followed by the typecode of the associated member.
+ 
+\end_layout
+
+\begin_layout Itemize
+Typecodes for an 
+\family typewriter
+exception
+\family default
+ type are mapped to a list of length three.
+ The first element is the identifier 
+\family typewriter
+exception
+\family default
+, the second element the Repository Id, and the third element is a list
+ with an even number of elements.
+ The zeroth and other even-numbered elements are member names, followed
+ by the member's typecode.
+ 
+\end_layout
+
+\begin_layout Itemize
+Typecodes for a 
+\family typewriter
+sequence
+\family default
+ type are mapped to a list of length two or three.
+ The first element is the identifier 
+\family typewriter
+sequence
+\family default
+, the second element is the typecode of the member type.
+ The third element, if present, denotes the sequence's bound.
+ Otherwise, the sequence is unbounded.
+ 
+\end_layout
+
+\begin_layout Itemize
+Typecodes for an 
+\family typewriter
+array
+\family default
+ type are mapped to a list of length three.
+ The first element is the identifier 
+\family typewriter
+array
+\family default
+, the second element is the typecode of the member type, the third element
+ is the array's length.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+Typecodes for an enum
+\family default
+ type are mapped to a list of length two.
+ The first element is the identifier 
+\family typewriter
+enum
+\family default
+, the second element is a list of the enumeration identifiers.
+ 
+\end_layout
+
+\begin_layout Itemize
+Object reference typecodes are mapped to a list of length two.
+ The first element is the identifier 
+\family typewriter
+Object
+\family default
+, the second element is the Repository Id of the IDL 
+\family typewriter
+interface
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+Typecodes for a 
+\family typewriter
+fixed
+\family default
+ type are mapped to a list of length three.
+ The first element is the identifier 
+\family typewriter
+fixed
+\family default
+.
+ The second element is the number of significant digits, the third element
+ is the scale.
+ 
+\end_layout
+
+\begin_layout Itemize
+Typecodes for a 
+\family typewriter
+valuetype
+\family default
+ are mapped to a list of length five.
+ The first element is the identifier 
+\family typewriter
+valuetype
+\family default
+.
+ The second element is the Repository Id.
+ The third element is a list of non-inherited members.
+ For each member, there are three elements in the list, a visibility (
+\family typewriter
+private
+\family default
+ or 
+\family typewriter
+public
+\family default
+), the member name and the member's typecode.
+ The fourth element is the typecode of the valuetype's concrete base, or
+ 0 (zero) if the valuetype does not have a concrete base.
+ The fifth element is either an empty string or one of the modifiers 
+\family typewriter
+custom
+\family default
+, 
+\family typewriter
+abstract
+\family default
+ or 
+\family typewriter
+truncatable
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+Typecodes for a boxed 
+\family typewriter
+valuetype
+\family default
+ are mapped to a list of length 3.
+ The first element is the identifier 
+\family typewriter
+valuebox
+\family default
+.
+ The second element is the Repository Id, and the third element is the typecode
+ of the boxed type.
+ 
+\end_layout
+
+\begin_layout Itemize
+A recursive reference to an outer type (in a 
+\family typewriter
+struct
+\family default
+, 
+\family typewriter
+union
+\family default
+ or 
+\family typewriter
+valuetype
+\family default
+) can be expressed by a list of length two.
+ The first element is the identifier 
+\family typewriter
+recursive
+\family default
+, the second element is the Repository Id of the outer type, which must
+ appear in the same typecode description.
+ 
+\end_layout
+
+\begin_layout Standard
+Examples for legal TypeCodes are: 
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+struct {} {s short ul {unsigned long} Q string}
+\family default
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+enum {A B C}
+\family default
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+union {} short {0 boolean (default) string}
+\family default
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+struct IDL:S:1.0 {foo {sequence {recursive IDL:S:1.0}}}
+\family default
+ 
+\end_layout
+
+\begin_layout Standard
+See the description of corba::type in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cmd:corba::type"
+
+\end_inset
+
+.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+of
+\begin_inset Quotes erd
+\end_inset
+
+ subcommand can be used to retrieve TypeCode information from the Interface
+ Repository, the 
+\begin_inset Quotes eld
+\end_inset
+
+equivalent
+\begin_inset Quotes erd
+\end_inset
+
+ subcommand can be used to check TypeCode values against known types.
+\end_layout
+
+\end_deeper
+\begin_layout Description
+Any Values of type 
+\family typewriter
+any
+\family default
+ are mapped to a list of length two.
+ The first element is the typecode, and the second element is the value.
+ 
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Mapping-of-Exceptions"
+
+\end_inset
+
+Exceptions
+\end_layout
+
+\begin_layout Standard
+Exceptions are mapped to Tcl errors.
+ The 
+\family typewriter
+corba::throw
+\family default
+ command is syntactic sugar for Tcl's native 
+\begin_inset Quotes eld
+\end_inset
+
+error,
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\family typewriter
+corba::try
+\family default
+ can be used to handle exceptions thrown with 
+\family typewriter
+corba::throw
+\family default
+ as well as errors raised with 
+\begin_inset Quotes eld
+\end_inset
+
+error.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::throw"
+
+\end_inset
+
+corba::throw
+\end_layout
+
+\begin_layout Standard
+Exceptions can be thrown with the 
+\family typewriter
+corba::throw
+\family default
+ command.
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::throw 
+\emph on
+exception
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+exception
+\emph default
+ value must be of exception type according to the type mapping, i.e., a list
+ of length one or two.
+ The first element of the list is the exception's Repository Id or absolute
+ scoped name.
+ The second element is a list of the exception's members according to the
+ mapping for structures.
+ E.g., if the following two exceptions were declared in interface A:
+\end_layout
+
+\begin_layout LyX-Code
+interface A {
+\begin_inset Newline newline
+\end_inset
+
+  exception EX {
+\begin_inset Newline newline
+\end_inset
+
+    long value;
+\begin_inset Newline newline
+\end_inset
+
+    string reason;
+\begin_inset Newline newline
+\end_inset
+
+  };
+\begin_inset Newline newline
+\end_inset
+
+  exception OOPS {};
+\begin_inset Newline newline
+\end_inset
+
+};
+\end_layout
+
+\begin_layout Standard
+Then these would be valid uses of 
+\family typewriter
+corba::throw:
+\end_layout
+
+\begin_layout LyX-Code
+corba::throw {IDL:A/EX:1.0 {value 42 reason "oops, what's up, doc?"}}
+\begin_inset Newline newline
+\end_inset
+
+corba::throw ::A::OOPS
+\end_layout
+
+\begin_layout Standard
+In the second example, the second list element could be omitted because
+ the exception does not have any members.
+\end_layout
+
+\begin_layout Standard
+If this command is used in a servant in the context of a server invocation,
+ and if the exception is not caught within the servant, it is passed back
+ to the client side.
+ If an exception is not caught within a client, the client prints an error
+ message and terminates.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "cmd:corba::try"
+
+\end_inset
+
+corba::try
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+corba::try
+\family default
+ command implements Java-style processing of exceptions and other Tcl errors.
+\end_layout
+
+\begin_layout Standard
+Syntax:
+\end_layout
+
+\begin_layout LyX-Code
+corba::try 
+\emph on
+block
+\emph default
+ ?catch {
+\emph on
+type
+\emph default
+ ?
+\emph on
+var
+\emph default
+?} 
+\emph on
+c-block
+\emph default
+? \SpecialChar \ldots{}
+ ?finally 
+\emph on
+f-block
+\emph default
+?
+\end_layout
+
+\begin_layout Standard
+First, 
+\emph on
+block
+\emph default
+ is evaluated.
+ If a CORBA exception or Tcl error has occured, then the 
+\family typewriter
+catch
+\family default
+ clauses are searched left to right.
+ Each 
+\family typewriter
+catch
+\family default
+ clause is associated with a specific exception type and a code block.
+ For the first clause whose 
+\emph on
+type
+\emph default
+ matches the exception's type, the associated 
+\emph on
+c-block
+\emph default
+ is executed.
+ The 
+\emph on
+type
+\emph default
+ can be specified as a Repository Id or as an absolute scoped name.
+\end_layout
+
+\begin_layout Standard
+The special value 
+\begin_inset Quotes eld
+\end_inset
+
+\SpecialChar \ldots{}
+
+\begin_inset Quotes erd
+\end_inset
+
+ can be used for 
+\emph on
+type
+\emph default
+ to match all CORBA exceptions and Tcl errors.
+ If a variable name 
+\emph on
+var
+\emph default
+ is present in a 
+\family typewriter
+catch
+\family default
+ clause, this variable is set to the exception that has occured.
+ Regardless of whether an exception or error has occured and whether an
+ exception or error has indeed been handled by a 
+\family typewriter
+catch
+\family default
+ clause, the 
+\emph on
+f-block
+\emph default
+ associated with the 
+\family typewriter
+finally
+\family default
+ clause is, if it exists, always executed.
+ If there are no 
+\family typewriter
+catch
+\family default
+ clauses, an implicit clause that catches 
+\begin_inset Quotes eld
+\end_inset
+
+\SpecialChar \ldots{}
+
+\begin_inset Quotes erd
+\end_inset
+
+ is used.
+ The return value of the 
+\family typewriter
+corba::try
+\family default
+ statement is computed as follows, in order of priority:
+\end_layout
+
+\begin_layout Itemize
+If a 
+\family typewriter
+finally
+\family default
+ clause exists and its 
+\emph on
+f-block
+\emph default
+ completes with a return value different from 
+\family typewriter
+TCL_OK
+\family default
+ (i.e.
+\begin_inset space ~
+\end_inset
+
+causes itself an error or executes a Tcl 
+\family typewriter
+return
+\family default
+, 
+\family typewriter
+break
+\family default
+ or 
+\family typewriter
+continue
+\family default
+ statement), then this return code is used.
+ 
+\end_layout
+
+\begin_layout Itemize
+If a CORBA exception or Tcl error occurs while executing 
+\emph on
+block
+\emph default
+, and this exception or error is handled by a 
+\family typewriter
+catch
+\family default
+ clause, then the return value of the associated 
+\emph on
+c-block
+\emph default
+ is used.
+ 
+\end_layout
+
+\begin_layout Itemize
+If a CORBA exception or Tcl error occurs while executing 
+\emph on
+block
+\emph default
+, and this exception is not handled by a 
+\family typewriter
+catch
+\family default
+ clause, then this error is used.
+ 
+\end_layout
+
+\begin_layout Itemize
+If no CORBA exception or Tcl error occurs while executing 
+\emph on
+block
+\emph default
+, then its return code is used.
+ 
+\end_layout
+
+\begin_layout Standard
+One effect of this return value handling is that all code blocks may execute
+ a Tcl 
+\family typewriter
+return
+\family default
+, 
+\family typewriter
+break
+\family default
+ or 
+\family typewriter
+continue
+\family default
+ statement, which will then be correctly passed along to the surrounding
+ code.
+\end_layout
+
+\begin_layout Standard
+One caveat is that it is not possible to collectively catch all CORBA system
+ exceptions as 
+\begin_inset Quotes eld
+\end_inset
+
+CORBA::\SpecialChar \-
+SystemException.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Exception Example
+\end_layout
+
+\begin_layout Standard
+Here's a small code example demostrating exception handling:
+\end_layout
+
+\begin_layout LyX-Code
+corba::try {
+\begin_inset Newline newline
+\end_inset
+
+  \SpecialChar \ldots{}
+
+\begin_inset Newline newline
+\end_inset
+
+} catch {::A::EX oops} {
+\begin_inset Newline newline
+\end_inset
+
+  # The variable oops contains A::EX data
+\begin_inset Newline newline
+\end_inset
+
+} catch {::CORBA::COMM_FAILURE} {
+\begin_inset Newline newline
+\end_inset
+
+  # The remote server may be down
+\begin_inset Newline newline
+\end_inset
+
+} catch {...
+ oops} {
+\begin_inset Newline newline
+\end_inset
+
+  puts "oops: unexpected exception: $oops"
+\begin_inset Newline newline
+\end_inset
+
+}
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:The-idl2tcl-Application"
+
+\end_inset
+
+The idl2tcl Application
+\end_layout
+
+\begin_layout Subsection
+Introduction
+\end_layout
+
+\begin_layout Standard
+As already mentioned above, Combat requires that type information is loaded
+ into the local Interface Repository.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+idl2tcl
+\begin_inset Quotes erd
+\end_inset
+
+ application is provided to read IDL files and to produce a Tcl file that
+ can be loaded with the 
+\begin_inset Quotes eld
+\end_inset
+
+source
+\begin_inset Quotes erd
+\end_inset
+
+ command to feed the IDL file's type information to the local Interface
+ Repository.
+\end_layout
+
+\begin_layout Standard
+idl2tcl works by preprocessing and parsing the IDL file into a CORBA Interface
+ Repository.
+ Because Combat neither implements an IDL parser nor a CORBA-compliant Interface
+ Repository, idl2tcl must rely on a third-party ORB to provide both.
+ Unfortunately, the syntax for loading IDL files into an Interface Repository
+ is not standardized.
+ idl2tcl has built-in knowledge how to accomplish this using the 
+\noun on
+Mico
+\noun default
+ and TAO ORBs, and has command-line options to work with other ORBs.
+\end_layout
+
+\begin_layout Subsection
+Usage
+\end_layout
+
+\begin_layout Standard
+idl2tcl is a command-line application with the following syntax::
+\end_layout
+
+\begin_layout LyX-Code
+idl2tcl ?
+\emph on
+options
+\emph default
+? 
+\emph on
+idl-file
+\emph default
+ \SpecialChar \ldots{}
+
+\end_layout
+
+\begin_layout Standard
+Each IDL file is preprocessed and loaded into an Interface Repository.
+ The Interface Repository is started from scratch, i.e., before the first
+ IDL file is loaded, it is empty.
+ Type information for the entire contents of the Interface Repository is
+ then written to a Tcl file in the current directory with the same base
+ name as the first IDL file and the 
+\begin_inset Quotes eld
+\end_inset
+
+.tcl
+\begin_inset Quotes erd
+\end_inset
+
+ extension.
+ This Tcl file can then be read with the 
+\begin_inset Quotes eld
+\end_inset
+
+source
+\begin_inset Quotes erd
+\end_inset
+
+ command to load the type information from all IDL files into Combat's Interface
+ Repository.
+\end_layout
+
+\begin_layout Standard
+idl2tcl supports the following options:
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ddash{}
+\end_layout
+
+\end_inset
+
+name
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+name
+\emph default
+ Names the output file, instead of using the first IDL file's base name.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+.tcl
+\begin_inset Quotes erd
+\end_inset
+
+ extension is appended to 
+\emph on
+name
+\emph default
+.
+\end_layout
+
+\begin_layout Description
+-I
+\emph on
+path
+\emph default
+ This option is passed to the IDL compiler.
+\end_layout
+
+\begin_layout Description
+-D
+\emph on
+name
+\emph default
+[=
+\emph on
+value
+\emph default
+] This option is passed to the IDL compiler.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ddash{}
+\end_layout
+
+\end_inset
+
+impl Writes an implementation skeleton file to the file 
+\emph on
+name
+\emph default
+_skel.tcl, where 
+\emph on
+name
+\emph default
+ is the base name of the first IDL file name or the parameter to the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ddash{}
+\end_layout
+
+\end_inset
+
+name
+\begin_inset Quotes erd
+\end_inset
+
+ option.
+ This skeleton can then be filled in to ease the effort of implementing
+ servants.
+ If the output file exists, it is not overwritten.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ddash{}
+\end_layout
+
+\end_inset
+
+ir
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+ior
+\emph default
+ Process the contents of the CORBA Interface Repository identified by the
+ stringified object reference 
+\emph on
+ior
+\emph default
+.
+ No IDL files are processed.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ddash{}
+\end_layout
+
+\end_inset
+
+name
+\begin_inset Quotes erd
+\end_inset
+
+ option must be supplied.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ddash{}
+\end_layout
+
+\end_inset
+
+ifr
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+cmd
+\emph default
+ Use 
+\emph on
+cmd
+\emph default
+ to start the Interface Repository.
+ 
+\emph on
+cmd
+\emph default
+ must include appropriate command-line parameters so that the Interface
+ Repository's stringified object reference gets written to the file 
+\begin_inset Quotes eld
+\end_inset
+
+ir.ior
+\begin_inset Quotes erd
+\end_inset
+
+ in the current directory.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ddash{}
+\end_layout
+
+\end_inset
+
+idl
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+cmd
+\emph default
+ Use 
+\emph on
+cmd
+\emph default
+ to load IDL files into the Interface Repository.
+ To 
+\emph on
+cmd
+\emph default
+, idl2tcl appends the 
+\begin_inset Quotes eld
+\end_inset
+
+-ORBInitRef
+\begin_inset Quotes erd
+\end_inset
+
+ parameter to set the 
+\begin_inset Quotes eld
+\end_inset
+
+InterfaceRepository
+\begin_inset Quotes erd
+\end_inset
+
+ initial reference, the set of IDL compiler options (
+\begin_inset Quotes eld
+\end_inset
+
+-I
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+-D
+\begin_inset Quotes erd
+\end_inset
+
+ above), and the name of a single IDL file.
+ 
+\emph on
+cmd
+\emph default
+ shall return a zero exit status in case of success or non-zero in case
+ of failure, and not write to standard error except in case of error.
+\end_layout
+
+\begin_layout Description
+-v Be more verbose.
+ This option can be used multiple times for increased verbosity.
+\end_layout
+
+\begin_layout Subsection
+ORB Configuration
+\end_layout
+
+\begin_layout Standard
+As mentioned above, idl2tcl requires an IDL compiler and CORBA Interface
+ Repository from a third part ORB.
+ idl2tcl has built-in knowledge of 
+\noun on
+Mico
+\noun default
+ and TAO:
+\end_layout
+
+\begin_layout Itemize
+To have idl2tcl use 
+\noun on
+Mico
+\noun default
+, the 
+\begin_inset Quotes eld
+\end_inset
+
+ird
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+idl
+\begin_inset Quotes erd
+\end_inset
+
+ applications must be available in the search path.
+\end_layout
+
+\begin_layout Itemize
+To have idl2tcl use TAO, the 
+\begin_inset Quotes eld
+\end_inset
+
+IFR_Service
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+tao_ifr
+\begin_inset Quotes erd
+\end_inset
+
+ applications must be available in the search path.
+\end_layout
+
+\begin_layout Standard
+There are two options to use another ORB's IDL compiler and Interface Repository
+:
+\end_layout
+
+\begin_layout Itemize
+Use idl2tcl's 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ddash{}
+\end_layout
+
+\end_inset
+
+ifr
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ddash{}
+\end_layout
+
+\end_inset
+
+idl
+\begin_inset Quotes erd
+\end_inset
+
+ options, providing the ORB-specific command lines for the IDL compiler
+ and Interface Repository.
+\end_layout
+
+\begin_layout Itemize
+Manually start the Interface Repository, manually load the IDL file(s) into
+ the Interface Repository, and then use idl2tcl's 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ddash{}
+\end_layout
+
+\end_inset
+
+ir
+\begin_inset Quotes erd
+\end_inset
+
+ option to process this Interface Repository.
+\end_layout
+
+\begin_layout Subsection
+Troubleshooting
+\end_layout
+
+\begin_layout Standard
+This section notes some common issues with idl2tcl:
+\end_layout
+
+\begin_layout Itemize
+The tool that loads IDL files into the Interface Repository generally requires
+ a C preprocessor to be available in your search path.
+ (E.g., 
+\noun on
+Mico
+\noun default
+'s 
+\begin_inset Quotes eld
+\end_inset
+
+idl
+\begin_inset Quotes erd
+\end_inset
+
+ uses 
+\begin_inset Quotes eld
+\end_inset
+
+mico-cpp,
+\begin_inset Quotes erd
+\end_inset
+
+ while TAO's 
+\begin_inset Quotes eld
+\end_inset
+
+tao_ifr
+\begin_inset Quotes erd
+\end_inset
+
+ uses a preprocessor that's defined at compile-time.) The search path must
+ bet set so that the required C preprocessor is found.
+\end_layout
+
+\begin_layout Itemize
+Some IDL compilers use built-in search paths to locate standard IDL files
+ (such as 
+\begin_inset Quotes eld
+\end_inset
+
+corba.idl
+\begin_inset Quotes erd
+\end_inset
+
+).
+ When you are using the pre-built idl2tcl package on Windows, which is based
+ on 
+\noun on
+Mico
+\noun default
+, but otherwise use a different ORB for development, it may be necessary
+ to supply the appropriate include path to idl2tcl..
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Complete-Example"
+
+\end_inset
+
+Complete Example
+\end_layout
+
+\begin_layout Standard
+This document has already included a number of code fragments.
+ This chapter walks you through a simple but complete client/server application.
+ The code can also be found in the 
+\begin_inset Quotes eld
+\end_inset
+
+demo/hello
+\begin_inset Quotes erd
+\end_inset
+
+ subdirectory.
+\end_layout
+
+\begin_layout Subsection
+The IDL File
+\end_layout
+
+\begin_layout Standard
+The IDL file, hello.idl, defines the following interface:
+\end_layout
+
+\begin_layout LyX-Code
+interface HelloWorld {
+\begin_inset Newline newline
+\end_inset
+
+  void hello (in string message);
+\begin_inset Newline newline
+\end_inset
+
+  attribute long messageCounter;
+\begin_inset Newline newline
+\end_inset
+
+};
+\end_layout
+
+\begin_layout Standard
+This file can then be 
+\begin_inset Quotes eld
+\end_inset
+
+compiled
+\begin_inset Quotes erd
+\end_inset
+
+ with the idl2tcl application:
+\end_layout
+
+\begin_layout LyX-Code
+idl2tcl hello.idl
+\end_layout
+
+\begin_layout Standard
+This results in the file 
+\begin_inset Quotes eld
+\end_inset
+
+hello.tcl
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+The Client
+\end_layout
+
+\begin_layout Standard
+The client is implemented as a command-line application with the following
+ two design requirements:
+\end_layout
+
+\begin_layout Itemize
+The client shall take a message on the command line; this message is passed
+ to the server's 
+\begin_inset Quotes eld
+\end_inset
+
+hello
+\begin_inset Quotes erd
+\end_inset
+
+ operation.
+\end_layout
+
+\begin_layout Itemize
+The client shall expect the server's stringified object reference in the
+ file 
+\begin_inset Quotes eld
+\end_inset
+
+server.ior
+\begin_inset Quotes erd
+\end_inset
+
+ in the current directory.
+\end_layout
+
+\begin_layout Standard
+First, the client loads the Combat ORB.
+\end_layout
+
+\begin_layout LyX-Code
+package require combat
+\end_layout
+
+\begin_layout Standard
+Then, the ORB is initialized.
+ The application's command line is passed to the ORB, so that the user may
+ specify ORB options on the command line.
+ Non-ORB options are returned from the corba::init command and again captured
+ in the argv variable.
+\end_layout
+
+\begin_layout LyX-Code
+set argv [eval corba::init $argv]
+\end_layout
+
+\begin_layout Standard
+The client expects a message on the command line, and complains if the command
+ line is empty.
+\end_layout
+
+\begin_layout LyX-Code
+if {[llength $argv] == 0} 
+\begin_inset Newline newline
+\end_inset
+
+  puts stderr "usage: $argv0 <message>"
+\begin_inset Newline newline
+\end_inset
+
+  exit 1
+\begin_inset Newline newline
+\end_inset
+
+}
+\begin_inset Newline newline
+\end_inset
+
+set message $argv
+\end_layout
+
+\begin_layout Standard
+Now the client loads type information for the 
+\begin_inset Quotes eld
+\end_inset
+
+HelloWorld
+\begin_inset Quotes erd
+\end_inset
+
+ interface into Combat's type repository.
+ This is done by simply reading the file 
+\begin_inset Quotes eld
+\end_inset
+
+hello.tcl
+\begin_inset Quotes erd
+\end_inset
+
+ that was generated by the idl2tcl application above, using the 
+\begin_inset Quotes eld
+\end_inset
+
+source
+\begin_inset Quotes erd
+\end_inset
+
+ command.
+\end_layout
+
+\begin_layout LyX-Code
+source hello.tcl
+\end_layout
+
+\begin_layout Standard
+The client next reads the stringified object reference from the 
+\begin_inset Quotes eld
+\end_inset
+
+server.ior
+\begin_inset Quotes erd
+\end_inset
+
+ file that the client is expecting in the current directory.
+ One option is to use the 
+\begin_inset Quotes eld
+\end_inset
+
+open
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+read
+\begin_inset Quotes erd
+\end_inset
+
+ commands; another is to use a 
+\begin_inset Quotes eld
+\end_inset
+
+file
+\begin_inset Quotes erd
+\end_inset
+
+-style stringified object reference.
+ These require an absolute path name, which 
+\begin_inset Quotes eld
+\end_inset
+
+pwd
+\begin_inset Quotes erd
+\end_inset
+
+ provides.
+\end_layout
+
+\begin_layout LyX-Code
+set obj [corba::string_to_object file://[pwd]/server.ior]
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+obj
+\begin_inset Quotes erd
+\end_inset
+
+ variable now holds an object reference that points to the server, and the
+ client is ready to make remote invocations on the server according to the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+HelloWorld
+\begin_inset Quotes erd
+\end_inset
+
+ interface.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+hello
+\begin_inset Quotes erd
+\end_inset
+
+ method takes a single string parameter; the client is passing the message
+ from the command line.
+\end_layout
+
+\begin_layout LyX-Code
+$obj hello $message
+\end_layout
+
+\begin_layout Standard
+The client can also read the server's 
+\begin_inset Quotes eld
+\end_inset
+
+messageCounter
+\begin_inset Quotes erd
+\end_inset
+
+ attribute:
+\end_layout
+
+\begin_layout LyX-Code
+set messageCounter [$obj messageCounter]
+\begin_inset Newline newline
+\end_inset
+
+puts "The server's message counter is $messageCounter."
+\end_layout
+
+\begin_layout Standard
+Done with the server, the client can release the object reference and exit.
+\end_layout
+
+\begin_layout LyX-Code
+corba::release $obj
+\end_layout
+
+\begin_layout Subsection
+The Server
+\end_layout
+
+\begin_layout Standard
+The server is also implemented as a command-line application.
+ For simplicity, there are only a few design requirements:
+\end_layout
+
+\begin_layout Itemize
+The server writes its stringified object reference to the file 
+\begin_inset Quotes eld
+\end_inset
+
+server.ior
+\begin_inset Quotes erd
+\end_inset
+
+ in the current directory.
+\end_layout
+
+\begin_layout Itemize
+The server runs perpetually (until it is manually terminated, e.g., by typing
+ Ctrl-C).
+ The server just runs in the foreground, i.e., it is not implemented as a
+ 
+\begin_inset Quotes eld
+\end_inset
+
+daemon.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+First, the server program loads the Combat ORB.
+\end_layout
+
+\begin_layout LyX-Code
+package require combat
+\end_layout
+
+\begin_layout Standard
+Then comes the definition of the 
+\begin_inset Quotes eld
+\end_inset
+
+HelloWorld_impl
+\begin_inset Quotes erd
+\end_inset
+
+ class, which implements the 
+\begin_inset Quotes eld
+\end_inset
+
+HelloWorld
+\begin_inset Quotes erd
+\end_inset
+
+ interface: it implements the 
+\begin_inset Quotes eld
+\end_inset
+
+hello
+\begin_inset Quotes erd
+\end_inset
+
+ method and has the 
+\begin_inset Quotes eld
+\end_inset
+
+messageCounter
+\begin_inset Quotes erd
+\end_inset
+
+ attribute.
+ As explained in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Implementing-Servants"
+
+\end_inset
+
+, the class inherits from the base class 
+\begin_inset Quotes eld
+\end_inset
+
+PortableServer::\SpecialChar \-
+ServantBase
+\begin_inset Quotes erd
+\end_inset
+
+ and also implements the 
+\begin_inset Quotes eld
+\end_inset
+
+_Interface
+\begin_inset Quotes erd
+\end_inset
+
+ method which informs Combat of the IDL type that is being implemented.
+\end_layout
+
+\begin_layout LyX-Code
+itcl::class HelloWorld_impl {
+\begin_inset Newline newline
+\end_inset
+
+  inherit PortableServer::ServantBase
+\begin_inset Newline newline
+\end_inset
+
+  public method _Interface {} {
+\begin_inset Newline newline
+\end_inset
+
+    return "::HelloWorld"
+\begin_inset Newline newline
+\end_inset
+
+  }
+\end_layout
+
+\begin_layout LyX-Code
+  public variable messageCounter 0
+\end_layout
+
+\begin_layout LyX-Code
+  public method hello {message} {
+\begin_inset Newline newline
+\end_inset
+
+    puts "The client says: $message"
+\begin_inset Newline newline
+\end_inset
+
+    incr messageCounter
+\begin_inset Newline newline
+\end_inset
+
+  }
+\begin_inset Newline newline
+\end_inset
+
+}
+\end_layout
+
+\begin_layout Standard
+Like in the client, the server initializes the ORB, passing any command-line
+ parameters to the ORB, and loads type information for the 
+\begin_inset Quotes eld
+\end_inset
+
+HelloWorld
+\begin_inset Quotes erd
+\end_inset
+
+ interface into Combat's type repository.
+\end_layout
+
+\begin_layout LyX-Code
+eval corba::init $argv
+\begin_inset Newline newline
+\end_inset
+
+source hello.tcl
+\end_layout
+
+\begin_layout Standard
+Servants must be activated with an instance of a Portable Object Adapter
+ (POA).
+ The Root POA local object is acquired using corba::\SpecialChar \-
+resolve_initial_references.
+ The program also queries the POA Manager instance, which is later needed
+ to switch the POA to the 
+\begin_inset Quotes eld
+\end_inset
+
+active
+\begin_inset Quotes erd
+\end_inset
+
+ state.
+\end_layout
+
+\begin_layout LyX-Code
+set poa [corba::resolve_initial_references RootPOA]
+\begin_inset Newline newline
+\end_inset
+
+set mgr [$poa the_POAManager]
+\end_layout
+
+\begin_layout Standard
+Now the server can create an instance of the HelloWorld_impl class, like
+ any other [incr Tcl] object.
+ For simplicity, the instance is activated with the Root POA itself rather
+ than creating a new POA instance -- for the limited purposes of this example,
+ the Root POA's policies are acceptable.
+\end_layout
+
+\begin_layout LyX-Code
+set srv [HelloWorld_impl #auto]
+\begin_inset Newline newline
+\end_inset
+
+set oid [$poa activate_object $srv]
+\end_layout
+
+\begin_layout Standard
+Next the server wants to write the servant's stringified object reference
+ to the console.
+ This is done by first calling the POA's 
+\begin_inset Quotes eld
+\end_inset
+
+id_to_reference
+\begin_inset Quotes erd
+\end_inset
+
+ method, which returns an object reference, and then the ORB's 
+\family typewriter
+corba::\SpecialChar \-
+object_\SpecialChar \-
+to_\SpecialChar \-
+string
+\family default
+ method to turn the object reference into a stringified object reference.
+\end_layout
+
+\begin_layout LyX-Code
+set ref [$poa id_to_reference $oid]
+\begin_inset Newline newline
+\end_inset
+
+set ior [corba::object_to_string $ref]
+\begin_inset Newline newline
+\end_inset
+
+puts "$ior"
+\end_layout
+
+\begin_layout Standard
+The same string can then be written to the 
+\begin_inset Quotes eld
+\end_inset
+
+server.ior
+\begin_inset Quotes erd
+\end_inset
+
+ file in the current directory.
+\end_layout
+
+\begin_layout LyX-Code
+set iorfile [open "server.ior" w]
+\begin_inset Newline newline
+\end_inset
+
+puts -nonewline $iorfile $ior
+\begin_inset Newline newline
+\end_inset
+
+close $iorfile
+\end_layout
+
+\begin_layout Standard
+Finally, the server activates the POA -- this is done via its manager --
+ and enters the event loop.
+\end_layout
+
+\begin_layout LyX-Code
+$mgr activate
+\begin_inset Newline newline
+\end_inset
+
+vwait forever
+\end_layout
+
+\begin_layout Standard
+Because the variable 
+\begin_inset Quotes eld
+\end_inset
+
+forever
+\begin_inset Quotes erd
+\end_inset
+
+ is never written to, the 
+\begin_inset Quotes eld
+\end_inset
+
+vwait
+\begin_inset Quotes erd
+\end_inset
+
+ command never returns but keeps running Tcl's the event loop, in which
+ the ORB listens for incoming requests.
+\end_layout
+
+\begin_layout Subsection
+Running The Example
+\end_layout
+
+\begin_layout Standard
+Running the example is trivially done by opening two consoles, and changing
+ to the 
+\begin_inset Quotes eld
+\end_inset
+
+demo/hello
+\begin_inset Quotes erd
+\end_inset
+
+ directory.
+ In the first console, run the server:
+\end_layout
+
+\begin_layout LyX-Code
+./server.tcl
+\end_layout
+
+\begin_layout Standard
+The server should print its stringified object reference (a long hexadecimal
+ string) to the console, and the file 
+\begin_inset Quotes eld
+\end_inset
+
+server.ior
+\begin_inset Quotes erd
+\end_inset
+
+ should appear.
+ Then, run the client, passing it a message on the command line:
+\end_layout
+
+\begin_layout LyX-Code
+./client.tcl "It worked."
+\end_layout
+
+\begin_layout Standard
+This message should then appear in the server's console.
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Issues-And-Workarounds"
+
+\end_inset
+
+Issues And Workarounds
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Object-References-Without-Type-Information"
+
+\end_inset
+
+Object References Without Type Information
+\end_layout
+
+\begin_layout Standard
+As explained elsewhere, Combat normally uses type information from its Interface
+ Repository to properly format CORBA messages.
+ This relies on the ability to extract the 
+\emph on
+Repository Id
+\emph default
+ from object references -- this Repository Id is then used as an index into
+ the Interface Repository, i.e., the data that was loaded from idl2tcl-generated
+ files.
+\end_layout
+
+\begin_layout Standard
+In some cases, however, the object reference may not contain the desired
+ Repository Id:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+corbaloc:
+\begin_inset Quotes erd
+\end_inset
+
+ stringified object references contain addressing but no type information.
+\end_layout
+
+\begin_layout Itemize
+Even in 
+\begin_inset Quotes eld
+\end_inset
+
+IOR:
+\begin_inset Quotes erd
+\end_inset
+
+ stringified object references, the Repository Id field is optional and
+ may be absent.
+ (Admittedly, I have not seen this occur 
+\begin_inset Quotes eld
+\end_inset
+
+in the wild.
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+Sometimes a stringified object reference contains the Repository Id for
+ a base interface rather than the desired most-derived interface.
+\end_layout
+
+\begin_layout Standard
+The symptom that results from using an object reference without type information
+ is that all remote method invocations will fail with the 
+\begin_inset Quotes eld
+\end_inset
+
+IDL:\SpecialChar \-
+omg.org/\SpecialChar \-
+CORBA/\SpecialChar \-
+INTF_REPOS\SpecialChar \-
+:1.0
+\begin_inset Quotes erd
+\end_inset
+
+ exception.
+\end_layout
+
+\begin_layout Standard
+The easiest workaround is to confirm the object's type with the built-in
+ 
+\begin_inset Quotes eld
+\end_inset
+
+_is_a
+\begin_inset Quotes erd
+\end_inset
+
+ operation.
+ Given a Repository Id or a scoped name as a parameter, it queries the remote
+ server whether the servant supports this type, returning true or false.
+ If the result is true, Combat takes notice and remembers that the object
+ reference supports this type; future remote method invocations will succeed.
+ Consider this example of accessing a CORBA Naming Service:
+\end_layout
+
+\begin_layout LyX-Code
+% source CosNaming.tcl ;# generated by idl2tcl
+\begin_inset Newline newline
+\end_inset
+
+% set o [corba::string_to_object corbaloc::localhost:1627/NameService]
+\begin_inset Newline newline
+\end_inset
+
+_combat_obj_1
+\end_layout
+
+\begin_layout LyX-Code
+% $o to_name "a/b"
+\begin_inset Newline newline
+\end_inset
+
+IDL:omg.org/CORBA/INTF_REPOS:1.0 {minor 0 completion_status COMPLETED_NO}
+\end_layout
+
+\begin_layout LyX-Code
+% $o _is_a ::CosNaming::NamingContextExt
+\begin_inset Newline newline
+\end_inset
+
+1
+\end_layout
+
+\begin_layout LyX-Code
+% $o to_name "a/b"
+\begin_inset Newline newline
+\end_inset
+
+{id a kind {}} {id b kind {}}
+\end_layout
+
+\begin_layout Standard
+Note how the 
+\family typewriter
+corba::string_to_object
+\family default
+ operation returns a valid object reference, but, even though we have loaded
+ type information for the Naming Service into the Interface Repository,
+ using the object reference fails at first because the 
+\begin_inset Quotes eld
+\end_inset
+
+corbaloc:
+\begin_inset Quotes erd
+\end_inset
+
+ string does not contain the Repository Id.
+ Then we use the 
+\begin_inset Quotes eld
+\end_inset
+
+_is_a
+\begin_inset Quotes erd
+\end_inset
+
+ operation to validate that this object is indeed of the expected type.
+ Combat then remembers that this object reference implements this type,
+ and from then on, invocations succeed.
+\end_layout
+
+\begin_layout Standard
+A few more notes:
+\end_layout
+
+\begin_layout Itemize
+This is issue mostly occurs at bootstrapping only.
+ Object references that are returned from a method invocation (e.g., in this
+ document's initial example, where the Bank's 
+\begin_inset Quotes eld
+\end_inset
+
+create
+\begin_inset Quotes erd
+\end_inset
+
+ operation returned an object of type 
+\begin_inset Quotes eld
+\end_inset
+
+Account
+\begin_inset Quotes erd
+\end_inset
+
+) typically contain proper type information.
+\end_layout
+
+\begin_layout Itemize
+Before giving up, Combat attempts to query the remote object for its type
+ information using the CORBA Reflection specification.
+ If all servers implemented this specification, there would be no need to
+ feed Combat's Interface Repository.
+ Unfortunately, this specification is not widely supported yet.
+\end_layout
+
+\begin_layout Itemize
+Combat also asks the remote object for its own CORBA Interface Repository
+ (using the built-in 
+\begin_inset Quotes eld
+\end_inset
+
+_interface
+\begin_inset Quotes erd
+\end_inset
+
+ operation).
+ If servers were configured to use an Interface Repository, there would
+ be no need to feed Combat's own.
+ However, it is relatively uncommon to set up Interface Repositories.
+ If you want to go this route, consult your ORB documentation.
+\end_layout
+
+\begin_layout Itemize
+Combat can also access CORBA Interface Repositories instead of its own,
+ if one is configured using the 
+\begin_inset Quotes eld
+\end_inset
+
+-ORBInitRef Interface\SpecialChar \-
+Repository
+\begin_inset Quotes erd
+\end_inset
+
+ option at ORB initialization time.
+\end_layout
+
+\begin_layout Itemize
+You can use the 
+\begin_inset Quotes eld
+\end_inset
+
+iordump
+\begin_inset Quotes erd
+\end_inset
+
+ tool to check if a stringified object reference contains correct type informati
+on.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Missing-Type-Information"
+
+\end_inset
+
+Missing Type Information
+\end_layout
+
+\begin_layout Standard
+Note that the 
+\begin_inset Quotes eld
+\end_inset
+
+IDL:omg.org/CORBA/INTF_REPOS:1.0
+\begin_inset Quotes erd
+\end_inset
+
+ exception is also raised if type information is not available in Combat's
+ Interface Repository, e.g., because the application neglected to load the
+ type information, regardless of whether the object reference contained
+ a Repository Id or not.
+ In this case, even the 
+\begin_inset Quotes eld
+\end_inset
+
+_is_a
+\begin_inset Quotes erd
+\end_inset
+
+ workaround above will not help.
+\end_layout
+
+\begin_layout Subsection
+Proprietary Bootstrapping
+\end_layout
+
+\begin_layout Standard
+Some ORBs implement proprietary bootstrapping functionality, i.e., means for
+ a client to discover servers without the need to transport an object reference.
+ E.g., the TAO ORB implements a multicast protocol that allows clients to
+ discover the Naming Service.
+ However, Combat does not implement these ORB-specific protocols.
+ Therefore, even though your C++ clients may not need an explicit reference
+ to the Naming Service or other services, Combat clients do.
+\end_layout
+
+\begin_layout Subsection
+Non-Functional DNS
+\end_layout
+
+\begin_layout Standard
+Combat by default uses the local hostname, as returned from Tcl's 
+\begin_inset Quotes eld
+\end_inset
+
+info hostname
+\begin_inset Quotes erd
+\end_inset
+
+ command, as addressing information in the object references that it generates.
+ Clients must therefore be able to resolve this hostname into an IP address.
+ If that is not the case, you can use the 
+\begin_inset Quotes eld
+\end_inset
+
+-ORBHostName
+\begin_inset Quotes erd
+\end_inset
+
+ option at ORB initialization time to set a host name or IP address that
+ Combat will use instead of 
+\begin_inset Quotes eld
+\end_inset
+
+info hostname:
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+In a local network that does not implement DNS, you may want to use your
+ local IP address.
+\end_layout
+
+\begin_layout Itemize
+When using Combat over the internet, you may want to use a fully qualified
+ host name.
+\end_layout
+
+\begin_layout Subsection
+Incompatible Codesets
+\end_layout
+
+\begin_layout Standard
+Connections may rarely fail because of incompatible character sets (
+\begin_inset Quotes eld
+\end_inset
+
+codesets
+\begin_inset Quotes erd
+\end_inset
+
+).
+ When a client opens a CORBA connection to a server, it sends its codeset
+ information.
+ If the server does not know about the client's codeset, it may decide to
+ abort the connection.
+\end_layout
+
+\begin_layout Standard
+Combat by default uses the codeset returned by Tcl's 
+\begin_inset Quotes eld
+\end_inset
+
+encoding system
+\begin_inset Quotes erd
+\end_inset
+
+ command.
+ If that codeset turns out to be incompatible, you can use the 
+\begin_inset Quotes eld
+\end_inset
+
+-ORBNativeCodeSet
+\begin_inset Quotes erd
+\end_inset
+
+ option at ORB initialization time to use a different codeset, which is
+ specified as a Tcl encoding name (i.e., it must match one of the strings
+ returned from Tcl's 
+\begin_inset Quotes eld
+\end_inset
+
+encoding names
+\begin_inset Quotes erd
+\end_inset
+
+ command).
+\end_layout
+
+\begin_layout Standard
+Combat uses a small built-in table to map Tcl's encoding names to values
+ from the 
+\begin_inset Quotes eld
+\end_inset
+
+OSF Character and Code Set Registry.
+\begin_inset Quotes erd
+\end_inset
+
+ This table is at the top of Combat's 
+\begin_inset Quotes eld
+\end_inset
+
+codeset.tcl
+\begin_inset Quotes erd
+\end_inset
+
+ file.
+ If ORB initialization fails with the 
+\begin_inset Quotes eld
+\end_inset
+
+unknown native codeset
+\begin_inset Quotes erd
+\end_inset
+
+ error, it may be necessary to extend this table.
+\end_layout
+
+\begin_layout Subsection
+Interface Repository Discrepancy
+\end_layout
+
+\begin_layout Standard
+There is the potential for discrepancy between Combat's Interface Repository
+ if the original IDL file (and the server implementation) has been modified
+ but the idl2tcl-generated file has not been updated.
+ This can result in subtle issues ranging from immediate connection failures
+ to misinterpretation of data.
+\end_layout
+
+\begin_layout Standard
+Note that this situation is not unique to Combat; it is equivalent to independen
+tly compiling and linking client and server programs using incompatible
+ IDL.
+\end_layout
+
+\begin_layout Subsection
+Reentrancy
+\end_layout
+
+\begin_layout Standard
+Because the ORB enters Tcl's event loop when waiting for replies to any
+ outstanding requests, there is the possibility that other events are processed.
+ E.g., Tk might react to GUI events.
+ That potentially allows for reentrancy, e.g., if a button is pressed while
+ a remote invocation is being made in reaction to a button being pressed.
+ An application that processes events from multiple sources needs to take
+ appropriate precautions so that this situation does not cause any issue,
+ e.g., by ignoring GUI events while remote invocations are being performed.
+ Applications can generally be written to tolerate reentrancy.
+\end_layout
+
+\begin_layout Subsection
+Leaking Memory
+\end_layout
+
+\begin_layout Standard
+Just to reiterate: because object references are associated with individual
+ Tcl commands, they consume memory that is not reclaimed when the variable
+ that contains the object reference's name goes out of scope.
+ All object references must eventually be passed to the 
+\family typewriter
+corba::release
+\family default
+ command to avoid leaking memory.
+ While it may be acceptable to be sloppy about memory leaks in small scripts,
+ it may eventually exhaust available memory in scripts that run for a long
+ time and that 
+\begin_inset Quotes eld
+\end_inset
+
+go through
+\begin_inset Quotes erd
+\end_inset
+
+ many object references.
+ Either way, it is good practice to be aware of existing object references
+ and to free unused object references.
+\end_layout
+
+\begin_layout Standard
+This applies to:
+\end_layout
+
+\begin_layout Itemize
+Object references returned from 
+\family typewriter
+corba::string_to_object
+\family default
+ operation.
+\end_layout
+
+\begin_layout Itemize
+Object references returned from the POA, e.g., from the 
+\begin_inset Quotes eld
+\end_inset
+
+id_to_reference
+\begin_inset Quotes erd
+\end_inset
+
+ operation.
+\end_layout
+
+\begin_layout Itemize
+Object references returned from method invocations, including object references
+ returned in 
+\begin_inset Quotes eld
+\end_inset
+
+inout
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+out
+\begin_inset Quotes erd
+\end_inset
+
+ parameters.
+\end_layout
+
+\begin_layout Itemize
+Object references that are returned as members of a complex data structure.
+\end_layout
+
+\begin_layout Section
+To Do
+\end_layout
+
+\begin_layout Standard
+Combat is reasonably complete.
+ Some random leftover food for thoughts: 
+\end_layout
+
+\begin_layout Itemize
+Multithreading is not yet supported, at least not explicitly.
+ It is perfectly possible to load the ORB into multiple independent Tcl
+ threads, but that results in multiple independent ORBs.
+ It would be nice if there was just one thread-aware ORB.
+\end_layout
+
+\begin_layout Itemize
+There is no collocation optimization.
+ I.e., when a client calls a server that is implemented in the same process,
+ the request and reply are transported over TCP/IP.
+\end_layout
+
+\begin_layout Itemize
+[incr Tcl] is nice and allows the server-side language mapping to be very
+ similar to C++, but it does not support virtual inheritance.
+\end_layout
+
+\begin_layout Itemize
+It would be nice to avoid idl2tcl's dependence on another ORB.
+ It would be even cooler if Combat could directly read IDL files.
+ However, parsing IDL is frustratingly complex (mostly due to the IDL language's
+ 
+\begin_inset Quotes eld
+\end_inset
+
+#pragma prefix
+\begin_inset Quotes erd
+\end_inset
+
+ kludge), and then you'd still be dependent on an external C preprocessor.
+\end_layout
+
+\begin_layout Standard
+Note that the author's motivation for future development is partly fueled
+ by user feedback.
+ I would love to hear of projects using Combat, or of plans to use it.
+\end_layout
+
+\begin_layout Section
+History
+\end_layout
+
+\begin_layout Standard
+Combat first saw light in 1998 as 
+\begin_inset Quotes eld
+\end_inset
+
+TclMico,
+\begin_inset Quotes erd
+\end_inset
+
+ written in C++, using the Dynamic Invocation Interface.
+ It was tightly coupled with the 
+\noun on
+Mico
+\noun default
+ ORB, using some of its proprietary APIs to map between Tcl's and 
+\noun on
+Mico
+\noun default
+'s type system event loop.
+ For a while, Combat lived on the 
+\begin_inset Quotes eld
+\end_inset
+
+bleeding edge,
+\begin_inset Quotes erd
+\end_inset
+
+ with frequent updates as Tcl, 
+\noun on
+Mico
+\noun default
+, the CORBA specification and compilers matured.
+ Even the Unix landscape was much more diverse then, with considerable acrobatic
+s required to support multiple platforms.
+\end_layout
+
+\begin_layout Standard
+TclMico was renamed to 
+\begin_inset Quotes eld
+\end_inset
+
+Combat
+\begin_inset Quotes erd
+\end_inset
+
+ with version 0.6 in 2000 when the implementation was ported to other ORBs.
+ The advent of the Portable Object Adapter and Dynamic Any specifications
+ largely abolished the reliance on ORB-specific extensions.
+ As a somewhat undesired side effect, this turned Combat into an excellent
+ test suite for these parts of the CORBA specification -- with a considerable
+ number of bug reports against pretty much every ORB that Combat was tested
+ against.
+ At first, ORBacus was the only ORB beside 
+\noun on
+Mico
+\noun default
+ that qualified.
+\end_layout
+
+\begin_layout Standard
+The name 
+\begin_inset Quotes eld
+\end_inset
+
+Combat
+\begin_inset Quotes erd
+\end_inset
+
+ was chosen out of belief that a catchy, snappy name is better than an accurate
+ but boring one.
+ It may be expanded as 
+\begin_inset Quotes eld
+\end_inset
+
+Corba Object Management By Application of Tcl
+\begin_inset Quotes erd
+\end_inset
+
+ if you like, but who cares? However, 
+\begin_inset Quotes eld
+\end_inset
+
+Combat
+\begin_inset Quotes erd
+\end_inset
+
+ has proven a poor choice because it is 
+\begin_inset Quotes eld
+\end_inset
+
+ungoogleable.
+\begin_inset Quotes erd
+\end_inset
+
+ Searching for 
+\begin_inset Quotes eld
+\end_inset
+
+TclMico
+\begin_inset Quotes erd
+\end_inset
+
+ proved very accurate, whereas searching for 
+\begin_inset Quotes eld
+\end_inset
+
+Combat
+\begin_inset Quotes erd
+\end_inset
+
+ \SpecialChar \ldots{}
+ you can imagine the result.
+ Even with more qualifications to the search you get mostly false positives.
+\end_layout
+
+\begin_layout Standard
+Building Combat remained a challenge.
+ A diverse landscape of ORBs, operating systems, compilers, and their versions
+ made the entire process somewhat hit and miss.
+ E.g., on some platforms, it was not straightforward to load C++ shared libraries
+ into a C executable like Tcl because of a static 
+\begin_inset Quotes eld
+\end_inset
+
+libstdc++.
+\begin_inset Quotes erd
+\end_inset
+
+ Some platforms still shipped without ISO C++ support, and gcc availability
+ was far from universal.
+ It was frustrating to spend so much effort on porting.
+\end_layout
+
+\begin_layout Standard
+Having been involved with the development and therefore very familar with
+ the internals of the 
+\noun on
+Mico
+\noun default
+ ORB, I eventually began to apply that experience to the implementation
+ of a stand-alone ORB entirely written in pure Tcl, avoiding any ORB or
+ platform compatibility issues.
+ Initially released in January 2001 with limited client-side only functionality,
+ the ORB rapidly matured.
+\end_layout
+
+\begin_layout Standard
+Combat version 0.7 was released in October 2001 as both 
+\begin_inset Quotes eld
+\end_inset
+
+Combat/C++
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Combat/Tcl,
+\begin_inset Quotes erd
+\end_inset
+
+ with near equivalent functionality.
+\end_layout
+
+\begin_layout Standard
+Combat 0.7 received a few patches over the following year but proved very
+ robust for a wide range of applications.
+ One of the more significant additions came in 2004, when Combat joined
+ 
+\noun on
+Mico
+\noun default
+ and Orbix as the first ORBs to implement the CORBA Reflection specification.
+\end_layout
+
+\begin_layout Standard
+Between 2004 and 2008, a few minor bug fixes trickled into Combat/Tcl, but
+ Combat/C++ saw little use.
+ The pure-Tcl ORB proved just too convenient -- it required no porting effort
+ at all between platforms.
+ While Combat/C++ may be faster, Combat/Tcl's performance proved more than
+ sufficient for my occasional use of Combat for ad-hoc GUIs.
+ Therefore I decided to retire Combat/C++.
+ Version 0.8 of the Tcl ORB took over the name 
+\begin_inset Quotes eld
+\end_inset
+
+Combat
+\begin_inset Quotes erd
+\end_inset
+
+ without the 
+\begin_inset Quotes eld
+\end_inset
+
+/Tcl
+\begin_inset Quotes erd
+\end_inset
+
+ qualifier.
+\end_layout
+
+\begin_layout Standard
+The original intention was to submit Combat to the Object Management Group
+ as an official Tcl language mapping for CORBA, and to reserve the 
+\begin_inset Quotes eld
+\end_inset
+
+1.0
+\begin_inset Quotes erd
+\end_inset
+
+ version number until that time.
+ However, with Tcl's popularity eclipsed by other scripting languages over
+ the years, that never came to pass.
+\end_layout
+
+\end_body
+\end_document

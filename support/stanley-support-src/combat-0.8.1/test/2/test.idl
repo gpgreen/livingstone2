@@ -1,0 +1,60 @@
+
+enum Enum1 {A, B, C, D, E};
+enum Enum2 {Z, Y, X, W, V};
+
+typedef unsigned long datum;
+
+struct Struct1 {
+  short s;
+  Enum1 e1;
+  string q;
+};
+
+struct Struct2 {
+  boolean b;
+  Struct1 s1;
+  Enum2 e2;
+  unsigned long ul;
+};
+
+typedef struct Struct3_ {
+  Struct1 s1;
+  Struct2 s2;
+} Struct3;
+
+struct Struct4 {
+  string name;
+  sequence<Struct4,1> left;
+  sequence<Struct4,1> right;
+};
+
+typedef sequence<Struct1> Seq1;
+typedef sequence<Struct2,2> Seq2;
+typedef sequence<char,16> Seq3;
+typedef sequence<octet,8> Seq4;
+
+typedef Enum1 Arr1[3];
+typedef Enum2 Arr2[2][3];
+typedef char Arr3[16];
+typedef octet Arr4[8];
+
+typedef sequence<octet> OctSeq;
+
+interface composed {
+  attribute Enum1 e1;
+  attribute Enum2 e2;
+  attribute datum d;
+  attribute Struct1 s1;
+  attribute Struct2 s2;
+  attribute Struct3 s3;
+  attribute Struct4 s4;
+  attribute Seq1 q1;
+  attribute Seq2 q2;
+  attribute Seq3 q3;
+  attribute Seq4 q4;
+  attribute Arr1 a1;
+  attribute Arr2 a2;
+  attribute Arr3 a3;
+  attribute Arr4 a4;
+  attribute OctSeq os;
+};

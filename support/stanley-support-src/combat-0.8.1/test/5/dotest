@@ -1,0 +1,174 @@
+#! /bin/sh
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+lappend auto_path ../../orb ../../tclkill
+package require tcltest
+package require combat
+package require kill
+
+namespace import tcltest::test
+tcltest::configure -verbose {body error pass}
+
+if {[string first noexec $argv] == -1} {
+    catch {file delete server.ior}
+    set server [eval exec [info nameofexecutable] ./server.tcl $argv &]
+}
+
+catch {
+    set argv [eval corba::init $argv]
+    eval tcltest::configure $argv
+    source test.tcl
+
+    #
+    # might need to wait for the server to start up
+    #
+
+    for {set i 0} {$i < 10} {incr i} {
+	if {[file exists server.ior]} {
+	    after 500
+	    break
+	}
+	after 500
+    }
+
+    if {![file exists server.ior]} {
+	catch {kill $server}
+	puts "oops, server did not start up"
+	exit 1
+    }
+
+    set reffile [open server.ior]
+    set ior [read -nonewline $reffile]
+    set obj [corba::string_to_object $ior]
+    close $reffile
+
+    #
+    # beginning of tests
+    #
+
+    test any-1.1 {enum typecode} {
+	set _tc_MyEnum [corba::type of IDL:MyEnum:1.0]
+    } {enum {A B C D}}
+    test any-1.2 {struct typecode} {
+	set _tc_MyStruct [corba::type of IDL:MyStruct:1.0]
+    } {struct IDL:MyStruct:1.0 {s short e {enum {A B C D}} q string}}
+    test any-1.3 {sequence typecode} {
+	set _tc_MySequence [corba::type of IDL:MySequence:1.0]
+    } {sequence {struct IDL:MyStruct:1.0 {s short e {enum {A B C D}} q string}}}
+    test any-1.4 {array typecode} {
+	set _tc_MyArray [corba::type of IDL:MyArray:1.0]
+    } {array {enum {A B C D}} 3}
+    test any-1.5 {union (no default) typecode} {
+	set _tc_NoDefault [corba::type of IDL:NoDefault:1.0]
+    } {union IDL:NoDefault:1.0 boolean {1 {enum {A B C D}} 0 {struct IDL:MyStruct:1.0 {s short e {enum {A B C D}} q string}}}}
+    test any-1.6 {union (explicit default) typecode} {
+	set _tc_ExplicitDefault [corba::type of IDL:ExplicitDefault:1.0]
+    } {union IDL:ExplicitDefault:1.0 {unsigned short} {0 {enum {A B C D}} 1 {enum {A B C D}} (default) string}}
+    test any-1.7 {union (without default) typecode} {
+	set _tc_WithoutDefault [corba::type of IDL:WithoutDefault:1.0]
+    } {union IDL:WithoutDefault:1.0 boolean {1 {enum {A B C D}}}}
+
+    test any-2.1 {any test} {
+	$obj value {boolean 1}
+	$obj value
+    } {boolean 1}
+    test any-2.2 {integer types} {
+	set res ""
+	$obj value {short -1}
+	lappend res [$obj value]
+	$obj value {long 42}
+	lappend res [$obj value]
+	$obj value {{unsigned short} 6274}
+	lappend res [$obj value]
+	$obj value {{unsigned long} 18}
+	lappend res [$obj value]
+    } {{short -1} {long 42} {{unsigned short} 6274} {{unsigned long} 18}}
+    test any-2.3 {float types} {
+	set res ""
+	$obj value {float 3.5}
+	lappend res [$obj value]
+	$obj value {double 1.25}
+	lappend res [$obj value]
+    } {{float 3.5} {double 1.25}}
+    test any-2.4 {string type} {
+	set res ""
+	$obj value {string {Hello World}}
+	lappend res [$obj value]
+	$obj value {string ""}
+	lappend res [$obj value]
+    } {{string {Hello World}} {string {}}}
+
+    test any-3.1 {enum type} {
+	$obj value [list $_tc_MyEnum A]
+	$obj value
+    } [list $_tc_MyEnum A]
+    test any-3.2 {struct type} {
+	$obj value [list $_tc_MyStruct {s 42 e C q {Hello World}}]
+	$obj value
+    } [list $_tc_MyStruct {s 42 e C q {Hello World}}]
+    test any-3.3 {sequence of structs} {
+	$obj value [list $_tc_MySequence {{s 42 e C q {Hello World}} {s -1 e A q {}}}]
+	$obj value
+    } [list $_tc_MySequence {{s 42 e C q {Hello World}} {s -1 e A q {}}}]
+    test any-3.4 {array type} {
+	$obj value [list $_tc_MyArray {A B C}]
+	$obj value
+    } [list $_tc_MyArray {A B C}]
+
+    test any-4.1 {union (no default) type} {
+	$obj value [list $_tc_NoDefault {1 D}]
+	$obj value
+    } [list $_tc_NoDefault {1 D}]
+    test any-4.2 {union (explicit default) type} {
+	$obj value [list $_tc_ExplicitDefault {2 {Hello World}}]
+	$obj value
+    } [list $_tc_ExplicitDefault {2 {Hello World}}]
+    test any-4.3 {union (without default) type} {
+	$obj value [list $_tc_WithoutDefault {1 D}]
+	$obj value
+    } [list $_tc_WithoutDefault {1 D}]
+
+    test any-5.1 {enum typecheck} {
+	set res ""
+	lappend res [corba::type equivalent $_tc_MyEnum $_tc_MyEnum]
+	lappend res [corba::type equivalent $_tc_MyEnum $_tc_MyStruct]
+	lappend res [corba::type equivalent $_tc_MyEnum $_tc_MySequence]
+	lappend res [corba::type equivalent $_tc_MyEnum $_tc_MyArray]
+    } {1 0 0 0}
+    test any-5.2 {struct typecheck} {
+	set res ""
+	lappend res [corba::type equivalent $_tc_MyStruct $_tc_MyEnum]
+	lappend res [corba::type equivalent $_tc_MyStruct $_tc_MyStruct]
+	lappend res [corba::type equivalent $_tc_MyStruct $_tc_MySequence]
+	lappend res [corba::type equivalent $_tc_MyStruct $_tc_MyArray]
+    } {0 1 0 0}
+    test any-5.3 {sequence typecheck} {
+	set res ""
+	lappend res [corba::type equivalent $_tc_MySequence $_tc_MyEnum]
+	lappend res [corba::type equivalent $_tc_MySequence $_tc_MyStruct]
+	lappend res [corba::type equivalent $_tc_MySequence $_tc_MySequence]
+	lappend res [corba::type equivalent $_tc_MySequence $_tc_MyArray]
+    } {0 0 1 0}
+    test any-5.3 {array typecheck} {
+	set res ""
+	lappend res [corba::type equivalent $_tc_MyArray $_tc_MyEnum]
+	lappend res [corba::type equivalent $_tc_MyArray $_tc_MyStruct]
+	lappend res [corba::type equivalent $_tc_MyArray $_tc_MySequence]
+	lappend res [corba::type equivalent $_tc_MyArray $_tc_MyArray]
+    } {0 0 0 1}
+} out
+
+if {[string first noexec $argv] == -1} {
+    kill $server
+}
+
+if {$out != ""} {
+    puts $out
+}

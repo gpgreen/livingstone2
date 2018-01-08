@@ -1,0 +1,218 @@
+#! /bin/sh
+# $Id: iordump,v 1.1 2008-11-14 02:12:35 Owner Exp $ \
+# \
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+#
+# ----------------------------------------------------------------------
+# IOR Decoder using some Combat internals.
+# ----------------------------------------------------------------------
+#
+
+set myDir [file normalize [file dirname [info script]]]
+set parentDir [file dirname $myDir]
+set orbDir [file join $parentDir orb]
+
+if {[file exists $orbDir] && [file isdirectory $orbDir]} {
+    lappend auto_path $orbDir
+}
+
+if {[catch {package require combat} oops]} {
+    puts stderr "Error: Failed to find the required \"combat\" package."
+    exit 1
+}
+
+proc usage {argv0} {
+    puts stderr "usage: $argv0 ?ior-string-or-file?"
+    puts stderr ""
+    puts stderr "    Prints the contents of a CORBA object reference."
+    puts stderr ""
+    puts stderr "    If a parameter is supplied, and if that parameter does not begin with"
+    puts stderr "    \"IOR:\", it is interpreted as a file name to read an object reference"
+    puts stderr "    from."
+    puts stderr ""
+    puts stderr "    When called without parameters, or if the file name is \"-\", an object"
+    puts stderr "    reference is read from standard input."
+    puts stderr ""
+    exit 1
+}
+
+if {$argc > 1} {
+    usage $argv0
+} elseif {!$argc || [set arg [lindex $argv 0]] == "-"} {
+    #
+    # Read object reference from standard input.
+    #
+    set ref [gets stdin]
+} elseif {[string range $arg 0 0] == "-"} {
+    usage $argv0
+} elseif {[string range $arg 0 3] != "IOR:"} {
+    #
+    # Read object reference from file.
+    #
+    if {[catch {set file [open $arg]} res]} {
+	puts "error: cannot open $arg: $res"
+	exit 1
+    }
+    set ref [read $file]
+    close $file
+} else {
+    #
+    # Use object reference on command line.
+    #
+    set ref $arg
+}
+
+set ref [string trim $ref]
+
+#
+# ----------------------------------------------------------------------
+# Some helpers.
+# ----------------------------------------------------------------------
+#
+
+proc GetCodeSetName {cs} {
+    if {[info exists ::Combat::CONV_FRAME::codesets($cs)]} {
+	return [lindex $::Combat::CONV_FRAME::codesets($cs) 1]
+    }
+    return [format "0x%08x" $cs]
+}
+
+proc dumpORBTypeComponent {component} {
+    set buf [::Combat::CDR::ReadBuffer \#auto [$component cget -component_data]]
+    $buf configure -byteorder [$buf boolean]
+    set orb_type [$buf ulong]
+    puts "ORB Type Tag"
+    puts [format "   ORB Type:  0x%08x" $orb_type]
+    itcl::delete object $buf
+}
+
+proc dumpCodeSetsComponent {component} {
+    puts "Codesets Tag"
+
+    set i 0
+    puts "     Native char CS: [GetCodeSetName [$component cget -char_native_code_set]]"
+    foreach ncs [$component cget -char_conversion_code_sets] {
+	if {[incr i] == 1} {
+	    puts "   Accepted char CS: [GetCodeSetName $ncs]"
+	} else {
+	    puts "                     [GetCodeSetName $ncs]"
+	}
+    }
+
+    set i 0
+    puts "    Native wchar CS: [GetCodeSetName [$component cget -wchar_native_code_set]]"
+    foreach ncs [$component cget -wchar_conversion_code_sets] {
+	if {[incr i] == 1} {
+	    puts "  Accepted wchar CS: [GetCodeSetName $ncs]"
+	} else {
+	    puts "                     [GetCodeSetName $ncs]"
+	}
+    }
+}
+
+proc dumpAlternateIIOPAddressComponent {component} {
+    set buf [::Combat::CDR::ReadBuffer \#auto [$component cget -component_data]]
+    $buf configure -byteorder [$buf boolean]
+    set host [$buf string]
+    set port [$buf ushort]
+    puts "Alternate IIOP Address Tag"
+    puts "       Addr:  $host:$port"
+    itcl::delete object $buf
+}
+
+proc dumpTaggedComponent {component} {
+    set tag [$component cget -tag]
+
+    switch -- $tag {
+	0 { # TAG_ORB_TYPE
+	    dumpORBTypeComponent $component
+	}
+	1 { # TAG_CODE_SETS
+	    dumpCodeSetsComponent $component
+	}
+	3 { # TAG_ALTERNATE_IIOP_ADDRESS
+	    dumpAlternateIIOPAddressComponent $component
+	}
+	default {
+	    puts "Unknown Tagged Component, ComponentId = $tag"
+	    ::Combat::DumpOctets "Data:" [$component cget -component_data]
+	}
+    }
+}
+
+proc dumpMultipleComponentsProfile {profile} {
+    puts "Multiple Components:"
+
+    foreach component [$profile cget -components] {
+	puts ""
+	dumpTaggedComponent $component
+    }
+}
+
+proc dumpIIOPProfile {profile} {
+    puts "IIOP Profile"
+
+    set major [$profile cget -major_version]
+    set minor [$profile cget -minor_version]
+
+    puts "    Version:  $major.$minor"
+    puts "    Address:  [$profile cget -host]:[$profile cget -port]"
+    ::Combat::DumpOctets "Key:" [$profile cget -object_key]
+
+    foreach component [$profile cget -components] {
+	puts ""
+	dumpTaggedComponent $component
+    }
+}
+
+proc dumpIor {ior} {
+    set type_id [$ior cget -type_id]
+ 
+    puts ""
+    if {$type_id != ""} {
+	puts "    Repo Id:  $type_id"
+    } else {
+	puts "    Repo Id:  <unknown>"
+    }
+    puts ""
+
+    foreach profile [$ior cget -profiles] {
+	set tag [$profile cget -tag]
+	switch -- $tag {
+	    0 { # TAG_INTERNET_IOP
+		dumpIIOPProfile $profile
+	    }
+	    1 { # TAG_MULTIPLE_COMPONENTS
+		dumpMultipleComponentsProfile $profile
+	    }
+	    default {
+		puts "Unknown Profile, ProfileId = $tag"
+		::Combat::DumpOctets "Data:" [$profile cget -profile_data]
+	    }
+	}
+	puts ""
+    }
+}
+
+#
+# ----------------------------------------------------------------------
+# Main
+# ----------------------------------------------------------------------
+#
+
+if {[catch {set ior [::Combat::IOP::DestringifyIOR $ref]} oops]} {
+    puts "error: $oops"
+    exit 1
+}
+
+dumpIor $ior
+
+itcl::delete object $ior

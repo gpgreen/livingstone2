@@ -1,0 +1,12 @@
+// IDL
+// http://www.random.org/Random.idl
+
+interface Random {
+
+  // return non-negative long integer in the interval [0, 2^31)
+  long lrand48();
+
+  // return signed long integer in the interval [-2^31, 2^31)
+  long mrand48();
+
+};

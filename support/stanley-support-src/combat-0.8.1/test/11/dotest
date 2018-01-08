@@ -1,0 +1,153 @@
+#! /bin/sh
+# the next line restarts using tclsh8.5 on unix \
+if type tclsh8.5 > /dev/null 2>&1 ; then exec tclsh8.5 "$0" ${1+"$@"} ; fi
+# the next line restarts using tclsh85 on Windows using Cygwin \
+if type tclsh85 > /dev/null 2>&1 ; then exec tclsh85 "`cygpath --windows $0`" ${1+"$@"} ; fi
+# the next line complains about a missing tclsh \
+echo "This software requires Tcl 8.5 to run." ; \
+echo "Make sure that \"tclsh8.5\" or \"tclsh85\" is in your \$PATH" ; \
+exit 1
+
+lappend auto_path ../../orb ../../tclkill
+package require tcltest
+package require combat
+package require kill
+
+namespace import tcltest::test
+tcltest::configure -verbose {body error pass}
+
+if {[string first noexec $argv] == -1} {
+    catch {file delete server.ior}
+    set server [eval exec [info nameofexecutable] ./server.tcl $argv &]
+}
+
+catch {
+    set argv [eval corba::init $argv]
+    eval tcltest::configure $argv
+
+    #
+    # might need to wait for the server to start up
+    #
+
+    for {set i 0} {$i < 10} {incr i} {
+	if {[file exists server.ior]} {
+	    after 500
+	    break
+	}
+	after 500
+    }
+
+    if {![file exists server.ior]} {
+	catch {kill $server}
+	puts "oops, server did not start up"
+	exit 1
+    }
+
+    set reffile [open server.ior]
+    set ior [read -nonewline $reffile]
+    set obj [corba::string_to_object $ior]
+    close $reffile
+
+    #
+    # beginning of tests
+    #
+
+    test dii-1.1 {simple square op} {
+	corba::dii $obj {{unsigned long} square {{in short}}} 42
+    } {1764}
+    test dii-1.2 {short attribute} {
+	corba::dii $obj {void _set_s {{in short}}} 42
+	corba::dii $obj {short _get_s {}}
+    } {42}
+    test dii-1.3 {readonly string attribute} {
+	corba::dii $obj {string _get_ra {}}
+    } {Hello World}
+
+    test dii-2.1 {in and out strings} {
+	set out Blubber
+	set res [corba::dii $obj {long copy {{in string} {out string}}} "Hello World" out]
+	list $res $out
+    } {11 {Hello World}}
+    test dii-2.2 {inout string} {
+	set str "Hello World"
+	set res [corba::dii $obj {void reverse {{inout string}}} str]
+	list $res $str
+    } {{} {dlroW olleH}}
+    test dii-2.3 {sequence passing} {
+	set res [corba::dii $obj {{unsigned short} length {{in {sequence {struct {} {member long}}}} {out {enum {ODD EVEN}}}}} {{member 1} {member 2} {member 3} {member 4} {member 5} {member 6} {member 7} {member 8} {member 9}} e]
+	list $res $e
+    } {9 ODD}
+    test dii-2.4 {complex return value} {
+	corba::dii $obj {{sequence {struct {} {member long}}} squares {{in {unsigned short}}}} 5
+    } {{member 0} {member 1} {member 4} {member 9} {member 16}}
+
+    test dii-3.1 {object reference return value} {
+	set newobj [corba::dii $obj {Object dup {}}]
+	corba::dii $newobj {{unsigned long} square {{in short}}} 42
+    } {1764}
+    test dii-3.2 {object reference parameter} {
+	corba::dii $obj {boolean isme {{in Object}}} $obj
+    } {1}
+    test dii-3.3 {nil object reference parameter} {
+	corba::dii $obj {boolean isme {{in Object}}} 0
+    } {0}
+    test dii-3.4 {object reference out parameter} {
+	unset newobj
+	corba::dii $obj {void dup2 {{in Object} {out Object}}} $obj newobj
+	corba::dii $newobj {boolean isme {{in Object}}} $obj
+    } {1}
+
+    test dii-4.1 {catching user exception} {
+	catch {
+	    corba::dii $obj {void DontCallMe {} {{exception IDL:Oops:1.0 {what string}}}}
+	} res
+	set res
+    } {IDL:Oops:1.0 {what {I said, don't call me!}}}
+    test dii-4.2 {oneway op} {
+	corba::dii $obj {void nop {} {} oneway}
+    } {}
+
+    test dii-5.1 {async square} {
+	set handle [corba::dii -async $obj {{unsigned long} square {{in short}}} 42]
+	corba::request get $handle
+    } {1764}
+    test dii-5.2 {multiple squares} {
+	set h1 [corba::dii -async $obj {{unsigned long} square {{in short}}} 2]
+	set h2 [corba::dii -async $obj {{unsigned long} square {{in short}}} 3]
+	set h3 [corba::dii -async $obj {{unsigned long} square {{in short}}} 4]
+	set     res [corba::request get $h3]
+	lappend res [corba::request get $h2]
+	lappend res [corba::request get $h1]
+    } {16 9 4}
+    test dii-5.3 {async invocation with out parameter} {
+	set h1 [corba::dii -async $obj {long copy {{in string} {out string}}} "Hello World" out1]
+	set h2 [corba::dii -async $obj {long copy {{in string} {out string}}} "" out2]
+	set h3 [corba::dii -async $obj {long copy {{in string} {out string}}} "42" out3]
+	catch {unset res}
+	lappend res [corba::request get $h1]
+	lappend res [corba::request get $h2]
+	lappend res [corba::request get $h3]
+	lappend res $out1
+	lappend res $out2
+	lappend res $out3
+    } {11 0 2 {Hello World} {} 42}
+
+    test dii-6.1 {callback handler} {
+	global result
+	proc callback {handle} {
+	    global result
+	    set result [corba::request get $handle]
+	}
+	set handle [corba::dii -callback callback $obj {{unsigned long} square {{in short}}} 42]
+	vwait result
+	set result
+    } {1764}
+} out
+
+if {[string first noexec $argv] == -1} {
+    kill $server
+}
+
+if {$out != ""} {
+    puts $out
+}
