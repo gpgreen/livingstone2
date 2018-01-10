@@ -109,8 +109,8 @@ support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/lib
 	@echo " "
 	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}"
 	@echo " "
-	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}/unix; make; make install)
-	mv ${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/Tktable.so.${STANLEY_TKTABLE_VERSION} ${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so 
+	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}; make; make install)
+	#mv ${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/Tktable.so.${STANLEY_TKTABLE_VERSION} ${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so 
 
 
 # Mico
@@ -177,8 +177,9 @@ bin/stanley-bin: \
 	@echo "Building stanley-gpu soft link to RUN-STANLEY-OPS.csh"
 	(cd ${STANLEY_ROOT}/interface; chmod a+x RUN-STANLEY-OPS.csh)
 	(cd ${STANLEY_ROOT}/interface; rm -f stanley-gpu ; ln -s RUN-STANLEY-OPS.csh stanley-gpu)
-
+	@echo "Building stanley"
 	(cd ${STANLEY_ROOT}/src/c; make)
+	@echo "Building stanley/interface"
 	(cd ${STANLEY_ROOT}/interface; make)
 ## nothing  to make for ${CORBA_DIR}
 ## idl -> tcl generation is done by Stanley during initialization

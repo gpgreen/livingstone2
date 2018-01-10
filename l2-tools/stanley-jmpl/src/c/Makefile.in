@@ -93,7 +93,7 @@ X11_INC = -I $(STANLEY_ROOT)/src/include -I $(X11_INC_DIR)
 #	-DUSE_TCL_DP inits Tcl-DP
 
 # Combat (tclMico) ORB -- Combat_Init called in tkAppInit.c 
-TCLMICO_LIBS      = -L$(MICO_LIB) -l$(MICO_LIB_L) -l$(MICO_LIB_LIR) -L$(CPP_LIB) -lstdc++ -L$(GENERIC_LIBS) -ldl $(OTHER_MICO_LIBS) -lnsl 
+TCLMICO_LIBS      = -L$(MICO_LIB) -l$(MICO_LIB_L) -l$(MICO_LIB_LIR) -L$(CPP_LIB) -lstdc++ -L$(GENERIC_LIBS) -ldl $(OTHER_MICO_LIBS) -lnsl -lssl
 ### TCLMICO_LIBS      = -L$(TCL_MICO_LIB) -ltclmico -L$(MICO_LIB) -lmico -L$(CPP_LIB) -lg++ -lstdc++ -L/usr/local/gnu/gcc-2.8.1/lib/gcc-lib/sparc-sun-solaris2.6/2.8.1 -lgcc -ldl -lelf -lsocket -lnsl
 CFLAGS += $(AC_FLAGS) $(INCDIRS) $(X11_INC) -pedantic -O -fno-fast-math -g
 

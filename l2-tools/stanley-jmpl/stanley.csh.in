@@ -135,9 +135,11 @@ if (! ${?STANLEY_ROOT}) then
       set match_test4 = `expr match $version_2 '.*1\.4\.*'`
       set match_test5 = `expr match $version_2 '.*1\.5\.*'`
       set match_test6 = `expr match $version_2 '.*1\.6\.*'`
+      set match_test7 = `expr match $version_2 '.*1\.7\.*'`
+      set match_test8 = `expr match $version_2 '.*1\.8\.*'`
       # echo match_test $match_test 
-      if (( $match_test4 == 0 ) && ( $match_test5 == 0 ) && ( $match_test6 == 0)) then
-        echo "$JAVA_HOME not jdk1.4.*, jdk1.5.*, or jdk1.6.*"
+      if (( $match_test4 == 0 ) && ( $match_test5 == 0 ) && ( $match_test6 == 0 ) && ( $match_test7 == 0 ) && ( $match_test8 == 0)) then
+        echo "$JAVA_HOME not jdk1.4.*, jdk1.5.*, jdk1.6.*, jdk1.7.*, jdk1.8.*"
         exit 1
       endif
     else

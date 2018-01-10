@@ -526,7 +526,7 @@ cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STAN
 echo " "
 echo "$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}/unix"
 echo " "
-cd $SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}/unix
+cd $SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/Tktable${STANLEY_TKTABLE_VERSION}
 ./configure --prefix=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION} --exec-prefix=$STANLEY_ROOT/support/tclTk${STANLEY_TCL_TK_VERSION} --with-tcl=$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-tk=$SUPPORT_ROOT/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tk${STANLEY_TK_VERSION}/unix 
 
 

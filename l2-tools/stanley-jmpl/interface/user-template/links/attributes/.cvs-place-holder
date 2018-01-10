@@ -1,3 +1,0 @@
-## CVS will not checkout directories which do not have leaf files
-## this file is to force CVS to do so
-## chmod u-w .c*; chmod g-w .c*
