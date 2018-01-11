@@ -36,7 +36,7 @@ TOUCH = touch
 
 build: support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so \
-	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/itcl${STANLEY_ITCL_VERSION}/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so \
 	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/orb \
@@ -76,7 +76,7 @@ support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so: \
 
 
 # Itcl
-support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libitcl${STANLEY_ITCL_LIB_VERSION}.so: \
+support/tclTk${STANLEY_TCL_TK_VERSION}/lib/itcl${STANLEY_ITCL_VERSION}/libitcl${STANLEY_ITCL_LIB_VERSION}.so: \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so
 # configure for itcl3.2 requires that the tcl/tk stub libraries already be built
@@ -98,8 +98,8 @@ support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libitcl${STANLEY_ITCL_LIB_VERSION}.so
 # are to fix errors in itcl version 3.1.0
 # itcl 3.2 does not have these problems, but it does not have itclConfig.sh
 # which combat requires -- so we use 3.1.0
-	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}; make all; cd config; chmod a+x mkinstalldirs; chmod a+x install-sh; cd ..; make install)
-	cp ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}/itcl/generic/itclDecls.h ${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/include
+	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}; make; make install)
+#	cp ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}/itcl/generic/itclDecls.h ${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/include
 
 
 # TkTable
@@ -147,7 +147,7 @@ support/tclTk${STANLEY_TCL_TK_VERSION}/lib/orb: \
 bin/stanley-bin: \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so \
-	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/itcl${STANLEY_ITCL_VERSION}/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so \
 	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/orb
