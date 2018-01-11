@@ -36,10 +36,10 @@ TOUCH = touch
 
 build: support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so \
-	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/itcl${STANLEY_ITCL_VERSION}/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/itcl${STANLEY_ITCL_LIB_VERSION}/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so \
 	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so \
-	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/orb \
+	support/combat-${STANLEY_COMBAT_VERSION}/lib/libcombat.so \
 	bin/stanley-bin
 
 # Tcl
@@ -76,7 +76,7 @@ support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so: \
 
 
 # Itcl
-support/tclTk${STANLEY_TCL_TK_VERSION}/lib/itcl${STANLEY_ITCL_VERSION}/libitcl${STANLEY_ITCL_LIB_VERSION}.so: \
+support/tclTk${STANLEY_TCL_TK_VERSION}/lib/itcl${STANLEY_ITCL_LIB_VERSION}/libitcl${STANLEY_ITCL_LIB_VERSION}.so: \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so
 # configure for itcl3.2 requires that the tcl/tk stub libraries already be built
@@ -90,7 +90,7 @@ support/tclTk${STANLEY_TCL_TK_VERSION}/lib/itcl${STANLEY_ITCL_VERSION}/libitcl${
 ## then run autoconf
 #	(cd ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}; make distclean; ./configure --enable-shared --prefix=${STANLEY_ROOT}/lib/tclTk${STANLEY_TCL_TK_VERSION} --with-tcl=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-tk=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tk${STANLEY_TK_VERSION}/unix)
 	@echo " "
-	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_VERSION}"
+	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/itcl${STANLEY_ITCL_LIB_VERSION}"
 	@echo " "
 # cd config; chmod a+x mkinstalldirs; chmod a+x install-sh; cd ..
 # and
@@ -128,7 +128,7 @@ support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}
 
 
 # Combat
-support/tclTk${STANLEY_TCL_TK_VERSION}/lib/orb: \
+support/combat-${STANLEY_COMBAT_VERSION}/lib/libcombat.so: \
 	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so
 # combat needs itcl installed prior to running configure
 # so do here rather than in stanley-jmpl/configure.in
@@ -136,21 +136,20 @@ support/tclTk${STANLEY_TCL_TK_VERSION}/lib/orb: \
 	@echo "Configure ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}"
 	@echo " "
 # since combat configure is not done in stanley-jmpl/configure,
-#	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; ./configure --prefix=${STANLEY_ROOT}/support/combat-${STANLEY_COMBAT_VERSION} --with-tcl=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-mico=${SUPPORT_ROOT}/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico/admin --with-itcl=${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib --enable-shared)
+	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; ./configure --prefix=${STANLEY_ROOT}/support/combat-${STANLEY_COMBAT_VERSION} --with-tcl=${SUPPORT_ROOT}/stanley-support-src/tclTk${STANLEY_TCL_TK_VERSION}/tcl${STANLEY_TCL_VERSION}/unix --with-mico=${SUPPORT_ROOT}/stanley-support-src/mico/${STANLEY_MICO_VERSION}/mico/admin --with-itcl=${STANLEY_ROOT}/support/tclTk${STANLEY_TCL_TK_VERSION}/lib --enable-shared)
 	@echo " "
 	@echo "Build ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}"
 	@echo " "
-#	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; make; make install)
-#	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; cp -r orb support/tclTk${STANLEY_TCL_TK_VERSION}/lib)
+	(cd ${SUPPORT_ROOT}/stanley-support-src/combat-${STANLEY_COMBAT_VERSION}; make; make install)
 
 # Stanley
 bin/stanley-bin: \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtcl${STANLEY_TCL_TK_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/libtk${STANLEY_TCL_TK_VERSION}.so \
-	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/itcl${STANLEY_ITCL_VERSION}/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
+	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/itcl${STANLEY_ITCL_LIB_VERSION}/libitcl${STANLEY_ITCL_LIB_VERSION}.so \
 	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/Tktable${STANLEY_TKTABLE_VERSION}/libTktable${STANLEY_TKTABLE_VERSION}.so \
 	support/mico/${STANLEY_MICO_VERSION}/mico/lib/libmico${STANLEY_MICO_LIB_VERSION}.so \
-	support/tclTk${STANLEY_TCL_TK_VERSION}/lib/orb
+	support/combat-${STANLEY_COMBAT_VERSION}/lib/libcombat.so
 	@echo " "
 #	@echo "Build ${STANLEY_ROOT}/bin/stanley-bin"
 #	@echo " "

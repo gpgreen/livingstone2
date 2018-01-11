@@ -170,7 +170,8 @@ if (! ${?STANLEY_ROOT}) then
     endif
 
     setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:$STANLEY_TKTABLE_LIB
-
+    setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${STANLEY_TCL_TK_LIB}/itcl@STANLEY_ITCL_LIB_VERSION@
+    
     # Stanley ORB client: Mico shared libraries
     # setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:$MICO_LIB
     # setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:$TCL_MICO_LIB

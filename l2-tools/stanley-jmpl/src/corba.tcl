@@ -132,7 +132,8 @@ proc initializeStanleyCORBAClient { } {
   if {$g_NM_win32P} {
     eval corba::init -ORBDebugLevel 10 -ORBNoCodeSets -ORBNoResolve
   } else {
-    eval corba::init -ORBDebugLevel 10 -ORBNoCodeSets 
+    #eval corba::init -ORBDebugLevel 10 -ORBNoCodeSets 
+    eval corba::init
   }
 
   # Feed the local interface repository with information about the Livingstone
