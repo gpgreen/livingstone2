@@ -57,10 +57,10 @@ endif
 
 ## Tcl/Tk
 if ("$arg_tkcon" == "1") then
-  $STANLEY_ROOT/support/tclTk8.3/bin/wish8.3 \
+  $STANLEY_ROOT/support/tclTk8.5/bin/wish8.5 \
         $STANLEY_ROOT/support/tkcon-1.6/tkcon.tcl
 else
-  $STANLEY_ROOT/support/tclTk8.3/bin/wish8.3
+  $STANLEY_ROOT/support/tclTk8.5/bin/wish8.5
 endif
 
 
